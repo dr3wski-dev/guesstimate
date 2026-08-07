@@ -4,6 +4,7 @@
     "league": "NBA",
     "xLabel": "Height", "xUnit": "in",
     "yLabel": "Career 3-point percentage", "yUnit": "3P%",
+    "xStep": 1,
     "targetPlayer": "Dirk Nowitzki", "targetX": 84, "targetY": 38.0,
     "referencePlayers": [
       { "name": "Muggsy Bogues", "x": 63, "y": 27.8 },
@@ -46,6 +47,7 @@
     "league": "NFL",
     "xLabel": "Rushing yards per game (season)", "xUnit": "YPG",
     "yLabel": "Rushing touchdowns (season)", "yUnit": "TDs",
+    "yStep": 1,
     "targetPlayer": "Jonathan Taylor, 2021", "targetX": 106.5, "targetY": 18,
     "referencePlayers": [
       { "name": "McCaffrey \u201923", "x": 91.2, "y": 14 },
@@ -98,24 +100,11 @@
     "source": "StatMuse career passing touchdown percentage and interception percentage."
   },
   {
-    "id": "mlb-avg-hr-bonds",
-    "league": "MLB",
-    "xLabel": "Career batting average", "xUnit": "AVG",
-    "yLabel": "Career home runs", "yUnit": "HR",
-    "targetPlayer": "Barry Bonds", "targetX": 0.298, "targetY": 762,
-    "referencePlayers": [
-      { "name": "Tony Gwynn", "x": 0.338, "y": 135 },
-      { "name": "Dave Kingman", "x": 0.236, "y": 442 },
-      { "name": "Babe Ruth", "x": 0.342, "y": 714 }
-    ],
-    "fact": "Barry Bonds holds the all-time home run record (762) — more than even Babe Ruth's 714 — but his .298 career batting average trails Ruth's .342 by a wide margin, and Dave Kingman's raw power (442 HR on a .236 average) shows that home run totals alone don't tell the whole story. Tony Gwynn (.338 / 135) is the pure-contact opposite: one of the best pure hitters ever, with a fraction of the power. Ruth remains the rare player who tops the field on both axes at once.",
-    "source": "StatMuse career batting average and home run totals."
-  },
-  {
     "id": "nba-as-ppg-randolph",
     "league": "NBA",
     "xLabel": "Career All-Star selections", "xUnit": "AS",
     "yLabel": "Career points per game", "yUnit": "PPG",
+    "xStep": 1,
     "targetPlayer": "Zach Randolph", "targetX": 2, "targetY": 16.6,
     "referencePlayers": [
       { "name": "Joe Johnson", "x": 7, "y": 16.0 },
@@ -130,6 +119,7 @@
     "league": "NFL",
     "xLabel": "Career Pro Bowl selections", "xUnit": "PB",
     "yLabel": "Career receiving yards", "yUnit": "yards",
+    "xStep": 1, "yStep": 1,
     "targetPlayer": "Anquan Boldin", "targetX": 3, "targetY": 13779,
     "referencePlayers": [
       { "name": "Randy Moss", "x": 6, "y": 15292 },
@@ -144,6 +134,7 @@
     "league": "MLB",
     "xLabel": "Career All-Star selections", "xUnit": "AS",
     "yLabel": "Career home runs", "yUnit": "HR",
+    "xStep": 1, "yStep": 1,
     "targetPlayer": "Bobby Abreu", "targetX": 2, "targetY": 288,
     "referencePlayers": [
       { "name": "Adam Dunn", "x": 2, "y": 462 },

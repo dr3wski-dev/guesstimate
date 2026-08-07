@@ -220,6 +220,24 @@ function shortLabel(name){
   return name.replace(/,?\s*\d{4}$/, '') || name;
 }
 
+// Guess-snapping precision. A fixed "round to nearest 0.1" (the old behavior)
+// is wrong the moment a stat's whole meaningful range is itself close to 0.1 —
+// batting average (.236-.342) is the case that broke it: nearly the entire
+// chart collapsed onto two clickable values. Each question can declare xStep/
+// yStep explicitly (e.g. 1 for a stat that's only ever a whole number, like an
+// All-Star count or a home run total; 0.001 for batting average); anything that
+// doesn't is assumed to be a normal one-decimal per-game rate stat, matching
+// every question built before this existed.
+const DEFAULT_STEP = 0.1;
+function stepDecimals(step){
+  if(step >= 1) return 0;
+  return Math.max(0, -Math.floor(Math.log10(step)));
+}
+function roundToStep(v, step){
+  const decimals = stepDecimals(step);
+  return Number((Math.round(v/step)*step).toFixed(decimals));
+}
+
 let idx = 0;
 let roundScores = [];
 
@@ -255,6 +273,8 @@ function showQuestion(){
   const allY = [r.targetY, ...r.referencePlayers.map(p=>p.y)];
   const xMin = Math.min(...allX)*0.7, xMax = Math.max(...allX)*1.15;
   const yMin = Math.min(...allY)*0.5, yMax = Math.max(...allY)*1.2;
+  const xStep = r.xStep || DEFAULT_STEP, yStep = r.yStep || DEFAULT_STEP;
+  const xDecimals = stepDecimals(xStep), yDecimals = stepDecimals(yStep);
   const W = 560, H = 420, padL = 54, padR = 20, padT = 20, padB = 44;
   const plotW = W-padL-padR, plotH = H-padT-padB;
   const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
@@ -286,13 +306,13 @@ function showQuestion(){
       const xv = xMin + (i/4)*(xMax-xMin);
       const px = xPix(xv);
       svg.appendChild(el('line',{x1:px,y1:padT,x2:px,y2:padT+plotH, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono'}); t.textContent = xv.toFixed(1); svg.appendChild(t);
+      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono'}); t.textContent = xv.toFixed(xDecimals); svg.appendChild(t);
     }
     for(let i=0;i<=4;i++){
       const yv = yMin + (i/4)*(yMax-yMin);
       const py = yPix(yv);
       svg.appendChild(el('line',{x1:padL,y1:py,x2:padL+plotW,y2:py, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono'}); t.textContent = yv.toFixed(1); svg.appendChild(t);
+      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono'}); t.textContent = yv.toFixed(yDecimals); svg.appendChild(t);
     }
     const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono'}); xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
     const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', transform:`rotate(-90 14 ${padT+plotH/2})`}); yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
@@ -305,7 +325,7 @@ function showQuestion(){
       const px = (e.clientX - rect.left)*scaleX, py = (e.clientY - rect.top)*scaleY;
       const gx = Math.max(xMin, Math.min(xMax, xVal(px)));
       const gy = Math.max(yMin, Math.min(yMax, yVal(py)));
-      guess = { x: Math.round(gx*10)/10, y: Math.round(gy*10)/10 };
+      guess = { x: roundToStep(gx, xStep), y: roundToStep(gy, yStep) };
       readout.innerHTML = `Your guess: <b>${guess.x} ${r.xUnit}</b>, <b>${guess.y} ${r.yUnit}</b>`;
       submitBtn.disabled = false;
       draw();
