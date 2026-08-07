@@ -141,6 +141,34 @@ function selectDailyQuestions(dateStr, pool, count=5){
   return seededShuffle(pool, seed).slice(0, Math.min(count, pool.length));
 }
 
+// Shuffled-bag anti-repeat rotation (ACTION_PLAN.md v1.1 trigger: the pool is now
+// large enough that daily repeats would be noticeable). Concatenate independently
+// -shuffled copies of the pool end-to-end ("cycle 0", "cycle 1", ...) into one
+// infinite sequence, then hand out `count` consecutive items per calendar day.
+// Every item in the pool appears exactly once before any item repeats — a fresh
+// reshuffle only happens once the whole pool has been exhausted — and it's still a
+// pure function of (dateStr, pool, count): no stored cursor, nothing to desync.
+const BAG_EPOCH = '2026-01-01'; // fixed origin so day numbering never shifts across sessions
+function daysSince(dateStr, epoch){
+  return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
+}
+function selectDailyBag(dateStr, pool, count=5){
+  if(pool.length === 0) return [];
+  const dayIndex = Math.max(0, daysSince(dateStr, BAG_EPOCH));
+  const startIdx = dayIndex * count;
+  const cycleShuffles = new Map();
+  const result = [];
+  for(let i = startIdx; i < startIdx + count; i++){
+    const cycleIndex = Math.floor(i / pool.length);
+    const posInCycle = i % pool.length;
+    if(!cycleShuffles.has(cycleIndex)){
+      cycleShuffles.set(cycleIndex, seededShuffle(pool, hashString(`bag-cycle-${cycleIndex}`)));
+    }
+    result.push(cycleShuffles.get(cycleIndex)[posInCycle]);
+  }
+  return result;
+}
+
 /* ============================= STREAK (ported unchanged from guesstimate-slider-legacy.html) ============================= */
 const STATS_KEY = 'guesstimate_stats_v1';
 function loadStats(){ try{ return JSON.parse(localStorage.getItem(STATS_KEY)) || {lastPlayed:null,currentStreak:0,bestStreak:0}; }catch(e){ return {lastPlayed:null,currentStreak:0,bestStreak:0}; } }
@@ -368,7 +396,13 @@ async function init(){
   }
   QUESTION_POOL = pool;
   TODAY = todayDateString();
-  ROUNDS = selectDailyQuestions(TODAY, QUESTION_POOL, QUESTION_POOL.length);
+  // Shuffled-bag rotation: 5/day, no repeats until the whole pool has been shown
+  // once (see selectDailyBag above). Falls back to the full pool on days it can't
+  // fill a group of 5 yet (pool still under 5 questions).
+  const DAILY_COUNT = 5;
+  ROUNDS = QUESTION_POOL.length >= DAILY_COUNT
+    ? selectDailyBag(TODAY, QUESTION_POOL, DAILY_COUNT)
+    : selectDailyQuestions(TODAY, QUESTION_POOL, QUESTION_POOL.length);
   startScreen();
 }
 init();
