@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Defense-in-depth per SECURITY_NOTES.md: this page now parses a URL param
+     (?challenge=1&from=...&score=...) into the DOM. The param is sanitized in JS
+     regardless, but a CSP costs nothing and would have blocked the earlier
+     reflected-XSS bug documented there even before the code-level fix existed. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self';">
 <title>Guesstimate — Scatter Prototype</title>
 <script>
 // Applied synchronously, before CSS paints, so a returning player with a saved
@@ -120,6 +125,11 @@
   .streak-line{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); text-align:center; margin-bottom:16px; }
   .streak-line b{ color:var(--ink); font-family:'Fraunces',serif; font-size:16px; }
   .error-text{ color:var(--bad); }
+  .challenge-banner{ font-family:'IBM Plex Mono',monospace; font-size:13px; background:color-mix(in srgb, var(--accent) 18%, var(--paper)); border:2px solid var(--ink); border-radius:4px; padding:10px 12px; margin-bottom:16px; }
+  .challenge-box{ margin-top:18px; padding-top:16px; border-top:2px dashed var(--line); text-align:left; }
+  .challenge-box label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); display:block; margin-bottom:6px; }
+  .challenge-box input{ width:100%; font-family:'Work Sans',sans-serif; font-size:14px; padding:9px 10px; border:2px solid var(--ink); border-radius:3px; background:var(--paper); color:var(--ink); margin-bottom:10px; }
+  .challenge-box input::placeholder{ color:var(--ink-faint); }
 </style>
 </head>
 <body>
@@ -135,6 +145,39 @@
 </div>
 
 <script>
+/* ============================= UNTRUSTED INPUT (challenge links) =============================
+   Anything arriving via a URL parameter is untrusted the moment it's going to touch
+   the DOM — see SECURITY_NOTES.md, which documents a real reflected-XSS bug from
+   exactly this pattern (a challenge link's `from` name interpolated unescaped). The
+   fix there was to sanitize once, at the point of parsing, rather than case-by-case
+   at each downstream usage site — that's what this block does, before anything else
+   in the app runs. escapeHtml is applied again at the actual render call below, as
+   belt-and-suspenders on top of the whitelist here. */
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+function sanitizeName(raw){
+  if(!raw) return '';
+  return raw.replace(/[^a-zA-Z0-9 '\-]/g, '').trim().slice(0, 30);
+}
+function clampScore(raw, max){
+  const n = parseInt(raw, 10);
+  if(!Number.isFinite(n)) return null;
+  return Math.max(0, Math.min(max, n));
+}
+// Generous fixed cap rather than tying it to today's pool size — the sender's max
+// possible score (the day they played) may not match the recipient's (today), since
+// the pool keeps growing.
+const CHALLENGE_MAX_SCORE = 5000;
+const challengeParams = new URLSearchParams(location.search);
+const CHALLENGE = challengeParams.get('challenge') === '1' ? {
+  active: true,
+  from: sanitizeName(challengeParams.get('from') || ''),
+  score: clampScore(challengeParams.get('score'), CHALLENGE_MAX_SCORE),
+} : { active: false };
+
 /* ============================= DATA LOADING =============================
    Question content lives in ../data/questions.json (the canonical schema — see
    README.md and CONTENT_BACKLOG.md) and is loaded at runtime instead of being
@@ -297,10 +340,14 @@ function startScreen(){
   progressEl.innerHTML = '';
   const stats = loadStats();
   const streakHTML = stats.currentStreak>0 ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  const challengeHTML = CHALLENGE.active
+    ? `<div class="challenge-banner">🎯 <b>${escapeHtml(CHALLENGE.from || 'A friend')}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`
+    : '';
   panel.innerHTML = `
     <h1 class="title">Guesstimate</h1>
     <p class="sub">Real reference players are plotted on a 2D chart — click where you think the named player falls on both stats at once.</p>
     <p class="instructions" style="margin-bottom:16px;">Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.</p>
+    ${challengeHTML}
     ${streakHTML}
     <div class="next-row"><button class="primary" id="startBtn">Start today's ${ROUNDS.length===1?'question':'questions'} →</button></div>
   `;
@@ -468,8 +515,43 @@ function showResults(){
       <div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>
       <button class="primary" id="againBtn">Play again</button>
     </div>
+    <div class="challenge-box">
+      <label for="challengeName">Your name (optional, shown to whoever you send this to)</label>
+      <input type="text" id="challengeName" maxlength="30" placeholder="e.g. Drew">
+      <div class="next-row"><button class="primary" id="shareBtn">Share your score</button></div>
+      <p class="instructions" id="shareStatus" style="margin-top:8px;"></p>
+    </div>
   `;
   document.getElementById('againBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+
+  document.getElementById('shareBtn').addEventListener('click', async ()=>{
+    const nameInput = document.getElementById('challengeName');
+    const name = sanitizeName(nameInput ? nameInput.value : '');
+    const url = new URL(location.href);
+    url.search = '';
+    url.searchParams.set('challenge', '1');
+    if(name) url.searchParams.set('from', name);
+    url.searchParams.set('score', String(total));
+    const shareUrl = url.toString();
+    const shareText = `Guesstimate — I scored ${total}/${ROUNDS.length*100}. Think you can beat me?`;
+    const status = document.getElementById('shareStatus');
+
+    if(navigator.share){
+      try{
+        await navigator.share({ title: 'Guesstimate', text: shareText, url: shareUrl });
+        return;
+      }catch(err){
+        if(err && err.name === 'AbortError') return; // player closed the share sheet - not a failure
+        // any other failure (e.g. share unsupported for this content) falls through to the clipboard below
+      }
+    }
+    try{
+      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      status.textContent = 'Copied! Paste it in Messages, or anywhere.';
+    }catch(err){
+      status.textContent = shareUrl;
+    }
+  });
 }
 
 /* ============================= INIT ============================= */
