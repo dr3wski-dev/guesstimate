@@ -1,0 +1,117 @@
+[
+  {
+    "id": "nba-ppg-rpg-lebron",
+    "league": "NBA",
+    "xLabel": "Career points per game", "xUnit": "PPG",
+    "yLabel": "Career rebounds per game", "yUnit": "RPG",
+    "targetPlayer": "LeBron James", "targetX": 26.8, "targetY": 7.5,
+    "referencePlayers": [
+      { "name": "Dennis Rodman", "x": 7.3, "y": 13.1 },
+      { "name": "Chris Paul", "x": 16.8, "y": 4.4 },
+      { "name": "Stephen Curry", "x": 24.8, "y": 4.7 },
+      { "name": "Wilt Chamberlain", "x": 30.1, "y": 22.9 }
+    ],
+    "fact": "LeBron James averages 26.8 points and 7.5 rebounds a game for his career — high scoring with real but not elite rebounding. Wilt Chamberlain (30.1 / 22.9) is the only player in NBA history to average 30+ points and 20+ rebounds for a full career. Dennis Rodman (7.3 / 13.1) is the mirror image — elite rebounding, modest scoring.",
+    "source": "Basketball-Reference / StatMuse career averages."
+  },
+  {
+    "id": "nba-ppg-apg-lebron",
+    "league": "NBA",
+    "xLabel": "Career points per game", "xUnit": "PPG",
+    "yLabel": "Career assists per game", "yUnit": "APG",
+    "targetPlayer": "LeBron James", "targetX": 26.8, "targetY": 7.4,
+    "referencePlayers": [
+      { "name": "Dennis Rodman", "x": 7.3, "y": 1.8 },
+      { "name": "Chris Paul", "x": 16.8, "y": 9.2 },
+      { "name": "Stephen Curry", "x": 24.8, "y": 6.3 },
+      { "name": "Wilt Chamberlain", "x": 30.1, "y": 4.4 }
+    ],
+    "fact": "LeBron James averages 7.4 assists a game to go with his scoring — genuinely rare playmaking for a top-5 all-time scorer. Chris Paul (16.8 / 9.2) built his whole career around exactly that combination at a smaller scale. Rodman (7.3 / 1.8) shows the opposite: a non-playmaking specialist.",
+    "source": "Basketball-Reference / StatMuse career averages."
+  },
+  {
+    "id": "nba-apg-rpg-lebron",
+    "league": "NBA",
+    "xLabel": "Career assists per game", "xUnit": "APG",
+    "yLabel": "Career rebounds per game", "yUnit": "RPG",
+    "targetPlayer": "LeBron James", "targetX": 7.4, "targetY": 7.5,
+    "referencePlayers": [
+      { "name": "Dennis Rodman", "x": 1.8, "y": 13.1 },
+      { "name": "Chris Paul", "x": 9.2, "y": 4.4 },
+      { "name": "Stephen Curry", "x": 6.3, "y": 4.7 },
+      { "name": "Wilt Chamberlain", "x": 4.4, "y": 22.9 }
+    ],
+    "fact": "LeBron James sits almost exactly in the middle on both assists (7.4) and rebounds (7.5) — a genuine do-everything profile rather than a specialist in either direction. Chris Paul (9.2 / 4.4) leans hard toward playmaking, Rodman (1.8 / 13.1) leans hard toward rebounding, and almost no one in NBA history is this balanced across both at LeBron's scoring volume.",
+    "source": "Basketball-Reference / StatMuse career averages."
+  },
+  {
+    "id": "nfl-ypg-tds-taylor",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)", "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)", "yUnit": "TDs",
+    "targetPlayer": "Jonathan Taylor, 2021", "targetX": 106.5, "targetY": 18,
+    "referencePlayers": [
+      { "name": "McCaffrey \u201923", "x": 91.2, "y": 14 },
+      { "name": "Henry \u201920", "x": 126.7, "y": 17 },
+      { "name": "Peterson \u201912", "x": 131.1, "y": 12 }
+    ],
+    "fact": "Jonathan Taylor's 2021 season is the counterintuitive one here: his 106.5 rushing yards per game is actually the lowest of these four seasons, yet his 18 rushing touchdowns is the highest — the 17-game season gave him an extra game, and a huge share of his team's goal-line work. Adrian Peterson's 2012 MVP season (131.1 YPG) is the opposite profile: gaining more yards per game than anyone here, but with the fewest touchdowns.",
+    "source": "Pro Football Reference / StatMuse season totals. Yards-per-game computed from confirmed season yardage \u00f7 games played."
+  },
+  {
+    "id": "nba-stl-blk-pippen",
+    "league": "NBA",
+    "xLabel": "Career steals per game", "xUnit": "SPG",
+    "yLabel": "Career blocks per game", "yUnit": "BPG",
+    "targetPlayer": "Scottie Pippen", "targetX": 2.0, "targetY": 0.8,
+    "referencePlayers": [
+      { "name": "Dikembe Mutombo", "x": 0.4, "y": 2.8 },
+      { "name": "John Stockton", "x": 2.2, "y": 0.2 },
+      { "name": "Hakeem Olajuwon", "x": 1.7, "y": 3.1 }
+    ],
+    "fact": "Scottie Pippen's 2.0 steals and 0.8 blocks a game is a genuinely rare wing profile — enough blocks to suggest a rim-protecting big, delivered by a 6'8\" forward who also picked pockets like a guard. Dikembe Mutombo (0.4 / 2.8) and John Stockton (2.2 / 0.2) are the two specialist extremes this pairing usually produces: a pure rim-protector and a pure ball-hawk. Hakeem Olajuwon (1.7 / 3.1) is the rare exception who tops both — a center with a guard's hands and a shot-blocker's timing.",
+    "source": "StatMuse career per-game averages (regular season)."
+  },
+  {
+    "id": "nba-fga-ts-jordan",
+    "league": "NBA",
+    "xLabel": "Career field goal attempts per game", "xUnit": "FGA",
+    "yLabel": "Career true shooting percentage", "yUnit": "TS%",
+    "targetPlayer": "Michael Jordan", "targetX": 22.9, "targetY": 56.9,
+    "referencePlayers": [
+      { "name": "Allen Iverson", "x": 21.8, "y": 51.8 },
+      { "name": "Stephen Curry", "x": 17.9, "y": 62.6 },
+      { "name": "DeAndre Jordan", "x": 5.1, "y": 64.4 }
+    ],
+    "fact": "Michael Jordan took more shots per game (22.9) than anyone else here — even more than Allen Iverson (21.8), the standard reference for a pure volume scorer. But his efficiency (56.9 TS%) sits well below the elite tier: Stephen Curry (62.6) gets nearly as many shots up at a far higher efficiency, and DeAndre Jordan (64.4) shows the opposite extreme — a role player who barely shoots (5.1 attempts a game) but converts at an absurd rate, mostly dunks and putbacks. Jordan's greatness came from volume and shot difficulty, not from posting efficiency numbers like the specialists at either end of this chart.",
+    "source": "StatMuse career true shooting percentage and field goal attempts per game (regular season)."
+  },
+  {
+    "id": "nfl-int-td-winston",
+    "league": "NFL",
+    "xLabel": "Career interception percentage", "xUnit": "INT%",
+    "yLabel": "Career touchdown percentage", "yUnit": "TD%",
+    "targetPlayer": "Jameis Winston", "targetX": 3.5, "targetY": 4.8,
+    "referencePlayers": [
+      { "name": "Alex Smith", "x": 2.1, "y": 3.8 },
+      { "name": "Brett Favre", "x": 3.3, "y": 5.0 },
+      { "name": "Aaron Rodgers", "x": 1.4, "y": 6.0 }
+    ],
+    "fact": "Jameis Winston throws touchdowns at almost the same rate as Brett Favre (4.8% vs. 5.0%) — but his interception rate (3.5%) is even higher than Favre's, the quarterback whose whole reputation is built on high-risk gunslinging. Alex Smith (2.1% / 3.8%) is the pure game-manager opposite: low risk, low reward. Aaron Rodgers (1.4% / 6.0%) shows the tradeoff isn't actually mandatory — the best touchdown rate in this set paired with the best career interception percentage in NFL history.",
+    "source": "StatMuse career passing touchdown percentage and interception percentage."
+  },
+  {
+    "id": "mlb-avg-hr-bonds",
+    "league": "MLB",
+    "xLabel": "Career batting average", "xUnit": "AVG",
+    "yLabel": "Career home runs", "yUnit": "HR",
+    "targetPlayer": "Barry Bonds", "targetX": 0.298, "targetY": 762,
+    "referencePlayers": [
+      { "name": "Tony Gwynn", "x": 0.338, "y": 135 },
+      { "name": "Dave Kingman", "x": 0.236, "y": 442 },
+      { "name": "Babe Ruth", "x": 0.342, "y": 714 }
+    ],
+    "fact": "Barry Bonds holds the all-time home run record (762) — more than even Babe Ruth's 714 — but his .298 career batting average trails Ruth's .342 by a wide margin, and Dave Kingman's raw power (442 HR on a .236 average) shows that home run totals alone don't tell the whole story. Tony Gwynn (.338 / 135) is the pure-contact opposite: one of the best pure hitters ever, with a fraction of the power. Ruth remains the rare player who tops the field on both axes at once.",
+    "source": "StatMuse career batting average and home run totals."
+  }
+]

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guesstimate — Scatter Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #f2efe4; --paper-2: #e9e4d4;
+    --ink: #1b1810; --ink-soft: #55503f; --ink-faint: #5f5946;
+    --line: rgba(27,24,16,0.18);
+    --accent: #f0b429;
+    --good: #1e6a41; --good-bg: #e4f3ea;
+    --mid: #c88a00; --bad: #b53a2e;
+    --guess: #2f5fd6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh;
+    background:var(--paper);
+    background-image:repeating-linear-gradient(0deg, rgba(27,24,16,0.025) 0px, rgba(27,24,16,0.025) 1px, transparent 1px, transparent 3px);
+    color:var(--ink); font-family:'Work Sans', sans-serif;
+    display:flex; align-items:center; justify-content:center; padding:5vh 5vw;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  :focus-visible{ outline:3px solid var(--ink); outline-offset:3px; }
+  .app{ width:100%; max-width:620px; }
+
+  .topline{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint);
+    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;
+  }
+  .progress{ display:flex; gap:6px; margin-bottom:22px; }
+  .progress .seg{ flex:1; height:6px; background:var(--paper-2); border:1.5px solid var(--ink); }
+  .progress .seg.done{ background:var(--ink); }
+  .progress .seg.active{ background:var(--accent); }
+  .panel{
+    background:var(--paper); border:2.5px solid var(--ink); border-radius:3px;
+    box-shadow:7px 7px 0 var(--ink); padding:26px;
+  }
+  h1.title{ font-family:'Fraunces',serif; font-weight:700; font-size:clamp(24px,5vw,32px); margin:0 0 8px; line-height:1.05; }
+  p.sub{ color:var(--ink-soft); margin:0 0 18px; line-height:1.5; font-size:14.5px; }
+  button.primary{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; letter-spacing:0.03em;
+    background:var(--ink); color:var(--paper); border:2px solid var(--ink); border-radius:3px;
+    padding:12px 22px; cursor:pointer; box-shadow:4px 4px 0 rgba(27,24,16,0.35);
+    transition:transform .15s ease;
+  }
+  button.primary:hover:not(:disabled){ transform:translate(-2px,-2px); }
+  button.primary:disabled{ opacity:0.4; cursor:default; }
+
+  .league-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; background:var(--accent); color:#4d3a06; padding:3px 9px; border:1.5px solid var(--ink); margin-bottom:10px; }
+  .prompt{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1.3; margin-bottom:4px; }
+  .prompt .player{ color:var(--guess); }
+  .instructions{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin-bottom:14px; }
+
+  .chart-frame{
+    background:color-mix(in srgb, var(--accent) 12%, var(--paper));
+    border:2.5px solid var(--ink); border-radius:3px; padding:6px;
+    margin-bottom:16px; position:relative;
+  }
+  .chart-frame svg{ width:100%; height:auto; display:block; cursor:crosshair; }
+
+  .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:center; margin-bottom:14px; min-height:18px; }
+
+  .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
+  .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; }
+  .verdict-row .pts.good{ color:var(--good); } .verdict-row .pts.mid{ color:var(--mid); } .verdict-row .pts.bad{ color:var(--bad); }
+  .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; }
+  .fact{ color:var(--ink-soft); line-height:1.55; font-size:13.5px; margin:12px 0 16px; }
+  .next-row{ display:flex; justify-content:flex-end; }
+  .note{ font-size:12px; color:var(--ink-faint); margin-top:22px; line-height:1.6; }
+  .pill{ font-family:'IBM Plex Mono',monospace; font-size:12px; border:2px solid var(--ink); border-radius:20px; padding:5px 10px; }
+  .streak-line{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); text-align:center; margin-bottom:16px; }
+  .streak-line b{ color:var(--ink); font-family:'Fraunces',serif; font-size:16px; }
+  .error-text{ color:var(--bad); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topline">
+    <span>GUESSTIMATE — SCATTER</span>
+    <span id="topRight">···</span>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div class="panel" id="panel"></div>
+  <p class="note">Prototype of the click-to-plot 2D mechanic — real reference players are plotted on both axes at once, and you click where you think the named player falls. All five data points (four references + LeBron's real career line) are verified NBA career averages.</p>
+</div>
+
+<script>
+/* ============================= DATA LOADING =============================
+   Question content lives in ../data/questions.json (the canonical schema — see
+   README.md and CONTENT_BACKLOG.md) and is loaded at runtime instead of being
+   hardcoded here, so content edits never require touching this file or risk a
+   hardcoded copy drifting out of sync with the source of truth. */
+let QUESTION_POOL = [];
+let TODAY = '';
+let ROUNDS = [];
+
+/* ============================= DAILY SELECTION (pure — portable to a server later) =============================
+   Ported unchanged from guesstimate-slider-legacy.html — already built and tested
+   there. Given a date string and the question pool, deterministically picks
+   today's questions: same date always produces the same result, so it doesn't
+   matter where this runs (browser today, an API later). Selecting the *full* pool
+   for now (see the selectDailyQuestions call in init() below) rather than a
+   5-question subset — there are only 4 verified questions so far, not enough to
+   meaningfully sample from; the function already supports a smaller count once
+   the pool grows (see ACTION_PLAN.md v1.1). */
+function hashString(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = (Math.imul(31,h) + str.charCodeAt(i)) | 0; }
+  return h >>> 0;
+}
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function seededShuffle(arr, seed){
+  const rng = mulberry32(seed);
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+// Fixed reference timezone so every player gets the same "today" regardless of
+// their own — otherwise players in different timezones could be on different
+// calendar days at the same real-world moment.
+function todayDateString(tz='America/New_York'){
+  return new Date().toLocaleDateString('en-CA', { timeZone: tz }); // e.g. "2026-08-05"
+}
+function selectDailyQuestions(dateStr, pool, count=5){
+  const seed = hashString(dateStr);
+  return seededShuffle(pool, seed).slice(0, Math.min(count, pool.length));
+}
+
+/* ============================= STREAK (ported unchanged from guesstimate-slider-legacy.html) ============================= */
+const STATS_KEY = 'guesstimate_stats_v1';
+function loadStats(){ try{ return JSON.parse(localStorage.getItem(STATS_KEY)) || {lastPlayed:null,currentStreak:0,bestStreak:0}; }catch(e){ return {lastPlayed:null,currentStreak:0,bestStreak:0}; } }
+function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function registerCompletion(){
+  const s = loadStats(); const today = todayISO();
+  if(s.lastPlayed === today) return s;
+  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  s.currentStreak = (s.lastPlayed===yesterday) ? s.currentStreak+1 : 1;
+  s.bestStreak = Math.max(s.bestStreak||0, s.currentStreak);
+  s.lastPlayed = today; saveStats(s); return s;
+}
+
+/* ============================= SCORING (same exponential model, extended to 2D) ============================= */
+// Distance is computed in normalized chart-space (0-1 on each axis, based on the
+// plotted range) rather than raw stat units, so PPG and RPG — different scales —
+// contribute fairly to the single error number. Same HALF_LIFE decay curve as the
+// core game, just fed a 2D distance instead of a 1D one.
+const HALF_LIFE = 25;
+function scoreGuess2D(gx, gy, tx, ty, xRange, yRange){
+  const ndx = (gx - tx) / xRange;
+  const ndy = (gy - ty) / yRange;
+  const errorPct = Math.sqrt(ndx*ndx + ndy*ndy) * 100;
+  return { points: Math.round(100 * Math.pow(0.5, errorPct / HALF_LIFE)), errorPct };
+}
+function scoreTier(points){
+  if(points >= 100) return { emoji:'🟢', label:'Perfect' };
+  if(points >= 90)  return { emoji:'🟢', label:'Great' };
+  if(points >= 50)  return { emoji:'🟡', label:'Ballpark' };
+  if(points >= 1)   return { emoji:'🔴', label:'Off' };
+  return { emoji:'⚫', label:'Way off' };
+}
+
+/* ============================= RENDER ============================= */
+const panel = document.getElementById('panel');
+const topRight = document.getElementById('topRight');
+const progressEl = document.getElementById('progress');
+const SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs={}){ const n=document.createElementNS(SVGNS, tag); for(const k in attrs) n.setAttribute(k, attrs[k]); return n; }
+// Chart labels want a short display form. "Dennis Rodman" -> "Rodman" (last name) works
+// for full names, but breaks for entries already written short with a year, like
+// "McCaffrey '23" -> naively grabbing the last word would show just "'23". Only shorten
+// to the last word when the name looks like a plain multi-word full name.
+function shortLabel(name){
+  return /\d/.test(name) ? name.replace(/,?\s*\d{4}$/, '') || name : name.split(' ').pop();
+}
+
+let idx = 0;
+let roundScores = [];
+
+function renderProgress(){
+  progressEl.innerHTML = '';
+  ROUNDS.forEach((_,i)=>{
+    const seg = document.createElement('div');
+    seg.className = 'seg' + (i<idx?' done':'') + (i===idx?' active':'');
+    progressEl.appendChild(seg);
+  });
+}
+
+function startScreen(){
+  topRight.textContent = `${ROUNDS.length} QUESTIONS`;
+  progressEl.innerHTML = '';
+  const stats = loadStats();
+  const streakHTML = stats.currentStreak>0 ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  panel.innerHTML = `
+    <h1 class="title">Guesstimate</h1>
+    <p class="sub">Real reference players are plotted on a 2D chart — click where you think the named player falls on both stats at once.</p>
+    <p class="instructions" style="margin-bottom:16px;">Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.</p>
+    ${streakHTML}
+    <div class="next-row"><button class="primary" id="startBtn">Start today's ${ROUNDS.length===1?'question':'questions'} →</button></div>
+  `;
+  document.getElementById('startBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+}
+
+function showQuestion(){
+  topRight.textContent = `${idx+1} / ${ROUNDS.length}`;
+  renderProgress();
+  const r = ROUNDS[idx];
+  const allX = [r.targetX, ...r.referencePlayers.map(p=>p.x)];
+  const allY = [r.targetY, ...r.referencePlayers.map(p=>p.y)];
+  const xMin = Math.min(...allX)*0.7, xMax = Math.max(...allX)*1.15;
+  const yMin = Math.min(...allY)*0.5, yMax = Math.max(...allY)*1.2;
+  const W = 560, H = 420, padL = 54, padR = 20, padT = 20, padB = 44;
+  const plotW = W-padL-padR, plotH = H-padT-padB;
+  const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
+  const yPix = (v)=> padT + plotH - ((v-yMin)/(yMax-yMin))*plotH;
+  const xVal = (px)=> xMin + ((px-padL)/plotW)*(xMax-xMin);
+  const yVal = (py)=> yMin + ((padT+plotH-py)/plotH)*(yMax-yMin);
+
+  panel.innerHTML = `
+    <div class="league-tag">${r.league}</div>
+    <div class="prompt">${r.xLabel} vs. ${r.yLabel}<br>— <span class="player">${r.targetPlayer}</span></div>
+    <div class="instructions">Click on the chart to plot where you think ${r.targetPlayer} falls on both stats at once</div>
+    <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
+    <div class="readout" id="readout">Click the chart to place your guess</div>
+    <div class="next-row"><button class="primary" id="submitBtn" disabled>Submit guess</button></div>
+    <div id="revealArea"></div>
+  `;
+
+  const svg = document.getElementById('chartSvg');
+  const readout = document.getElementById('readout');
+  const submitBtn = document.getElementById('submitBtn');
+  let guess = null;
+  let answered = false;
+
+  function draw(){
+    svg.innerHTML = '';
+    svg.appendChild(el('line',{x1:padL,y1:padT,x2:padL,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
+    svg.appendChild(el('line',{x1:padL,y1:padT+plotH,x2:padL+plotW,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
+    for(let i=0;i<=4;i++){
+      const xv = xMin + (i/4)*(xMax-xMin);
+      const px = xPix(xv);
+      svg.appendChild(el('line',{x1:px,y1:padT,x2:px,y2:padT+plotH, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
+      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.6, class:'mono'}); t.textContent = xv.toFixed(1); svg.appendChild(t);
+    }
+    for(let i=0;i<=4;i++){
+      const yv = yMin + (i/4)*(yMax-yMin);
+      const py = yPix(yv);
+      svg.appendChild(el('line',{x1:padL,y1:py,x2:padL+plotW,y2:py, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
+      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.6, class:'mono'}); t.textContent = yv.toFixed(1); svg.appendChild(t);
+    }
+    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.7, class:'mono'}); xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
+    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.7, class:'mono', transform:`rotate(-90 14 ${padT+plotH/2})`}); yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
+
+    const hit = el('rect',{x:padL,y:padT,width:plotW,height:plotH, fill:'transparent'});
+    hit.addEventListener('click', (e)=>{
+      if(answered) return;
+      const rect = svg.getBoundingClientRect();
+      const scaleX = W/rect.width, scaleY = H/rect.height;
+      const px = (e.clientX - rect.left)*scaleX, py = (e.clientY - rect.top)*scaleY;
+      const gx = Math.max(xMin, Math.min(xMax, xVal(px)));
+      const gy = Math.max(yMin, Math.min(yMax, yVal(py)));
+      guess = { x: Math.round(gx*10)/10, y: Math.round(gy*10)/10 };
+      readout.innerHTML = `Your guess: <b>${guess.x} ${r.xUnit}</b>, <b>${guess.y} ${r.yUnit}</b>`;
+      submitBtn.disabled = false;
+      draw();
+    });
+    svg.appendChild(hit);
+
+    r.referencePlayers.forEach((p,i)=>{
+      const cx = xPix(p.x), cy = yPix(p.y);
+      svg.appendChild(el('circle',{cx,cy,r:7, fill:'var(--paper)', stroke:'var(--ink)','stroke-width':2, style:'pointer-events:none;'}));
+      const above = i%2===0;
+      const t = el('text',{x:cx,y:above?cy-13:cy+22,'text-anchor':'middle','font-size':10.5, 'font-weight':600, fill:'var(--ink)', class:'mono', style:'pointer-events:none;'});
+      t.textContent = shortLabel(p.name);
+      svg.appendChild(t);
+    });
+
+    if(guess){
+      const gx = xPix(guess.x), gy = yPix(guess.y);
+      svg.appendChild(el('circle',{cx:gx,cy:gy,r:9, fill:'var(--guess)', stroke:'var(--ink)','stroke-width':2.5, style:'pointer-events:none;'}));
+    }
+  }
+  draw();
+
+  submitBtn.addEventListener('click', ()=>{
+    if(!guess || answered) return;
+    answered = true;
+    submitBtn.disabled = true;
+    const xRange = xMax-xMin, yRange = yMax-yMin;
+    const { points } = scoreGuess2D(guess.x, guess.y, r.targetX, r.targetY, xRange, yRange);
+    roundScores.push(points);
+    const t = scoreTier(points);
+    const tierClass = points>=90?'good':points>=50?'mid':'bad';
+
+    const tx = xPix(r.targetX), ty = yPix(r.targetY);
+    const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
+    svg.appendChild(connector);
+    svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5}));
+    const targetLbl = el('text',{x:tx,y:ty-15,'text-anchor':'middle','font-size':11,'font-weight':700, fill:'var(--good)', class:'mono'});
+    targetLbl.textContent = shortLabel(r.targetPlayer);
+    svg.appendChild(targetLbl);
+
+    document.getElementById('revealArea').innerHTML = `
+      <div class="reveal">
+        <div class="verdict-row">
+          <div class="pts ${tierClass}">${t.emoji} ${t.label} — +${points}</div>
+          <div class="compare">Actual: ${r.targetX} ${r.xUnit}, ${r.targetY} ${r.yUnit}</div>
+        </div>
+        <p class="fact">${r.fact}<br><span class="mono" style="font-size:11px;">${r.source}</span></p>
+        <div class="next-row"><button class="primary" id="nextBtn">${idx+1<ROUNDS.length?'Next question →':'See results →'}</button></div>
+      </div>
+    `;
+    document.getElementById('nextBtn').addEventListener('click', ()=>{
+      idx++;
+      if(idx>=ROUNDS.length) showResults(); else showQuestion();
+    });
+  });
+}
+
+function showResults(){
+  topRight.textContent = 'RESULTS';
+  renderProgress();
+  const total = roundScores.reduce((a,b)=>a+b,0);
+  const stats = registerCompletion();
+  const pills = roundScores.map(s=>`<span class="pill">+${s}</span>`).join('');
+  panel.innerHTML = `
+    <div style="text-align:center;">
+      <div class="topline" style="justify-content:center;">ROUND COMPLETE</div>
+      <div style="font-family:'Fraunces',serif;font-weight:900;font-size:52px;margin:10px 0;">${total}<span style="font-size:22px;color:var(--ink-faint);font-weight:600;">/${ROUNDS.length*100}</span></div>
+      <div style="display:flex;justify-content:center;gap:8px;margin:16px 0;flex-wrap:wrap;">${pills}</div>
+      <div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>
+      <button class="primary" id="againBtn">Play again</button>
+    </div>
+  `;
+  document.getElementById('againBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+}
+
+/* ============================= INIT ============================= */
+// Content lives in ../data/questions.json (see DATA LOADING comment above) — fetch
+// it before anything else can render, and fail visibly rather than silently if it
+// doesn't load, instead of leaving the page stuck on nothing.
+async function init(){
+  panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
+  let pool;
+  try{
+    const res = await fetch('../data/questions.json');
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    pool = await res.json();
+    if(!Array.isArray(pool) || pool.length === 0) throw new Error('empty question pool');
+  }catch(err){
+    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${err.message}). Try refreshing the page.</p>`;
+    return;
+  }
+  QUESTION_POOL = pool;
+  TODAY = todayDateString();
+  ROUNDS = selectDailyQuestions(TODAY, QUESTION_POOL, QUESTION_POOL.length);
+  startScreen();
+}
+init();
+</script>
+</body>
+</html>
