@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Guesstimate OG image source</title>
+<!--
+  Source for assets/og-image.png — the link-preview card. Kept in the repo so the
+  image is regenerable rather than a mystery binary. To rebuild:
+
+    chrome --headless --disable-gpu --hide-scrollbars \
+           --screenshot=handoff/assets/og-image.png --window-size=1200,630 \
+           file:///ABSOLUTE/PATH/handoff/assets/og-source.html
+
+  Deliberately shows a chart with the answer already revealed, using real data
+  from the Zach Randolph question — it has to communicate the mechanic in the
+  half second someone spends looking at a preview in a message thread.
+-->
+<style>
+  @font-face{font-family:'Fraunces';font-weight:600 900;src:url('fonts/fraunces-var.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-weight:400;src:url('fonts/ibmplexmono-400.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-weight:600;src:url('fonts/ibmplexmono-600.woff2') format('woff2');}
+  @font-face{font-family:'Work Sans';font-weight:400 700;src:url('fonts/worksans-var.woff2') format('woff2');}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    width:1200px; height:630px; overflow:hidden;
+    background:#f2efe4;
+    background-image:repeating-linear-gradient(0deg, rgba(27,24,16,0.03) 0px, rgba(27,24,16,0.03) 1px, transparent 1px, transparent 3px);
+    color:#1b1810; font-family:'Work Sans',sans-serif;
+    display:flex; align-items:center; gap:56px; padding:64px 70px;
+  }
+  .left{ width:470px; flex:none; }
+  .tag{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600;
+    letter-spacing:0.1em; background:#ef8c3b; color:#3a2405; padding:6px 14px;
+    border:2px solid #1b1810; margin-bottom:26px;
+  }
+  h1{ font-family:'Fraunces',serif; font-weight:900; font-size:82px; line-height:0.95; letter-spacing:-0.02em; margin-bottom:22px; }
+  p{ font-size:25px; line-height:1.42; color:#55503f; }
+  p b{ color:#1b1810; font-weight:700; }
+  .meta{ font-family:'IBM Plex Mono',monospace; font-size:17px; letter-spacing:0.06em; color:#5f5946; margin-top:30px; text-transform:uppercase; }
+  .card{
+    flex:1; background:#faf3e2; border:4px solid #1b1810; border-radius:5px;
+    box-shadow:14px 14px 0 #1b1810; padding:14px;
+  }
+  svg{ display:block; width:100%; height:auto; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="tag">NBA · NFL · MLB</div>
+    <h1>Guesstimate</h1>
+    <p>Five sports stat questions a day. Real players are plotted — <b>you guess where the next one falls.</b></p>
+    <div class="meta">Same questions for everyone · New daily</div>
+  </div>
+  <div class="card">
+    <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg">
+      <!-- axes -->
+      <line x1="54" y1="20" x2="54" y2="376" stroke="#1b1810" stroke-width="2.5"/>
+      <line x1="54" y1="376" x2="540" y2="376" stroke="#1b1810" stroke-width="2.5"/>
+      <!-- gridlines -->
+      <g stroke="#1b1810" stroke-opacity="0.09" stroke-width="1.2">
+        <line x1="175.5" y1="20" x2="175.5" y2="376"/><line x1="297" y1="20" x2="297" y2="376"/>
+        <line x1="418.5" y1="20" x2="418.5" y2="376"/><line x1="540" y1="20" x2="540" y2="376"/>
+        <line x1="54" y1="287" x2="540" y2="287"/><line x1="54" y1="198" x2="540" y2="198"/>
+        <line x1="54" y1="109" x2="540" y2="109"/><line x1="54" y1="20" x2="540" y2="20"/>
+      </g>
+      <!-- tick labels -->
+      <g font-family="IBM Plex Mono, monospace" font-size="13" fill="#1b1810" fill-opacity="0.85">
+        <text x="54" y="396" text-anchor="middle">0</text><text x="175.5" y="396" text-anchor="middle">4</text>
+        <text x="297" y="396" text-anchor="middle">8</text><text x="418.5" y="396" text-anchor="middle">12</text>
+        <text x="540" y="396" text-anchor="middle">16</text>
+        <text x="46" y="381" text-anchor="end">12</text><text x="46" y="292" text-anchor="end">16</text>
+        <text x="46" y="203" text-anchor="end">20</text><text x="46" y="114" text-anchor="end">24</text>
+        <text x="46" y="25" text-anchor="end">28</text>
+      </g>
+      <!-- axis titles -->
+      <text x="297" y="416" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13.5" fill="#1b1810">Career All-Star selections (AS) →</text>
+      <text x="16" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13.5" fill="#1b1810" transform="rotate(-90 16 198)">↑ Career points per game (PPG)</text>
+      <!-- reference players -->
+      <g>
+        <circle cx="266" cy="243" r="8.5" fill="#faf3e2" stroke="#1b1810" stroke-width="2.5"/>
+        <text x="252" y="232" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="#1b1810">Joe Johnson</text>
+        <circle cx="297" cy="227" r="8.5" fill="#faf3e2" stroke="#1b1810" stroke-width="2.5"/>
+        <text x="311" y="232" text-anchor="start" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="#1b1810">Vince Carter</text>
+        <circle cx="479" cy="93" r="8.5" fill="#faf3e2" stroke="#1b1810" stroke-width="2.5"/>
+        <text x="479" y="78" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="#1b1810">Karl Malone</text>
+      </g>
+      <!-- guess + connector + answer -->
+      <line x1="145" y1="180" x2="115" y2="234" stroke="#1b1810" stroke-width="1.8" stroke-dasharray="5 5"/>
+      <circle cx="145" cy="180" r="11" fill="#2f5fd6" stroke="#1b1810" stroke-width="3"/>
+      <circle cx="115" cy="234" r="11" fill="#1e6a41" stroke="#1b1810" stroke-width="3"/>
+      <text x="115" y="262" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13.5" font-weight="700" fill="#1e6a41">Zach Randolph</text>
+    </svg>
+  </div>
+</body>
+</html>

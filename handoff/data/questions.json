@@ -2,14 +2,38 @@
   {
     "id": "nba-height-3p-nowitzki",
     "league": "NBA",
-    "xLabel": "Height", "xUnit": "in",
-    "yLabel": "Career 3-point percentage", "yUnit": "3P%",
+    "xLabel": "Height",
+    "xUnit": "in",
+    "yLabel": "Career 3-point percentage",
+    "yUnit": "3P%",
     "xStep": 1,
-    "targetPlayer": "Dirk Nowitzki", "targetX": 84, "targetY": 38.0,
+    "xDomain": [
+      60,
+      92
+    ],
+    "yDomain": [
+      0,
+      48
+    ],
+    "targetPlayer": "Dirk Nowitzki",
+    "targetX": 84,
+    "targetY": 38,
     "referencePlayers": [
-      { "name": "Muggsy Bogues", "x": 63, "y": 27.8 },
-      { "name": "Reggie Miller", "x": 79, "y": 39.5 },
-      { "name": "Shaquille O'Neal", "x": 85, "y": 4.5 }
+      {
+        "name": "Muggsy Bogues",
+        "x": 63,
+        "y": 27.8
+      },
+      {
+        "name": "Reggie Miller",
+        "x": 79,
+        "y": 39.5
+      },
+      {
+        "name": "Shaquille O'Neal",
+        "x": 85,
+        "y": 4.5
+      }
     ],
     "fact": "Dirk Nowitzki stood 7'0\" (84 inches) - nearly as tall as Shaquille O'Neal (7'1\", 85 inches) - but shot 38.0% from three for his career, worlds ahead of Shaq's 4.5% (Shaq made exactly one three-pointer in 22 career attempts). Dirk even out-shot Muggsy Bogues, the shortest player in NBA history at 5'3\", who hit 27.8% from deep. Reggie Miller (6'7\", 39.5%) is the archetype pure sharpshooter - and Dirk, nearly half a foot taller, wasn't far behind him at all.",
     "source": "StatMuse / Basketball-Reference height and career 3-point percentage."
@@ -17,13 +41,37 @@
   {
     "id": "nba-mpg-ppg-williams",
     "league": "NBA",
-    "xLabel": "Career minutes per game", "xUnit": "MPG",
-    "yLabel": "Career points per game", "yUnit": "PPG",
-    "targetPlayer": "Lou Williams", "targetX": 24.1, "targetY": 13.9,
+    "xLabel": "Career minutes per game",
+    "xUnit": "MPG",
+    "yLabel": "Career points per game",
+    "yUnit": "PPG",
+    "xDomain": [
+      16,
+      40
+    ],
+    "yDomain": [
+      8,
+      28
+    ],
+    "targetPlayer": "Lou Williams",
+    "targetX": 24.1,
+    "targetY": 13.9,
     "referencePlayers": [
-      { "name": "Manu Ginobili", "x": 25.4, "y": 13.3 },
-      { "name": "DeMar DeRozan", "x": 34.5, "y": 21.1 },
-      { "name": "Kobe Bryant", "x": 36.1, "y": 25.0 }
+      {
+        "name": "Manu Ginobili",
+        "x": 25.4,
+        "y": 13.3
+      },
+      {
+        "name": "DeMar DeRozan",
+        "x": 34.5,
+        "y": 21.1
+      },
+      {
+        "name": "Kobe Bryant",
+        "x": 36.1,
+        "y": 25
+      }
     ],
     "fact": "Lou Williams built a three-time Sixth Man of the Year career on 24.1 minutes a game — barely two-thirds of Kobe Bryant's 36.1-minute workload — while still averaging 13.9 points, close to a full starter's production squeezed into a bench role. Manu Ginobili (25.4 MPG, 13.3 PPG) landed in almost the exact same zone despite a Hall-of-Fame resume, deployed off the bench by design for most of his prime. DeMar DeRozan (34.5 MPG, 21.1 PPG) shows the traditional high-usage starter workload both bench legends were compared against, not with.",
     "source": "StatMuse career per-game averages (regular season)."
@@ -31,13 +79,37 @@
   {
     "id": "nba-ppg-stuff-green",
     "league": "NBA",
-    "xLabel": "Career points per game", "xUnit": "PPG",
-    "yLabel": "Career rebounds + assists per game", "yUnit": "REB+AST",
-    "targetPlayer": "Draymond Green", "targetX": 8.7, "targetY": 12.4,
+    "xLabel": "Career points per game",
+    "xUnit": "PPG",
+    "yLabel": "Career rebounds + assists per game",
+    "yUnit": "REB+AST",
+    "xDomain": [
+      4,
+      28
+    ],
+    "yDomain": [
+      4,
+      20
+    ],
+    "targetPlayer": "Draymond Green",
+    "targetX": 8.7,
+    "targetY": 12.4,
     "referencePlayers": [
-      { "name": "Klay Thompson", "x": 18.6, "y": 5.6 },
-      { "name": "Russell Westbrook", "x": 20.9, "y": 14.9 },
-      { "name": "Nikola Jokic", "x": 22.2, "y": 18.6 }
+      {
+        "name": "Klay Thompson",
+        "x": 18.6,
+        "y": 5.6
+      },
+      {
+        "name": "Russell Westbrook",
+        "x": 20.9,
+        "y": 14.9
+      },
+      {
+        "name": "Nikola Jokic",
+        "x": 22.2,
+        "y": 18.6
+      }
     ],
     "fact": "Draymond Green scores less than half of what Klay Thompson does (8.7 PPG to 18.6) but combines for more rebounds and assists (12.4 to Klay's 5.6) — real proof a player can be a genuine star without scoring like one. Russell Westbrook (20.9 PPG, 14.9 combined) shows what happens when high scoring and stat-stuffing coexist, and Nikola Jokic (22.2 PPG, 18.6 combined) is the current extreme: elite at both at once, a center who also leads the league in rebounds and assists.",
     "source": "StatMuse career per-game averages (regular season)."
@@ -45,28 +117,76 @@
   {
     "id": "nfl-ypg-tds-taylor",
     "league": "NFL",
-    "xLabel": "Rushing yards per game (season)", "xUnit": "YPG",
-    "yLabel": "Rushing touchdowns (season)", "yUnit": "TDs",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
     "yStep": 1,
-    "targetPlayer": "Jonathan Taylor, 2021", "targetX": 106.5, "targetY": 18,
+    "xDomain": [
+      80,
+      140
+    ],
+    "yDomain": [
+      8,
+      24
+    ],
+    "targetPlayer": "Jonathan Taylor, 2021",
+    "targetX": 106.5,
+    "targetY": 18,
     "referencePlayers": [
-      { "name": "McCaffrey \u201923", "x": 91.2, "y": 14 },
-      { "name": "Henry \u201920", "x": 126.7, "y": 17 },
-      { "name": "Peterson \u201912", "x": 131.1, "y": 12 }
+      {
+        "name": "McCaffrey ’23",
+        "x": 91.2,
+        "y": 14
+      },
+      {
+        "name": "Henry ’20",
+        "x": 126.7,
+        "y": 17
+      },
+      {
+        "name": "Peterson ’12",
+        "x": 131.1,
+        "y": 12
+      }
     ],
     "fact": "Jonathan Taylor's 2021 season is the counterintuitive one here: his 106.5 rushing yards per game is actually the lowest of these four seasons, yet his 18 rushing touchdowns is the highest — the 17-game season gave him an extra game, and a huge share of his team's goal-line work. Adrian Peterson's 2012 MVP season (131.1 YPG) is the opposite profile: gaining more yards per game than anyone here, but with the fewest touchdowns.",
-    "source": "Pro Football Reference / StatMuse season totals. Yards-per-game computed from confirmed season yardage \u00f7 games played."
+    "source": "Pro Football Reference / StatMuse season totals. Yards-per-game computed from confirmed season yardage ÷ games played."
   },
   {
     "id": "nba-stl-blk-pippen",
     "league": "NBA",
-    "xLabel": "Career steals per game", "xUnit": "SPG",
-    "yLabel": "Career blocks per game", "yUnit": "BPG",
-    "targetPlayer": "Scottie Pippen", "targetX": 2.0, "targetY": 0.8,
+    "xLabel": "Career steals per game",
+    "xUnit": "SPG",
+    "yLabel": "Career blocks per game",
+    "yUnit": "BPG",
+    "xDomain": [
+      0,
+      2.8
+    ],
+    "yDomain": [
+      0,
+      3.6
+    ],
+    "targetPlayer": "Scottie Pippen",
+    "targetX": 2,
+    "targetY": 0.8,
     "referencePlayers": [
-      { "name": "Dikembe Mutombo", "x": 0.4, "y": 2.8 },
-      { "name": "John Stockton", "x": 2.2, "y": 0.2 },
-      { "name": "Hakeem Olajuwon", "x": 1.7, "y": 3.1 }
+      {
+        "name": "Dikembe Mutombo",
+        "x": 0.4,
+        "y": 2.8
+      },
+      {
+        "name": "John Stockton",
+        "x": 2.2,
+        "y": 0.2
+      },
+      {
+        "name": "Hakeem Olajuwon",
+        "x": 1.7,
+        "y": 3.1
+      }
     ],
     "fact": "Scottie Pippen's 2.0 steals and 0.8 blocks a game is a genuinely rare wing profile — enough blocks to suggest a rim-protecting big, delivered by a 6'8\" forward who also picked pockets like a guard. Dikembe Mutombo (0.4 / 2.8) and John Stockton (2.2 / 0.2) are the two specialist extremes this pairing usually produces: a pure rim-protector and a pure ball-hawk. Hakeem Olajuwon (1.7 / 3.1) is the rare exception who tops both — a center with a guard's hands and a shot-blocker's timing.",
     "source": "StatMuse career per-game averages (regular season)."
@@ -74,13 +194,37 @@
   {
     "id": "nba-fga-ts-jordan",
     "league": "NBA",
-    "xLabel": "Career field goal attempts per game", "xUnit": "FGA",
-    "yLabel": "Career true shooting percentage", "yUnit": "TS%",
-    "targetPlayer": "Michael Jordan", "targetX": 22.9, "targetY": 56.9,
+    "xLabel": "Career field goal attempts per game",
+    "xUnit": "FGA",
+    "yLabel": "Career true shooting percentage",
+    "yUnit": "TS%",
+    "xDomain": [
+      4,
+      28
+    ],
+    "yDomain": [
+      48,
+      68
+    ],
+    "targetPlayer": "Michael Jordan",
+    "targetX": 22.9,
+    "targetY": 56.9,
     "referencePlayers": [
-      { "name": "Allen Iverson", "x": 21.8, "y": 51.8 },
-      { "name": "Stephen Curry", "x": 17.9, "y": 62.6 },
-      { "name": "DeAndre Jordan", "x": 5.1, "y": 64.4 }
+      {
+        "name": "Allen Iverson",
+        "x": 21.8,
+        "y": 51.8
+      },
+      {
+        "name": "Stephen Curry",
+        "x": 17.9,
+        "y": 62.6
+      },
+      {
+        "name": "DeAndre Jordan",
+        "x": 5.1,
+        "y": 64.4
+      }
     ],
     "fact": "Michael Jordan took more shots per game (22.9) than anyone else here — even more than Allen Iverson (21.8), the standard reference for a pure volume scorer. But his efficiency (56.9 TS%) sits well below the elite tier: Stephen Curry (62.6) gets nearly as many shots up at a far higher efficiency, and DeAndre Jordan (64.4) shows the opposite extreme — a role player who barely shoots (5.1 attempts a game) but converts at an absurd rate, mostly dunks and putbacks. Jordan's greatness came from volume and shot difficulty, not from posting efficiency numbers like the specialists at either end of this chart.",
     "source": "StatMuse career true shooting percentage and field goal attempts per game (regular season)."
@@ -88,13 +232,37 @@
   {
     "id": "nfl-int-td-winston",
     "league": "NFL",
-    "xLabel": "Career interception percentage", "xUnit": "INT%",
-    "yLabel": "Career touchdown percentage", "yUnit": "TD%",
-    "targetPlayer": "Jameis Winston", "targetX": 3.5, "targetY": 4.8,
+    "xLabel": "Career interception percentage",
+    "xUnit": "INT%",
+    "yLabel": "Career touchdown percentage",
+    "yUnit": "TD%",
+    "xDomain": [
+      1,
+      4.2
+    ],
+    "yDomain": [
+      3,
+      7
+    ],
+    "targetPlayer": "Jameis Winston",
+    "targetX": 3.5,
+    "targetY": 4.8,
     "referencePlayers": [
-      { "name": "Alex Smith", "x": 2.1, "y": 3.8 },
-      { "name": "Brett Favre", "x": 3.3, "y": 5.0 },
-      { "name": "Aaron Rodgers", "x": 1.4, "y": 6.0 }
+      {
+        "name": "Alex Smith",
+        "x": 2.1,
+        "y": 3.8
+      },
+      {
+        "name": "Brett Favre",
+        "x": 3.3,
+        "y": 5
+      },
+      {
+        "name": "Aaron Rodgers",
+        "x": 1.4,
+        "y": 6
+      }
     ],
     "fact": "Jameis Winston throws touchdowns at almost the same rate as Brett Favre (4.8% vs. 5.0%) — but his interception rate (3.5%) is even higher than Favre's, the quarterback whose whole reputation is built on high-risk gunslinging. Alex Smith (2.1% / 3.8%) is the pure game-manager opposite: low risk, low reward. Aaron Rodgers (1.4% / 6.0%) shows the tradeoff isn't actually mandatory — the best touchdown rate in this set paired with the best career interception percentage in NFL history.",
     "source": "StatMuse career passing touchdown percentage and interception percentage."
@@ -102,14 +270,38 @@
   {
     "id": "nba-as-ppg-randolph",
     "league": "NBA",
-    "xLabel": "Career All-Star selections", "xUnit": "AS",
-    "yLabel": "Career points per game", "yUnit": "PPG",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career points per game",
+    "yUnit": "PPG",
     "xStep": 1,
-    "targetPlayer": "Zach Randolph", "targetX": 2, "targetY": 16.6,
+    "xDomain": [
+      0,
+      16
+    ],
+    "yDomain": [
+      12,
+      28
+    ],
+    "targetPlayer": "Zach Randolph",
+    "targetX": 2,
+    "targetY": 16.6,
     "referencePlayers": [
-      { "name": "Joe Johnson", "x": 7, "y": 16.0 },
-      { "name": "Vince Carter", "x": 8, "y": 16.7 },
-      { "name": "Karl Malone", "x": 14, "y": 25.0 }
+      {
+        "name": "Joe Johnson",
+        "x": 7,
+        "y": 16
+      },
+      {
+        "name": "Vince Carter",
+        "x": 8,
+        "y": 16.7
+      },
+      {
+        "name": "Karl Malone",
+        "x": 14,
+        "y": 25
+      }
     ],
     "fact": "Zach Randolph made just 2 All-Star teams in his career — yet his 16.6 career points per game is basically identical to Joe Johnson's 16.0 (7 All-Star nods) and Vince Carter's 16.7 (8 nods). All-Star selections reward more than raw scoring average — team success, era, and position all factor in — and Randolph's Memphis grit-and-grind identity earned him far less recognition than his actual production. Karl Malone (14 AS, 25.0 PPG) anchors the other extreme: a player whose selections actually matched his all-time-great scoring.",
     "source": "StatMuse career per-game averages and career All-Star selection counts."
@@ -117,14 +309,39 @@
   {
     "id": "nfl-pb-recyds-boldin",
     "league": "NFL",
-    "xLabel": "Career Pro Bowl selections", "xUnit": "PB",
-    "yLabel": "Career receiving yards", "yUnit": "yards",
-    "xStep": 1, "yStep": 1,
-    "targetPlayer": "Anquan Boldin", "targetX": 3, "targetY": 13779,
+    "xLabel": "Career Pro Bowl selections",
+    "xUnit": "PB",
+    "yLabel": "Career receiving yards",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      16
+    ],
+    "yDomain": [
+      10000,
+      26000
+    ],
+    "targetPlayer": "Anquan Boldin",
+    "targetX": 3,
+    "targetY": 13779,
     "referencePlayers": [
-      { "name": "Randy Moss", "x": 6, "y": 15292 },
-      { "name": "Larry Fitzgerald", "x": 11, "y": 17492 },
-      { "name": "Jerry Rice", "x": 13, "y": 22895 }
+      {
+        "name": "Randy Moss",
+        "x": 6,
+        "y": 15292
+      },
+      {
+        "name": "Larry Fitzgerald",
+        "x": 11,
+        "y": 17492
+      },
+      {
+        "name": "Jerry Rice",
+        "x": 13,
+        "y": 22895
+      }
     ],
     "fact": "Anquan Boldin made only 3 Pro Bowls in his career, but his 13,779 receiving yards is within shouting distance of Randy Moss's 15,292 — a player who made twice as many Pro Bowls. Boldin's game was built on contested catches and physicality rather than the highlight-reel speed that tends to win Pro Bowl votes, and it cost him recognition his production arguably earned. Jerry Rice (13 PB, 22,895 yards) remains the standard nobody else in NFL history has matched.",
     "source": "StatMuse / Pro Football Reference career Pro Bowl selections and receiving yards."
@@ -132,14 +349,39 @@
   {
     "id": "mlb-as-hr-abreu",
     "league": "MLB",
-    "xLabel": "Career All-Star selections", "xUnit": "AS",
-    "yLabel": "Career home runs", "yUnit": "HR",
-    "xStep": 1, "yStep": 1,
-    "targetPlayer": "Bobby Abreu", "targetX": 2, "targetY": 288,
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      16
+    ],
+    "yDomain": [
+      200,
+      800
+    ],
+    "targetPlayer": "Bobby Abreu",
+    "targetX": 2,
+    "targetY": 288,
     "referencePlayers": [
-      { "name": "Adam Dunn", "x": 2, "y": 462 },
-      { "name": "Ken Griffey Jr.", "x": 13, "y": 630 },
-      { "name": "Alex Rodriguez", "x": 14, "y": 696 }
+      {
+        "name": "Adam Dunn",
+        "x": 2,
+        "y": 462
+      },
+      {
+        "name": "Ken Griffey Jr.",
+        "x": 13,
+        "y": 630
+      },
+      {
+        "name": "Alex Rodriguez",
+        "x": 14,
+        "y": 696
+      }
     ],
     "fact": "Bobby Abreu and Adam Dunn each made exactly 2 All-Star teams — but Dunn hit 174 more career home runs (462 to Abreu's 288). Abreu's value came from on-base percentage, doubles, and stolen bases rather than pure power, a game sabermetricians rate highly but All-Star voters historically haven't rewarded the same way as a big home run total. Griffey (13 AS, 630 HR) and Rodriguez (14 AS, 696 HR) show what it looks like when a player's power and his recognition actually line up.",
     "source": "StatMuse career All-Star selections and home run totals."

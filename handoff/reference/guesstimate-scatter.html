@@ -3,12 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Defense-in-depth per SECURITY_NOTES.md: this page now parses a URL param
-     (?challenge=1&from=...&score=...) into the DOM. The param is sanitized in JS
+<!-- Defense-in-depth per SECURITY_NOTES.md: this page parses URL params
+     (?challenge=1&from=...&score=...&d=...) into the DOM. They're sanitized in JS
      regardless, but a CSP costs nothing and would have blocked the earlier
-     reflected-XSS bug documented there even before the code-level fix existed. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self';">
-<title>Guesstimate — Scatter Prototype</title>
+     reflected-XSS bug documented there even before the code-level fix existed.
+     Fonts are self-hosted now, so this no longer needs to allow googleapis/gstatic
+     at all — the only non-'self' source left is data: for the inline SVG favicon. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self';">
+<title>Guesstimate — Daily Sports Stat Guessing Game</title>
+<meta name="description" content="Five sports stat questions a day. Real players are plotted on a chart — you guess where another one falls. Same questions for everyone, every day.">
+<!-- Open Graph / Twitter. This game's distribution model is people pasting a link
+     into a group chat, which means this card IS the landing page for most players.
+     NOTE FOR DEPLOY: og:image and og:url must become absolute URLs on the real
+     domain — most crawlers (including iMessage's) will not resolve a relative
+     og:image. Regenerate the image from assets/og-source.html; see that file. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Guesstimate">
+<meta property="og:title" content="Guesstimate — Daily Sports Stat Guessing Game">
+<meta property="og:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls. How close can you get?">
+<meta property="og:image" content="assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Guesstimate — a scatter chart with plotted sports players and a guess marker.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Guesstimate — Daily Sports Stat Guessing Game">
+<meta name="twitter:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls.">
+<meta name="twitter:image" content="assets/og-image.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1810'/%3E%3Cpath d='M6 26 H27' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M6 26 V5' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='2.6' fill='%23f0b429'/%3E%3Ccircle cx='20' cy='12' r='3.4' fill='%232f5fd6' stroke='%23f2efe4' stroke-width='1.6'/%3E%3C/svg%3E">
 <script>
 // Applied synchronously, before CSS paints, so a returning player with a saved
 // dark-mode preference doesn't see a flash of the light theme first.
@@ -19,19 +40,36 @@
   }catch(e){}
 })();
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Self-hosted fonts (latin subset only). Removes three render-blocking
+     third-party requests, kills the font-swap flash, and lets the CSP above drop
+     its googleapis/gstatic allowances entirely — consistent with the project's
+     stated "minimize dependencies and attack surface" posture. Fraunces and Work
+     Sans ship as variable fonts, so one file each covers every weight used. */
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:600 900;font-display:swap;src:url('../assets/fonts/fraunces-var.woff2') format('woff2');}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('../assets/fonts/worksans-var.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('../assets/fonts/ibmplexmono-400.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('../assets/fonts/ibmplexmono-500.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/ibmplexmono-600.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('../assets/fonts/ibmplexmono-700.woff2') format('woff2');}
+
   :root{
     --paper: #f2efe4; --paper-2: #e9e4d4;
     --ink: #1b1810; --ink-rgb: 27,24,16; --ink-soft: #55503f; --ink-faint: #5f5946;
     --line: rgba(27,24,16,0.18);
-    --accent: #f0b429;
+    --accent: #f0b429; --accent-ink: #4d3a06;
     --good: #1e6a41; --good-rgb: 30,106,65; --good-bg: #e4f3ea;
     --mid: #c88a00; --bad: #b53a2e;
     --guess: #2f5fd6;
   }
+  /* Per-league accent. Every question used to look identical — same paper, same
+     axes, same three hollow dots — so five rounds a day read as one thing five
+     times. Immaculate Grid gets this variety free from team logos; this is the
+     cheap equivalent. Set on .app (not .panel) because the progress bar lives
+     outside the panel and needs the same accent. */
+  .app[data-league="NBA"]{ --accent:#ef8c3b; --accent-ink:#3a2405; }
+  .app[data-league="NFL"]{ --accent:#57a877; --accent-ink:#0d2b1a; }
+  .app[data-league="MLB"]{ --accent:#6d9ce0; --accent-ink:#0f2445; }
   /* Dark palette applies automatically for players whose OS is set to dark mode
      (unless they've explicitly picked light via the toggle), and always applies
      once data-theme="dark" is set explicitly. Mostly a straight paper/ink swap
@@ -51,7 +89,7 @@
     --paper: #17140f; --paper-2: #211d16;
     --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
     --line: rgba(242,237,224,0.18);
-    --good: #3ddc84; --good-bg: rgba(61,220,132,0.15);
+    --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
     --mid: #e0a83c; --bad: #ff6b57;
     --guess: #6d93ff;
   }
@@ -63,14 +101,15 @@
     color:var(--ink); font-family:'Work Sans', sans-serif;
     display:flex; align-items:center; justify-content:center; padding:5vh 5vw;
   }
-  .theme-toggle{
-    position:fixed; top:16px; right:16px; z-index:10;
+  .controls{ position:fixed; top:16px; right:16px; z-index:10; display:flex; gap:8px; }
+  .icon-btn{
     width:38px; height:38px; display:flex; align-items:center; justify-content:center;
-    font-size:16px; line-height:1; background:var(--paper); color:var(--ink);
+    font-size:15px; line-height:1; background:var(--paper); color:var(--ink);
     border:2px solid var(--ink); border-radius:50%; cursor:pointer;
     box-shadow:3px 3px 0 rgba(var(--ink-rgb),0.35); transition:transform .15s ease;
+    font-family:'IBM Plex Mono',monospace; padding:0;
   }
-  .theme-toggle:hover{ transform:translate(-1px,-1px); }
+  .icon-btn:hover{ transform:translate(-1px,-1px); }
   .mono{font-family:'IBM Plex Mono', monospace;}
   :focus-visible{ outline:3px solid var(--ink); outline-offset:3px; }
   .app{ width:100%; max-width:620px; }
@@ -98,8 +137,14 @@
   }
   button.primary:hover:not(:disabled){ transform:translate(-2px,-2px); }
   button.primary:disabled{ opacity:0.4; cursor:default; }
+  button.ghost{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px;
+    background:transparent; color:var(--ink); border:2px solid var(--ink); border-radius:3px;
+    padding:10px 18px; cursor:pointer; transition:transform .15s ease;
+  }
+  button.ghost:hover{ transform:translate(-1px,-1px); }
 
-  .league-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; background:var(--accent); color:#4d3a06; padding:3px 9px; border:1.5px solid var(--ink); margin-bottom:10px; }
+  .league-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; background:var(--accent); color:var(--accent-ink); padding:3px 9px; border:1.5px solid var(--ink); margin-bottom:10px; }
   .prompt{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1.3; margin-bottom:4px; }
   .prompt .player{ color:var(--guess); }
   .instructions{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin-bottom:14px; }
@@ -107,10 +152,21 @@
   .chart-frame{
     background:color-mix(in srgb, var(--accent) 12%, var(--paper));
     border:2.5px solid var(--ink); border-radius:3px; padding:6px;
-    margin-bottom:16px; position:relative; touch-action:none;
+    margin-bottom:12px; position:relative; touch-action:none;
   }
   .chart-frame svg{ width:100%; height:auto; display:block; cursor:crosshair; touch-action:none; }
   .chart-frame svg rect[tabindex]:focus-visible{ outline:3px solid var(--ink); outline-offset:-3px; }
+
+  /* Reference values, listed under the chart. Without these you can see a dot and
+     a name but have to eyeball its coordinates off the gridlines — which makes the
+     guess a vibe rather than an inference. Stating them turns it into reasoning.
+     A list rather than a hover tooltip on the dots, because the dots deliberately
+     have pointer-events:none (so they don't swallow drags) and hover doesn't
+     exist on touch anyway. */
+  .legend{ display:flex; flex-wrap:wrap; gap:5px 16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .legend span{ white-space:nowrap; }
+  .legend i{ display:inline-block; width:8px; height:8px; border-radius:50%; border:1.5px solid var(--ink); background:var(--paper); margin-right:6px; vertical-align:baseline; }
+  .legend b{ color:var(--ink); font-weight:600; }
 
   .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:center; margin-bottom:14px; min-height:18px; }
 
@@ -120,43 +176,92 @@
   @keyframes targetDrop{ 0%{ transform:scale(0.3); opacity:0; } 60%{ transform:scale(1.25); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
   @keyframes pulseGlow{ 0%{ box-shadow:0 0 0 0 rgba(var(--good-rgb),0.5); } 100%{ box-shadow:0 0 0 16px rgba(var(--good-rgb),0); } }
   @keyframes shakeBad{ 0%,100%{ transform:translateX(0); } 20%{ transform:translateX(-6px); } 40%{ transform:translateX(6px); } 60%{ transform:translateX(-4px); } 80%{ transform:translateX(4px); } }
+  @keyframes coachPulse{ 0%{ transform:scale(0.75); opacity:0.9; } 70%{ transform:scale(1.6); opacity:0; } 100%{ transform:scale(1.6); opacity:0; } }
   .target-marker{ transform-box:fill-box; transform-origin:center; animation:targetDrop .5s cubic-bezier(.3,1.5,.4,1) both; }
   .verdict-row.tier-perfect{ animation:pulseGlow 0.9s ease-out; border-radius:8px; }
   .reveal.tier-bad{ animation:shakeBad 0.4s ease-in-out; }
+  .coach-ring{ transform-box:fill-box; transform-origin:center; animation:coachPulse 1.9s ease-out infinite; }
   @media (prefers-reduced-motion: reduce){
-    .target-marker, .verdict-row.tier-perfect, .reveal.tier-bad{ animation:none !important; }
+    .target-marker, .verdict-row.tier-perfect, .reveal.tier-bad, .coach-ring{ animation:none !important; }
+    .coach-ring{ opacity:0.55; }
   }
 
   .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
-  .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
-  .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; }
+  .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; white-space:nowrap; }
   .verdict-row .pts.good{ color:var(--good); } .verdict-row .pts.mid{ color:var(--mid); } .verdict-row .pts.bad{ color:var(--bad); }
-  .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; }
-  .fact{ color:var(--ink-soft); line-height:1.55; font-size:13.5px; margin:12px 0 16px; }
-  .next-row{ display:flex; justify-content:flex-end; }
+  .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; line-height:1.5; }
+  .verdict-row .compare .miss{ color:var(--guess); }
+
+  /* The fact is the actual product — it's the only thing in this genre that
+     teaches you something, and it was previously rendered at 13.5px in muted grey
+     below the fold. Give it the weight it earns. */
+  .fact-block{ margin:14px 0 16px; border-left:3px solid var(--accent); padding-left:13px; }
+  .fact-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px; }
+  .fact{ color:var(--ink); line-height:1.6; font-size:14.5px; margin:0; }
+  .fact-source{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:8px 0 0; }
+
+  .next-row{ display:flex; justify-content:flex-end; gap:10px; align-items:center; flex-wrap:wrap; }
   .note{ font-size:12px; color:var(--ink-faint); margin-top:22px; line-height:1.6; }
   .pill{ font-family:'IBM Plex Mono',monospace; font-size:12px; border:2px solid var(--ink); border-radius:20px; padding:5px 10px; }
   .streak-line{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); text-align:center; margin-bottom:16px; }
   .streak-line b{ color:var(--ink); font-family:'Fraunces',serif; font-size:16px; }
   .error-text{ color:var(--bad); }
-  .challenge-banner{ font-family:'IBM Plex Mono',monospace; font-size:13px; background:color-mix(in srgb, var(--accent) 18%, var(--paper)); border:2px solid var(--ink); border-radius:4px; padding:10px 12px; margin-bottom:16px; }
+  .challenge-banner{ font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.55; background:color-mix(in srgb, var(--accent) 18%, var(--paper)); border:2px solid var(--ink); border-radius:4px; padding:10px 12px; margin-bottom:16px; }
   .challenge-box{ margin-top:18px; padding-top:16px; border-top:2px dashed var(--line); text-align:left; }
   .challenge-box label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); display:block; margin-bottom:6px; }
   .challenge-box input{ width:100%; font-family:'Work Sans',sans-serif; font-size:14px; padding:9px 10px; border:2px solid var(--ink); border-radius:3px; background:var(--paper); color:var(--ink); margin-bottom:10px; }
   .challenge-box input::placeholder{ color:var(--ink-faint); }
+
+  /* The shareable artifact. Wordle's emoji grid isn't decoration — it's the
+     growth engine: spoiler-free, instantly parseable in a message thread, and it
+     invites a reply in a way a bare number never does. Shown here too, because
+     people like seeing the thing they're about to send. */
+  .share-card{ font-family:'IBM Plex Mono',monospace; background:var(--paper-2); border:2px solid var(--ink); border-radius:4px; padding:12px 14px; margin:16px 0 4px; text-align:left; }
+  .share-card .sc-head{ font-size:12px; color:var(--ink-soft); letter-spacing:0.05em; margin-bottom:6px; }
+  .share-card .sc-strip{ font-size:22px; letter-spacing:3px; line-height:1.3; }
+  .share-card .sc-score{ font-size:13px; color:var(--ink-soft); margin-top:4px; }
+
+  dialog.modal{
+    border:2.5px solid var(--ink); border-radius:4px; background:var(--paper); color:var(--ink);
+    box-shadow:7px 7px 0 var(--ink); padding:22px; max-width:400px; width:calc(100% - 40px);
+  }
+  dialog.modal::backdrop{ background:rgba(0,0,0,0.45); }
+  .modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:12px; }
+  .modal-head h2{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; margin:0; }
+  .stat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px; }
+  .stat-cell{ text-align:center; }
+  .stat-cell .v{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; line-height:1.1; }
+  .stat-cell .k{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:3px; }
+  .dist-row{ display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; margin-bottom:5px; }
+  .dist-row .dl{ width:78px; color:var(--ink-soft); flex:none; }
+  .dist-row .db{ background:var(--ink); height:15px; min-width:3px; border-radius:2px; }
+  .dist-row .dn{ color:var(--ink-faint); }
+  .modal-empty{ font-size:13px; color:var(--ink-soft); line-height:1.55; }
 </style>
 </head>
 <body>
-<button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
-<div class="app">
+<div class="controls">
+  <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
+  <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
+</div>
+<div class="app" id="app">
   <div class="topline">
-    <span>GUESSTIMATE — SCATTER</span>
+    <span id="topLeft">GUESSTIMATE</span>
     <span id="topRight">···</span>
   </div>
   <div class="progress" id="progress"></div>
   <div class="panel" id="panel"></div>
-  <p class="note">Prototype of the click-to-plot 2D mechanic — real reference players are plotted on both axes at once, and you click where you think the named player falls. All five data points (four references + LeBron's real career line) are verified NBA career averages.</p>
+  <p class="note">Every number here is a real, verified career or season stat, cited on each reveal. The hollow dots are reference players with their values listed — you're estimating where the named player falls against them.</p>
 </div>
+
+<dialog class="modal" id="statsModal" aria-labelledby="statsTitle">
+  <div class="modal-head">
+    <h2 id="statsTitle">Your stats</h2>
+    <button class="icon-btn" id="statsClose" aria-label="Close stats">✕</button>
+  </div>
+  <div id="statsBody"></div>
+</dialog>
 
 <script>
 /* ============================= UNTRUSTED INPUT (challenge links) =============================
@@ -181,6 +286,23 @@ function clampScore(raw, max){
   if(!Number.isFinite(n)) return null;
   return Math.max(0, Math.min(max, n));
 }
+// Fixed origin for the daily rotation so day numbering never shifts across
+// sessions. Declared up here rather than with the rotation code below because the
+// challenge-date sanitizer needs it, and this block deliberately runs first.
+const BAG_EPOCH = '2026-01-01';
+// A challenge link carries the date it was played on, so the recipient gets the
+// *same five questions* the sender did. Without it the banner claims "beat their
+// 350" while serving an entirely different puzzle. Bounded on both ends: nothing
+// before the epoch (no such puzzle) and nothing beyond tomorrow (no peeking at
+// future puzzles by hand-editing the parameter).
+function sanitizeDate(raw){
+  if(!raw || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
+  const t = Date.parse(raw + 'T00:00:00Z');
+  if(!Number.isFinite(t)) return null;
+  if(t < Date.parse(BAG_EPOCH + 'T00:00:00Z')) return null;
+  if(t > Date.now() + 86400000) return null;
+  return raw;
+}
 // Generous fixed cap rather than tying it to today's pool size — the sender's max
 // possible score (the day they played) may not match the recipient's (today), since
 // the pool keeps growing.
@@ -190,6 +312,7 @@ const CHALLENGE = challengeParams.get('challenge') === '1' ? {
   active: true,
   from: sanitizeName(challengeParams.get('from') || ''),
   score: clampScore(challengeParams.get('score'), CHALLENGE_MAX_SCORE),
+  date: sanitizeDate(challengeParams.get('d')),
 } : { active: false };
 
 /* ============================= DATA LOADING =============================
@@ -200,16 +323,18 @@ const CHALLENGE = challengeParams.get('challenge') === '1' ? {
 let QUESTION_POOL = [];
 let TODAY = '';
 let ROUNDS = [];
+let DAILY_ROUNDS = [];
+let PUZZLE_NO = null;
+// 'daily' — today's puzzle, counts toward the streak.
+// 'challenge' — a friend's older puzzle, replayed for comparison; never counts.
+// 'practice' — random questions outside today's set; never counts.
+let MODE = 'daily';
 
 /* ============================= DAILY SELECTION (pure — portable to a server later) =============================
    Ported unchanged from guesstimate-slider-legacy.html — already built and tested
    there. Given a date string and the question pool, deterministically picks
    today's questions: same date always produces the same result, so it doesn't
-   matter where this runs (browser today, an API later). Selecting the *full* pool
-   for now (see the selectDailyQuestions call in init() below) rather than a
-   5-question subset — there are only 4 verified questions so far, not enough to
-   meaningfully sample from; the function already supports a smaller count once
-   the pool grows (see ACTION_PLAN.md v1.1). */
+   matter where this runs (browser today, an API later). */
 function hashString(str){
   let h = 0;
   for(let i=0;i<str.length;i++){ h = (Math.imul(31,h) + str.charCodeAt(i)) | 0; }
@@ -240,16 +365,16 @@ function selectDailyQuestions(dateStr, pool, count=5){
   return seededShuffle(pool, seed).slice(0, Math.min(count, pool.length));
 }
 
-// Shuffled-bag anti-repeat rotation (ACTION_PLAN.md v1.1 trigger: the pool is now
-// large enough that daily repeats would be noticeable). Concatenate independently
-// -shuffled copies of the pool end-to-end ("cycle 0", "cycle 1", ...) into one
-// infinite sequence, then hand out `count` consecutive items per calendar day.
-// Every item in the pool appears exactly once before any item repeats — a fresh
-// reshuffle only happens once the whole pool has been exhausted — and it's still a
+// Shuffled-bag anti-repeat rotation (ACTION_PLAN.md v1.1). Concatenate
+// independently-shuffled copies of the pool end-to-end ("cycle 0", "cycle 1", ...)
+// into one infinite sequence, then hand out `count` consecutive items per calendar
+// day. Every item appears exactly once before any item repeats, and it's still a
 // pure function of (dateStr, pool, count): no stored cursor, nothing to desync.
-const BAG_EPOCH = '2026-01-01'; // fixed origin so day numbering never shifts across sessions
 function daysSince(dateStr, epoch){
   return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
+}
+function puzzleNumber(dateStr){
+  return Math.max(0, daysSince(dateStr, BAG_EPOCH)) + 1; // day one is #1
 }
 function selectDailyBag(dateStr, pool, count=5){
   if(pool.length === 0) return [];
@@ -267,19 +392,45 @@ function selectDailyBag(dateStr, pool, count=5){
   }
   return result;
 }
+// Questions for the daily set on `dateStr` — used both for today and for
+// replaying the day a challenge link was sent from.
+function roundsForDate(dateStr){
+  const DAILY_COUNT = 5;
+  return QUESTION_POOL.length >= DAILY_COUNT
+    ? selectDailyBag(dateStr, QUESTION_POOL, DAILY_COUNT)
+    : selectDailyQuestions(dateStr, QUESTION_POOL, QUESTION_POOL.length);
+}
 
-/* ============================= STREAK (ported unchanged from guesstimate-slider-legacy.html) ============================= */
+/* ============================= STATS & STREAK ============================= */
 const STATS_KEY = 'guesstimate_stats_v1';
-function loadStats(){ try{ return JSON.parse(localStorage.getItem(STATS_KEY)) || {lastPlayed:null,currentStreak:0,bestStreak:0}; }catch(e){ return {lastPlayed:null,currentStreak:0,bestStreak:0}; } }
+const INTRO_KEY = 'guesstimate_seen_intro';
+const DEFAULT_STATS = { lastPlayed:null, currentStreak:0, bestStreak:0, daysPlayed:0, totalPoints:0, bestRound:0, tiers:{} };
+// Merged over the defaults rather than read raw, so a player carrying an older
+// v1 record (streak fields only) picks up the new aggregate fields as zeros
+// instead of producing NaN everywhere in the stats modal.
+function loadStats(){
+  try{
+    const s = JSON.parse(localStorage.getItem(STATS_KEY)) || {};
+    return Object.assign({}, DEFAULT_STATS, s, { tiers: Object.assign({}, s.tiers) });
+  }catch(e){ return Object.assign({}, DEFAULT_STATS, { tiers:{} }); }
+}
 function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
 function todayISO(){ return new Date().toISOString().slice(0,10); }
-function registerCompletion(){
+// Only ever counts once per calendar day. That guards the streak, and it also
+// means the "play again" button can't inflate the aggregate stats by replaying
+// today's questions with the answers already known.
+function registerCompletion(scores){
   const s = loadStats(); const today = todayISO();
   if(s.lastPlayed === today) return s;
   const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
   s.currentStreak = (s.lastPlayed===yesterday) ? s.currentStreak+1 : 1;
   s.bestStreak = Math.max(s.bestStreak||0, s.currentStreak);
-  s.lastPlayed = today; saveStats(s); return s;
+  s.lastPlayed = today;
+  s.daysPlayed = (s.daysPlayed||0) + 1;
+  s.totalPoints = (s.totalPoints||0) + scores.reduce((a,b)=>a+b,0);
+  s.bestRound = Math.max(s.bestRound||0, scores.reduce((a,b)=>a+b,0));
+  scores.forEach(p=>{ const k = scoreTier(p).label; s.tiers[k] = (s.tiers[k]||0) + 1; });
+  saveStats(s); return s;
 }
 
 /* ============================= SCORING (same exponential model, extended to 2D) ============================= */
@@ -294,6 +445,7 @@ function scoreGuess2D(gx, gy, tx, ty, xRange, yRange){
   const errorPct = Math.sqrt(ndx*ndx + ndy*ndy) * 100;
   return { points: Math.round(100 * Math.pow(0.5, errorPct / HALF_LIFE)), errorPct };
 }
+const TIER_ORDER = ['Perfect','Great','Ballpark','Off','Way off'];
 function scoreTier(points){
   if(points >= 100) return { emoji:'🟢', label:'Perfect' };
   if(points >= 90)  return { emoji:'🟢', label:'Great' };
@@ -304,10 +456,15 @@ function scoreTier(points){
 
 /* ============================= RENDER ============================= */
 const panel = document.getElementById('panel');
+const appEl = document.getElementById('app');
+const topLeft = document.getElementById('topLeft');
 const topRight = document.getElementById('topRight');
 const progressEl = document.getElementById('progress');
 const SVGNS = 'http://www.w3.org/2000/svg';
 function el(tag, attrs={}){ const n=document.createElementNS(SVGNS, tag); for(const k in attrs) n.setAttribute(k, attrs[k]); return n; }
+function prefersReducedMotion(){
+  return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
 // Chart labels show the full name rather than abbreviating to a last name — a
 // last-name-only label is ambiguous the moment two reference players in the same
 // question share a surname (this pool already has both Michael Jordan and DeAndre
@@ -325,16 +482,128 @@ function shortLabel(name){
 // chart collapsed onto two clickable values. Each question can declare xStep/
 // yStep explicitly (e.g. 1 for a stat that's only ever a whole number, like an
 // All-Star count or a home run total; 0.001 for batting average); anything that
-// doesn't is assumed to be a normal one-decimal per-game rate stat, matching
-// every question built before this existed.
+// doesn't is assumed to be a normal one-decimal per-game rate stat.
 const DEFAULT_STEP = 0.1;
 function stepDecimals(step){
   if(step >= 1) return 0;
   return Math.max(0, -Math.floor(Math.log10(step)));
 }
 function roundToStep(v, step){
-  const decimals = stepDecimals(step);
-  return Number((Math.round(v/step)*step).toFixed(decimals));
+  return Number((Math.round(v/step)*step).toFixed(stepDecimals(step)));
+}
+function fmtVal(v, step){
+  const d = stepDecimals(step);
+  return v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+}
+
+/* ---------- Axis domain ----------
+   This used to be `min(allPoints)*0.7 .. max(allPoints)*1.15`, where allPoints
+   INCLUDED the hidden answer. Whenever the target was an axis extreme — which the
+   "sneaky stud" content premise makes the common case, not the rare one — the
+   printed tick labels were a direct function of the answer: leftmost label ÷ 0.7
+   recovered targetX exactly. 8 of the first 10 questions leaked at least one axis
+   that way, and the visual tell (a conspicuous empty band on the side the answer
+   is hiding in) needed no arithmetic at all.
+
+   Now the domain never depends on the target. Questions declare xDomain/yDomain
+   explicitly — round human numbers, which also give far nicer tick labels — and
+   anything that doesn't gets a fallback derived from the REFERENCE players only,
+   snapped outward to a round step. The fallback still has to contain the target,
+   so it widens in whole steps if the target sits outside the reference spread;
+   quantizing that expansion means it reveals "within one step of the edge" rather
+   than the exact value. Explicit domains are the recommended path. */
+function niceStep(span){
+  const raw = span/4;
+  const mag = Math.pow(10, Math.floor(Math.log10(Math.abs(raw) || 1)));
+  const n = raw/mag;
+  const nice = n<=1 ? 1 : n<=2 ? 2 : n<=2.5 ? 2.5 : n<=5 ? 5 : 10;
+  return nice*mag;
+}
+function tidy(v){ return Number(v.toPrecision(12)); }
+function autoDomain(refVals, target){
+  const lo0 = Math.min(...refVals), hi0 = Math.max(...refVals);
+  const spread = (hi0 - lo0) || Math.abs(hi0) || 1;
+  const step = niceStep(spread*1.7);
+  let lo = Math.floor((lo0 - spread*0.35)/step)*step;
+  let hi = Math.ceil((hi0 + spread*0.35)/step)*step;
+  let guard = 0;
+  while(target < lo && guard++ < 500) lo -= step;
+  while(target > hi && guard++ < 500) hi += step;
+  return [tidy(lo), tidy(hi)];
+}
+function resolveDomain(explicit, refVals, target){
+  if(Array.isArray(explicit) && explicit.length === 2 && explicit[0] < explicit[1]){
+    let [lo, hi] = explicit;
+    // A hand-authored domain that doesn't actually contain the answer would draw
+    // the target off-chart; widen rather than fail silently.
+    if(target < lo || target > hi){
+      const pad = (hi-lo)*0.1;
+      lo = Math.min(lo, target-pad); hi = Math.max(hi, target+pad);
+    }
+    return [lo, hi];
+  }
+  return autoDomain(refVals, target);
+}
+// Tick decimals come from the tick values themselves, not from the guess step —
+// a domain of [0, 48] with a 0.1 guess step should print "12", not "12.0".
+function tickDecimals(vals){
+  for(let d=0; d<=3; d++){
+    if(vals.every(v => Math.abs(v - Number(v.toFixed(d))) < 1e-9)) return d;
+  }
+  return 3;
+}
+function fmtTick(v, d){
+  return v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+}
+
+/* ---------- Chart label placement ----------
+   Replaces `const above = i%2===0`, which alternated labels above/below by array
+   index and knew nothing about where anything actually was. Labels now get a
+   ranked list of candidate positions and take the first one that collides with
+   nothing already placed and stays inside the chart. */
+function textBox(text, fontSize, ax, ay, anchor){
+  // Approximate metrics. getBBox() would be exact but only works once the node is
+  // in the document, and measuring-then-replacing means two layout passes and
+  // visible jitter on the reveal. The chart labels are monospace, so a fixed
+  // advance ratio is close enough to make the right decision.
+  const w = text.length * fontSize * 0.58;
+  const x0 = anchor === 'middle' ? ax - w/2 : anchor === 'end' ? ax - w : ax;
+  return { x0, x1: x0+w, y0: ay - fontSize*0.82, y1: ay + fontSize*0.26 };
+}
+function boxesOverlap(a, b, pad=2){
+  return !(a.x1+pad < b.x0 || b.x1+pad < a.x0 || a.y1+pad < b.y0 || b.y1+pad < a.y0);
+}
+function makeLabelPlacer(bounds){
+  const occupied = [];
+  const CANDIDATES = [
+    [0,-12,'middle'], [0,20,'middle'],
+    [11,4,'start'], [-11,4,'end'],
+    [0,-24,'middle'], [0,32,'middle'],
+    [11,-9,'start'], [-11,-9,'end'],
+    [11,17,'start'], [-11,17,'end'],
+  ];
+  return {
+    reserve(box){ occupied.push(box); },
+    reserveDot(cx, cy, r){ occupied.push({ x0:cx-r, x1:cx+r, y0:cy-r, y1:cy+r }); },
+    place(text, cx, cy, fontSize){
+      let fallback = null;
+      for(const [dx, dy, anchor] of CANDIDATES){
+        const ax = cx+dx, ay = cy+dy;
+        const box = textBox(text, fontSize, ax, ay, anchor);
+        if(box.x0 < bounds.x0 || box.x1 > bounds.x1 || box.y0 < bounds.y0 || box.y1 > bounds.y1) continue;
+        if(!fallback) fallback = { ax, ay, anchor, box };
+        if(occupied.some(o => boxesOverlap(box, o))) continue;
+        occupied.push(box);
+        return { x:ax, y:ay, anchor };
+      }
+      // Nothing clean fits: take the best in-bounds option anyway rather than
+      // drawing a label off the edge of the chart.
+      if(fallback){ occupied.push(fallback.box); return { x:fallback.ax, y:fallback.ay, anchor:fallback.anchor }; }
+      const ax = Math.min(Math.max(cx, bounds.x0+24), bounds.x1-24);
+      const ay = Math.min(Math.max(cy-12, bounds.y0+10), bounds.y1-4);
+      return { x:ax, y:ay, anchor:'middle' };
+    }
+  };
 }
 
 let idx = 0;
@@ -348,48 +617,91 @@ function renderProgress(){
     progressEl.appendChild(seg);
   });
 }
+function setTopline(right){
+  const label = MODE === 'practice' ? 'GUESSTIMATE · PRACTICE'
+              : MODE === 'challenge' ? `GUESSTIMATE #${puzzleNumber(CHALLENGE.date)} · CHALLENGE`
+              : `GUESSTIMATE #${PUZZLE_NO}`;
+  topLeft.textContent = label;
+  topRight.textContent = right;
+}
 
 function startScreen(){
-  topRight.textContent = `${ROUNDS.length} QUESTIONS`;
+  appEl.removeAttribute('data-league');
+  setTopline(`${ROUNDS.length} QUESTIONS`);
   progressEl.innerHTML = '';
   const stats = loadStats();
   const streakHTML = stats.currentStreak>0 ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
-  const challengeHTML = CHALLENGE.active
-    ? `<div class="challenge-banner">🎯 <b>${escapeHtml(CHALLENGE.from || 'A friend')}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`
-    : '';
+  let challengeHTML = '';
+  if(CHALLENGE.active){
+    const who = escapeHtml(CHALLENGE.from || 'A friend');
+    challengeHTML = MODE === 'challenge'
+      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(CHALLENGE.date)} (${CHALLENGE.date}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
+      : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
+  }
+  const practiceHTML = QUESTION_POOL.length > ROUNDS.length
+    ? `<button class="ghost" id="practiceBtn">Practice</button>` : '';
   panel.innerHTML = `
     <h1 class="title">Guesstimate</h1>
-    <p class="sub">Real reference players are plotted on a 2D chart — click where you think the named player falls on both stats at once.</p>
-    <p class="instructions" style="margin-bottom:16px;">Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.</p>
+    <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
+    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(CHALLENGE.date)} — ${CHALLENGE.date}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row"><button class="primary" id="startBtn">Start today's ${ROUNDS.length===1?'question':'questions'} →</button></div>
+    <div class="next-row">${practiceHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  const pb = document.getElementById('practiceBtn');
+  if(pb) pb.addEventListener('click', startPractice);
+}
+
+// Practice draws from everything that ISN'T in today's set, so it can't be used
+// to preview the daily puzzle. It never touches the streak or the stats — same
+// contract as Poeltl's unlimited mode.
+function startPractice(){
+  const todayIds = new Set(DAILY_ROUNDS.map(q=>q.id));
+  let avail = QUESTION_POOL.filter(q=>!todayIds.has(q.id));
+  if(avail.length === 0) avail = QUESTION_POOL.slice();
+  const shuffled = seededShuffle(avail, (Math.random()*4294967296)>>>0);
+  MODE = 'practice';
+  ROUNDS = shuffled.slice(0, Math.min(5, shuffled.length));
+  idx = 0; roundScores = [];
+  showQuestion();
+}
+function backToToday(){
+  MODE = CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY ? 'challenge' : 'daily';
+  ROUNDS = DAILY_ROUNDS;
+  idx = 0; roundScores = [];
+  startScreen();
 }
 
 function showQuestion(){
-  topRight.textContent = `${idx+1} / ${ROUNDS.length}`;
-  renderProgress();
   const r = ROUNDS[idx];
-  const allX = [r.targetX, ...r.referencePlayers.map(p=>p.x)];
-  const allY = [r.targetY, ...r.referencePlayers.map(p=>p.y)];
-  const xMin = Math.min(...allX)*0.7, xMax = Math.max(...allX)*1.15;
-  const yMin = Math.min(...allY)*0.5, yMax = Math.max(...allY)*1.2;
+  appEl.setAttribute('data-league', r.league);
+  setTopline(`${idx+1} / ${ROUNDS.length}`);
+  renderProgress();
+
   const xStep = r.xStep || DEFAULT_STEP, yStep = r.yStep || DEFAULT_STEP;
-  const xDecimals = stepDecimals(xStep), yDecimals = stepDecimals(yStep);
+  const [xMin, xMax] = resolveDomain(r.xDomain, r.referencePlayers.map(p=>p.x), r.targetX);
+  const [yMin, yMax] = resolveDomain(r.yDomain, r.referencePlayers.map(p=>p.y), r.targetY);
   const W = 560, H = 420, padL = 54, padR = 20, padT = 20, padB = 44;
   const plotW = W-padL-padR, plotH = H-padT-padB;
   const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
   const yPix = (v)=> padT + plotH - ((v-yMin)/(yMax-yMin))*plotH;
   const xVal = (px)=> xMin + ((px-padL)/plotW)*(xMax-xMin);
   const yVal = (py)=> yMin + ((padT+plotH-py)/plotH)*(yMax-yMin);
+  const xTicks = [0,1,2,3,4].map(i=> xMin + (i/4)*(xMax-xMin));
+  const yTicks = [0,1,2,3,4].map(i=> yMin + (i/4)*(yMax-yMin));
+  const xTickD = tickDecimals(xTicks), yTickD = tickDecimals(yTicks);
+
+  const legendHTML = r.referencePlayers.map(p =>
+    `<span><i></i><b>${escapeHtml(shortLabel(p.name))}</b> — ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
+  ).join('');
 
   panel.innerHTML = `
-    <div class="league-tag">${r.league}</div>
-    <div class="prompt">${r.xLabel} vs. ${r.yLabel}<br>— <span class="player">${r.targetPlayer}</span></div>
-    <div class="instructions">Click or drag to plot where you think ${r.targetPlayer} falls on both stats at once — or tab in and use the arrow keys</div>
+    <div class="league-tag">${escapeHtml(r.league)}</div>
+    <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br>— <span class="player">${escapeHtml(r.targetPlayer)}</span></div>
+    <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once — or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
+    <div class="legend">${legendHTML}</div>
     <div class="readout" id="readout" aria-live="polite">Click the chart to place your guess</div>
     <div class="next-row"><button class="primary" id="submitBtn" disabled>Submit guess</button></div>
     <div id="revealArea"></div>
@@ -402,6 +714,20 @@ function showQuestion(){
   let answered = false;
   let guessEl = null;
   let guideXEl = null, guideYEl = null;
+  let placer = null;
+  let coachActive = false;
+  try{ coachActive = !localStorage.getItem(INTRO_KEY); }catch(e){ coachActive = false; }
+
+  // Everyone who ever arrives here comes cold from a link in a group chat, looks
+  // at an empty chart, and has to infer the interaction. One pulsing ring and a
+  // line of text, dismissed forever on first contact.
+  function dismissCoach(){
+    if(!coachActive) return;
+    coachActive = false;
+    try{ localStorage.setItem(INTRO_KEY, '1'); }catch(e){}
+    const g = svg.querySelector('.coach');
+    if(g) g.remove();
+  }
 
   // Takes a position already in data space (stat units, not pixels) and applies
   // it as the current guess: updates the readout live, and updates (or creates)
@@ -411,10 +737,11 @@ function showQuestion(){
   // Mutates existing elements in place rather than tearing down and rebuilding
   // the whole chart on every move, which would be janky at drag speed.
   function applyGuess(gx, gy){
+    dismissCoach();
     gx = Math.max(xMin, Math.min(xMax, gx));
     gy = Math.max(yMin, Math.min(yMax, gy));
     guess = { x: roundToStep(gx, xStep), y: roundToStep(gy, yStep) };
-    readout.innerHTML = `Your guess: <b>${guess.x} ${r.xUnit}</b>, <b>${guess.y} ${r.yUnit}</b>`;
+    readout.innerHTML = `Your guess: <b>${fmtVal(guess.x, xStep)} ${escapeHtml(r.xUnit)}</b>, <b>${fmtVal(guess.y, yStep)} ${escapeHtml(r.yUnit)}</b>`;
     submitBtn.disabled = false;
     const gxPix = xPix(guess.x), gyPix = yPix(guess.y);
 
@@ -453,22 +780,26 @@ function showQuestion(){
     svg.innerHTML = '';
     // svg just got wiped, so any prior element references are stale
     guessEl = null; guideXEl = null; guideYEl = null;
+    placer = makeLabelPlacer({ x0:4, x1:W-4, y0:padT+2, y1:padT+plotH+2 });
+
     svg.appendChild(el('line',{x1:padL,y1:padT,x2:padL,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
     svg.appendChild(el('line',{x1:padL,y1:padT+plotH,x2:padL+plotW,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
-    for(let i=0;i<=4;i++){
-      const xv = xMin + (i/4)*(xMax-xMin);
+    xTicks.forEach(xv=>{
       const px = xPix(xv);
       svg.appendChild(el('line',{x1:px,y1:padT,x2:px,y2:padT+plotH, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'}); t.textContent = xv.toFixed(xDecimals); svg.appendChild(t);
-    }
-    for(let i=0;i<=4;i++){
-      const yv = yMin + (i/4)*(yMax-yMin);
+      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'});
+      t.textContent = fmtTick(xv, xTickD); svg.appendChild(t);
+    });
+    yTicks.forEach(yv=>{
       const py = yPix(yv);
       svg.appendChild(el('line',{x1:padL,y1:py,x2:padL+plotW,y2:py, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'}); t.textContent = yv.toFixed(yDecimals); svg.appendChild(t);
-    }
-    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;'}); xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
-    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;', transform:`rotate(-90 14 ${padT+plotH/2})`}); yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
+      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'});
+      t.textContent = fmtTick(yv, yTickD); svg.appendChild(t);
+    });
+    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;'});
+    xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
+    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;', transform:`rotate(-90 14 ${padT+plotH/2})`});
+    yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
 
     // The hit rect already spans the full plot area (hundreds of CSS px on any
     // real screen), so the draggable target is far larger than the 44x44px
@@ -512,14 +843,29 @@ function showQuestion(){
     });
     svg.appendChild(hit);
 
-    r.referencePlayers.forEach((p,i)=>{
+    // Reserve every dot before placing any label, so labels dodge dots they
+    // aren't attached to as well as each other.
+    r.referencePlayers.forEach(p=>{ placer.reserveDot(xPix(p.x), yPix(p.y), 9); });
+    r.referencePlayers.forEach(p=>{
       const cx = xPix(p.x), cy = yPix(p.y);
       svg.appendChild(el('circle',{cx,cy,r:7, fill:'var(--paper)', stroke:'var(--ink)','stroke-width':2, style:'pointer-events:none;'}));
-      const above = i%2===0;
-      const t = el('text',{x:cx,y:above?cy-13:cy+22,'text-anchor':'middle','font-size':10.5, 'font-weight':600, fill:'var(--ink)', class:'mono', style:'pointer-events:none;'});
-      t.textContent = shortLabel(p.name);
+      const text = shortLabel(p.name);
+      const pos = placer.place(text, cx, cy, 10.5);
+      const t = el('text',{x:pos.x, y:pos.y, 'text-anchor':pos.anchor, 'font-size':10.5, 'font-weight':600, fill:'var(--ink)', class:'mono plabel', style:'pointer-events:none;'});
+      t.textContent = text;
       svg.appendChild(t);
     });
+
+    if(coachActive){
+      const g = el('g',{class:'coach', style:'pointer-events:none;'});
+      const ccx = padL+plotW/2, ccy = padT+plotH/2;
+      g.appendChild(el('circle',{cx:ccx, cy:ccy, r:13, fill:'none', stroke:'var(--guess)','stroke-width':2.5, class:'coach-ring'}));
+      g.appendChild(el('circle',{cx:ccx, cy:ccy, r:3.5, fill:'var(--guess)'}));
+      const ct = el('text',{x:ccx, y:ccy+40, 'text-anchor':'middle', 'font-size':11.5, fill:'var(--guess)', 'font-weight':600, class:'mono'});
+      ct.textContent = 'click or drag anywhere';
+      g.appendChild(ct);
+      svg.appendChild(g);
+    }
 
     if(guess){
       const gx = xPix(guess.x), gy = yPix(guess.y);
@@ -529,6 +875,23 @@ function showQuestion(){
   }
   draw();
 
+  // "You were 2.3 PPG high" reads as an outcome; "Actual: 16.6" makes you do the
+  // subtraction yourself. GeoGuessr's whole reveal is built on stating the miss.
+  function missText(g, t, unit, step){
+    const d = g - t;
+    if(Math.abs(d) < step/2) return `exact on ${unit}`;
+    return `${fmtVal(Math.abs(d), step)} ${unit} ${d>0 ? 'high' : 'low'}`;
+  }
+  function countUp(node, to){
+    if(prefersReducedMotion() || to === 0){ node.textContent = `+${to}`; return; }
+    const dur = 650, t0 = performance.now();
+    (function frame(now){
+      const p = Math.min(1, (now-t0)/dur);
+      node.textContent = `+${Math.round(to * (1 - Math.pow(1-p, 3)))}`;
+      if(p < 1) requestAnimationFrame(frame);
+    })(t0);
+  }
+
   submitBtn.addEventListener('click', ()=>{
     if(answered){
       idx++;
@@ -537,6 +900,7 @@ function showQuestion(){
     }
     if(!guess) return;
     answered = true;
+    dismissCoach();
     const xRange = xMax-xMin, yRange = yMax-yMin;
     const { points } = scoreGuess2D(guess.x, guess.y, r.targetX, r.targetY, xRange, yRange);
     roundScores.push(points);
@@ -550,45 +914,78 @@ function showQuestion(){
     const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
     svg.appendChild(connector);
     svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
-    const targetLbl = el('text',{x:tx,y:ty-15,'text-anchor':'middle','font-size':11,'font-weight':700, fill:'var(--good)', class:'mono target-marker'});
-    targetLbl.textContent = shortLabel(r.targetPlayer);
+    // Same placer the reference labels used, so the answer label dodges them too.
+    const targetText = shortLabel(r.targetPlayer);
+    placer.reserveDot(tx, ty, 11);
+    const tpos = placer.place(targetText, tx, ty, 11);
+    const targetLbl = el('text',{x:tpos.x, y:tpos.y, 'text-anchor':tpos.anchor, 'font-size':11, 'font-weight':700, fill:'var(--good)', class:'mono target-marker plabel'});
+    targetLbl.textContent = targetText;
     svg.appendChild(targetLbl);
 
     document.getElementById('revealArea').innerHTML = `
       <div class="reveal ${tierAnimClass}">
         <div class="verdict-row ${tierAnimClass}">
-          <div class="pts ${tierClass}">${t.emoji} ${t.label} — +${points}</div>
-          <div class="compare">Actual: ${r.targetX} ${r.xUnit}, ${r.targetY} ${r.yUnit}</div>
+          <div class="pts ${tierClass}">${t.emoji} ${t.label} — <span id="ptsNum">+0</span></div>
+          <div class="compare">
+            Actual: ${fmtVal(r.targetX, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(r.targetY, yStep)} ${escapeHtml(r.yUnit)}<br>
+            <span class="miss">You were ${escapeHtml(missText(guess.x, r.targetX, r.xUnit, xStep))} · ${escapeHtml(missText(guess.y, r.targetY, r.yUnit, yStep))}</span>
+          </div>
         </div>
-        <p class="fact">${r.fact}<br><span class="mono" style="font-size:11px;">${r.source}</span></p>
+        <div class="fact-block">
+          <div class="fact-label">Why it's interesting</div>
+          <p class="fact">${r.fact}</p>
+          <p class="fact-source">${r.source}</p>
+        </div>
       </div>
     `;
+    countUp(document.getElementById('ptsNum'), points);
     submitBtn.textContent = idx+1<ROUNDS.length ? 'Next question →' : 'See results →';
   });
 }
 
 function showResults(){
-  topRight.textContent = 'RESULTS';
+  appEl.removeAttribute('data-league');
+  setTopline('RESULTS');
   renderProgress();
   const total = roundScores.reduce((a,b)=>a+b,0);
-  const stats = registerCompletion();
+  const max = ROUNDS.length*100;
+  // Practice and challenge replays are explicitly outside the daily record.
+  const stats = MODE === 'daily' ? registerCompletion(roundScores) : loadStats();
+  const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
+  const headline = MODE === 'practice' ? 'Guesstimate · practice'
+                 : MODE === 'challenge' ? `Guesstimate #${puzzleNumber(CHALLENGE.date)}`
+                 : `Guesstimate #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>`<span class="pill">+${s}</span>`).join('');
+  const streakHTML = MODE === 'daily'
+    ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
+    : `<div class="streak-line">${MODE==='practice' ? 'Practice round — no streak effect' : "Challenge round — doesn't affect your streak"}</div>`;
+
   panel.innerHTML = `
     <div style="text-align:center;">
       <div class="topline" style="justify-content:center;">ROUND COMPLETE</div>
-      <div style="font-family:'Fraunces',serif;font-weight:900;font-size:52px;margin:10px 0;">${total}<span style="font-size:22px;color:var(--ink-faint);font-weight:600;">/${ROUNDS.length*100}</span></div>
+      <div style="font-family:'Fraunces',serif;font-weight:900;font-size:52px;margin:10px 0;">${total}<span style="font-size:22px;color:var(--ink-faint);font-weight:600;">/${max}</span></div>
       <div style="display:flex;justify-content:center;gap:8px;margin:16px 0;flex-wrap:wrap;">${pills}</div>
-      <div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>
-      <button class="primary" id="againBtn">Play again</button>
+      ${streakHTML}
+      <div class="share-card">
+        <div class="sc-head">${escapeHtml(headline)}</div>
+        <div class="sc-strip">${strip}</div>
+        <div class="sc-score">${total}/${max}</div>
+      </div>
     </div>
     <div class="challenge-box">
       <label for="challengeName">Your name (optional, shown to whoever you send this to)</label>
       <input type="text" id="challengeName" maxlength="30" placeholder="e.g. Drew">
-      <div class="next-row"><button class="primary" id="shareBtn">Share your score</button></div>
+      <div class="next-row">
+        ${MODE==='daily' ? '<button class="ghost" id="againBtn">Play again</button>' : '<button class="ghost" id="backBtn">Back to today</button>'}
+        <button class="primary" id="shareBtn">Share your score</button>
+      </div>
       <p class="instructions" id="shareStatus" style="margin-top:8px;"></p>
     </div>
   `;
-  document.getElementById('againBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  const againBtn = document.getElementById('againBtn');
+  if(againBtn) againBtn.addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  const backBtn = document.getElementById('backBtn');
+  if(backBtn) backBtn.addEventListener('click', backToToday);
 
   document.getElementById('shareBtn').addEventListener('click', async ()=>{
     const nameInput = document.getElementById('challengeName');
@@ -598,8 +995,11 @@ function showResults(){
     url.searchParams.set('challenge', '1');
     if(name) url.searchParams.set('from', name);
     url.searchParams.set('score', String(total));
+    // Anchor the link to the puzzle that was actually played, so the recipient
+    // gets the same five questions rather than a different day's set.
+    if(MODE !== 'practice') url.searchParams.set('d', MODE === 'challenge' ? CHALLENGE.date : TODAY);
     const shareUrl = url.toString();
-    const shareText = `Guesstimate — I scored ${total}/${ROUNDS.length*100}. Think you can beat me?`;
+    const shareText = `${headline}\n${strip}  ${total}/${max}`;
     const status = document.getElementById('shareStatus');
 
     if(navigator.share){
@@ -612,13 +1012,49 @@ function showResults(){
       }
     }
     try{
-      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
       status.textContent = 'Copied! Paste it in Messages, or anywhere.';
     }catch(err){
       status.textContent = shareUrl;
     }
   });
 }
+
+/* ============================= STATS MODAL ============================= */
+const statsModal = document.getElementById('statsModal');
+function renderStatsModal(){
+  const s = loadStats();
+  const body = document.getElementById('statsBody');
+  if(!s.daysPlayed){
+    body.innerHTML = `<p class="modal-empty">No rounds yet. Finish today's five questions and your stats will show up here — days played, average score, and how your guesses break down.</p>`;
+    return;
+  }
+  const avg = Math.round(s.totalPoints / s.daysPlayed);
+  const counts = TIER_ORDER.map(k => s.tiers[k] || 0);
+  const maxCount = Math.max(1, ...counts);
+  const rows = TIER_ORDER.map((k,i)=>{
+    const emoji = ({'Perfect':'🟢','Great':'🟢','Ballpark':'🟡','Off':'🔴','Way off':'⚫'})[k];
+    const w = Math.round((counts[i]/maxCount)*100);
+    return `<div class="dist-row"><span class="dl">${emoji} ${k}</span><span class="db" style="width:${w}%"></span><span class="dn">${counts[i]}</span></div>`;
+  }).join('');
+  body.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="v">${s.daysPlayed}</div><div class="k">Days played</div></div>
+      <div class="stat-cell"><div class="v">${avg}</div><div class="k">Avg score</div></div>
+      <div class="stat-cell"><div class="v">${s.currentStreak}</div><div class="k">Streak</div></div>
+      <div class="stat-cell"><div class="v">${s.bestStreak}</div><div class="k">Best streak</div></div>
+    </div>
+    <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN — BEST ROUND ${s.bestRound}</div>
+    ${rows}
+  `;
+}
+document.getElementById('statsBtn').addEventListener('click', ()=>{
+  renderStatsModal();
+  if(statsModal.showModal) statsModal.showModal(); else statsModal.setAttribute('open','');
+});
+document.getElementById('statsClose').addEventListener('click', ()=>{
+  if(statsModal.close) statsModal.close(); else statsModal.removeAttribute('open');
+});
 
 /* ============================= INIT ============================= */
 // Content lives in ../data/questions.json (see DATA LOADING comment above) — fetch
@@ -633,18 +1069,16 @@ async function init(){
     pool = await res.json();
     if(!Array.isArray(pool) || pool.length === 0) throw new Error('empty question pool');
   }catch(err){
-    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${err.message}). Try refreshing the page.</p>`;
+    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
     return;
   }
   QUESTION_POOL = pool;
   TODAY = todayDateString();
-  // Shuffled-bag rotation: 5/day, no repeats until the whole pool has been shown
-  // once (see selectDailyBag above). Falls back to the full pool on days it can't
-  // fill a group of 5 yet (pool still under 5 questions).
-  const DAILY_COUNT = 5;
-  ROUNDS = QUESTION_POOL.length >= DAILY_COUNT
-    ? selectDailyBag(TODAY, QUESTION_POOL, DAILY_COUNT)
-    : selectDailyQuestions(TODAY, QUESTION_POOL, QUESTION_POOL.length);
+  PUZZLE_NO = puzzleNumber(TODAY);
+  // A dated challenge link replays the sender's puzzle; anything else is today's.
+  MODE = (CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY) ? 'challenge' : 'daily';
+  DAILY_ROUNDS = roundsForDate(MODE === 'challenge' ? CHALLENGE.date : TODAY);
+  ROUNDS = DAILY_ROUNDS;
   startScreen();
 }
 init();
