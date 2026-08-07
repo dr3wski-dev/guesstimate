@@ -209,12 +209,15 @@ const topRight = document.getElementById('topRight');
 const progressEl = document.getElementById('progress');
 const SVGNS = 'http://www.w3.org/2000/svg';
 function el(tag, attrs={}){ const n=document.createElementNS(SVGNS, tag); for(const k in attrs) n.setAttribute(k, attrs[k]); return n; }
-// Chart labels want a short display form. "Dennis Rodman" -> "Rodman" (last name) works
-// for full names, but breaks for entries already written short with a year, like
-// "McCaffrey '23" -> naively grabbing the last word would show just "'23". Only shorten
-// to the last word when the name looks like a plain multi-word full name.
+// Chart labels show the full name rather than abbreviating to a last name — a
+// last-name-only label is ambiguous the moment two reference players in the same
+// question share a surname (this pool already has both Michael Jordan and DeAndre
+// Jordan), and that only gets more likely as the player pool grows toward 500.
+// Still strip a trailing season year from target players written like "Jonathan
+// Taylor, 2021" — that's identifying a season, not a person, and the prompt text
+// above the chart already states it.
 function shortLabel(name){
-  return /\d/.test(name) ? name.replace(/,?\s*\d{4}$/, '') || name : name.split(' ').pop();
+  return name.replace(/,?\s*\d{4}$/, '') || name;
 }
 
 let idx = 0;

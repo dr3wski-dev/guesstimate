@@ -1,18 +1,17 @@
 [
   {
-    "id": "nba-ppg-rpg-lebron",
+    "id": "nba-height-3p-nowitzki",
     "league": "NBA",
-    "xLabel": "Career points per game", "xUnit": "PPG",
-    "yLabel": "Career rebounds per game", "yUnit": "RPG",
-    "targetPlayer": "LeBron James", "targetX": 26.8, "targetY": 7.5,
+    "xLabel": "Height", "xUnit": "in",
+    "yLabel": "Career 3-point percentage", "yUnit": "3P%",
+    "targetPlayer": "Dirk Nowitzki", "targetX": 84, "targetY": 38.0,
     "referencePlayers": [
-      { "name": "Dennis Rodman", "x": 7.3, "y": 13.1 },
-      { "name": "Chris Paul", "x": 16.8, "y": 4.4 },
-      { "name": "Stephen Curry", "x": 24.8, "y": 4.7 },
-      { "name": "Wilt Chamberlain", "x": 30.1, "y": 22.9 }
+      { "name": "Muggsy Bogues", "x": 63, "y": 27.8 },
+      { "name": "Reggie Miller", "x": 79, "y": 39.5 },
+      { "name": "Shaquille O'Neal", "x": 85, "y": 4.5 }
     ],
-    "fact": "LeBron James averages 26.8 points and 7.5 rebounds a game for his career — high scoring with real but not elite rebounding. Wilt Chamberlain (30.1 / 22.9) is the only player in NBA history to average 30+ points and 20+ rebounds for a full career. Dennis Rodman (7.3 / 13.1) is the mirror image — elite rebounding, modest scoring.",
-    "source": "Basketball-Reference / StatMuse career averages."
+    "fact": "Dirk Nowitzki stood 7'0\" (84 inches) - nearly as tall as Shaquille O'Neal (7'1\", 85 inches) - but shot 38.0% from three for his career, worlds ahead of Shaq's 4.5% (Shaq made exactly one three-pointer in 22 career attempts). Dirk even out-shot Muggsy Bogues, the shortest player in NBA history at 5'3\", who hit 27.8% from deep. Reggie Miller (6'7\", 39.5%) is the archetype pure sharpshooter - and Dirk, nearly half a foot taller, wasn't far behind him at all.",
+    "source": "StatMuse / Basketball-Reference height and career 3-point percentage."
   },
   {
     "id": "nba-mpg-ppg-williams",
