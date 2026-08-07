@@ -28,7 +28,7 @@
     --ink: #1b1810; --ink-rgb: 27,24,16; --ink-soft: #55503f; --ink-faint: #5f5946;
     --line: rgba(27,24,16,0.18);
     --accent: #f0b429;
-    --good: #1e6a41; --good-bg: #e4f3ea;
+    --good: #1e6a41; --good-rgb: 30,106,65; --good-bg: #e4f3ea;
     --mid: #c88a00; --bad: #b53a2e;
     --guess: #2f5fd6;
   }
@@ -42,7 +42,7 @@
       --paper: #17140f; --paper-2: #211d16;
       --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
       --line: rgba(242,237,224,0.18);
-      --good: #3ddc84; --good-bg: rgba(61,220,132,0.15);
+      --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
       --mid: #e0a83c; --bad: #ff6b57;
       --guess: #6d93ff;
     }
@@ -107,11 +107,25 @@
   .chart-frame{
     background:color-mix(in srgb, var(--accent) 12%, var(--paper));
     border:2.5px solid var(--ink); border-radius:3px; padding:6px;
-    margin-bottom:16px; position:relative;
+    margin-bottom:16px; position:relative; touch-action:none;
   }
   .chart-frame svg{ width:100%; height:auto; display:block; cursor:crosshair; touch-action:none; }
+  .chart-frame svg rect[tabindex]:focus-visible{ outline:3px solid var(--ink); outline-offset:-3px; }
 
   .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:center; margin-bottom:14px; min-height:18px; }
+
+  /* Reveal "juice", ported from guesstimate-slider-legacy.html: the target marker
+     bounce-drops in, and the verdict row pulses (great guess) or shakes (bad
+     guess). Respects prefers-reduced-motion — see the override below. */
+  @keyframes targetDrop{ 0%{ transform:scale(0.3); opacity:0; } 60%{ transform:scale(1.25); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
+  @keyframes pulseGlow{ 0%{ box-shadow:0 0 0 0 rgba(var(--good-rgb),0.5); } 100%{ box-shadow:0 0 0 16px rgba(var(--good-rgb),0); } }
+  @keyframes shakeBad{ 0%,100%{ transform:translateX(0); } 20%{ transform:translateX(-6px); } 40%{ transform:translateX(6px); } 60%{ transform:translateX(-4px); } 80%{ transform:translateX(4px); } }
+  .target-marker{ transform-box:fill-box; transform-origin:center; animation:targetDrop .5s cubic-bezier(.3,1.5,.4,1) both; }
+  .verdict-row.tier-perfect{ animation:pulseGlow 0.9s ease-out; border-radius:8px; }
+  .reveal.tier-bad{ animation:shakeBad 0.4s ease-in-out; }
+  @media (prefers-reduced-motion: reduce){
+    .target-marker, .verdict-row.tier-perfect, .reveal.tier-bad{ animation:none !important; }
+  }
 
   .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
   .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
@@ -374,9 +388,9 @@ function showQuestion(){
   panel.innerHTML = `
     <div class="league-tag">${r.league}</div>
     <div class="prompt">${r.xLabel} vs. ${r.yLabel}<br>— <span class="player">${r.targetPlayer}</span></div>
-    <div class="instructions">Click on the chart to plot where you think ${r.targetPlayer} falls on both stats at once</div>
+    <div class="instructions">Click or drag to plot where you think ${r.targetPlayer} falls on both stats at once — or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
-    <div class="readout" id="readout">Click the chart to place your guess</div>
+    <div class="readout" id="readout" aria-live="polite">Click the chart to place your guess</div>
     <div class="next-row"><button class="primary" id="submitBtn" disabled>Submit guess</button></div>
     <div id="revealArea"></div>
   `;
@@ -387,20 +401,37 @@ function showQuestion(){
   let guess = null;
   let answered = false;
   let guessEl = null;
+  let guideXEl = null, guideYEl = null;
 
-  // Updates (or creates) the guess marker directly, rather than tearing down and
-  // rebuilding the whole chart on every pointer move — that full-redraw approach
-  // was fine for single clicks but would be janky at drag speed.
-  function placeGuess(clientX, clientY){
-    const rect = svg.getBoundingClientRect();
-    const scaleX = W/rect.width, scaleY = H/rect.height;
-    const px = (clientX - rect.left)*scaleX, py = (clientY - rect.top)*scaleY;
-    const gx = Math.max(xMin, Math.min(xMax, xVal(px)));
-    const gy = Math.max(yMin, Math.min(yMax, yVal(py)));
+  // Takes a position already in data space (stat units, not pixels) and applies
+  // it as the current guess: updates the readout live, and updates (or creates)
+  // the guess marker plus its dashed guide lines to both axes, so the player can
+  // calibrate precisely against the gridlines and reference dots while dragging
+  // or nudging with arrow keys — not just see the result after letting go.
+  // Mutates existing elements in place rather than tearing down and rebuilding
+  // the whole chart on every move, which would be janky at drag speed.
+  function applyGuess(gx, gy){
+    gx = Math.max(xMin, Math.min(xMax, gx));
+    gy = Math.max(yMin, Math.min(yMax, gy));
     guess = { x: roundToStep(gx, xStep), y: roundToStep(gy, yStep) };
     readout.innerHTML = `Your guess: <b>${guess.x} ${r.xUnit}</b>, <b>${guess.y} ${r.yUnit}</b>`;
     submitBtn.disabled = false;
     const gxPix = xPix(guess.x), gyPix = yPix(guess.y);
+
+    if(!guideXEl){
+      guideXEl = el('line',{stroke:'var(--guess)','stroke-width':1.5,'stroke-dasharray':'4 4','stroke-opacity':0.55, style:'pointer-events:none;'});
+      svg.appendChild(guideXEl);
+    }
+    guideXEl.setAttribute('x1', gxPix); guideXEl.setAttribute('x2', gxPix);
+    guideXEl.setAttribute('y1', gyPix); guideXEl.setAttribute('y2', padT+plotH);
+
+    if(!guideYEl){
+      guideYEl = el('line',{stroke:'var(--guess)','stroke-width':1.5,'stroke-dasharray':'4 4','stroke-opacity':0.55, style:'pointer-events:none;'});
+      svg.appendChild(guideYEl);
+    }
+    guideYEl.setAttribute('x1', padL); guideYEl.setAttribute('x2', gxPix);
+    guideYEl.setAttribute('y1', gyPix); guideYEl.setAttribute('y2', gyPix);
+
     if(guessEl){
       guessEl.setAttribute('cx', gxPix);
       guessEl.setAttribute('cy', gyPix);
@@ -410,27 +441,42 @@ function showQuestion(){
     }
   }
 
+  // Pointer coordinates (client pixels) -> data space, then hands off to applyGuess.
+  function placeGuess(clientX, clientY){
+    const rect = svg.getBoundingClientRect();
+    const scaleX = W/rect.width, scaleY = H/rect.height;
+    const px = (clientX - rect.left)*scaleX, py = (clientY - rect.top)*scaleY;
+    applyGuess(xVal(px), yVal(py));
+  }
+
   function draw(){
     svg.innerHTML = '';
-    guessEl = null; // svg just got wiped, so any prior marker reference is stale
+    // svg just got wiped, so any prior element references are stale
+    guessEl = null; guideXEl = null; guideYEl = null;
     svg.appendChild(el('line',{x1:padL,y1:padT,x2:padL,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
     svg.appendChild(el('line',{x1:padL,y1:padT+plotH,x2:padL+plotW,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
     for(let i=0;i<=4;i++){
       const xv = xMin + (i/4)*(xMax-xMin);
       const px = xPix(xv);
       svg.appendChild(el('line',{x1:px,y1:padT,x2:px,y2:padT+plotH, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono'}); t.textContent = xv.toFixed(xDecimals); svg.appendChild(t);
+      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'}); t.textContent = xv.toFixed(xDecimals); svg.appendChild(t);
     }
     for(let i=0;i<=4;i++){
       const yv = yMin + (i/4)*(yMax-yMin);
       const py = yPix(yv);
       svg.appendChild(el('line',{x1:padL,y1:py,x2:padL+plotW,y2:py, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono'}); t.textContent = yv.toFixed(yDecimals); svg.appendChild(t);
+      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'}); t.textContent = yv.toFixed(yDecimals); svg.appendChild(t);
     }
-    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono'}); xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
-    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', transform:`rotate(-90 14 ${padT+plotH/2})`}); yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
+    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;'}); xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
+    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;', transform:`rotate(-90 14 ${padT+plotH/2})`}); yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
 
-    const hit = el('rect',{x:padL,y:padT,width:plotW,height:plotH, fill:'transparent'});
+    // The hit rect already spans the full plot area (hundreds of CSS px on any
+    // real screen), so the draggable target is far larger than the 44x44px
+    // minimum touch target regardless of the drawn marker's small visual radius
+    // — a touch can start a drag anywhere in the chart, not just precisely on
+    // the existing pin.
+    const hit = el('rect',{x:padL,y:padT,width:plotW,height:plotH, fill:'transparent', tabindex:'0', role:'application'});
+    hit.setAttribute('aria-label', `${r.xLabel} versus ${r.yLabel} chart for ${r.targetPlayer}. Click or drag to place a guess. When focused, use the arrow keys to move it and Enter to submit.`);
     let dragging = false;
     hit.addEventListener('pointerdown', (e)=>{
       if(answered) return;
@@ -443,10 +489,27 @@ function showQuestion(){
       placeGuess(e.clientX, e.clientY);
     });
     hit.addEventListener('pointerup', (e)=>{
+      if(dragging && navigator.vibrate) navigator.vibrate(12);
       dragging = false;
       try{ hit.releasePointerCapture(e.pointerId); }catch(err){}
     });
     hit.addEventListener('pointercancel', ()=>{ dragging = false; });
+    // Keyboard path: tab to focus the chart, arrow keys nudge the guess one
+    // step per press on each axis, Enter submits. Mirrors the pointer/drag
+    // interaction rather than being a bolted-on separate mode.
+    hit.addEventListener('keydown', (e)=>{
+      if(answered) return;
+      const dir = { ArrowLeft:[-1,0], ArrowRight:[1,0], ArrowUp:[0,1], ArrowDown:[0,-1] }[e.key];
+      if(dir){
+        e.preventDefault();
+        const baseX = guess ? guess.x : (xMin+xMax)/2;
+        const baseY = guess ? guess.y : (yMin+yMax)/2;
+        applyGuess(baseX + dir[0]*xStep, baseY + dir[1]*yStep);
+      } else if(e.key === 'Enter' && guess){
+        e.preventDefault();
+        submitBtn.click();
+      }
+    });
     svg.appendChild(hit);
 
     r.referencePlayers.forEach((p,i)=>{
@@ -479,18 +542,21 @@ function showQuestion(){
     roundScores.push(points);
     const t = scoreTier(points);
     const tierClass = points>=90?'good':points>=50?'mid':'bad';
+    // Reveal "juice", ported from guesstimate-slider-legacy.html: a great guess
+    // pulses, a bad one shakes. Same >=90/<25 thresholds as the legacy version.
+    const tierAnimClass = points>=90 ? 'tier-perfect' : points<25 ? 'tier-bad' : '';
 
     const tx = xPix(r.targetX), ty = yPix(r.targetY);
     const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
     svg.appendChild(connector);
-    svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5}));
-    const targetLbl = el('text',{x:tx,y:ty-15,'text-anchor':'middle','font-size':11,'font-weight':700, fill:'var(--good)', class:'mono'});
+    svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
+    const targetLbl = el('text',{x:tx,y:ty-15,'text-anchor':'middle','font-size':11,'font-weight':700, fill:'var(--good)', class:'mono target-marker'});
     targetLbl.textContent = shortLabel(r.targetPlayer);
     svg.appendChild(targetLbl);
 
     document.getElementById('revealArea').innerHTML = `
-      <div class="reveal">
-        <div class="verdict-row">
+      <div class="reveal ${tierAnimClass}">
+        <div class="verdict-row ${tierAnimClass}">
           <div class="pts ${tierClass}">${t.emoji} ${t.label} — +${points}</div>
           <div class="compare">Actual: ${r.targetX} ${r.xUnit}, ${r.targetY} ${r.yUnit}</div>
         </div>
