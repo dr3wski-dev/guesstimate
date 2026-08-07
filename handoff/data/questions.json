@@ -113,5 +113,47 @@
     ],
     "fact": "Barry Bonds holds the all-time home run record (762) — more than even Babe Ruth's 714 — but his .298 career batting average trails Ruth's .342 by a wide margin, and Dave Kingman's raw power (442 HR on a .236 average) shows that home run totals alone don't tell the whole story. Tony Gwynn (.338 / 135) is the pure-contact opposite: one of the best pure hitters ever, with a fraction of the power. Ruth remains the rare player who tops the field on both axes at once.",
     "source": "StatMuse career batting average and home run totals."
+  },
+  {
+    "id": "nba-as-ppg-randolph",
+    "league": "NBA",
+    "xLabel": "Career All-Star selections", "xUnit": "AS",
+    "yLabel": "Career points per game", "yUnit": "PPG",
+    "targetPlayer": "Zach Randolph", "targetX": 2, "targetY": 16.6,
+    "referencePlayers": [
+      { "name": "Joe Johnson", "x": 7, "y": 16.0 },
+      { "name": "Vince Carter", "x": 8, "y": 16.7 },
+      { "name": "Karl Malone", "x": 14, "y": 25.0 }
+    ],
+    "fact": "Zach Randolph made just 2 All-Star teams in his career — yet his 16.6 career points per game is basically identical to Joe Johnson's 16.0 (7 All-Star nods) and Vince Carter's 16.7 (8 nods). All-Star selections reward more than raw scoring average — team success, era, and position all factor in — and Randolph's Memphis grit-and-grind identity earned him far less recognition than his actual production. Karl Malone (14 AS, 25.0 PPG) anchors the other extreme: a player whose selections actually matched his all-time-great scoring.",
+    "source": "StatMuse career per-game averages and career All-Star selection counts."
+  },
+  {
+    "id": "nfl-pb-recyds-boldin",
+    "league": "NFL",
+    "xLabel": "Career Pro Bowl selections", "xUnit": "PB",
+    "yLabel": "Career receiving yards", "yUnit": "yards",
+    "targetPlayer": "Anquan Boldin", "targetX": 3, "targetY": 13779,
+    "referencePlayers": [
+      { "name": "Randy Moss", "x": 6, "y": 15292 },
+      { "name": "Larry Fitzgerald", "x": 11, "y": 17492 },
+      { "name": "Jerry Rice", "x": 13, "y": 22895 }
+    ],
+    "fact": "Anquan Boldin made only 3 Pro Bowls in his career, but his 13,779 receiving yards is within shouting distance of Randy Moss's 15,292 — a player who made twice as many Pro Bowls. Boldin's game was built on contested catches and physicality rather than the highlight-reel speed that tends to win Pro Bowl votes, and it cost him recognition his production arguably earned. Jerry Rice (13 PB, 22,895 yards) remains the standard nobody else in NFL history has matched.",
+    "source": "StatMuse / Pro Football Reference career Pro Bowl selections and receiving yards."
+  },
+  {
+    "id": "mlb-as-hr-abreu",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections", "xUnit": "AS",
+    "yLabel": "Career home runs", "yUnit": "HR",
+    "targetPlayer": "Bobby Abreu", "targetX": 2, "targetY": 288,
+    "referencePlayers": [
+      { "name": "Adam Dunn", "x": 2, "y": 462 },
+      { "name": "Ken Griffey Jr.", "x": 13, "y": 630 },
+      { "name": "Alex Rodriguez", "x": 14, "y": 696 }
+    ],
+    "fact": "Bobby Abreu and Adam Dunn each made exactly 2 All-Star teams — but Dunn hit 174 more career home runs (462 to Abreu's 288). Abreu's value came from on-base percentage, doubles, and stolen bases rather than pure power, a game sabermetricians rate highly but All-Star voters historically haven't rewarded the same way as a big home run total. Griffey (13 AS, 630 HR) and Rodriguez (14 AS, 696 HR) show what it looks like when a player's power and his recognition actually line up.",
+    "source": "StatMuse career All-Star selections and home run totals."
   }
 ]
