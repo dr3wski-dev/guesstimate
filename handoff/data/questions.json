@@ -15,34 +15,32 @@
     "source": "Basketball-Reference / StatMuse career averages."
   },
   {
-    "id": "nba-ppg-apg-lebron",
+    "id": "nba-mpg-ppg-williams",
     "league": "NBA",
-    "xLabel": "Career points per game", "xUnit": "PPG",
-    "yLabel": "Career assists per game", "yUnit": "APG",
-    "targetPlayer": "LeBron James", "targetX": 26.8, "targetY": 7.4,
+    "xLabel": "Career minutes per game", "xUnit": "MPG",
+    "yLabel": "Career points per game", "yUnit": "PPG",
+    "targetPlayer": "Lou Williams", "targetX": 24.1, "targetY": 13.9,
     "referencePlayers": [
-      { "name": "Dennis Rodman", "x": 7.3, "y": 1.8 },
-      { "name": "Chris Paul", "x": 16.8, "y": 9.2 },
-      { "name": "Stephen Curry", "x": 24.8, "y": 6.3 },
-      { "name": "Wilt Chamberlain", "x": 30.1, "y": 4.4 }
+      { "name": "Manu Ginobili", "x": 25.4, "y": 13.3 },
+      { "name": "DeMar DeRozan", "x": 34.5, "y": 21.1 },
+      { "name": "Kobe Bryant", "x": 36.1, "y": 25.0 }
     ],
-    "fact": "LeBron James averages 7.4 assists a game to go with his scoring — genuinely rare playmaking for a top-5 all-time scorer. Chris Paul (16.8 / 9.2) built his whole career around exactly that combination at a smaller scale. Rodman (7.3 / 1.8) shows the opposite: a non-playmaking specialist.",
-    "source": "Basketball-Reference / StatMuse career averages."
+    "fact": "Lou Williams built a three-time Sixth Man of the Year career on 24.1 minutes a game — barely two-thirds of Kobe Bryant's 36.1-minute workload — while still averaging 13.9 points, close to a full starter's production squeezed into a bench role. Manu Ginobili (25.4 MPG, 13.3 PPG) landed in almost the exact same zone despite a Hall-of-Fame resume, deployed off the bench by design for most of his prime. DeMar DeRozan (34.5 MPG, 21.1 PPG) shows the traditional high-usage starter workload both bench legends were compared against, not with.",
+    "source": "StatMuse career per-game averages (regular season)."
   },
   {
-    "id": "nba-apg-rpg-lebron",
+    "id": "nba-ppg-stuff-green",
     "league": "NBA",
-    "xLabel": "Career assists per game", "xUnit": "APG",
-    "yLabel": "Career rebounds per game", "yUnit": "RPG",
-    "targetPlayer": "LeBron James", "targetX": 7.4, "targetY": 7.5,
+    "xLabel": "Career points per game", "xUnit": "PPG",
+    "yLabel": "Career rebounds + assists per game", "yUnit": "REB+AST",
+    "targetPlayer": "Draymond Green", "targetX": 8.7, "targetY": 12.4,
     "referencePlayers": [
-      { "name": "Dennis Rodman", "x": 1.8, "y": 13.1 },
-      { "name": "Chris Paul", "x": 9.2, "y": 4.4 },
-      { "name": "Stephen Curry", "x": 6.3, "y": 4.7 },
-      { "name": "Wilt Chamberlain", "x": 4.4, "y": 22.9 }
+      { "name": "Klay Thompson", "x": 18.6, "y": 5.6 },
+      { "name": "Russell Westbrook", "x": 20.9, "y": 14.9 },
+      { "name": "Nikola Jokic", "x": 22.2, "y": 18.6 }
     ],
-    "fact": "LeBron James sits almost exactly in the middle on both assists (7.4) and rebounds (7.5) — a genuine do-everything profile rather than a specialist in either direction. Chris Paul (9.2 / 4.4) leans hard toward playmaking, Rodman (1.8 / 13.1) leans hard toward rebounding, and almost no one in NBA history is this balanced across both at LeBron's scoring volume.",
-    "source": "Basketball-Reference / StatMuse career averages."
+    "fact": "Draymond Green scores less than half of what Klay Thompson does (8.7 PPG to 18.6) but combines for more rebounds and assists (12.4 to Klay's 5.6) — real proof a player can be a genuine star without scoring like one. Russell Westbrook (20.9 PPG, 14.9 combined) shows what happens when high scoring and stat-stuffing coexist, and Nikola Jokic (22.2 PPG, 18.6 combined) is the current extreme: elite at both at once, a center who also leads the league in rebounds and assists.",
+    "source": "StatMuse career per-game averages (regular season)."
   },
   {
     "id": "nfl-ypg-tds-taylor",
