@@ -1,0 +1,528 @@
+League,Player,Position,Tier,Status,Note
+NBA,Michael Jordan,SG,Stud,Retired,Peak scoring/efficiency combo
+NBA,Kareem Abdul-Jabbar,C,Stud,Retired,All-time scoring leader for decades
+NBA,Magic Johnson,PG,Stud,Retired,Elite big-guard playmaking
+NBA,Larry Bird,SF,Stud,Retired,Scoring/rebounding/passing all-around
+NBA,Wilt Chamberlain,C,Stud,Retired,Historic outlier stat lines
+NBA,Bill Russell,C,Stud,Retired,Defense/rebounding over scoring
+NBA,Kobe Bryant,SG,Stud,Retired,Volume scorer archetype
+NBA,Tim Duncan,PF,Stud,Retired,Efficient two-way big
+NBA,Shaquille O'Neal,C,Stud,Retired,Dominant interior scoring
+NBA,Hakeem Olajuwon,C,Stud,Retired,Rare steals+blocks big man
+NBA,Karl Malone,PF,Stud,Retired,Longevity scoring/rebounding
+NBA,John Stockton,PG,Stud,Retired,All-time assists/steals leader
+NBA,Charles Barkley,PF,Stud,Retired,Undersized elite rebounder
+NBA,Julius Erving,SF,Stud,Retired,Scoring/athleticism archetype
+NBA,Oscar Robertson,PG,Stud,Retired,Triple-double season precedent
+NBA,Jerry West,SG,Stud,Retired,Efficient high-volume scorer
+NBA,David Robinson,C,Stud,Retired,Two-way stat-stuffing center
+NBA,Patrick Ewing,C,Stud,Retired,Scoring/shot-blocking big
+NBA,Moses Malone,C,Stud,Retired,Elite offensive rebounder
+NBA,Isiah Thomas,PG,Stud,Retired,Undersized scorer/playmaker
+NBA,Scottie Pippen,SF,Stud,Retired,Do-everything wing
+NBA,Dennis Rodman,PF,Stud,Retired,Elite rebounding specialist
+NBA,Allen Iverson,PG,Stud,Retired,High-volume undersized scorer
+NBA,Kevin Garnett,PF,Stud,Retired,Stat-stuffing two-way big
+NBA,Ray Allen,SG,Stud,Retired,Elite career 3P shooter
+NBA,Reggie Miller,SG,Sneaky Stud,Retired,Volume 3P specialist
+NBA,Gary Payton,PG,Stud,Retired,Defense/playmaking guard
+NBA,Clyde Drexler,SG,Stud,Retired,All-around wing scorer
+NBA,George Gervin,SG,Stud,Retired,Scoring title specialist
+NBA,Bob Cousy,PG,Sneaky Stud,Retired,Early-era assist leader
+NBA,Walt Frazier,PG,Sneaky Stud,Retired,Two-way guard
+NBA,Pete Maravich,PG,Stud,Retired,Historic scoring volume
+NBA,Dominique Wilkins,SF,Stud,Retired,Elite scoring wing
+NBA,Alonzo Mourning,C,Sneaky Stud,Retired,Shot-blocking specialist
+NBA,Chris Webber,PF,Sneaky Stud,Retired,Stat-stuffing forward
+NBA,Vince Carter,SG,Stud,Retired,Longevity scoring wing
+NBA,Tracy McGrady,SG,Stud,Retired,Peak scoring outlier
+NBA,Yao Ming,C,Sneaky Stud,Retired,Efficient scoring big
+NBA,Steve Nash,PG,Stud,Retired,Elite assist/efficiency guard
+NBA,Dirk Nowitzki,PF,Stud,Retired,Stretch-big scoring archetype
+NBA,Manu Ginobili,SG,Sneaky Stud,Retired,Efficient bench-to-star wing
+NBA,Tony Parker,PG,Sneaky Stud,Retired,Slashing playmaker
+NBA,Paul Pierce,SF,Stud,Retired,Volume scoring wing
+NBA,Kevin McHale,PF,Sneaky Stud,Retired,Post-scoring efficiency big
+NBA,Robert Parish,C,Role Player,Retired,Longevity rebounding center
+NBA,James Worthy,SF,Sneaky Stud,Retired,Efficient complementary scorer
+NBA,LeBron James,SF,Stud,Active,Do-everything stat-stuffer
+NBA,Stephen Curry,PG,Stud,Active,Revolutionary 3P volume/efficiency
+NBA,Kevin Durant,SF,Stud,Active,Elite scoring efficiency at size
+NBA,Giannis Antetokounmpo,PF,Stud,Active,Downhill scoring/rebounding big
+NBA,Nikola Jokic,C,Stud,Active,Historic stat-stuffing passing center
+NBA,Joel Embiid,C,Stud,Active,Efficient high-volume scoring big
+NBA,Luka Doncic,PG,Stud,Active,Scoring/playmaking stat-stuffer
+NBA,Jayson Tatum,SF,Stud,Active,Volume scoring wing
+NBA,Damian Lillard,PG,Stud,Active,Deep-range volume scorer
+NBA,James Harden,SG,Stud,Active,High-volume efficient scorer
+NBA,Kawhi Leonard,SF,Stud,Active,Two-way efficiency wing
+NBA,Anthony Davis,PF,Stud,Active,Stat-stuffing two-way big
+NBA,Russell Westbrook,PG,Stud,Active,Triple-double stat-stuffer
+NBA,Chris Paul,PG,Stud,Active,Elite assist/steal guard
+NBA,Kyrie Irving,PG,Stud,Active,High-efficiency scoring guard
+NBA,Jimmy Butler,SF,Stud,Active,Two-way scoring wing
+NBA,Devin Booker,SG,Stud,Active,Volume scoring guard
+NBA,Trae Young,PG,Stud,Active,Elite assist/scoring guard
+NBA,Ja Morant,PG,Stud,Active,Explosive scoring/playmaking guard
+NBA,Donovan Mitchell,SG,Stud,Active,Volume scoring guard
+NBA,Anthony Edwards,SG,Stud,Active,Athletic scoring wing
+NBA,Shai Gilgeous-Alexander,PG,Stud,Active,Efficient scoring guard
+NBA,Victor Wembanyama,C,Stud,Active,Rare size/block/shooting combo
+NBA,Paolo Banchero,PF,Stud,Active,Scoring forward
+NBA,Zion Williamson,PF,Sneaky Stud,Active,Interior efficiency outlier
+NBA,Karl-Anthony Towns,C,Stud,Active,Scoring/shooting big
+NBA,Bam Adebayo,C,Sneaky Stud,Active,Two-way stat-stuffing big
+NBA,Rudy Gobert,C,Sneaky Stud,Active,Elite rebounding/shot-blocking
+NBA,Jaylen Brown,SG,Stud,Active,Volume scoring wing
+NBA,Bradley Beal,SG,Stud,Active,Volume scoring guard
+NBA,Klay Thompson,SG,Stud,Active,Elite 3P specialist
+NBA,Draymond Green,PF,Role Player,Active,Playmaking defensive forward
+NBA,Paul George,SF,Stud,Active,Two-way scoring wing
+NBA,Blake Griffin,PF,Sneaky Stud,Retired,Athletic scoring/rebounding forward
+NBA,DeMar DeRozan,SG,Stud,Active,Mid-range volume scorer
+NBA,Kemba Walker,PG,Sneaky Stud,Retired,Undersized scoring guard
+NBA,John Wall,PG,Sneaky Stud,Retired,Elite assist/speed guard
+NBA,Kyle Lowry,PG,Role Player,Retired,Gritty playmaking guard
+NBA,Al Horford,C,Role Player,Active,Stretch-big stat-stuffer
+NBA,Mike Conley,PG,Role Player,Active,Efficient steady guard
+NBA,Jrue Holiday,PG,Sneaky Stud,Active,Two-way guard
+NBA,Fred VanVleet,PG,Role Player,Active,Undrafted-to-starter guard
+NBA,Domantas Sabonis,C,Stud,Active,Stat-stuffing passing big
+NBA,De'Aaron Fox,PG,Stud,Active,Speed-scoring guard
+NBA,Zach LaVine,SG,Sneaky Stud,Active,Athletic scoring guard
+NBA,Pascal Siakam,PF,Stud,Active,Versatile scoring forward
+NBA,Jamal Murray,PG,Sneaky Stud,Active,Clutch scoring guard
+NBA,Tyrese Haliburton,PG,Stud,Active,Elite assist guard
+NBA,Evan Mobley,PF,Sneaky Stud,Active,Two-way young big
+NBA,Franz Wagner,SF,Sneaky Stud,Active,Efficient scoring wing
+NBA,Lauri Markkanen,PF,Sneaky Stud,Active,Stretch-big scorer
+NBA,Scottie Barnes,SF,Sneaky Stud,Active,Stat-stuffing wing
+NBA,Cade Cunningham,PG,Stud,Active,Scoring/playmaking guard
+NBA,Jalen Brunson,PG,Stud,Active,Undersized volume scorer
+NBA,Nikola Vucevic,C,Sneaky Stud,Active,Stat-stuffing stretch big
+NBA,Clint Capela,C,Role Player,Active,Rebounding/lob-finishing big
+NBA,Mikal Bridges,SF,Sneaky Stud,Active,3-and-D wing
+NBA,Derrick White,PG,Sneaky Stud,Active,Two-way guard
+NBA,Marcus Smart,PG,Role Player,Active,Defensive playmaking guard
+NBA,OG Anunoby,SF,Sneaky Stud,Active,3-and-D forward
+NBA,Herbert Jones,SF,Role Player,Active,Defensive specialist wing
+NBA,Jarrett Allen,C,Sneaky Stud,Active,Efficient rebounding big
+NBA,Brook Lopez,C,Role Player,Active,Shot-blocking stretch big
+NBA,Alex Caruso,PG,Role Player,Active,Undrafted defensive guard
+NBA,Josh Hart,SG,Role Player,Active,Rebounding wing
+NBA,Aaron Gordon,PF,Sneaky Stud,Active,Athletic finishing forward
+NBA,Buddy Hield,SG,Role Player,Active,Volume 3P specialist
+NBA,Malcolm Brogdon,PG,Sneaky Stud,Active,Efficient sixth-man guard
+NBA,Terry Rozier,PG,Role Player,Active,Scoring guard
+NBA,Tyus Jones,PG,Role Player,Active,Elite assist-to-turnover guard
+NBA,Jalen Williams,SG,Sneaky Stud,Active,Two-way young wing
+NBA,Desmond Bane,SG,Sneaky Stud,Active,Efficient scoring wing
+NBA,Jerami Grant,PF,Sneaky Stud,Active,Scoring forward
+NBA,Mitchell Robinson,C,Role Player,Active,Rebounding/block specialist
+NBA,Nic Claxton,C,Role Player,Active,Shot-blocking big
+NBA,Ivica Zubac,C,Role Player,Active,Rebounding center
+NBA,Jalen Duren,C,Sneaky Stud,Active,Young rebounding big
+NBA,Walker Kessler,C,Sneaky Stud,Active,Elite block-rate big
+NBA,Patrick Beverley,PG,Role Player,Retired,Defensive pest guard
+NBA,PJ Tucker,PF,Role Player,Retired,3-and-D role forward
+NBA,Andre Iguodala,SF,Role Player,Retired,Playmaking defensive wing
+NBA,Shane Battier,SF,Role Player,Retired,Analytics-era 3-and-D wing
+NBA,Bruce Bowen,SF,Role Player,Retired,Defensive specialist
+NBA,Robert Horry,PF,Role Player,Retired,Clutch role-player archetype
+NBA,Tony Allen,SG,Role Player,Retired,Defensive stopper guard
+NBA,JJ Redick,SG,Role Player,Retired,Movement 3P specialist
+NBA,Kyle Korver,SF,Role Player,Retired,Elite catch-and-shoot specialist
+NBA,Danny Green,SG,Role Player,Retired,3-and-D role wing
+NBA,Trevor Ariza,SF,Role Player,Retired,3-and-D wing
+NBA,Steven Adams,C,Role Player,Active,Offensive rebounding specialist
+NBA,JaVale McGee,C,Role Player,Retired,Lob-finishing big
+NBA,Montrezl Harrell,C,Role Player,Active,Energy scoring big
+NBA,Taj Gibson,PF,Role Player,Retired,Defensive role big
+NBA,Derrick Favors,PF,Role Player,Retired,Rebounding role big
+NBA,Marcus Morris,PF,Role Player,Active,Scoring role forward
+NBA,Dwight Powell,C,Role Player,Active,Rolling big role player
+NBA,Grant Hill,SF,Stud,Retired,All-around wing before injuries
+NBA,Baron Davis,PG,Sneaky Stud,Retired,Explosive scoring guard
+NBA,Stephon Marbury,PG,Sneaky Stud,Retired,Volume scoring guard
+NBA,Vin Baker,PF,Sneaky Stud,Retired,Early-career stat-stuffer
+NBA,Shawn Marion,SF,Sneaky Stud,Retired,Stat-stuffing athletic wing
+NBA,Antawn Jamison,PF,Sneaky Stud,Retired,Volume scoring forward
+NBA,Elton Brand,PF,Sneaky Stud,Retired,Efficient scoring big
+NBA,Jermaine O'Neal,C,Sneaky Stud,Retired,Shot-blocking scoring big
+NBA,Ben Wallace,C,Role Player,Retired,Elite rebounding/defense low scoring
+NBA,Marcus Camby,C,Role Player,Retired,Shot-blocking specialist
+NBA,Theo Ratliff,C,Role Player,Retired,Shot-blocking specialist
+NBA,Manute Bol,C,Role Player,Retired,Extreme height block specialist
+NBA,Muggsy Bogues,PG,Role Player,Retired,Shortest-ever assist specialist
+NBA,Dikembe Mutombo,C,Sneaky Stud,Retired,Elite shot-blocking anchor
+NBA,Larry Nance Jr,PF,Role Player,Active,Energy rebounding forward
+NBA,Naz Reid,C,Role Player,Active,Efficient bench scoring big
+NBA,Bobby Portis,PF,Role Player,Active,Energy scoring/rebounding forward
+NBA,Kelly Olynyk,C,Role Player,Active,Stretch-big passer
+NBA,Kevin Love,PF,Sneaky Stud,Active,Stat-stuffing stretch big
+NBA,DeMarcus Cousins,C,Sneaky Stud,Active,Stat-stuffing scoring big
+NBA,Andre Drummond,C,Role Player,Active,Elite offensive-rebounding specialist
+NBA,Marc Gasol,C,Sneaky Stud,Retired,Passing/defense stat-stuffing big
+NBA,Pau Gasol,PF,Sneaky Stud,Retired,Skilled scoring/rebounding big
+NBA,Zach Randolph,PF,Sneaky Stud,Retired,Post-scoring rebounding forward
+NBA,LaMarcus Aldridge,PF,Sneaky Stud,Retired,Mid-range scoring big
+NBA,Amar'e Stoudemire,PF,Sneaky Stud,Retired,Athletic scoring big
+NBA,Carmelo Anthony,SF,Stud,Retired,Elite volume scoring forward
+NBA,Joe Johnson,SG,Sneaky Stud,Retired,Clutch volume scorer
+NBA,Monta Ellis,SG,Sneaky Stud,Retired,High-volume undersized scorer
+NBA,Jamal Crawford,SG,Role Player,Retired,Instant-offense bench scorer
+NBA,Lou Williams,SG,Role Player,Retired,Elite Sixth Man scorer
+NBA,Jordan Clarkson,SG,Role Player,Active,Bench scoring guard
+NBA,CJ McCollum,SG,Sneaky Stud,Active,Volume scoring guard
+NBA,Bogdan Bogdanovic,SG,Role Player,Active,3P role scorer
+NBA,Bojan Bogdanovic,SF,Role Player,Active,Volume scoring wing
+NBA,Nicolas Batum,SF,Role Player,Active,3-and-D role wing
+NBA,Danilo Gallinari,PF,Role Player,Active,Stretch-scoring forward
+NBA,Wendell Carter Jr,C,Role Player,Active,Rebounding/passing big
+NBA,Jonas Valanciunas,C,Role Player,Active,Rebounding scoring big
+NBA,Deandre Ayton,C,Sneaky Stud,Active,Efficient scoring big
+NBA,Myles Turner,C,Sneaky Stud,Active,Shot-blocking stretch big
+NBA,Jaren Jackson Jr,PF,Stud,Active,Elite shot-blocking scoring big
+NBA,Anfernee Simons,SG,Sneaky Stud,Active,Volume scoring guard
+NBA,RJ Barrett,SG,Role Player,Active,Volume scoring wing
+NBA,Jalen Green,SG,Sneaky Stud,Active,Athletic scoring guard
+NBA,Keegan Murray,SF,Role Player,Active,3-and-D scoring forward
+NBA,Chet Holmgren,C,Stud,Active,Stretch shot-blocking big
+NBA,Jabari Smith Jr,PF,Role Player,Active,Stretch-scoring forward
+NFL,Tom Brady,QB,Stud,Retired,All-time passing volume/wins
+NFL,Peyton Manning,QB,Stud,Retired,Efficient high-volume passer
+NFL,Joe Montana,QB,Stud,Retired,Clutch efficient passer
+NFL,Jerry Rice,WR,Stud,Retired,All-time receiving yardage
+NFL,Walter Payton,RB,Stud,Retired,Volume/efficiency rusher
+NFL,Barry Sanders,RB,Stud,Retired,Elite yards-per-carry rusher
+NFL,Emmitt Smith,RB,Stud,Retired,All-time rushing yardage
+NFL,Lawrence Taylor,LB,Stud,Retired,Elite pass-rushing linebacker
+NFL,Reggie White,DE,Stud,Retired,Elite sack specialist
+NFL,Deion Sanders,CB,Stud,Retired,Shutdown coverage corner
+NFL,Brett Favre,QB,Stud,Retired,Gunslinger volume passer
+NFL,John Elway,QB,Stud,Retired,Elite arm-talent passer
+NFL,Dan Marino,QB,Stud,Retired,Pure passing volume record-holder
+NFL,Terrell Owens,WR,Stud,Retired,Volume/TD receiver
+NFL,Randy Moss,WR,Stud,Retired,Elite deep-threat receiver
+NFL,Marshall Faulk,RB,Stud,Retired,Dual-threat rushing/receiving back
+NFL,LaDainian Tomlinson,RB,Stud,Retired,Elite TD-scoring back
+NFL,Adrian Peterson,RB,Stud,Retired,Elite yards-per-carry power back
+NFL,Ray Lewis,LB,Stud,Retired,Tackle-leading defensive anchor
+NFL,Troy Polamalu,S,Stud,Retired,Playmaking free safety
+NFL,Ed Reed,S,Stud,Retired,Elite interception safety
+NFL,Champ Bailey,CB,Stud,Retired,Shutdown corner
+NFL,Darrell Green,CB,Sneaky Stud,Retired,Longevity elite corner
+NFL,Bruce Smith,DE,Stud,Retired,All-time sack leader
+NFL,Junior Seau,LB,Stud,Retired,Tackle-machine linebacker
+NFL,Michael Strahan,DE,Stud,Retired,Single-season sack record
+NFL,Jason Taylor,DE,Sneaky Stud,Retired,Elite pass-rush specialist
+NFL,Warren Sapp,DT,Stud,Retired,Interior pass-rush anomaly
+NFL,Aaron Donald,DT,Stud,Retired,Dominant interior pass-rusher
+NFL,J.J. Watt,DE,Stud,Retired,Elite sack/tackle-for-loss lineman
+NFL,Von Miller,LB,Stud,Active,Elite pass-rush specialist
+NFL,Calvin Johnson,WR,Stud,Retired,Peak yardage-per-season outlier
+NFL,Larry Fitzgerald,WR,Stud,Retired,Volume possession receiver
+NFL,Andre Johnson,WR,Sneaky Stud,Retired,Volume possession receiver
+NFL,Marvin Harrison,WR,Stud,Retired,Efficient volume receiver
+NFL,Cris Carter,WR,Sneaky Stud,Retired,Red-zone TD specialist
+NFL,Tim Brown,WR,Sneaky Stud,Retired,Longevity possession receiver
+NFL,Steve Largent,WR,Sneaky Stud,Retired,Early-era efficiency receiver
+NFL,Michael Irvin,WR,Sneaky Stud,Retired,Volume possession receiver
+NFL,Isaac Bruce,WR,Sneaky Stud,Retired,Deep-threat volume receiver
+NFL,Torry Holt,WR,Sneaky Stud,Retired,Volume yardage receiver
+NFL,Tony Gonzalez,TE,Stud,Retired,All-time TE receiving numbers
+NFL,Antonio Gates,TE,Sneaky Stud,Retired,Undrafted-to-elite TE
+NFL,Rob Gronkowski,TE,Stud,Retired,Dominant TD-scoring TE
+NFL,Shannon Sharpe,TE,Sneaky Stud,Retired,Pass-catching TE pioneer
+NFL,Jason Witten,TE,Sneaky Stud,Retired,Volume possession TE
+NFL,Drew Brees,QB,Stud,Retired,All-time completion/yardage volume
+NFL,Aaron Rodgers,QB,Stud,Active,Elite TD-to-INT efficiency
+NFL,Ben Roethlisberger,QB,Stud,Retired,Volume gunslinger passer
+NFL,Philip Rivers,QB,Sneaky Stud,Retired,High-volume efficient passer
+NFL,Eli Manning,QB,Sneaky Stud,Retired,Clutch volume passer
+NFL,Kurt Warner,QB,Sneaky Stud,Retired,Undrafted-to-elite passer
+NFL,Steve Young,QB,Stud,Retired,Elite rushing/passing QB
+NFL,Troy Aikman,QB,Sneaky Stud,Retired,Efficient winning passer
+NFL,Fran Tarkenton,QB,Sneaky Stud,Retired,Early-era scrambling passer
+NFL,Roger Staubach,QB,Sneaky Stud,Retired,Clutch efficient passer
+NFL,Patrick Mahomes,QB,Stud,Active,Elite scoring/passing efficiency
+NFL,Josh Allen,QB,Stud,Active,Dual-threat scoring QB
+NFL,Justin Herbert,QB,Stud,Active,Elite arm-talent passer
+NFL,Joe Burrow,QB,Stud,Active,Efficient high-volume passer
+NFL,Lamar Jackson,QB,Stud,Active,Elite rushing QB outlier
+NFL,Jalen Hurts,QB,Stud,Active,Dual-threat TD-scoring QB
+NFL,Dak Prescott,QB,Stud,Active,Volume efficient passer
+NFL,Christian McCaffrey,RB,Stud,Active,Dual-threat rushing/receiving back
+NFL,Derrick Henry,RB,Stud,Active,Power volume rusher
+NFL,Saquon Barkley,RB,Stud,Active,Explosive dual-threat back
+NFL,Nick Chubb,RB,Sneaky Stud,Active,Elite yards-per-carry back
+NFL,Alvin Kamara,RB,Sneaky Stud,Active,Dual-threat scoring back
+NFL,Ezekiel Elliott,RB,Sneaky Stud,Active,Volume workhorse back
+NFL,Jonathan Taylor,RB,Stud,Active,Elite TD-scoring back
+NFL,Bijan Robinson,RB,Stud,Active,Explosive dual-threat back
+NFL,Justin Jefferson,WR,Stud,Active,Elite yardage receiver
+NFL,Ja'Marr Chase,WR,Stud,Active,Elite volume/TD receiver
+NFL,Tyreek Hill,WR,Stud,Active,Elite speed/yardage receiver
+NFL,CeeDee Lamb,WR,Stud,Active,Volume possession receiver
+NFL,Davante Adams,WR,Stud,Active,Elite route-runner receiver
+NFL,Stefon Diggs,WR,Sneaky Stud,Active,Volume possession receiver
+NFL,DeAndre Hopkins,WR,Sneaky Stud,Active,Contested-catch specialist
+NFL,A.J. Brown,WR,Stud,Active,Yards-per-catch outlier
+NFL,Amon-Ra St. Brown,WR,Sneaky Stud,Active,High-target-share receiver
+NFL,Puka Nacua,WR,Sneaky Stud,Active,Rookie-record volume receiver
+NFL,Travis Kelce,TE,Stud,Active,Elite volume receiving TE
+NFL,George Kittle,TE,Sneaky Stud,Active,Blocking/receiving dual-threat TE
+NFL,Mark Andrews,TE,Sneaky Stud,Active,Red-zone TE specialist
+NFL,T.J. Watt,LB,Stud,Active,Elite sack specialist
+NFL,Myles Garrett,DE,Stud,Active,Elite pass-rush specialist
+NFL,Nick Bosa,DE,Stud,Active,Elite sack producer
+NFL,Micah Parsons,LB,Stud,Active,Versatile pass-rush linebacker
+NFL,Aidan Hutchinson,DE,Sneaky Stud,Active,Young pass-rush specialist
+NFL,Trevon Diggs,CB,Sneaky Stud,Active,High-volume interception corner
+NFL,Sauce Gardner,CB,Stud,Active,Shutdown young corner
+NFL,Jalen Ramsey,CB,Stud,Active,Shutdown versatile corner
+NFL,Patrick Surtain II,CB,Stud,Active,Shutdown coverage corner
+NFL,Fred Warner,LB,Sneaky Stud,Active,Tackle-leading linebacker
+NFL,Roquan Smith,LB,Sneaky Stud,Active,Tackle-leading linebacker
+NFL,Tyler Lockett,WR,Role Player,Active,Efficient possession receiver
+NFL,DK Metcalf,WR,Sneaky Stud,Active,Size-speed outlier receiver
+NFL,Terry McLaurin,WR,Sneaky Stud,Active,Consistent volume receiver
+NFL,Chris Godwin,WR,Role Player,Active,Slot possession receiver
+NFL,Mike Evans,WR,Stud,Active,Consecutive 1000-yard streak receiver
+NFL,Keenan Allen,WR,Sneaky Stud,Active,Route-running possession receiver
+NFL,DeVonta Smith,WR,Sneaky Stud,Active,Efficient possession receiver
+NFL,Brandon Aiyuk,WR,Sneaky Stud,Active,Big-play possession receiver
+NFL,Jaylen Waddle,WR,Sneaky Stud,Active,Speed-threat receiver
+NFL,James Cook,RB,Role Player,Active,Efficient rotational back
+NFL,Rachaad White,RB,Role Player,Active,Dual-threat rotational back
+NFL,Kenneth Walker III,RB,Sneaky Stud,Active,Efficient young back
+NFL,Isiah Pacheco,RB,Role Player,Active,Physical rotational back
+NFL,Tony Pollard,RB,Role Player,Active,Change-of-pace back
+NFL,Josh Jacobs,RB,Sneaky Stud,Active,Volume workhorse back
+NFL,Rhamondre Stevenson,RB,Role Player,Active,Dual-threat rotational back
+NFL,David Montgomery,RB,Role Player,Active,Volume goal-line back
+NFL,Javonte Williams,RB,Role Player,Active,Rotational back
+NFL,Breece Hall,RB,Sneaky Stud,Active,Explosive young back
+NFL,De'Von Achane,RB,Sneaky Stud,Active,Elite yards-per-touch back
+NFL,Kyle Juszczyk,FB,Role Player,Active,Pass-catching fullback
+NFL,James White,RB,Role Player,Retired,Receiving-specialist back
+NFL,Danny Amendola,WR,Role Player,Retired,Slot possession receiver
+NFL,Julian Edelman,WR,Sneaky Stud,Retired,Undersized volume slot receiver
+NFL,Wes Welker,WR,Sneaky Stud,Retired,Elite slot-receiver volume
+NFL,Cole Beasley,WR,Role Player,Retired,Slot possession receiver
+NFL,Jason Peters,OT,Role Player,Retired,Longevity offensive tackle
+NFL,Zack Martin,OG,Sneaky Stud,Active,Elite run-blocking guard
+NFL,Quenton Nelson,OG,Sneaky Stud,Active,Elite pass-protection guard
+NFL,David Bakhtiari,OT,Role Player,Active,Elite pass-protection tackle
+NFL,Jason Kelce,C,Sneaky Stud,Retired,Elite run-blocking center
+NFL,Cameron Heyward,DT,Sneaky Stud,Active,Interior pass-rush anchor
+NFL,Calais Campbell,DE,Role Player,Active,Longevity pass-rush lineman
+NFL,Chandler Jones,DE,Sneaky Stud,Active,Elite sack producer
+NFL,Khalil Mack,LB,Stud,Active,Elite dual-threat pass-rusher
+NFL,DeMarcus Lawrence,DE,Role Player,Active,Consistent pass-rush lineman
+NFL,Brian Burns,DE,Sneaky Stud,Active,Young pass-rush specialist
+NFL,Haason Reddick,LB,Sneaky Stud,Active,Sack-specialist linebacker
+NFL,Matt Judon,LB,Role Player,Active,Consistent sack producer
+NFL,Bobby Wagner,LB,Sneaky Stud,Active,Tackle-machine linebacker
+NFL,Luke Kuechly,LB,Stud,Retired,Elite tackle-producing linebacker
+NFL,Patrick Willis,LB,Stud,Retired,Elite early-career tackler
+NFL,NaVorro Bowman,LB,Sneaky Stud,Retired,Tackle-leading linebacker
+NFL,Zach Cunningham,LB,Role Player,Active,Tackle-volume linebacker
+NFL,Lavonte David,LB,Sneaky Stud,Active,Underrated tackle producer
+NFL,Devin White,LB,Role Player,Active,Sideline-to-sideline linebacker
+NFL,Foyesade Oluokun,LB,Sneaky Stud,Active,Tackle-volume linebacker
+NFL,Justin Tucker,K,Sneaky Stud,Active,Elite accuracy kicker
+NFL,Adam Vinatieri,K,Sneaky Stud,Retired,Clutch longevity kicker
+NFL,Shane Lechler,P,Role Player,Retired,Elite punting specialist
+NFL,Xavien Howard,CB,Role Player,Active,Interception-volume corner
+NFL,Marlon Humphrey,CB,Sneaky Stud,Active,Versatile shutdown corner
+NFL,Derwin James,S,Sneaky Stud,Active,Do-everything safety
+NFL,Minkah Fitzpatrick,S,Sneaky Stud,Active,Ball-hawking safety
+NFL,Budda Baker,S,Role Player,Active,Tackle-volume safety
+NFL,Odell Beckham Jr,WR,Sneaky Stud,Active,Highlight-reel possession receiver
+NFL,Antonio Brown,WR,Stud,Retired,Elite volume receiver
+NFL,Le'Veon Bell,RB,Sneaky Stud,Retired,Dual-threat workhorse back
+NFL,Frank Gore,RB,Sneaky Stud,Retired,Longevity volume rusher
+NFL,Marshawn Lynch,RB,Sneaky Stud,Retired,Power volume rusher
+NFL,LeSean McCoy,RB,Sneaky Stud,Retired,Elusive dual-threat back
+NFL,DeMarco Murray,RB,Role Player,Retired,Single-season volume rusher
+NFL,Matt Forte,RB,Sneaky Stud,Retired,Dual-threat consistent back
+NFL,Jamaal Charles,RB,Sneaky Stud,Retired,Elite yards-per-carry back
+NFL,Arian Foster,RB,Sneaky Stud,Retired,Undrafted volume rusher
+NFL,Steven Jackson,RB,Role Player,Retired,Volume workhorse back
+NFL,Clinton Portis,RB,Sneaky Stud,Retired,Volume TD-scoring back
+NFL,Priest Holmes,RB,Sneaky Stud,Retired,Elite TD-scoring back
+NFL,Shaun Alexander,RB,Sneaky Stud,Retired,Volume TD-scoring back
+NFL,Edgerrin James,RB,Sneaky Stud,Retired,Volume workhorse back
+NFL,Jamal Lewis,RB,Role Player,Retired,Power volume rusher
+NFL,Corey Dillon,RB,Sneaky Stud,Retired,Power volume rusher
+NFL,Ricky Williams,RB,Sneaky Stud,Retired,Volume workhorse back
+NFL,Fred Taylor,RB,Role Player,Retired,Efficient volume back
+NFL,Warrick Dunn,RB,Role Player,Retired,Dual-threat smaller back
+NFL,Curtis Martin,RB,Stud,Retired,Elite career rushing volume
+NFL,Thurman Thomas,RB,Sneaky Stud,Retired,Dual-threat workhorse back
+NFL,Marcus Allen,RB,Stud,Retired,Elite TD-scoring versatile back
+NFL,Eric Dickerson,RB,Stud,Retired,Single-season rushing record
+NFL,Jim Brown,RB,Stud,Retired,Elite yards-per-carry legend
+NFL,Franco Harris,RB,Sneaky Stud,Retired,Volume playoff-era back
+NFL,Tony Dorsett,RB,Sneaky Stud,Retired,Elite yards-per-carry back
+NFL,Earl Campbell,RB,Stud,Retired,Power volume rusher
+NFL,O.J. Simpson,RB,Stud,Retired,Single-season rushing record
+MLB,Babe Ruth,OF,Stud,Retired,Power/average outlier for his era
+MLB,Hank Aaron,OF,Stud,Retired,All-time home run volume
+MLB,Willie Mays,OF,Stud,Retired,Five-tool stat-stuffer
+MLB,Ted Williams,OF,Stud,Retired,Elite career batting average
+MLB,Lou Gehrig,1B,Stud,Retired,Power/average stat-stuffer
+MLB,Ty Cobb,OF,Stud,Retired,All-time batting average leader
+MLB,Barry Bonds,OF,Stud,Retired,Single-season/career HR records
+MLB,Mickey Mantle,OF,Stud,Retired,Power/speed switch-hitter
+MLB,Stan Musial,OF,Stud,Retired,Consistent volume/average hitter
+MLB,Jackie Robinson,2B,Sneaky Stud,Retired,Speed/average infielder
+MLB,Cal Ripken Jr,SS,Stud,Retired,Durability/power shortstop
+MLB,Derek Jeter,SS,Stud,Retired,Volume hits shortstop
+MLB,Nolan Ryan,P,Stud,Retired,All-time strikeout volume
+MLB,Sandy Koufax,P,Stud,Retired,Peak dominance short career
+MLB,Bob Gibson,P,Stud,Retired,Elite ERA/strikeout pitcher
+MLB,Greg Maddux,P,Stud,Retired,Elite control low walk rate
+MLB,Randy Johnson,P,Stud,Retired,Elite strikeout-rate pitcher
+MLB,Pedro Martinez,P,Stud,Retired,Peak ERA/strikeout outlier
+MLB,Roger Clemens,P,Stud,Retired,Volume strikeout pitcher
+MLB,Tom Seaver,P,Sneaky Stud,Retired,Consistent strikeout pitcher
+MLB,Cy Young,P,Stud,Retired,All-time wins volume
+MLB,Walter Johnson,P,Stud,Retired,Early-era strikeout leader
+MLB,Christy Mathewson,P,Sneaky Stud,Retired,Elite control-era pitcher
+MLB,Rickey Henderson,OF,Stud,Retired,All-time stolen base leader
+MLB,Frank Robinson,OF,Stud,Retired,Power/average outfielder
+MLB,Reggie Jackson,OF,Sneaky Stud,Retired,Power/strikeout slugger
+MLB,Mike Schmidt,3B,Stud,Retired,Elite power third baseman
+MLB,George Brett,3B,Stud,Retired,Elite batting-average third baseman
+MLB,Wade Boggs,3B,Sneaky Stud,Retired,Elite contact/average hitter
+MLB,Tony Gwynn,OF,Stud,Retired,Elite career batting average
+MLB,Rod Carew,2B,Sneaky Stud,Retired,Elite contact-hitting infielder
+MLB,Ken Griffey Jr,OF,Stud,Retired,Power/efficiency outfielder
+MLB,Alex Rodriguez,SS,Stud,Retired,Power/average shortstop-3B
+MLB,Manny Ramirez,OF,Stud,Retired,Elite power/average hitter
+MLB,David Ortiz,DH,Stud,Retired,Power DH specialist
+MLB,Albert Pujols,1B,Stud,Retired,Volume power/average first baseman
+MLB,Chipper Jones,3B,Sneaky Stud,Retired,Switch-hitting power/average
+MLB,Ivan Rodriguez,C,Sneaky Stud,Retired,Power/defense catcher
+MLB,Mariano Rivera,P,Stud,Retired,All-time saves leader
+MLB,Ozzie Smith,SS,Role Player,Retired,Elite defense low power shortstop
+MLB,Ernie Banks,SS,Sneaky Stud,Retired,Power-hitting shortstop
+MLB,Willie McCovey,1B,Sneaky Stud,Retired,Power-hitting first baseman
+MLB,Harmon Killebrew,1B,Sneaky Stud,Retired,Elite home run rate hitter
+MLB,Frank Thomas,1B,Sneaky Stud,Retired,Power/average first baseman-DH
+MLB,Jeff Bagwell,1B,Sneaky Stud,Retired,Power/speed first baseman
+MLB,Craig Biggio,2B,Sneaky Stud,Retired,Volume hits second baseman
+MLB,Roberto Clemente,OF,Stud,Retired,Elite average/arm outfielder
+MLB,Yogi Berra,C,Sneaky Stud,Retired,Contact-hitting catcher
+MLB,Johnny Bench,C,Stud,Retired,Power-hitting defensive catcher
+MLB,Shohei Ohtani,DH,Stud,Active,Two-way power/pitching outlier
+MLB,Aaron Judge,OF,Stud,Active,Elite power/size outfielder
+MLB,Mike Trout,OF,Stud,Active,Five-tool stat-stuffer
+MLB,Mookie Betts,OF,Stud,Active,Power/speed/defense outfielder
+MLB,Juan Soto,OF,Stud,Active,Elite plate-discipline hitter
+MLB,Ronald Acuna Jr,OF,Stud,Active,Power/speed 40-40 outfielder
+MLB,Fernando Tatis Jr,SS,Stud,Active,Power/speed shortstop
+MLB,Freddie Freeman,1B,Stud,Active,Elite contact/power first baseman
+MLB,Jose Altuve,2B,Sneaky Stud,Active,Undersized power/average infielder
+MLB,Bryce Harper,OF,Stud,Active,Power-hitting outfielder-1B
+MLB,Manny Machado,3B,Stud,Active,Power/defense third baseman
+MLB,Francisco Lindor,SS,Stud,Active,Power/defense shortstop
+MLB,Corey Seager,SS,Sneaky Stud,Active,Power-hitting shortstop
+MLB,Vladimir Guerrero Jr,1B,Stud,Active,Elite contact/power first baseman
+MLB,Bo Bichette,SS,Sneaky Stud,Active,Volume hits shortstop
+MLB,Julio Rodriguez,OF,Stud,Active,Power/speed young outfielder
+MLB,Yordan Alvarez,DH,Stud,Active,Elite power DH
+MLB,Kyle Tucker,OF,Sneaky Stud,Active,Power/speed/average outfielder
+MLB,Corbin Carroll,OF,Sneaky Stud,Active,Power/speed young outfielder
+MLB,Gunnar Henderson,SS,Stud,Active,Young power shortstop
+MLB,Bobby Witt Jr,SS,Stud,Active,Power/speed shortstop
+MLB,Elly De La Cruz,SS,Sneaky Stud,Active,Elite speed/power shortstop
+MLB,Jackson Chourio,OF,Sneaky Stud,Active,Young power/speed outfielder
+MLB,Jazz Chisholm Jr,2B,Sneaky Stud,Active,Power/speed infielder-OF
+MLB,Matt Olson,1B,Sneaky Stud,Active,Power-hitting first baseman
+MLB,Pete Alonso,1B,Sneaky Stud,Active,Elite home run rate first baseman
+MLB,Paul Goldschmidt,1B,Sneaky Stud,Active,Consistent power/average
+MLB,Nolan Arenado,3B,Stud,Active,Power/defense third baseman
+MLB,Trea Turner,SS,Sneaky Stud,Active,Power/speed shortstop
+MLB,Xander Bogaerts,SS,Sneaky Stud,Active,Contact/power shortstop
+MLB,Jacob deGrom,P,Stud,Active,Elite ERA/strikeout-rate pitcher
+MLB,Gerrit Cole,P,Stud,Active,Elite strikeout-volume pitcher
+MLB,Spencer Strider,P,Sneaky Stud,Active,Elite strikeout-rate pitcher
+MLB,Corbin Burnes,P,Sneaky Stud,Active,Elite control/strikeout pitcher
+MLB,Zack Wheeler,P,Sneaky Stud,Active,Consistent volume pitcher
+MLB,Max Scherzer,P,Stud,Active,Elite strikeout-volume pitcher
+MLB,Justin Verlander,P,Stud,Active,Longevity strikeout pitcher
+MLB,Clayton Kershaw,P,Stud,Active,Elite ERA/control pitcher
+MLB,Shane Bieber,P,Sneaky Stud,Active,Elite strikeout-rate pitcher
+MLB,Dylan Cease,P,Sneaky Stud,Active,High-strikeout volatile pitcher
+MLB,Emmanuel Clase,P,Sneaky Stud,Active,Elite closer save-rate
+MLB,Josh Hader,P,Sneaky Stud,Active,Elite strikeout-rate reliever
+MLB,Edwin Diaz,P,Sneaky Stud,Active,Elite strikeout-rate closer
+MLB,Ketel Marte,2B,Sneaky Stud,Active,Underrated contact/power infielder
+MLB,Willy Adames,SS,Role Player,Active,Power-hitting shortstop
+MLB,Marcus Semien,2B,Sneaky Stud,Active,Durable power/speed infielder
+MLB,Luis Robert Jr,OF,Sneaky Stud,Active,Power/speed outfielder
+MLB,Steven Kwan,OF,Role Player,Active,Elite contact low-power outfielder
+MLB,Andres Gimenez,2B,Role Player,Active,Defense-first infielder
+MLB,Nico Hoerner,2B,Role Player,Active,Contact/speed infielder
+MLB,Brandon Nimmo,OF,Role Player,Active,High on-base outfielder
+MLB,Ian Happ,OF,Role Player,Active,Power/patience outfielder
+MLB,Christian Yelich,OF,Sneaky Stud,Active,Power/speed/average outfielder
+MLB,Kyle Schwarber,DH,Role Player,Active,Power-only three-true-outcomes hitter
+MLB,J.D. Martinez,DH,Sneaky Stud,Active,Power-hitting DH
+MLB,Anthony Santander,OF,Role Player,Active,Power-hitting outfielder
+MLB,Adley Rutschman,C,Sneaky Stud,Active,Power/contact catcher
+MLB,Salvador Perez,C,Sneaky Stud,Active,Durable power-hitting catcher
+MLB,William Contreras,C,Role Player,Active,Power-hitting catcher
+MLB,Cal Raleigh,C,Sneaky Stud,Active,Power-hitting catcher
+MLB,Willson Contreras,C,Role Player,Active,Power-hitting catcher
+MLB,Michael Harris II,OF,Sneaky Stud,Active,Power/speed young outfielder
+MLB,Ha-Seong Kim,SS,Role Player,Active,Defense-first utility infielder
+MLB,Jeremy Pena,SS,Role Player,Active,Defense-first shortstop
+MLB,Isaac Paredes,3B,Role Player,Active,Pull-power hitting infielder
+MLB,Ozzie Albies,2B,Sneaky Stud,Active,Power/speed second baseman
+MLB,Austin Riley,3B,Sneaky Stud,Active,Power-hitting third baseman
+MLB,Randy Arozarena,OF,Role Player,Active,Postseason power/speed outfielder
+MLB,Yandy Diaz,1B,Role Player,Active,Elite contact low-power infielder
+MLB,Alex Bregman,3B,Sneaky Stud,Active,Power/contact third baseman
+MLB,Jim Thome,1B,Sneaky Stud,Retired,Elite home run rate hitter
+MLB,Sammy Sosa,OF,Sneaky Stud,Retired,Power-hitting outfielder
+MLB,Mark McGwire,1B,Sneaky Stud,Retired,Elite home run rate first baseman
+MLB,Rafael Palmeiro,1B,Role Player,Retired,Volume power/average first baseman
+MLB,Fred McGriff,1B,Role Player,Retired,Consistent power first baseman
+MLB,Vladimir Guerrero Sr,OF,Stud,Retired,Free-swinging power/average hitter
+MLB,Gary Sheffield,OF,Sneaky Stud,Retired,Power-hitting outfielder
+MLB,Larry Walker,OF,Sneaky Stud,Retired,Power/average/defense outfielder
+MLB,Edgar Martinez,DH,Sneaky Stud,Retired,Elite career batting average DH
+MLB,Jeff Kent,2B,Sneaky Stud,Retired,Power-hitting second baseman
+MLB,Kenny Lofton,OF,Role Player,Retired,Speed/contact outfielder
+MLB,Andruw Jones,OF,Sneaky Stud,Retired,Power/defense outfielder
+MLB,Bernie Williams,OF,Role Player,Retired,Contact/power outfielder
+MLB,Barry Larkin,SS,Sneaky Stud,Retired,Power/speed shortstop
+MLB,Alan Trammell,SS,Role Player,Retired,Contact/defense shortstop
+MLB,Robin Yount,SS,Sneaky Stud,Retired,Volume hits shortstop-OF
+MLB,Paul Molitor,3B,Role Player,Retired,Volume hits infielder
+MLB,Kirby Puckett,OF,Sneaky Stud,Retired,Contact/power outfielder
+MLB,Eddie Murray,1B,Sneaky Stud,Retired,Switch-hitting power/average
+MLB,Dave Winfield,OF,Role Player,Retired,Volume power/average outfielder
+MLB,Andre Dawson,OF,Sneaky Stud,Retired,Power/speed outfielder
+MLB,Tim Raines,OF,Sneaky Stud,Retired,Elite stolen-base outfielder
+MLB,Roy Halladay,P,Stud,Retired,Elite control/complete-game pitcher
+MLB,John Smoltz,P,Sneaky Stud,Retired,Starter/closer dual-role pitcher
+MLB,Curt Schilling,P,Sneaky Stud,Retired,Elite strikeout-to-walk pitcher
+MLB,Mike Mussina,P,Role Player,Retired,Consistent control pitcher
+MLB,David Cone,P,Role Player,Retired,Strikeout-volume pitcher
+MLB,Orel Hershiser,P,Role Player,Retired,Elite scoreless-innings streak
+MLB,Dennis Eckersley,P,Sneaky Stud,Retired,Starter-to-closer conversion
+MLB,Rollie Fingers,P,Role Player,Retired,Early-era saves specialist
+MLB,Trevor Hoffman,P,Sneaky Stud,Retired,Elite career saves total
+MLB,Billy Wagner,P,Sneaky Stud,Retired,Elite strikeout-rate closer
+MLB,Craig Kimbrel,P,Sneaky Stud,Active,Elite strikeout-rate closer
+MLB,Aroldis Chapman,P,Sneaky Stud,Active,Elite velocity/strikeout reliever
+MLB,Kenley Jansen,P,Role Player,Active,Consistent saves closer
+MLB,Framber Valdez,P,Role Player,Active,Ground-ball control pitcher
+MLB,Logan Webb,P,Sneaky Stud,Active,Ground-ball strikeout pitcher
+MLB,Tarik Skubal,P,Stud,Active,Elite strikeout/control pitcher
+MLB,Paul Skenes,P,Stud,Active,Elite velocity rookie pitcher

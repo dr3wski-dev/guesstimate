@@ -4,27 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guesstimate — Scatter Prototype</title>
+<script>
+// Applied synchronously, before CSS paints, so a returning player with a saved
+// dark-mode preference doesn't see a flash of the light theme first.
+(function(){
+  try{
+    var t = localStorage.getItem('guesstimate_theme');
+    if(t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  }catch(e){}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper: #f2efe4; --paper-2: #e9e4d4;
-    --ink: #1b1810; --ink-soft: #55503f; --ink-faint: #5f5946;
+    --ink: #1b1810; --ink-rgb: 27,24,16; --ink-soft: #55503f; --ink-faint: #5f5946;
     --line: rgba(27,24,16,0.18);
     --accent: #f0b429;
     --good: #1e6a41; --good-bg: #e4f3ea;
     --mid: #c88a00; --bad: #b53a2e;
     --guess: #2f5fd6;
   }
+  /* Dark palette applies automatically for players whose OS is set to dark mode
+     (unless they've explicitly picked light via the toggle), and always applies
+     once data-theme="dark" is set explicitly. Mostly a straight paper/ink swap
+     to keep the same retro-paper look; good/mid/bad/guess get brightened a touch
+     since the muted light-mode versions read as too dark against a dark page. */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #17140f; --paper-2: #211d16;
+      --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
+      --line: rgba(242,237,224,0.18);
+      --good: #3ddc84; --good-bg: rgba(61,220,132,0.15);
+      --mid: #e0a83c; --bad: #ff6b57;
+      --guess: #6d93ff;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #17140f; --paper-2: #211d16;
+    --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
+    --line: rgba(242,237,224,0.18);
+    --good: #3ddc84; --good-bg: rgba(61,220,132,0.15);
+    --mid: #e0a83c; --bad: #ff6b57;
+    --guess: #6d93ff;
+  }
   *{box-sizing:border-box;}
   body{
     margin:0; min-height:100vh;
     background:var(--paper);
-    background-image:repeating-linear-gradient(0deg, rgba(27,24,16,0.025) 0px, rgba(27,24,16,0.025) 1px, transparent 1px, transparent 3px);
+    background-image:repeating-linear-gradient(0deg, rgba(var(--ink-rgb),0.025) 0px, rgba(var(--ink-rgb),0.025) 1px, transparent 1px, transparent 3px);
     color:var(--ink); font-family:'Work Sans', sans-serif;
     display:flex; align-items:center; justify-content:center; padding:5vh 5vw;
   }
+  .theme-toggle{
+    position:fixed; top:16px; right:16px; z-index:10;
+    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    font-size:16px; line-height:1; background:var(--paper); color:var(--ink);
+    border:2px solid var(--ink); border-radius:50%; cursor:pointer;
+    box-shadow:3px 3px 0 rgba(var(--ink-rgb),0.35); transition:transform .15s ease;
+  }
+  .theme-toggle:hover{ transform:translate(-1px,-1px); }
   .mono{font-family:'IBM Plex Mono', monospace;}
   :focus-visible{ outline:3px solid var(--ink); outline-offset:3px; }
   .app{ width:100%; max-width:620px; }
@@ -47,7 +88,7 @@
   button.primary{
     font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; letter-spacing:0.03em;
     background:var(--ink); color:var(--paper); border:2px solid var(--ink); border-radius:3px;
-    padding:12px 22px; cursor:pointer; box-shadow:4px 4px 0 rgba(27,24,16,0.35);
+    padding:12px 22px; cursor:pointer; box-shadow:4px 4px 0 rgba(var(--ink-rgb),0.35);
     transition:transform .15s ease;
   }
   button.primary:hover:not(:disabled){ transform:translate(-2px,-2px); }
@@ -82,6 +123,7 @@
 </style>
 </head>
 <body>
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
 <div class="app">
   <div class="topline">
     <span>GUESSTIMATE — SCATTER</span>
@@ -458,6 +500,27 @@ async function init(){
   startScreen();
 }
 init();
+
+/* ============================= THEME (light/dark) ============================= */
+const THEME_KEY = 'guesstimate_theme';
+function loadThemePref(){ try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; } }
+function saveThemePref(t){ try{ localStorage.setItem(THEME_KEY, t); }catch(e){} }
+function effectiveTheme(){
+  const stored = loadThemePref();
+  if(stored === 'light' || stored === 'dark') return stored;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+function updateThemeToggleIcon(){
+  const btn = document.getElementById('themeToggle');
+  if(btn) btn.textContent = effectiveTheme() === 'dark' ? '☀' : '☾';
+}
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  saveThemePref(next);
+  updateThemeToggleIcon();
+});
+updateThemeToggleIcon();
 </script>
 </body>
 </html>
