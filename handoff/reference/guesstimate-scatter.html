@@ -61,6 +61,13 @@
     --good: #1e6a41; --good-rgb: 30,106,65; --good-bg: #e4f3ea;
     --mid: #c88a00; --bad: #b53a2e;
     --guess: #2f5fd6;
+    --panel-pad: 26px;
+    /* Heat ramp for the six score bands. Ordered best -> worst, and used in three
+       places that must agree: the verdict colour, the concentric bands drawn around
+       the answer on reveal, and the emoji in the share strip. Green->gold->orange->red
+       keeps the Wordle "green is good" convention while still reading as a heat map. */
+    --t1: #12703a; --t2: #5a9e2f; --t3: #c9a227;
+    --t4: #d97b29; --t5: #c0392b; --t6: #5d5347;
   }
   /* Per-league accent. Every question used to look identical — same paper, same
      axes, same three hollow dots — so five rounds a day read as one thing five
@@ -83,6 +90,8 @@
       --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
       --mid: #e0a83c; --bad: #ff6b57;
       --guess: #6d93ff;
+      --t1: #3ddc84; --t2: #8fd94a; --t3: #e8c34a;
+      --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
     }
   }
   :root[data-theme="dark"]{
@@ -92,6 +101,8 @@
     --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
     --mid: #e0a83c; --bad: #ff6b57;
     --guess: #6d93ff;
+    --t1: #3ddc84; --t2: #8fd94a; --t3: #e8c34a;
+    --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
   }
   *{box-sizing:border-box;}
   body{
@@ -101,13 +112,17 @@
     color:var(--ink); font-family:'Work Sans', sans-serif;
     display:flex; align-items:center; justify-content:center; padding:5vh 5vw;
   }
-  .controls{ position:fixed; top:16px; right:16px; z-index:10; display:flex; gap:8px; }
+  /* The icon buttons used to be position:fixed at the top-right of the viewport,
+     which collided with the topline's round counter on any narrow screen — on an
+     iPhone the "1 / 5" rendered underneath two opaque circles. They live in the
+     topline row now, so they can't overlap anything at any width. */
+  .controls{ display:flex; gap:6px; }
   .icon-btn{
-    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
-    font-size:15px; line-height:1; background:var(--paper); color:var(--ink);
+    width:32px; height:32px; display:flex; align-items:center; justify-content:center;
+    font-size:13px; line-height:1; background:var(--paper); color:var(--ink);
     border:2px solid var(--ink); border-radius:50%; cursor:pointer;
-    box-shadow:3px 3px 0 rgba(var(--ink-rgb),0.35); transition:transform .15s ease;
-    font-family:'IBM Plex Mono',monospace; padding:0;
+    box-shadow:2px 2px 0 rgba(var(--ink-rgb),0.35); transition:transform .15s ease;
+    font-family:'IBM Plex Mono',monospace; padding:0; flex:none;
   }
   .icon-btn:hover{ transform:translate(-1px,-1px); }
   .mono{font-family:'IBM Plex Mono', monospace;}
@@ -115,17 +130,19 @@
   .app{ width:100%; max-width:620px; }
 
   .topline{
-    display:flex; justify-content:space-between; align-items:baseline;
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
     font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint);
-    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;
+    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:12px;
   }
-  .progress{ display:flex; gap:6px; margin-bottom:22px; }
+  .topline-end{ display:flex; align-items:center; gap:10px; flex:none; }
+  #topLeft{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .progress{ display:flex; gap:6px; margin-bottom:18px; }
   .progress .seg{ flex:1; height:6px; background:var(--paper-2); border:1.5px solid var(--ink); }
   .progress .seg.done{ background:var(--ink); }
   .progress .seg.active{ background:var(--accent); }
   .panel{
     background:var(--paper); border:2.5px solid var(--ink); border-radius:3px;
-    box-shadow:7px 7px 0 var(--ink); padding:26px;
+    box-shadow:7px 7px 0 var(--ink); padding:var(--panel-pad);
   }
   h1.title{ font-family:'Fraunces',serif; font-weight:700; font-size:clamp(24px,5vw,32px); margin:0 0 8px; line-height:1.05; }
   p.sub{ color:var(--ink-soft); margin:0 0 18px; line-height:1.5; font-size:14.5px; }
@@ -168,7 +185,24 @@
   .legend i{ display:inline-block; width:8px; height:8px; border-radius:50%; border:1.5px solid var(--ink); background:var(--paper); margin-right:6px; vertical-align:baseline; }
   .legend b{ color:var(--ink); font-weight:600; }
 
-  .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:center; margin-bottom:14px; min-height:18px; }
+  /* The action bar pins the readout and the submit button to the bottom of the
+     viewport whenever the panel is taller than the screen. Previously, on a 390x664
+     phone, the submit button sat at y=649-700 and the reveal that followed it started
+     at y=670 — so the player tapped a button they had to hunt for, and the score, the
+     miss and the fact all rendered off the bottom of the screen with no cue. Sticky
+     costs nothing on desktop (it only engages once the page actually scrolls) and
+     means the action is always in reach. The reveal is rendered ABOVE this bar, so
+     the score lands directly where the thumb already is. */
+  .actionbar{
+    position:sticky; bottom:0; z-index:5;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    background:var(--paper); border-top:2px dashed var(--line);
+    margin:14px calc(var(--panel-pad) * -1) calc(var(--panel-pad) * -1);
+    padding:12px var(--panel-pad) calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .actionbar .readout{ flex:1 1 auto; min-width:0; }
+  .actionbar button.primary{ flex:none; }
+  .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:left; min-height:18px; }
 
   /* Reveal "juice", ported from guesstimate-slider-legacy.html: the target marker
      bounce-drops in, and the verdict row pulses (great guess) or shakes (bad
@@ -189,7 +223,6 @@
   .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
   .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:6px; }
   .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; white-space:nowrap; }
-  .verdict-row .pts.good{ color:var(--good); } .verdict-row .pts.mid{ color:var(--mid); } .verdict-row .pts.bad{ color:var(--bad); }
   .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; line-height:1.5; }
   .verdict-row .compare .miss{ color:var(--guess); }
 
@@ -222,8 +255,33 @@
   .share-card .sc-strip{ font-size:22px; letter-spacing:3px; line-height:1.3; }
   .share-card .sc-score{ font-size:13px; color:var(--ink-soft); margin-top:4px; }
 
-  dialog.modal{
-    border:2.5px solid var(--ink); border-radius:4px; background:var(--paper); color:var(--ink);
+  /* Concentric score bands drawn around the answer on reveal — the literal heat map.
+     They show the player which band they landed in and how much room each one had,
+     which is the only place the scoring model is ever explained. Faded in rather than
+     popped so they read as background, not as another marker. */
+  @keyframes heatIn{ from{ opacity:0; } to{ opacity:1; } }
+  .heat{ animation:heatIn .45s ease-out both; }
+  @media (prefers-reduced-motion: reduce){ .heat{ animation:none !important; } }
+  .heat-key{ display:flex; flex-wrap:wrap; gap:3px 12px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:10px 0 0; }
+  .heat-key span{ white-space:nowrap; }
+
+  /* Phone layout. The old header stack (a 3-line Fraunces prompt plus a 3-line mono
+     instruction) pushed the chart down to y=296 on a 390x664 screen — 45% of the
+     viewport spent before the game started. */
+  @media (max-width: 560px){
+    :root{ --panel-pad: 18px; }
+    body{ padding:14px 12px; align-items:flex-start; }
+    .topline{ font-size:11px; letter-spacing:0.04em; }
+    .prompt{ font-size:17px; line-height:1.25; }
+    .instructions{ font-size:11px; margin-bottom:10px; }
+    h1.title{ margin-bottom:6px; }
+    .legend{ font-size:11px; gap:4px 12px; margin-bottom:12px; }
+    .verdict-row{ flex-direction:column; align-items:flex-start; gap:2px; }
+    .verdict-row .compare{ text-align:left; }
+    .fact{ font-size:14px; }
+    .note{ font-size:11.5px; }
+    button.primary{ padding:12px 18px; }
+  }
     box-shadow:7px 7px 0 var(--ink); padding:22px; max-width:400px; width:calc(100% - 40px);
   }
   dialog.modal::backdrop{ background:rgba(0,0,0,0.45); }
@@ -241,14 +299,16 @@
 </style>
 </head>
 <body>
-<div class="controls">
-  <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
-  <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
-</div>
 <div class="app" id="app">
   <div class="topline">
     <span id="topLeft">GUESSTIMATE</span>
-    <span id="topRight">···</span>
+    <span class="topline-end">
+      <span id="topRight">···</span>
+      <span class="controls">
+        <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
+      </span>
+    </span>
   </div>
   <div class="progress" id="progress"></div>
   <div class="panel" id="panel"></div>
@@ -308,7 +368,9 @@ function sanitizeDate(raw){
 // the pool keeps growing.
 const CHALLENGE_MAX_SCORE = 5000;
 const challengeParams = new URLSearchParams(location.search);
-const CHALLENGE = challengeParams.get('challenge') === '1' ? {
+// Mutable: leaveChallenge() clears this so a player who arrived on a friend's link
+// can get out of it and reach today's puzzle. See the note there.
+let CHALLENGE = challengeParams.get('challenge') === '1' ? {
   active: true,
   from: sanitizeName(challengeParams.get('from') || ''),
   score: clampScore(challengeParams.get('score'), CHALLENGE_MAX_SCORE),
@@ -327,7 +389,11 @@ let DAILY_ROUNDS = [];
 let PUZZLE_NO = null;
 // 'daily' — today's puzzle, counts toward the streak.
 // 'challenge' — a friend's older puzzle, replayed for comparison; never counts.
-// 'practice' — random questions outside today's set; never counts.
+// (A third 'practice' mode was removed: with a 10-question pool and 5 a day, its
+// "draw from everything that isn't in today's set" rule selected precisely
+// tomorrow's five questions — a 5/5 overlap, the exact opposite of what its own
+// comment claimed it guaranteed. It can come back when the pool is large enough
+// for a practice draw to be meaningfully separate from the next day's bag.)
 let MODE = 'daily';
 
 /* ============================= DAILY SELECTION (pure — portable to a server later) =============================
@@ -401,57 +467,131 @@ function roundsForDate(dateStr){
     : selectDailyQuestions(dateStr, QUESTION_POOL, QUESTION_POOL.length);
 }
 
-/* ============================= STATS & STREAK ============================= */
-const STATS_KEY = 'guesstimate_stats_v1';
+/* ============================= STATS & STREAK =============================
+   The streak used to be recorded against a UTC date (`new Date().toISOString()`)
+   while the puzzle itself is served against America/New_York. Those two clocks
+   disagree for four hours every day — 8pm to midnight ET, which is prime time for
+   a daily game. The measured consequence: play at 9pm ET Monday and the app files
+   it under Tuesday; play Tuesday morning and `lastPlayed === today` is already
+   true, so that round is silently discarded — no streak credit, no day counted, no
+   points, and no message explaining why. Everything below now runs on the same
+   Eastern calendar date the puzzle does. */
+const STATS_KEY = 'guesstimate_stats_v2';
+const LEGACY_STATS_KEY = 'guesstimate_stats_v1';
 const INTRO_KEY = 'guesstimate_seen_intro';
 const DEFAULT_STATS = { lastPlayed:null, currentStreak:0, bestStreak:0, daysPlayed:0, totalPoints:0, bestRound:0, tiers:{} };
-// Merged over the defaults rather than read raw, so a player carrying an older
-// v1 record (streak fields only) picks up the new aggregate fields as zeros
-// instead of producing NaN everywhere in the stats modal.
+// Calendar-date arithmetic on the ET date string. Parsing the date-only string as
+// UTC and stepping a whole day is safe here precisely because there's no time
+// component — it's a calendar decrement, so DST transitions can't shift it.
+function prevDateString(dateStr){
+  return new Date(Date.parse(dateStr + 'T00:00:00Z') - 86400000).toISOString().slice(0,10);
+}
+// v1 records were written against the old scoring curve, so their point totals and
+// tier histogram aren't comparable to anything scored now — carrying them forward
+// would quietly corrupt the average. The streak is the part that would actually
+// hurt to lose, so that comes across and the score aggregates restart.
+function migrateLegacyStats(){
+  try{
+    const old = JSON.parse(localStorage.getItem(LEGACY_STATS_KEY));
+    if(!old) return null;
+    return Object.assign({}, DEFAULT_STATS, {
+      lastPlayed: old.lastPlayed || null,
+      currentStreak: old.currentStreak || 0,
+      bestStreak: old.bestStreak || 0,
+      tiers: {},
+    });
+  }catch(e){ return null; }
+}
 function loadStats(){
   try{
-    const s = JSON.parse(localStorage.getItem(STATS_KEY)) || {};
-    return Object.assign({}, DEFAULT_STATS, s, { tiers: Object.assign({}, s.tiers) });
-  }catch(e){ return Object.assign({}, DEFAULT_STATS, { tiers:{} }); }
+    const raw = localStorage.getItem(STATS_KEY);
+    if(raw){
+      const s = JSON.parse(raw) || {};
+      return Object.assign({}, DEFAULT_STATS, s, { tiers: Object.assign({}, s.tiers) });
+    }
+    const migrated = migrateLegacyStats();
+    if(migrated) return migrated;
+  }catch(e){}
+  return Object.assign({}, DEFAULT_STATS, { tiers:{} });
 }
 function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
-function todayISO(){ return new Date().toISOString().slice(0,10); }
-// Only ever counts once per calendar day. That guards the streak, and it also
-// means the "play again" button can't inflate the aggregate stats by replaying
-// today's questions with the answers already known.
-function registerCompletion(scores){
-  const s = loadStats(); const today = todayISO();
+// The stored streak is only ever recomputed when a round is completed, so a lapsed
+// player used to be shown a streak they no longer had — set lastPlayed seven months
+// back and the start screen still cheerfully read "🔥 7-day streak", right up until
+// it snapped to 1 the moment they finished. Read it through here instead: a streak
+// is live only if the last completed day was today or yesterday.
+function liveStreak(s, today){
+  if(!s.lastPlayed) return 0;
+  if(s.lastPlayed === today || s.lastPlayed === prevDateString(today)) return s.currentStreak || 0;
+  return 0;
+}
+// Only ever counts once per Eastern calendar day, so replaying today's questions
+// with the answers already known can't inflate the aggregates or the streak.
+function registerCompletion(scores, dateStr){
+  const s = loadStats();
+  const today = dateStr || todayDateString();
   if(s.lastPlayed === today) return s;
-  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
-  s.currentStreak = (s.lastPlayed===yesterday) ? s.currentStreak+1 : 1;
+  s.currentStreak = (s.lastPlayed === prevDateString(today)) ? (s.currentStreak||0)+1 : 1;
   s.bestStreak = Math.max(s.bestStreak||0, s.currentStreak);
   s.lastPlayed = today;
   s.daysPlayed = (s.daysPlayed||0) + 1;
-  s.totalPoints = (s.totalPoints||0) + scores.reduce((a,b)=>a+b,0);
-  s.bestRound = Math.max(s.bestRound||0, scores.reduce((a,b)=>a+b,0));
+  const total = scores.reduce((a,b)=>a+b,0);
+  s.totalPoints = (s.totalPoints||0) + total;
+  s.bestRound = Math.max(s.bestRound||0, total);
   scores.forEach(p=>{ const k = scoreTier(p).label; s.tiers[k] = (s.tiers[k]||0) + 1; });
   saveStats(s); return s;
 }
 
-/* ============================= SCORING (same exponential model, extended to 2D) ============================= */
-// Distance is computed in normalized chart-space (0-1 on each axis, based on the
-// plotted range) rather than raw stat units, so PPG and RPG — different scales —
-// contribute fairly to the single error number. Same HALF_LIFE decay curve as the
-// core game, just fed a 2D distance instead of a 1D one.
-const HALF_LIFE = 25;
+/* ============================= SCORING =============================
+   Distance is computed in normalized chart-space (0-1 on each axis, based on the
+   plotted range) rather than raw stat units, so two stats on different scales
+   contribute fairly to one error number.
+
+   The curve replaces the old `0.5^(err%/25)` half-life model, which had three
+   measured problems: it bottomed out at 2 points rather than 0 (so a uniformly
+   random click averaged 188/500 and the "/500" denominator implied a floor that
+   didn't exist), a 100-point "Perfect" needed a sub-pixel hit on most questions,
+   and the single "Off" band swallowed ~80% of all outcomes — which is why a normal
+   round shared as a wall of red.
+
+   points = 100 * exp(-(d / 0.30) ^ 1.6)
+
+   SHAPE below 2 sharpens the peak, so the top band stays genuinely rare instead of
+   being a flat plateau every decent guess lands on; SIGMA sets how fast it falls
+   away. Calibrated by simulation against the real target positions in
+   questions.json — see USER_EXPERIENCE_REVIEW.md §2. Resulting means, per 500:
+   random click 113, always-click-the-middle 165, casual 273, good 389, expert 457.
+   Chance is now visibly bad and a full 500 is effectively unreachable. */
+const SCORE_SIGMA = 0.30;
+const SCORE_SHAPE = 1.6;
 function scoreGuess2D(gx, gy, tx, ty, xRange, yRange){
   const ndx = (gx - tx) / xRange;
   const ndy = (gy - ty) / yRange;
-  const errorPct = Math.sqrt(ndx*ndx + ndy*ndy) * 100;
-  return { points: Math.round(100 * Math.pow(0.5, errorPct / HALF_LIFE)), errorPct };
+  const dist = Math.sqrt(ndx*ndx + ndy*ndy);
+  return { points: Math.round(100 * Math.exp(-Math.pow(dist / SCORE_SIGMA, SCORE_SHAPE))), dist };
 }
-const TIER_ORDER = ['Perfect','Great','Ballpark','Off','Way off'];
+// Inverse of the curve: the normalized distance at which a guess scores exactly
+// `points`. Used to draw the heat bands around the answer, so the rings on the
+// chart are the scoring model rather than a decorative approximation of it.
+function distForScore(points){
+  return SCORE_SIGMA * Math.pow(-Math.log(points/100), 1/SCORE_SHAPE);
+}
+// Six bands instead of five. The old set had two that could never fire: "Way off"
+// required 0 points when the minimum achievable score was 2, and "Perfect" required
+// an exact pixel hit. Every band below is reachable on every question, and the
+// emoji form a heat ramp so the share strip carries as much information as the
+// tiers do — the previous strip used one green for two different tiers.
+const TIERS = [
+  { min:95, emoji:'🎯', label:'Bullseye', color:'var(--t1)' },
+  { min:80, emoji:'🟩', label:'Great',    color:'var(--t2)' },
+  { min:60, emoji:'🟨', label:'Close',    color:'var(--t3)' },
+  { min:40, emoji:'🟧', label:'Off',      color:'var(--t4)' },
+  { min:15, emoji:'🟥', label:'Way off',  color:'var(--t5)' },
+  { min:0,  emoji:'⬛', label:'Miss',     color:'var(--t6)' },
+];
+const TIER_ORDER = TIERS.map(t => t.label);
 function scoreTier(points){
-  if(points >= 100) return { emoji:'🟢', label:'Perfect' };
-  if(points >= 90)  return { emoji:'🟢', label:'Great' };
-  if(points >= 50)  return { emoji:'🟡', label:'Ballpark' };
-  if(points >= 1)   return { emoji:'🔴', label:'Off' };
-  return { emoji:'⚫', label:'Way off' };
+  return TIERS.find(t => points >= t.min) || TIERS[TIERS.length-1];
 }
 
 /* ============================= RENDER ============================= */
@@ -618,10 +758,9 @@ function renderProgress(){
   });
 }
 function setTopline(right){
-  const label = MODE === 'practice' ? 'GUESSTIMATE · PRACTICE'
-              : MODE === 'challenge' ? `GUESSTIMATE #${puzzleNumber(CHALLENGE.date)} · CHALLENGE`
-              : `GUESSTIMATE #${PUZZLE_NO}`;
-  topLeft.textContent = label;
+  topLeft.textContent = MODE === 'challenge'
+    ? `GUESSTIMATE #${puzzleNumber(CHALLENGE.date)} · CHALLENGE`
+    : `GUESSTIMATE #${PUZZLE_NO}`;
   topRight.textContent = right;
 }
 
@@ -630,7 +769,8 @@ function startScreen(){
   setTopline(`${ROUNDS.length} QUESTIONS`);
   progressEl.innerHTML = '';
   const stats = loadStats();
-  const streakHTML = stats.currentStreak>0 ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  const streak = liveStreak(stats, TODAY);
+  const streakHTML = streak>0 ? `<div class="streak-line">🔥 <b>${streak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
   let challengeHTML = '';
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
@@ -638,36 +778,40 @@ function startScreen(){
       ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(CHALLENGE.date)} (${CHALLENGE.date}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
   }
-  const practiceHTML = QUESTION_POOL.length > ROUNDS.length
-    ? `<button class="ghost" id="practiceBtn">Practice</button>` : '';
+  // Offered before the player commits to five rounds of someone else's day, not
+  // only after. Arriving on a challenge link is how most people will ever reach
+  // this game, and today's puzzle is the thing that actually starts a streak.
+  const escapeHTML = MODE === 'challenge'
+    ? `<button class="ghost" id="todayBtn">Play today's instead</button>` : '';
   panel.innerHTML = `
     <h1 class="title">Guesstimate</h1>
     <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
     <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(CHALLENGE.date)} — ${CHALLENGE.date}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row">${practiceHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
+    <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
-  const pb = document.getElementById('practiceBtn');
-  if(pb) pb.addEventListener('click', startPractice);
+  const tb = document.getElementById('todayBtn');
+  if(tb) tb.addEventListener('click', leaveChallenge);
 }
 
-// Practice draws from everything that ISN'T in today's set, so it can't be used
-// to preview the daily puzzle. It never touches the streak or the stats — same
-// contract as Poeltl's unlimited mode.
-function startPractice(){
-  const todayIds = new Set(DAILY_ROUNDS.map(q=>q.id));
-  let avail = QUESTION_POOL.filter(q=>!todayIds.has(q.id));
-  if(avail.length === 0) avail = QUESTION_POOL.slice();
-  const shuffled = seededShuffle(avail, (Math.random()*4294967296)>>>0);
-  MODE = 'practice';
-  ROUNDS = shuffled.slice(0, Math.min(5, shuffled.length));
-  idx = 0; roundScores = [];
-  showQuestion();
-}
-function backToToday(){
-  MODE = CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY ? 'challenge' : 'daily';
+/* Leaving a challenge had no working exit. `init()` sets DAILY_ROUNDS to the
+   challenge day when one is active, and the old backToToday() just reassigned
+   ROUNDS = DAILY_ROUNDS and recomputed MODE from the still-present CHALLENGE
+   object — so "Back to today" re-served the challenge puzzle, kept the
+   "#217 · CHALLENGE" topline and kept the banner up. There was no route to today's
+   puzzle at all short of hand-editing the query string, which meant every player
+   arriving through the game's only growth channel was pinned to a stale day and
+   could never start a streak.
+
+   Clearing the URL as well as the in-memory state matters: without it a refresh,
+   a bookmark, or a share from this session would drop them straight back in. */
+function leaveChallenge(){
+  CHALLENGE = { active:false, from:'', score:null, date:null };
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  MODE = 'daily';
+  DAILY_ROUNDS = roundsForDate(TODAY);
   ROUNDS = DAILY_ROUNDS;
   idx = 0; roundScores = [];
   startScreen();
@@ -702,9 +846,11 @@ function showQuestion(){
     <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once — or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
     <div class="legend">${legendHTML}</div>
-    <div class="readout" id="readout" aria-live="polite">Click the chart to place your guess</div>
-    <div class="next-row"><button class="primary" id="submitBtn" disabled>Submit guess</button></div>
-    <div id="revealArea"></div>
+    <div id="revealArea" aria-live="polite"></div>
+    <div class="actionbar">
+      <div class="readout" id="readout" aria-live="polite">Tap the chart to place your guess</div>
+      <button class="primary" id="submitBtn" disabled>Submit guess</button>
+    </div>
   `;
 
   const svg = document.getElementById('chartSvg');
@@ -905,12 +1051,37 @@ function showQuestion(){
     const { points } = scoreGuess2D(guess.x, guess.y, r.targetX, r.targetY, xRange, yRange);
     roundScores.push(points);
     const t = scoreTier(points);
-    const tierClass = points>=90?'good':points>=50?'mid':'bad';
     // Reveal "juice", ported from guesstimate-slider-legacy.html: a great guess
-    // pulses, a bad one shakes. Same >=90/<25 thresholds as the legacy version.
-    const tierAnimClass = points>=90 ? 'tier-perfect' : points<25 ? 'tier-bad' : '';
+    // pulses, a bad one shakes. Rebased onto the new bands (Great+ / Miss).
+    const tierAnimClass = points>=80 ? 'tier-perfect' : points<15 ? 'tier-bad' : '';
 
     const tx = xPix(r.targetX), ty = yPix(r.targetY);
+
+    /* The heat map. One ellipse per score band, drawn outermost-first and inserted
+       at the front of the SVG so everything else stays on top of them. They're
+       ellipses rather than circles because the two axes have different pixel
+       scales, and the score is normalized per-axis — a circle would misrepresent
+       what the model actually charges for a miss. This is also the only place the
+       scoring is ever explained: the player can see how much room "Great" had. */
+    // Clipped to the plot rect: the widest band has a 218px radius on a 486px plot,
+    // so without this it washes over the tick labels and past the edge of the SVG.
+    const clipId = `plotclip-${idx}`;
+    const clip = el('clipPath',{id:clipId});
+    clip.appendChild(el('rect',{x:padL, y:padT, width:plotW, height:plotH}));
+    const defs = el('defs');
+    defs.appendChild(clip);
+    const heat = el('g',{class:'heat', 'clip-path':`url(#${clipId})`, style:'pointer-events:none;'});
+    [...TIERS].reverse().forEach(tier=>{
+      if(tier.min <= 0) return;
+      const d = distForScore(tier.min);
+      heat.appendChild(el('ellipse',{
+        cx:tx, cy:ty, rx:Math.abs(d*plotW), ry:Math.abs(d*plotH),
+        fill:tier.color, 'fill-opacity':0.13, stroke:tier.color,
+        'stroke-opacity':0.3, 'stroke-width':1,
+      }));
+    });
+    svg.insertBefore(heat, svg.firstChild);
+    svg.insertBefore(defs, svg.firstChild);
     const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
     svg.appendChild(connector);
     svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
@@ -922,24 +1093,38 @@ function showQuestion(){
     targetLbl.textContent = targetText;
     svg.appendChild(targetLbl);
 
-    document.getElementById('revealArea').innerHTML = `
+    // The emoji already carries the colour and is what shows up in the share strip,
+    // so no separate swatch — that rendered every band as two identical squares.
+    const keyHTML = TIERS.map(tier =>
+      `<span${tier.label===t.label?' style="color:var(--ink);font-weight:700;"':''}>${tier.emoji} ${tier.label}</span>`
+    ).join('');
+
+    const revealArea = document.getElementById('revealArea');
+    revealArea.innerHTML = `
       <div class="reveal ${tierAnimClass}">
         <div class="verdict-row ${tierAnimClass}">
-          <div class="pts ${tierClass}">${t.emoji} ${t.label} — <span id="ptsNum">+0</span></div>
+          <div class="pts" style="color:${t.color}">${t.emoji} ${t.label} — <span id="ptsNum">+0</span></div>
           <div class="compare">
             Actual: ${fmtVal(r.targetX, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(r.targetY, yStep)} ${escapeHtml(r.yUnit)}<br>
             <span class="miss">You were ${escapeHtml(missText(guess.x, r.targetX, r.xUnit, xStep))} · ${escapeHtml(missText(guess.y, r.targetY, r.yUnit, yStep))}</span>
           </div>
         </div>
+        <div class="heat-key">${keyHTML}</div>
         <div class="fact-block">
           <div class="fact-label">Why it's interesting</div>
-          <p class="fact">${r.fact}</p>
-          <p class="fact-source">${r.source}</p>
+          <p class="fact">${escapeHtml(r.fact)}</p>
+          <p class="fact-source">${escapeHtml(r.source)}</p>
         </div>
       </div>
     `;
     countUp(document.getElementById('ptsNum'), points);
     submitBtn.textContent = idx+1<ROUNDS.length ? 'Next question →' : 'See results →';
+    // On a phone the reveal used to render entirely below the fold — the player
+    // tapped Submit, the button relabelled, and the score, the miss and the fact
+    // were all off-screen with nothing indicating they existed.
+    try{
+      revealArea.scrollIntoView({ block:'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    }catch(e){ revealArea.scrollIntoView(false); }
   });
 }
 
@@ -949,16 +1134,20 @@ function showResults(){
   renderProgress();
   const total = roundScores.reduce((a,b)=>a+b,0);
   const max = ROUNDS.length*100;
-  // Practice and challenge replays are explicitly outside the daily record.
-  const stats = MODE === 'daily' ? registerCompletion(roundScores) : loadStats();
+  // Challenge replays are explicitly outside the daily record. The daily completion
+  // is filed against the Eastern date the puzzle was served for, not a UTC one.
+  const stats = MODE === 'daily' ? registerCompletion(roundScores, TODAY) : loadStats();
   const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
-  const headline = MODE === 'practice' ? 'Guesstimate · practice'
-                 : MODE === 'challenge' ? `Guesstimate #${puzzleNumber(CHALLENGE.date)}`
-                 : `Guesstimate #${PUZZLE_NO}`;
-  const pills = roundScores.map(s=>`<span class="pill">+${s}</span>`).join('');
+  const headline = MODE === 'challenge'
+    ? `Guesstimate #${puzzleNumber(CHALLENGE.date)}`
+    : `Guesstimate #${PUZZLE_NO}`;
+  const pills = roundScores.map(s=>{
+    const tier = scoreTier(s);
+    return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tier.emoji} +${s}</span>`;
+  }).join('');
   const streakHTML = MODE === 'daily'
-    ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
-    : `<div class="streak-line">${MODE==='practice' ? 'Practice round — no streak effect' : "Challenge round — doesn't affect your streak"}</div>`;
+    ? `<div class="streak-line">🔥 <b>${liveStreak(stats, TODAY)}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
+    : `<div class="streak-line">Challenge round — doesn't affect your streak</div>`;
 
   panel.innerHTML = `
     <div style="text-align:center;">
@@ -976,16 +1165,17 @@ function showResults(){
       <label for="challengeName">Your name (optional, shown to whoever you send this to)</label>
       <input type="text" id="challengeName" maxlength="30" placeholder="e.g. Drew">
       <div class="next-row">
-        ${MODE==='daily' ? '<button class="ghost" id="againBtn">Play again</button>' : '<button class="ghost" id="backBtn">Back to today</button>'}
+        ${MODE==='challenge' ? '<button class="ghost" id="backBtn">Play today\'s puzzle →</button>' : ''}
         <button class="primary" id="shareBtn">Share your score</button>
       </div>
       <p class="instructions" id="shareStatus" style="margin-top:8px;"></p>
     </div>
   `;
-  const againBtn = document.getElementById('againBtn');
-  if(againBtn) againBtn.addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  // "Play again" is gone with practice mode: on a daily round it re-served the same
+  // five questions with every answer already revealed, which promised new content
+  // and delivered a replay.
   const backBtn = document.getElementById('backBtn');
-  if(backBtn) backBtn.addEventListener('click', backToToday);
+  if(backBtn) backBtn.addEventListener('click', leaveChallenge);
 
   document.getElementById('shareBtn').addEventListener('click', async ()=>{
     const nameInput = document.getElementById('challengeName');
@@ -997,7 +1187,7 @@ function showResults(){
     url.searchParams.set('score', String(total));
     // Anchor the link to the puzzle that was actually played, so the recipient
     // gets the same five questions rather than a different day's set.
-    if(MODE !== 'practice') url.searchParams.set('d', MODE === 'challenge' ? CHALLENGE.date : TODAY);
+    url.searchParams.set('d', MODE === 'challenge' ? CHALLENGE.date : TODAY);
     const shareUrl = url.toString();
     const shareText = `${headline}\n${strip}  ${total}/${max}`;
     const status = document.getElementById('shareStatus');
@@ -1030,18 +1220,17 @@ function renderStatsModal(){
     return;
   }
   const avg = Math.round(s.totalPoints / s.daysPlayed);
-  const counts = TIER_ORDER.map(k => s.tiers[k] || 0);
+  const counts = TIERS.map(t => s.tiers[t.label] || 0);
   const maxCount = Math.max(1, ...counts);
-  const rows = TIER_ORDER.map((k,i)=>{
-    const emoji = ({'Perfect':'🟢','Great':'🟢','Ballpark':'🟡','Off':'🔴','Way off':'⚫'})[k];
+  const rows = TIERS.map((t,i)=>{
     const w = Math.round((counts[i]/maxCount)*100);
-    return `<div class="dist-row"><span class="dl">${emoji} ${k}</span><span class="db" style="width:${w}%"></span><span class="dn">${counts[i]}</span></div>`;
+    return `<div class="dist-row"><span class="dl">${t.emoji} ${t.label}</span><span class="db" style="width:${w}%;background:${t.color}"></span><span class="dn">${counts[i]}</span></div>`;
   }).join('');
   body.innerHTML = `
     <div class="stat-grid">
       <div class="stat-cell"><div class="v">${s.daysPlayed}</div><div class="k">Days played</div></div>
       <div class="stat-cell"><div class="v">${avg}</div><div class="k">Avg score</div></div>
-      <div class="stat-cell"><div class="v">${s.currentStreak}</div><div class="k">Streak</div></div>
+      <div class="stat-cell"><div class="v">${liveStreak(s, TODAY || todayDateString())}</div><div class="k">Streak</div></div>
       <div class="stat-cell"><div class="v">${s.bestStreak}</div><div class="k">Best streak</div></div>
     </div>
     <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN — BEST ROUND ${s.bestRound}</div>

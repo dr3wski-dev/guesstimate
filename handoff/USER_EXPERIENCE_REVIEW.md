@@ -11,6 +11,38 @@ COMPETITIVE_ANALYSIS backlog shipped in `0f143dc` and is *not* re-litigated here
 
 ---
 
+## Status
+
+| # | Finding | Status |
+|---|---|---|
+| 0.1 | No deployed URL; file doesn't work standalone | **open** — deploy task |
+| 1.1 | Challenge link is a one-way door | **fixed** |
+| 1.2 | Streak clock (UTC) vs puzzle clock (ET) | **fixed** |
+| 1.3 | Content exhausts in two days | **open** — content pipeline |
+| 1.4 | Practice mode spoils tomorrow | **fixed** — mode removed |
+| 2.1–2.3 | Dead tiers, red share strip, dishonest floor | **fixed** — new curve + 6 heat bands |
+| 2.4 | Difficulty not comparable across questions | **open** |
+| 3.1–3.5 | Phone layout | **fixed** |
+| 4.1 | Stale streak displayed as live | **fixed** |
+| 4.2 | Nothing explains scoring | **partly** — the reveal heat map now shows the bands |
+| 4.3 | "Play again" replays a known round | **fixed** — removed |
+| 4.4 | Results screen has no recap | **open** |
+| 5.1 | Reveal never announced | **fixed** — `aria-live` on the reveal |
+| 5.2 | Keyboard play impossible on some questions | **open** |
+| 6.1 | `fact`/`source` unescaped | **fixed** |
+| 6.2–6.3 | Content naming and domain choices | **open** |
+
+Everything marked fixed is covered by the 24-check browser suite described at the
+bottom of this document.
+
+**On `data/athlete_pool.csv`:** it holds 527 rows of
+`League,Player,Position,Tier,Status,Note` (190 NBA / 179 NFL / 158 MLB) and **no stat
+columns at all**. It is a curation shortlist — a research target for §1.3 — not question
+data, and nothing can be generated from it without a sourced research pass per the
+project's no-fabricated-stats rule.
+
+---
+
 ## The one-paragraph version
 
 The game itself is good. The 2D estimation mechanic works, the drag interaction is
@@ -377,3 +409,63 @@ reference set with a tighter spread makes the guess more discriminating.
 
 Items 2–5 are, collectively, about a day of work and remove every functional defect
 found. Item 6 is the actual product roadmap.
+
+---
+
+## What shipped, and how it was verified
+
+Items 2–5 above are done, plus practice-mode removal (1.4). The new scoring model:
+
+```
+points = 100 * exp(-(d / 0.30) ^ 1.6)      d = normalized 2D chart distance
+```
+
+`SCORE_SHAPE` below 2 sharpens the peak so the top band stays rare rather than being a
+plateau every decent guess lands on. Calibrated by simulation against the real target
+positions in `questions.json`. Measured means, per 500:
+
+| player | old curve | new curve |
+|---|---|---|
+| random click | 188 | **113** |
+| always clicks the middle | 203 | **165** |
+| casual (±20% per axis) | 277 | **273** |
+| good (±10% per axis) | 360 | **389** |
+| expert (±5% per axis) | 422 | **457** |
+
+Chance is now visibly bad instead of looking like 38% of a perfect score, and a full 500
+is effectively unreachable. Six bands, all reachable on every question:
+
+| band | score | ring radius (fraction of axis) |
+|---|---|---|
+| 🎯 Bullseye | ≥95 | 0.047 |
+| 🟩 Great | ≥80 | 0.117 |
+| 🟨 Close | ≥60 | 0.197 |
+| 🟧 Off | ≥40 | 0.284 |
+| 🟥 Way off | ≥15 | 0.448 |
+| ⬛ Miss | <15 | beyond |
+
+Those radii are drawn on the chart at reveal as clipped concentric ellipses — the
+literal heat map, and the only place the scoring model is ever explained. They're
+ellipses, not circles, because the two axes have different pixel scales while the score
+is normalized per-axis; a circle would misrepresent what a miss actually costs.
+
+The share strip is the visible payoff. Same two playthroughs, before and after:
+
+```
+centre-clicker  before  🔴🔴🔴🔴🟡  214/500      after  🟥🟥🟥🟧🟨  181/500
+good player     (n/a — Perfect was unreachable)  after  🟩🟩🎯🟩🟩  464/500
+```
+
+**Verification.** `verify.mjs` drives the real page in Chromium — iPhone 13 and desktop
+viewports — and asserts 24 checks: practice mode gone with no dangling references; the
+submit button and the score both on-screen on a 390×664 phone after submitting; controls
+no longer overlapping the round counter; a Mon-evening / Tue-morning / Wed-morning
+sequence producing streak 3 and daysPlayed 3 rather than silently dropping a day; a
+seven-month-old streak reading 0; v1 stats migrating streaks while dropping old-scale
+scores; escape from a challenge link reaching today's puzzle from both the start screen
+and the results screen with the URL cleared; and an exact hit scoring 100 with a maximum
+miss scoring 0. All 24 pass.
+
+**Storage note:** stats moved to `guesstimate_stats_v2`. v1 records carry their streak
+fields across; point totals and the tier histogram restart, because they were recorded
+on the old curve and averaging them against new-curve rounds would be meaningless.
