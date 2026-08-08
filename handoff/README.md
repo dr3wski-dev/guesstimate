@@ -17,15 +17,23 @@ falls, scored by proximity.
    in a challenge-link feature), the fix pattern, and the general security posture.
    Read this before adding challenge links to the current reference implementation —
    they don't exist there yet, and need to be built with this pattern from day one.
-3. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
+3. **USER_EXPERIENCE_REVIEW.md** — a playtest-driven review of the current reference
+   implementation, written by actually driving it in a browser on phone and desktop
+   rather than reading it. Contains five reproducible functional defects (the challenge
+   link has no path back to today's puzzle, the streak clock and puzzle clock disagree
+   for four hours a day, the mobile reveal renders below the fold, practice mode serves
+   tomorrow's exact puzzle, two of the five score tiers are unreachable) plus a
+   prioritized fix order. Read this before starting new feature work.
+4. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-4. **data/questions.json** — 4 fully verified, sourced questions (3 NBA, 1 NFL) in the
-   exact schema new content should follow.
-5. **reference/guesstimate-scatter.html** — the working, tested reference
+5. **data/questions.json** — 10 fully verified, sourced questions (6 NBA, 3 NFL, 1 MLB)
+   in the exact schema new content should follow. Ten is two days of non-repeating play;
+   see USER_EXPERIENCE_REVIEW.md §1.3 for why growing this is the top-line launch metric.
+6. **reference/guesstimate-scatter.html** — the working, tested reference
    implementation. Click-to-plot 2D mechanic, exponential-decay scoring, multi-round
    loop. This is what the production build should extend, not replace.
-6. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
+7. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
    of the mechanic. Kept only because it contains two pieces of tested logic not yet
    ported into the scatter version: the daily-selection pure function
    (`selectDailyQuestions`) and the streak/localStorage system. Port these, don't
