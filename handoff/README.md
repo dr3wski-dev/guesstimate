@@ -20,16 +20,25 @@ falls, scored by proximity.
 3. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-4. **data/questions.json** — 4 fully verified, sourced questions (3 NBA, 1 NFL) in the
-   exact schema new content should follow.
-5. **reference/guesstimate-scatter.html** — the working, tested reference
+4. **data/questions.json** — 16 fully verified, sourced questions (7 NBA, 5 NFL,
+   4 MLB) in the exact schema new content should follow. This is the canonical
+   content source and the only one; the Worker bundles it at build time, which
+   means adding questions requires redeploying the Worker, not just pushing.
+5. **DEPLOY.md** — how the two deployed pieces (Pages site + questions Worker)
+   fit together, what still needs a human with a browser, and precisely which
+   part of the "client sees everything" problem the Worker does and does not
+   solve. Read before deploying or before touching the CSP.
+6. **reference/guesstimate-scatter.html** — the working, tested reference
    implementation. Click-to-plot 2D mechanic, exponential-decay scoring, multi-round
    loop. This is what the production build should extend, not replace.
-6. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
-   of the mechanic. Kept only because it contains two pieces of tested logic not yet
-   ported into the scatter version: the daily-selection pure function
-   (`selectDailyQuestions`) and the streak/localStorage system. Port these, don't
-   rebuild them — they're already correct.
+7. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D
+   version of the mechanic. Historical only now: the two pieces of tested logic it
+   was being kept for have both been ported. The streak/localStorage system is in
+   the scatter build, and the daily-selection function has moved past it entirely —
+   it lives in `worker/src/selection.js` and runs server-side.
+8. **worker/** — the questions API. `src/selection.js` is the daily-rotation logic
+   (the only copy that exists); `src/index.js` is the Worker that serves a single
+   day's questions and refuses to serve any other.
 
 ## What's explicitly NOT in scope
 Stated plainly because this project went through several pivots to reach its current
@@ -39,7 +48,9 @@ form, and it would be easy for old context to leak back in:
 - No fabricated or estimated data, ever — every number in questions.json has a named
   source; every future addition needs the same
 - No live sports data API for v1 — see ACTION_PLAN.md section 1 for the reasoning
-- No accounts or backend for v1 — localStorage only, no PII
+- No accounts or database for v1 — localStorage only, no PII. There is now one
+  stateless Cloudflare Worker (`worker/`) that picks today's questions server-side;
+  it stores nothing and knows nothing about who is playing. See DEPLOY.md.
 
 ## The one instruction to give Claude Code before anything else
 *"Read README.md, then ACTION_PLAN.md in full, before writing any code. Treat

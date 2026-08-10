@@ -8,7 +8,12 @@
      regardless, but a CSP costs nothing and would have blocked the earlier
      reflected-XSS bug documented there even before the code-level fix existed.
      Fonts are self-hosted now, so this no longer needs to allow googleapis/gstatic
-     at all — the only non-'self' source left is data: for the inline SVG favicon. -->
+     at all — the only non-'self' source left is data: for the inline SVG favicon.
+     connect-src stays 'self' because the questions API is a Worker routed at
+     /api/* on this same domain; if it's ever moved to a *.workers.dev host, this
+     tag and _headers both need that origin or every fetch is silently blocked.
+     Kept in sync with the _headers file at the publish root — see the long note
+     there, including why script-src still needs 'unsafe-inline'. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self';">
 <title>Guesstimate — Daily Sports Stat Guessing Game</title>
 <meta name="description" content="Five sports stat questions a day. Real players are plotted on a chart — you guess where another one falls. Same questions for everyone, every day.">
@@ -317,11 +322,16 @@ const CHALLENGE = challengeParams.get('challenge') === '1' ? {
 
 /* ============================= DATA LOADING =============================
    Question content lives in ../data/questions.json (the canonical schema — see
-   README.md and CONTENT_BACKLOG.md) and is loaded at runtime instead of being
-   hardcoded here, so content edits never require touching this file or risk a
-   hardcoded copy drifting out of sync with the source of truth. */
-let QUESTION_POOL = [];
-let TODAY = '';
+   README.md and CONTENT_BACKLOG.md), but this page no longer fetches it. It used
+   to, and that meant the entire pool — every future day's answers included — was
+   one dev-tools panel away, and "today" was whatever the device clock claimed.
+   Both are decided server-side now by the Worker in ../worker/; this page asks
+   for a day's questions and is told which day it is. See worker/src/index.js for
+   what that does and does not protect. */
+const API_BASE = '/api';
+let TODAY = '';          // authoritative date, from the server — never Date.now()
+let SERVED_DATE = '';    // the date the server actually served (challenge ⇒ ≠ TODAY)
+let HAS_PRACTICE = false;
 let ROUNDS = [];
 let DAILY_ROUNDS = [];
 let PUZZLE_NO = null;
@@ -330,75 +340,22 @@ let PUZZLE_NO = null;
 // 'practice' — random questions outside today's set; never counts.
 let MODE = 'daily';
 
-/* ============================= DAILY SELECTION (pure — portable to a server later) =============================
-   Ported unchanged from guesstimate-slider-legacy.html — already built and tested
-   there. Given a date string and the question pool, deterministically picks
-   today's questions: same date always produces the same result, so it doesn't
-   matter where this runs (browser today, an API later). */
-function hashString(str){
-  let h = 0;
-  for(let i=0;i<str.length;i++){ h = (Math.imul(31,h) + str.charCodeAt(i)) | 0; }
-  return h >>> 0;
-}
-function mulberry32(seed){
-  return function(){
-    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-function seededShuffle(arr, seed){
-  const rng = mulberry32(seed);
-  const a = [...arr];
-  for(let i=a.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-  return a;
-}
-// Fixed reference timezone so every player gets the same "today" regardless of
-// their own — otherwise players in different timezones could be on different
-// calendar days at the same real-world moment.
-function todayDateString(tz='America/New_York'){
-  return new Date().toLocaleDateString('en-CA', { timeZone: tz }); // e.g. "2026-08-05"
-}
-function selectDailyQuestions(dateStr, pool, count=5){
-  const seed = hashString(dateStr);
-  return seededShuffle(pool, seed).slice(0, Math.min(count, pool.length));
-}
+/* ============================= DAILY SELECTION — NOT HERE ANYMORE =============================
+   hashString / mulberry32 / seededShuffle / selectDailyQuestions / selectDailyBag /
+   roundsForDate / todayDateString all used to live here. They now live in exactly
+   one place, worker/src/selection.js, and run on the server. Deleting them rather
+   than leaving a second copy behind is the point: a client-side selector needs the
+   whole pool to select from, which is precisely what was leaking, and two copies of
+   a determinism-critical function is a drift bug waiting to happen.
 
-// Shuffled-bag anti-repeat rotation (ACTION_PLAN.md v1.1). Concatenate
-// independently-shuffled copies of the pool end-to-end ("cycle 0", "cycle 1", ...)
-// into one infinite sequence, then hand out `count` consecutive items per calendar
-// day. Every item appears exactly once before any item repeats, and it's still a
-// pure function of (dateStr, pool, count): no stored cursor, nothing to desync.
+   What's left below is date *display* arithmetic only — it reads no questions and
+   picks nothing, so it's safe on the client. Note it's deliberately not used to
+   decide what to play: TODAY comes from the server response. */
 function daysSince(dateStr, epoch){
   return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
 }
 function puzzleNumber(dateStr){
   return Math.max(0, daysSince(dateStr, BAG_EPOCH)) + 1; // day one is #1
-}
-function selectDailyBag(dateStr, pool, count=5){
-  if(pool.length === 0) return [];
-  const dayIndex = Math.max(0, daysSince(dateStr, BAG_EPOCH));
-  const startIdx = dayIndex * count;
-  const cycleShuffles = new Map();
-  const result = [];
-  for(let i = startIdx; i < startIdx + count; i++){
-    const cycleIndex = Math.floor(i / pool.length);
-    const posInCycle = i % pool.length;
-    if(!cycleShuffles.has(cycleIndex)){
-      cycleShuffles.set(cycleIndex, seededShuffle(pool, hashString(`bag-cycle-${cycleIndex}`)));
-    }
-    result.push(cycleShuffles.get(cycleIndex)[posInCycle]);
-  }
-  return result;
-}
-// Questions for the daily set on `dateStr` — used both for today and for
-// replaying the day a challenge link was sent from.
-function roundsForDate(dateStr){
-  const DAILY_COUNT = 5;
-  return QUESTION_POOL.length >= DAILY_COUNT
-    ? selectDailyBag(dateStr, QUESTION_POOL, DAILY_COUNT)
-    : selectDailyQuestions(dateStr, QUESTION_POOL, QUESTION_POOL.length);
 }
 
 /* ============================= STATS & STREAK ============================= */
@@ -619,7 +576,7 @@ function renderProgress(){
 }
 function setTopline(right){
   const label = MODE === 'practice' ? 'GUESSTIMATE · PRACTICE'
-              : MODE === 'challenge' ? `GUESSTIMATE #${puzzleNumber(CHALLENGE.date)} · CHALLENGE`
+              : MODE === 'challenge' ? `GUESSTIMATE #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
               : `GUESSTIMATE #${PUZZLE_NO}`;
   topLeft.textContent = label;
   topRight.textContent = right;
@@ -635,15 +592,15 @@ function startScreen(){
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
     challengeHTML = MODE === 'challenge'
-      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(CHALLENGE.date)} (${CHALLENGE.date}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
+      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
   }
-  const practiceHTML = QUESTION_POOL.length > ROUNDS.length
+  const practiceHTML = HAS_PRACTICE
     ? `<button class="ghost" id="practiceBtn">Practice</button>` : '';
   panel.innerHTML = `
     <h1 class="title">Guesstimate</h1>
     <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
-    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(CHALLENGE.date)} — ${CHALLENGE.date}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
+    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
     <div class="next-row">${practiceHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
@@ -655,19 +612,31 @@ function startScreen(){
 
 // Practice draws from everything that ISN'T in today's set, so it can't be used
 // to preview the daily puzzle. It never touches the streak or the stats — same
-// contract as Poeltl's unlimited mode.
-function startPractice(){
-  const todayIds = new Set(DAILY_ROUNDS.map(q=>q.id));
-  let avail = QUESTION_POOL.filter(q=>!todayIds.has(q.id));
-  if(avail.length === 0) avail = QUESTION_POOL.slice();
-  const shuffled = seededShuffle(avail, (Math.random()*4294967296)>>>0);
+// contract as Poeltl's unlimited mode. The filtering moved to the server along
+// with everything else that needed the full pool to do its job; this is now a
+// fetch, so it can fail, and it has to say so rather than dead-ending on a
+// button that silently does nothing.
+async function startPractice(){
+  const pb = document.getElementById('practiceBtn');
+  if(pb){ pb.disabled = true; pb.textContent = 'Loading…'; }
+  let questions;
+  try{
+    const res = await fetch(`${API_BASE}/practice`);
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    ({ questions } = await res.json());
+    if(!Array.isArray(questions) || questions.length === 0) throw new Error('no questions returned');
+  }catch(err){
+    if(pb){ pb.disabled = false; pb.textContent = 'Practice'; }
+    panel.insertAdjacentHTML('beforeend', `<p class="sub error-text">Couldn't load practice questions (${escapeHtml(err.message)}).</p>`);
+    return;
+  }
   MODE = 'practice';
-  ROUNDS = shuffled.slice(0, Math.min(5, shuffled.length));
+  ROUNDS = questions;
   idx = 0; roundScores = [];
   showQuestion();
 }
 function backToToday(){
-  MODE = CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY ? 'challenge' : 'daily';
+  MODE = CHALLENGE.active && SERVED_DATE !== TODAY ? 'challenge' : 'daily';
   ROUNDS = DAILY_ROUNDS;
   idx = 0; roundScores = [];
   startScreen();
@@ -953,7 +922,7 @@ function showResults(){
   const stats = MODE === 'daily' ? registerCompletion(roundScores) : loadStats();
   const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
   const headline = MODE === 'practice' ? 'Guesstimate · practice'
-                 : MODE === 'challenge' ? `Guesstimate #${puzzleNumber(CHALLENGE.date)}`
+                 : MODE === 'challenge' ? `Guesstimate #${puzzleNumber(SERVED_DATE)}`
                  : `Guesstimate #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>`<span class="pill">+${s}</span>`).join('');
   const streakHTML = MODE === 'daily'
@@ -997,7 +966,7 @@ function showResults(){
     url.searchParams.set('score', String(total));
     // Anchor the link to the puzzle that was actually played, so the recipient
     // gets the same five questions rather than a different day's set.
-    if(MODE !== 'practice') url.searchParams.set('d', MODE === 'challenge' ? CHALLENGE.date : TODAY);
+    if(MODE !== 'practice') url.searchParams.set('d', SERVED_DATE);
     const shareUrl = url.toString();
     const shareText = `${headline}\n${strip}  ${total}/${max}`;
     const status = document.getElementById('shareStatus');
@@ -1062,22 +1031,32 @@ document.getElementById('statsClose').addEventListener('click', ()=>{
 // doesn't load, instead of leaving the page stuck on nothing.
 async function init(){
   panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
-  let pool;
+  let data;
   try{
-    const res = await fetch('../data/questions.json');
+    // The only date the client may ask for is a challenge link's — and the server
+    // refuses it if it isn't in the past, so this parameter can't be walked
+    // forward to read a future puzzle. With no parameter the server answers with
+    // its own today, which is the normal path.
+    const q = CHALLENGE.date ? `?d=${encodeURIComponent(CHALLENGE.date)}` : '';
+    const res = await fetch(`${API_BASE}/daily${q}`);
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    pool = await res.json();
-    if(!Array.isArray(pool) || pool.length === 0) throw new Error('empty question pool');
+    data = await res.json();
+    if(!Array.isArray(data.questions) || data.questions.length === 0) throw new Error('no questions returned');
   }catch(err){
     panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
     return;
   }
-  QUESTION_POOL = pool;
-  TODAY = todayDateString();
-  PUZZLE_NO = puzzleNumber(TODAY);
+  // Every one of these is the server's answer, not this device's opinion.
+  TODAY = data.today;
+  PUZZLE_NO = data.puzzleNumber;
+  HAS_PRACTICE = !!data.hasPractice;
   // A dated challenge link replays the sender's puzzle; anything else is today's.
-  MODE = (CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY) ? 'challenge' : 'daily';
-  DAILY_ROUNDS = roundsForDate(MODE === 'challenge' ? CHALLENGE.date : TODAY);
+  // `data.date` is what the server actually served, which is not necessarily what
+  // was asked for — a rejected date falls back to today, and the mode has to
+  // follow what was served or the banner would lie about which puzzle this is.
+  MODE = (CHALLENGE.active && data.date !== data.today) ? 'challenge' : 'daily';
+  SERVED_DATE = data.date;
+  DAILY_ROUNDS = data.questions;
   ROUNDS = DAILY_ROUNDS;
   startScreen();
 }

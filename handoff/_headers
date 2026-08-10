@@ -1,0 +1,50 @@
+# Cloudflare Pages reads this file from the ROOT of whatever directory it
+# publishes. If the Pages build output directory is changed, this file has to
+# move with it or it silently does nothing — there is no error, the headers just
+# never appear. Verify after deploying with:
+#   curl -sI https://<site>/ | grep -i content-security-policy
+#
+# This is the defense-in-depth layer SECURITY_NOTES.md asks for. The page also
+# carries the same policy in a <meta http-equiv> tag; that's intentional
+# redundancy, not a mistake. The meta tag keeps the protection when the file is
+# opened directly (file://, a local static server, someone's fork) where no
+# server is setting headers at all, and this file covers the directives a meta
+# tag cannot express — frame-ancestors is ignored in meta and only works here.
+# If you change one, change both.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  X-Frame-Options: DENY
+
+# Fonts are self-hosted (assets/fonts/*.woff2), so font-src is 'self' and there
+# is no googleapis/gstatic allowance anywhere in the policy — confirmed against
+# the HTML, which has no <link> to any external stylesheet or font service.
+#
+# connect-src 'self' is what the Worker API relies on: it's routed at /api/* on
+# this same domain (see worker/wrangler.toml), so the game's fetches are
+# same-origin. If the Worker is ever moved to a *.workers.dev host instead, this
+# directive AND the meta tag both need that origin added, or every request the
+# game makes will be blocked with no obvious cause.
+#
+# NOTE ON 'unsafe-inline' IN script-src, because it undercuts the policy and
+# should not be mistaken for an oversight: the entire game is one inline <script>
+# in a single self-contained HTML file, which is the reference implementation's
+# defining property (see README.md). A strict script-src 'self' would block the
+# game from running at all. The real fix is not a CSP edit — it's extracting the
+# script to its own .js file, at which point 'unsafe-inline' can be dropped from
+# both here and the meta tag with no other changes. Worth doing when this stops
+# being a single-file reference build. Until then the XSS mitigation that
+# actually carries the weight is the escaping at the URL-parameter parsing
+# boundary described in SECURITY_NOTES.md, not this header.
+
+# Long-lived immutable assets. Fonts and the OG image are content-addressed by
+# nothing, so if one is ever replaced in place, rename it rather than relying on
+# a cache bust that won't come for a year.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/og-image.png
+  Cache-Control: public, max-age=604800

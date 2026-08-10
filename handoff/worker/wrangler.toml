@@ -1,0 +1,23 @@
+name = "guesstimate-api"
+main = "src/index.js"
+compatibility_date = "2026-08-10"
+
+# The question pool is bundled into the Worker at build time via a JSON import in
+# src/index.js, pointing at ../../data/questions.json — the same canonical file
+# the content workflow already edits. There is no second copy to keep in sync,
+# and adding questions means redeploying the Worker, not editing anything here.
+
+# Deployed under the site's own domain rather than a separate *.workers.dev host.
+# That is the whole reason the page's CSP can stay `connect-src 'self'` and why no
+# CORS negotiation is involved: to the browser the API is same-origin. Set this to
+# the real domain at deploy time (see DEPLOY.md); it is intentionally left
+# commented out so a first `wrangler deploy` succeeds on workers.dev for testing
+# before a domain exists.
+# routes = [
+#   { pattern = "guesstimate.app/api/*", zone_name = "guesstimate.app" }
+# ]
+
+# No KV, no D1, no Durable Objects, no secrets, no bindings of any kind. If this
+# section ever grows one, the "stateless pure function" property that makes this
+# thing free and un-abusable is gone, and the security posture in
+# ACTION_PLAN.md section 3 needs rereading first.
