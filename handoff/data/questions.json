@@ -621,5 +621,203 @@
     ],
     "fact": "Power and speed almost never share a career. Mark McGwire hit 583 home runs and stole 12 bases — total, across his entire career. Rickey Henderson stole 1,406, the all-time record and about 50% more than second place, and hit 297. Ichiro (117 HR, 509 SB) is the pure contact-and-speed pole. Willie Mays hit 660 home runs *and* stole 338 bases: more power than McGwire and more steals than most players who were known for stealing. That corner of this chart is essentially empty, and it's most of why Mays is in the greatest-player-ever argument at all.",
     "source": "StatMuse career home run and stolen base totals; all-time career stolen base leaderboard."
+  },
+  {
+    "id": "nhl-goals-assists-gretzky",
+    "league": "NHL",
+    "xLabel": "Career goals",
+    "xUnit": "G",
+    "yLabel": "Career assists",
+    "yUnit": "A",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      1200
+    ],
+    "yDomain": [
+      0,
+      2400
+    ],
+    "targetPlayer": "Wayne Gretzky",
+    "targetX": 894,
+    "targetY": 1963,
+    "referencePlayers": [
+      {
+        "name": "Mario Lemieux",
+        "x": 690,
+        "y": 1033
+      },
+      {
+        "name": "Brett Hull",
+        "x": 741,
+        "y": 650
+      },
+      {
+        "name": "Gordie Howe",
+        "x": 801,
+        "y": 1049
+      }
+    ],
+    "fact": "Wayne Gretzky has 1,963 career assists. The second-highest point total in NHL history — goals and assists combined — belongs to Jaromir Jagr, at 1,921. Gretzky could have never scored a single goal in his life and would still be the leading scorer the league has ever had. He also scored 894 of them. Brett Hull is the pure sniper here (741 goals, 650 assists, more goals than helpers); Gordie Howe played 25 seasons to reach 801 and 1,049. Gretzky's 2,857 points are 936 clear of second place, which is roughly Brett Hull's entire scoring career as the margin.",
+    "source": "StatMuse career goals, assists, and points; all-time NHL career points leaderboard."
+  },
+  {
+    "id": "nhl-goals-pim-howe",
+    "league": "NHL",
+    "xLabel": "Career goals",
+    "xUnit": "G",
+    "yLabel": "Career penalty minutes",
+    "yUnit": "PIM",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      1000
+    ],
+    "yDomain": [
+      0,
+      4800
+    ],
+    "targetPlayer": "Gordie Howe",
+    "targetX": 801,
+    "targetY": 1685,
+    "referencePlayers": [
+      {
+        "name": "Tiger Williams",
+        "x": 241,
+        "y": 3971
+      },
+      {
+        "name": "Mario Lemieux",
+        "x": 690,
+        "y": 834
+      },
+      {
+        "name": "Wayne Gretzky",
+        "x": 894,
+        "y": 577
+      }
+    ],
+    "fact": "The \"Gordie Howe hat trick\" — a goal, an assist, and a fight in the same game — is named after him because he was genuinely both things at once. He scored 801 goals and served 1,685 penalty minutes, roughly 28 hours in the box. Gretzky scored more (894) and sat for 577. Tiger Williams, the most penalized player in NHL history at 3,971 minutes, scored 241. Skill and violence usually sit at opposite ends of this chart; Howe is the reason the phrase exists.",
+    "source": "StatMuse career goals and penalty minutes; all-time NHL penalty-minute leaderboard."
+  },
+  {
+    "id": "nfl-passtd-rushyds-vick",
+    "league": "NFL",
+    "xLabel": "Career passing touchdowns",
+    "xUnit": "pass TD",
+    "yLabel": "Career rushing yards",
+    "yUnit": "rush yds",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      600
+    ],
+    "yDomain": [
+      0,
+      8000
+    ],
+    "targetPlayer": "Michael Vick",
+    "targetX": 133,
+    "targetY": 6109,
+    "referencePlayers": [
+      {
+        "name": "Dan Marino",
+        "x": 420,
+        "y": 87
+      },
+      {
+        "name": "Steve Young",
+        "x": 232,
+        "y": 4239
+      },
+      {
+        "name": "Peyton Manning",
+        "x": 539,
+        "y": 667
+      }
+    ],
+    "fact": "Dan Marino threw for 420 touchdowns and rushed for 87 yards. Not 87 per season — 87 total, across seventeen years. Peyton Manning managed 667 in the same number of seasons. Michael Vick rushed for 6,109, more than most of the running backs of his era and more than any quarterback in NFL history at the time he retired, while throwing 133 touchdown passes. The chart shows the trade the position used to demand: Marino and Manning bought passing volume by never leaving the pocket, and Vick bought a dimension nobody else had by never being a high-volume passer.",
+    "source": "StatMuse career passing touchdowns and career rushing yards."
+  },
+  {
+    "id": "mlb-hits-hr-ichiro",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      2500,
+      4500
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Ichiro Suzuki",
+    "targetX": 3089,
+    "targetY": 117,
+    "referencePlayers": [
+      {
+        "name": "Babe Ruth",
+        "x": 2873,
+        "y": 714
+      },
+      {
+        "name": "Derek Jeter",
+        "x": 3465,
+        "y": 260
+      },
+      {
+        "name": "Pete Rose",
+        "x": 4256,
+        "y": 160
+      }
+    ],
+    "fact": "Ichiro Suzuki collected 3,089 hits in the majors and hit 117 home runs — and he didn't play his first MLB game until he was 27. He had already recorded 1,278 hits in Japan, which puts his professional total at 4,367, more than Pete Rose's all-time MLB record of 4,256 (the combined figure isn't an official mark, since the two leagues are counted separately). Babe Ruth is the shape-inversion on this chart: 714 home runs on fewer hits than Ichiro, because a startling share of his contact left the park.",
+    "source": "StatMuse career hits and home runs; NPB hit total via MLB.com and Baseball-Reference Bullpen."
+  },
+  {
+    "id": "nba-reg-playoff-iverson",
+    "league": "NBA",
+    "xLabel": "Career regular season",
+    "xUnit": "PPG",
+    "yLabel": "Career playoffs",
+    "yUnit": "PPG",
+    "xDomain": [
+      15,
+      35
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Allen Iverson",
+    "targetX": 26.7,
+    "targetY": 29.7,
+    "referencePlayers": [
+      {
+        "name": "Tim Duncan",
+        "x": 19.0,
+        "y": 20.6
+      },
+      {
+        "name": "Larry Bird",
+        "x": 24.3,
+        "y": 23.8
+      },
+      {
+        "name": "Karl Malone",
+        "x": 25.0,
+        "y": 24.7
+      }
+    ],
+    "fact": "Almost nobody scores more in the playoffs than the regular season — the defenses tighten, the rotations shorten, and the games slow down. Larry Bird went 24.3 to 23.8. Karl Malone went 25.0 to 24.7. Allen Iverson went 26.7 to 29.7, a three-point jump, the largest of any high-volume scorer in league history. He is 6'0\" and 165 pounds and never won a title, and the thing people remember — carrying a team to the Finals and stealing Game 1 from a 56-win Lakers side — is exactly what this number describes.",
+    "source": "StatMuse career regular season and playoff points per game."
   }
 ]

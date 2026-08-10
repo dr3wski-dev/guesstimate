@@ -75,6 +75,10 @@
   .app[data-league="NBA"]{ --accent:#ef8c3b; --accent-ink:#3a2405; }
   .app[data-league="NFL"]{ --accent:#57a877; --accent-ink:#0d2b1a; }
   .app[data-league="MLB"]{ --accent:#6d9ce0; --accent-ink:#0f2445; }
+  /* Kept clearly distinct from the MLB blue in hue and lightness, not just hue —
+     the two never share a screen but they do share a session, and a player
+     shouldn't have to wonder which league they're on. */
+  .app[data-league="NHL"]{ --accent:#a97fd0; --accent-ink:#2a1440; }
   /* Dark palette applies automatically for players whose OS is set to dark mode
      (unless they've explicitly picked light via the toggle), and always applies
      once data-theme="dark" is set explicitly. Mostly a straight paper/ink swap
@@ -835,6 +839,34 @@ function showQuestion(){
     // Reserve every dot before placing any label, so labels dodge dots they
     // aren't attached to as well as each other.
     r.referencePlayers.forEach(p=>{ placer.reserveDot(xPix(p.x), yPix(p.y), 9); });
+    // The coach mark sits dead centre of the plot and used to be drawn after the
+    // labels, so it never competed for space and landed straight on top of any
+    // label near the middle — on the one screen a new player sees first.
+    //
+    // Radius 21 covers the ring at the top of its pulse. The caption that used
+    // to sit under it is gone entirely — see the note where the ring is drawn.
+    /* The ring was pinned to the exact centre of the plot, which breaks whenever
+       a reference player happens to sit there — Karl Malone at 25.0 / 24.7 on a
+       15-35 axis lands within a few pixels of it. The ring then covers his dot,
+       and reserving space for it leaves his label nowhere to go.
+       It doesn't need to be the centre; it only needs to say "somewhere in here
+       is clickable". So pick whichever candidate sits furthest from every
+       reference dot, preferring the centre by giving it a bonus. */
+    const coachC = (function(){
+      if(!coachActive) return null;
+      const cx0 = padL+plotW/2, cy0 = padT+plotH/2;
+      const dots = r.referencePlayers.map(p=>({ x:xPix(p.x), y:yPix(p.y) }));
+      const cands = [
+        { x:cx0, y:cy0, bonus:26 },
+        { x:padL+plotW*0.28, y:padT+plotH*0.30, bonus:0 },
+        { x:padL+plotW*0.72, y:padT+plotH*0.30, bonus:0 },
+        { x:padL+plotW*0.28, y:padT+plotH*0.70, bonus:0 },
+        { x:padL+plotW*0.72, y:padT+plotH*0.70, bonus:0 },
+      ];
+      const clearance = c => Math.min(...dots.map(d=>Math.hypot(d.x-c.x, d.y-c.y))) + c.bonus;
+      return cands.reduce((best,c)=> clearance(c) > clearance(best) ? c : best, cands[0]);
+    })();
+    if(coachC) placer.reserveDot(coachC.x, coachC.y, 21);
     r.referencePlayers.forEach(p=>{
       const cx = xPix(p.x), cy = yPix(p.y);
       svg.appendChild(el('circle',{cx,cy,r:7, fill:'var(--paper)', stroke:'var(--ink)','stroke-width':2, style:'pointer-events:none;'}));
@@ -845,14 +877,19 @@ function showQuestion(){
       svg.appendChild(t);
     });
 
-    if(coachActive){
+    if(coachC){
       const g = el('g',{class:'coach', style:'pointer-events:none;'});
-      const ccx = padL+plotW/2, ccy = padT+plotH/2;
+      const { x:ccx, y:ccy } = coachC;
       g.appendChild(el('circle',{cx:ccx, cy:ccy, r:13, fill:'none', stroke:'var(--guess)','stroke-width':2.5, class:'coach-ring'}));
       g.appendChild(el('circle',{cx:ccx, cy:ccy, r:3.5, fill:'var(--guess)'}));
-      const ct = el('text',{x:ccx, y:ccy+40, 'text-anchor':'middle', 'font-size':11.5, fill:'var(--guess)', 'font-weight':600, class:'mono'});
-      ct.textContent = 'click or drag anywhere';
-      g.appendChild(ct);
+      /* The ring used to carry a "click or drag anywhere" caption. It's gone,
+         for two reasons that point the same way. It was ~147px wide dropped into
+         the middle of the plot, and in a crowded question there was simply
+         nowhere for it to go — reserving space for it starved the labels, and
+         routing it around them left it overlapping anyway. And it was redundant:
+         the readout directly below the chart already reads "Click the chart to
+         place your guess". The pulsing ring says where, the readout says what.
+         Losing a duplicated sentence is not a cost. */
       svg.appendChild(g);
     }
 
