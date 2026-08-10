@@ -124,6 +124,15 @@
     font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint);
     letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;
   }
+  /* The topline label doubles as the way back to the home screen. A real
+     <button> rather than a styled span so it's keyboard-reachable and announced
+     as a control; the reset strips the chrome so it still reads as a label. */
+  button.home-btn{
+    font:inherit; letter-spacing:inherit; text-transform:inherit; color:inherit;
+    background:none; border:0; padding:0; margin:0; cursor:pointer;
+    border-bottom:1px solid transparent;
+  }
+  button.home-btn:hover, button.home-btn:focus-visible{ color:var(--ink); border-bottom-color:var(--ink); }
   .progress{ display:flex; gap:6px; margin-bottom:22px; }
   .progress .seg{ flex:1; height:6px; background:var(--paper-2); border:1.5px solid var(--ink); }
   .progress .seg.done{ background:var(--ink); }
@@ -252,7 +261,7 @@
 </div>
 <div class="app" id="app">
   <div class="topline">
-    <span id="topLeft">GUESSTIMATE</span>
+    <button id="topLeft" class="home-btn" title="Back to the home screen">GUESSTIMATE</button>
     <span id="topRight">···</span>
   </div>
   <div class="progress" id="progress"></div>
@@ -374,14 +383,24 @@ function loadStats(){
   }catch(e){ return Object.assign({}, DEFAULT_STATS, { tiers:{} }); }
 }
 function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
-function todayISO(){ return new Date().toISOString().slice(0,10); }
+/* Was `new Date().toISOString().slice(0,10)` — the device clock, in UTC. Two
+   separate bugs in one line. It was spoofable, which is the thing the Worker was
+   built to stop: advance the system clock and the streak advances with it. And
+   UTC disagreed with the America/New_York day the puzzle actually rotates on, so
+   for anyone playing after ~8pm ET the completion was filed under *tomorrow*,
+   which silently dropped days for players who mix evening and morning sessions.
+   TODAY comes from the server and is already the ET date, so use it. */
+function dayBefore(dateStr){
+  return new Date(Date.parse(dateStr + 'T00:00:00Z') - 86400000).toISOString().slice(0,10);
+}
 // Only ever counts once per calendar day. That guards the streak, and it also
 // means the "play again" button can't inflate the aggregate stats by replaying
 // today's questions with the answers already known.
 function registerCompletion(scores){
-  const s = loadStats(); const today = todayISO();
+  const s = loadStats(); const today = TODAY;
+  if(!today) return s; // no authoritative date yet — never guess at one
   if(s.lastPlayed === today) return s;
-  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  const yesterday = dayBefore(today);
   s.currentStreak = (s.lastPlayed===yesterday) ? s.currentStreak+1 : 1;
   s.bestStreak = Math.max(s.bestStreak||0, s.currentStreak);
   s.lastPlayed = today;
@@ -583,12 +602,33 @@ function setTopline(right){
   topRight.textContent = right;
 }
 
+/* A run is part-finished when some rounds are scored but not all. Tracked so the
+   home button can't quietly throw away four completed rounds on a mis-tap —
+   without this, "back to home" and "start over" would be the same action. */
+function runInProgress(){
+  return roundScores.length > 0 && roundScores.length < ROUNDS.length;
+}
+function goHome(){ startScreen(); }
+
 function startScreen(){
   appEl.removeAttribute('data-league');
   setTopline(`${ROUNDS.length} QUESTIONS`);
   progressEl.innerHTML = '';
   const stats = loadStats();
   const streakHTML = stats.currentStreak>0 ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  const resuming = runInProgress();
+  // Replaying after finishing is allowed but never counts — say so instead of
+  // offering a "Start" button that implies fresh questions and delivers the five
+  // you just answered.
+  const playedToday = MODE === 'daily' && !resuming && stats.lastPlayed === TODAY;
+  const startLabel = resuming
+    ? `Resume — question ${roundScores.length + 1} of ${ROUNDS.length} →`
+    : playedToday
+      ? `Replay today's questions →`
+      : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+  const replayNote = playedToday
+    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
+    : '';
   let challengeHTML = '';
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
@@ -602,9 +642,17 @@ function startScreen(){
     <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row"><button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
+    <div class="next-row"><button class="primary" id="startBtn">${startLabel}</button></div>
+    ${replayNote}
   `;
-  document.getElementById('startBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  document.getElementById('startBtn').addEventListener('click', ()=>{
+    // Resuming picks up at the first unscored round. roundScores.length is that
+    // index in both states you can leave from: mid-question (length === idx) and
+    // on a reveal (length === idx+1).
+    if(resuming){ idx = roundScores.length; }
+    else { idx = 0; roundScores = []; }
+    showQuestion();
+  });
 }
 
 function backToToday(){
@@ -916,14 +964,17 @@ function showResults(){
       <label for="challengeName">Your name (optional, shown to whoever you send this to)</label>
       <input type="text" id="challengeName" maxlength="30" placeholder="e.g. Drew">
       <div class="next-row">
-        ${MODE==='daily' ? '<button class="ghost" id="againBtn">Play again</button>' : '<button class="ghost" id="backBtn">Back to today</button>'}
+        ${MODE==='daily' ? '<button class="ghost" id="homeBtn">Back to home</button>' : '<button class="ghost" id="backBtn">Back to today</button>'}
         <button class="primary" id="shareBtn">Share your score</button>
       </div>
       <p class="instructions" id="shareStatus" style="margin-top:8px;"></p>
     </div>
   `;
-  const againBtn = document.getElementById('againBtn');
-  if(againBtn) againBtn.addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  // "Play again" used to sit here and re-serve the same five questions with the
+  // answers already known. Home is the honest destination: it shows the streak
+  // and states plainly that a replay doesn't count.
+  const homeBtn = document.getElementById('homeBtn');
+  if(homeBtn) homeBtn.addEventListener('click', goHome);
   const backBtn = document.getElementById('backBtn');
   if(backBtn) backBtn.addEventListener('click', backToToday);
 
@@ -988,6 +1039,10 @@ function renderStatsModal(){
     ${rows}
   `;
 }
+// The topline label is the way back to the home screen from any point in a run.
+// Safe mid-run because startScreen() offers Resume rather than restarting — see
+// runInProgress().
+topLeft.addEventListener('click', goHome);
 document.getElementById('statsBtn').addEventListener('click', ()=>{
   renderStatsModal();
   if(statsModal.showModal) statsModal.showModal(); else statsModal.setAttribute('open','');
