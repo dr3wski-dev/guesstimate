@@ -385,5 +385,241 @@
     ],
     "fact": "Bobby Abreu and Adam Dunn each made exactly 2 All-Star teams — but Dunn hit 174 more career home runs (462 to Abreu's 288). Abreu's value came from on-base percentage, doubles, and stolen bases rather than pure power, a game sabermetricians rate highly but All-Star voters historically haven't rewarded the same way as a big home run total. Griffey (13 AS, 630 HR) and Rodriguez (14 AS, 696 HR) show what it looks like when a player's power and his recognition actually line up.",
     "source": "StatMuse career All-Star selections and home run totals."
+  },
+  {
+    "id": "mlb-k9-bb9-martinez",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per 9 innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per 9 innings",
+    "yUnit": "BB/9",
+    "xStep": 0.01,
+    "yStep": 0.01,
+    "xDomain": [
+      4,
+      12
+    ],
+    "yDomain": [
+      1,
+      5
+    ],
+    "targetPlayer": "Pedro Martinez",
+    "targetX": 10.04,
+    "targetY": 2.42,
+    "referencePlayers": [
+      {
+        "name": "Greg Maddux",
+        "x": 6.06,
+        "y": 1.8
+      },
+      {
+        "name": "Nolan Ryan",
+        "x": 9.55,
+        "y": 4.67
+      },
+      {
+        "name": "Randy Johnson",
+        "x": 10.61,
+        "y": 3.26
+      }
+    ],
+    "fact": "Pedro Martinez struck out 10.04 batters per nine innings — essentially Randy Johnson territory (10.61) and more than Nolan Ryan's 9.55 — while walking only 2.42, closer to Greg Maddux, the control archetype at 1.80, than to either power pitcher. That combination is the entire argument for Pedro. Ryan bought his strikeouts with 4.67 walks per nine, nearly double Pedro's rate; Maddux bought his control by striking out 6.06, barely half as many. Pedro refused the trade. In 1999 he struck out 313 batters and walked 37.",
+    "source": "StatMuse career K/9 and BB/9; 1999 season strikeout and walk totals."
+  },
+  {
+    "id": "mlb-ba-hr-williams",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.2,
+      0.36
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Ted Williams",
+    "targetX": 0.344,
+    "targetY": 521,
+    "referencePlayers": [
+      {
+        "name": "Reggie Jackson",
+        "x": 0.262,
+        "y": 563
+      },
+      {
+        "name": "Hank Aaron",
+        "x": 0.305,
+        "y": 755
+      },
+      {
+        "name": "Tony Gwynn",
+        "x": 0.338,
+        "y": 135
+      }
+    ],
+    "fact": "The power/contact trade-off is real, and Ted Williams mostly ignored it. He hit .344 for his career — higher than Tony Gwynn's .338, and Gwynn built a Hall of Fame case almost entirely on batting titles, finishing with 135 home runs. Williams hit 521, within 42 of Reggie Jackson, who hit .262 and struck out more times (2,597) than any batter in history. Hank Aaron (.305, 755) marks the outer edge of sustained power. And Williams did it having lost nearly five full seasons in his prime to military service in two wars.",
+    "source": "StatMuse career batting average and home run totals; career strikeout leaderboard."
+  },
+  {
+    "id": "nfl-att-ypc-charles",
+    "league": "NFL",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "carries",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "xDomain": [
+      0,
+      4800
+    ],
+    "yDomain": [
+      2,
+      6
+    ],
+    "targetPlayer": "Jamaal Charles",
+    "targetX": 1407,
+    "targetY": 5.4,
+    "referencePlayers": [
+      {
+        "name": "Barry Sanders",
+        "x": 3062,
+        "y": 5.0
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3230,
+        "y": 4.6
+      },
+      {
+        "name": "Emmitt Smith",
+        "x": 4409,
+        "y": 4.2
+      }
+    ],
+    "fact": "Jamaal Charles averaged 5.4 yards per carry — the highest of any running back in NFL history with at least 1,000 attempts, ahead of Barry Sanders' 5.0 and Jim Brown's 5.2. The only players above him on the overall list are quarterbacks (Lamar Jackson, Russell Wilson, Cam Newton), who pick their runs. Charles did it on 1,407 carries, under a third of Emmitt Smith's 4,409. Smith holds the career rushing yards record and Charles holds the rate, which is a fair summary of how football remembers running backs: volume gets the record, efficiency gets forgotten.",
+    "source": "StatMuse career rushing attempts and yards per carry; yards-per-carry leaderboard with a 1,000-attempt minimum."
+  },
+  {
+    "id": "nfl-rec-ypr-moss",
+    "league": "NFL",
+    "xLabel": "Career receptions",
+    "xUnit": "rec",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/R",
+    "xStep": 1,
+    "xDomain": [
+      0,
+      1600
+    ],
+    "yDomain": [
+      8,
+      20
+    ],
+    "targetPlayer": "Randy Moss",
+    "targetX": 982,
+    "targetY": 15.6,
+    "referencePlayers": [
+      {
+        "name": "DeSean Jackson",
+        "x": 641,
+        "y": 17.6
+      },
+      {
+        "name": "Wes Welker",
+        "x": 903,
+        "y": 11.0
+      },
+      {
+        "name": "Jerry Rice",
+        "x": 1549,
+        "y": 14.8
+      }
+    ],
+    "fact": "Randy Moss is the definitive deep threat of his era and he averaged 15.6 yards a catch — two full yards below DeSean Jackson's 17.6, and less than a yard above Jerry Rice's 14.8. The reputation didn't come from where the catches started, it came from where they ended: 156 receiving touchdowns, second-most all time. Wes Welker is the archetype's opposite pole — 903 catches, nearly Moss's total, at 11.0 yards each. \"Deep threat\" describes what a defense is afraid of, not what the average play actually gains.",
+    "source": "StatMuse career receptions, yards per reception, and receiving touchdowns."
+  },
+  {
+    "id": "nba-career-peak-chamberlain",
+    "league": "NBA",
+    "xLabel": "Career points per game",
+    "xUnit": "PPG",
+    "yLabel": "Best single season",
+    "yUnit": "PPG",
+    "xDomain": [
+      15,
+      35
+    ],
+    "yDomain": [
+      20,
+      60
+    ],
+    "targetPlayer": "Wilt Chamberlain",
+    "targetX": 30.1,
+    "targetY": 50.4,
+    "referencePlayers": [
+      {
+        "name": "Tim Duncan",
+        "x": 19.0,
+        "y": 25.5
+      },
+      {
+        "name": "Kobe Bryant",
+        "x": 25.0,
+        "y": 35.4
+      },
+      {
+        "name": "Michael Jordan",
+        "x": 30.1,
+        "y": 37.1
+      }
+    ],
+    "fact": "Wilt Chamberlain and Michael Jordan have the same career scoring average — 30.1 points per game, the two highest in NBA history. Their peaks are not close. Jordan's best year was 37.1 in 1986-87. Wilt's was 50.4 in 1961-62: thirteen points per game higher than the best season Jordan ever played, and nearly double Tim Duncan's career average. Kobe's 35.4 in 2005-06 is the season with the 81-point game in it, and it still doesn't reach Jordan's peak. Wilt's career average and his best season are two entirely different players.",
+    "source": "StatMuse career and single-season points per game; all-time career PPG leaderboard."
+  },
+  {
+    "id": "mlb-hr-sb-mays",
+    "league": "MLB",
+    "xLabel": "Career home runs",
+    "xUnit": "HR",
+    "yLabel": "Career stolen bases",
+    "yUnit": "SB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      0,
+      1600
+    ],
+    "targetPlayer": "Willie Mays",
+    "targetX": 660,
+    "targetY": 338,
+    "referencePlayers": [
+      {
+        "name": "Ichiro Suzuki",
+        "x": 117,
+        "y": 509
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 297,
+        "y": 1406
+      },
+      {
+        "name": "Mark McGwire",
+        "x": 583,
+        "y": 12
+      }
+    ],
+    "fact": "Power and speed almost never share a career. Mark McGwire hit 583 home runs and stole 12 bases — total, across his entire career. Rickey Henderson stole 1,406, the all-time record and about 50% more than second place, and hit 297. Ichiro (117 HR, 509 SB) is the pure contact-and-speed pole. Willie Mays hit 660 home runs *and* stole 338 bases: more power than McGwire and more steals than most players who were known for stealing. That corner of this chart is essentially empty, and it's most of why Mays is in the greatest-player-ever argument at all.",
+    "source": "StatMuse career home run and stolen base totals; all-time career stolen base leaderboard."
   }
 ]
