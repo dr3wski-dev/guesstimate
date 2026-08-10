@@ -28,9 +28,10 @@ falls, scored by proximity.
    fit together, what still needs a human with a browser, and precisely which
    part of the "client sees everything" problem the Worker does and does not
    solve. Read before deploying or before touching the CSP.
-6. **reference/guesstimate-scatter.html** — the working, tested reference
-   implementation. Click-to-plot 2D mechanic, exponential-decay scoring, multi-round
-   loop. This is what the production build should extend, not replace.
+6. **site/** — the deployed site, and the *only* directory Cloudflare Pages
+   publishes. `site/index.html` is the game: click-to-plot 2D mechanic,
+   exponential-decay scoring, the daily loop, streaks, challenge links, stats.
+   Nothing else belongs in here — see DEPLOY.md for why that boundary matters.
 7. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D
    version of the mechanic. Historical only now: the two pieces of tested logic it
    was being kept for have both been ported. The streak/localStorage system is in
@@ -54,6 +55,6 @@ form, and it would be easy for old context to leak back in:
 
 ## The one instruction to give Claude Code before anything else
 *"Read README.md, then ACTION_PLAN.md in full, before writing any code. Treat
-guesstimate-scatter.html as the reference implementation to extend, not a prototype to
+site/index.html as the reference implementation to extend, not a prototype to
 throw away. Do not fabricate or estimate stats — if data is needed beyond what's in
 questions.json, flag it as a research task rather than filling it in."*

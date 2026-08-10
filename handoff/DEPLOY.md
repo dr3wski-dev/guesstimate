@@ -12,7 +12,7 @@ can only call an API on its own origin. That's deliberate — it means no CORS, 
 third-party origin in the policy, and a preflight can never be the reason the
 game fails to load. If the Worker ends up on a `*.workers.dev` host instead, the
 origin has to be added to *both* `_headers` and the `<meta http-equiv>` CSP in
-`reference/guesstimate-scatter.html`, or every request the game makes is blocked
+`site/index.html`, or every request the game makes is blocked
 with nothing useful in the console.
 
 ---
@@ -25,11 +25,20 @@ Cloudflare login.
 1. **Connect the repo to Cloudflare Pages.** Dashboard → Workers & Pages → Create
    → Pages → Connect to Git → pick `dr3wski-dev/guesstimate`.
    - Build command: none (there is no build step)
-   - Build output directory: `handoff`
-   - `_headers` sits at `handoff/_headers`, i.e. the root of that output
+   - Build output directory: `handoff/site`
+   - `_headers` sits at `handoff/site/_headers`, i.e. the root of that output
      directory, which is the only place Pages will read it from. If the output
      directory is ever changed, move `_headers` with it — a misplaced `_headers`
      fails silently, with no warning and no headers.
+
+   **`handoff/site/` contains the entire published site and nothing else. That
+   separation is load-bearing, not tidiness.** Pages serves every file in the
+   output directory, so if `data/questions.json` lived inside it, the full
+   question pool would be downloadable at `/data/questions.json` and the Worker
+   would be pointless — the exact leak it was built to close, reopened by a
+   directory layout. `data/` and `worker/` sit outside `site/` deliberately.
+   Verify after any restructure: `curl -sI https://<site>/data/questions.json`
+   must be a 404.
 2. **Deploy the Worker.** From `handoff/worker/`: `wrangler login` (opens a
    browser), then `wrangler deploy`. The dashboard's "create Worker" flow works
    too — paste `src/index.js` and `src/selection.js`.

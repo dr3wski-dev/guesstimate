@@ -51,12 +51,12 @@
      its googleapis/gstatic allowances entirely — consistent with the project's
      stated "minimize dependencies and attack surface" posture. Fraunces and Work
      Sans ship as variable fonts, so one file each covers every weight used. */
-  @font-face{font-family:'Fraunces';font-style:normal;font-weight:600 900;font-display:swap;src:url('../assets/fonts/fraunces-var.woff2') format('woff2');}
-  @font-face{font-family:'Work Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('../assets/fonts/worksans-var.woff2') format('woff2');}
-  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('../assets/fonts/ibmplexmono-400.woff2') format('woff2');}
-  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('../assets/fonts/ibmplexmono-500.woff2') format('woff2');}
-  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/ibmplexmono-600.woff2') format('woff2');}
-  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('../assets/fonts/ibmplexmono-700.woff2') format('woff2');}
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:600 900;font-display:swap;src:url('assets/fonts/fraunces-var.woff2') format('woff2');}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('assets/fonts/worksans-var.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/ibmplexmono-400.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('assets/fonts/ibmplexmono-500.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('assets/fonts/ibmplexmono-600.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/ibmplexmono-700.woff2') format('woff2');}
 
   :root{
     --paper: #f2efe4; --paper-2: #e9e4d4;
@@ -331,13 +331,15 @@ const CHALLENGE = challengeParams.get('challenge') === '1' ? {
 const API_BASE = '/api';
 let TODAY = '';          // authoritative date, from the server — never Date.now()
 let SERVED_DATE = '';    // the date the server actually served (challenge ⇒ ≠ TODAY)
-let HAS_PRACTICE = false;
 let ROUNDS = [];
 let DAILY_ROUNDS = [];
 let PUZZLE_NO = null;
 // 'daily' — today's puzzle, counts toward the streak.
 // 'challenge' — a friend's older puzzle, replayed for comparison; never counts.
-// 'practice' — random questions outside today's set; never counts.
+// (There was a 'practice' mode. It was removed: at a 16-question pool the whole
+//  rotation cycles in ~3 days, so an unlimited mode mostly served up questions
+//  the player was about to get anyway, and it competed with the daily habit the
+//  game is built around. Revisit at a much larger pool, not before.)
 let MODE = 'daily';
 
 /* ============================= DAILY SELECTION — NOT HERE ANYMORE =============================
@@ -575,8 +577,7 @@ function renderProgress(){
   });
 }
 function setTopline(right){
-  const label = MODE === 'practice' ? 'GUESSTIMATE · PRACTICE'
-              : MODE === 'challenge' ? `GUESSTIMATE #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
+  const label = MODE === 'challenge' ? `GUESSTIMATE #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
               : `GUESSTIMATE #${PUZZLE_NO}`;
   topLeft.textContent = label;
   topRight.textContent = right;
@@ -595,46 +596,17 @@ function startScreen(){
       ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
   }
-  const practiceHTML = HAS_PRACTICE
-    ? `<button class="ghost" id="practiceBtn">Practice</button>` : '';
   panel.innerHTML = `
     <h1 class="title">Guesstimate</h1>
     <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
     <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row">${practiceHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
+    <div class="next-row"><button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
-  const pb = document.getElementById('practiceBtn');
-  if(pb) pb.addEventListener('click', startPractice);
 }
 
-// Practice draws from everything that ISN'T in today's set, so it can't be used
-// to preview the daily puzzle. It never touches the streak or the stats — same
-// contract as Poeltl's unlimited mode. The filtering moved to the server along
-// with everything else that needed the full pool to do its job; this is now a
-// fetch, so it can fail, and it has to say so rather than dead-ending on a
-// button that silently does nothing.
-async function startPractice(){
-  const pb = document.getElementById('practiceBtn');
-  if(pb){ pb.disabled = true; pb.textContent = 'Loading…'; }
-  let questions;
-  try{
-    const res = await fetch(`${API_BASE}/practice`);
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    ({ questions } = await res.json());
-    if(!Array.isArray(questions) || questions.length === 0) throw new Error('no questions returned');
-  }catch(err){
-    if(pb){ pb.disabled = false; pb.textContent = 'Practice'; }
-    panel.insertAdjacentHTML('beforeend', `<p class="sub error-text">Couldn't load practice questions (${escapeHtml(err.message)}).</p>`);
-    return;
-  }
-  MODE = 'practice';
-  ROUNDS = questions;
-  idx = 0; roundScores = [];
-  showQuestion();
-}
 function backToToday(){
   MODE = CHALLENGE.active && SERVED_DATE !== TODAY ? 'challenge' : 'daily';
   ROUNDS = DAILY_ROUNDS;
@@ -918,16 +890,15 @@ function showResults(){
   renderProgress();
   const total = roundScores.reduce((a,b)=>a+b,0);
   const max = ROUNDS.length*100;
-  // Practice and challenge replays are explicitly outside the daily record.
+  // Challenge replays are explicitly outside the daily record.
   const stats = MODE === 'daily' ? registerCompletion(roundScores) : loadStats();
   const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
-  const headline = MODE === 'practice' ? 'Guesstimate · practice'
-                 : MODE === 'challenge' ? `Guesstimate #${puzzleNumber(SERVED_DATE)}`
+  const headline = MODE === 'challenge' ? `Guesstimate #${puzzleNumber(SERVED_DATE)}`
                  : `Guesstimate #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>`<span class="pill">+${s}</span>`).join('');
   const streakHTML = MODE === 'daily'
     ? `<div class="streak-line">🔥 <b>${stats.currentStreak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
-    : `<div class="streak-line">${MODE==='practice' ? 'Practice round — no streak effect' : "Challenge round — doesn't affect your streak"}</div>`;
+    : `<div class="streak-line">Challenge round — doesn't affect your streak</div>`;
 
   panel.innerHTML = `
     <div style="text-align:center;">
@@ -966,7 +937,7 @@ function showResults(){
     url.searchParams.set('score', String(total));
     // Anchor the link to the puzzle that was actually played, so the recipient
     // gets the same five questions rather than a different day's set.
-    if(MODE !== 'practice') url.searchParams.set('d', SERVED_DATE);
+    url.searchParams.set('d', SERVED_DATE);
     const shareUrl = url.toString();
     const shareText = `${headline}\n${strip}  ${total}/${max}`;
     const status = document.getElementById('shareStatus');
@@ -1049,7 +1020,6 @@ async function init(){
   // Every one of these is the server's answer, not this device's opinion.
   TODAY = data.today;
   PUZZLE_NO = data.puzzleNumber;
-  HAS_PRACTICE = !!data.hasPractice;
   // A dated challenge link replays the sender's puzzle; anything else is today's.
   // `data.date` is what the server actually served, which is not necessarily what
   // was asked for — a rejected date falls back to today, and the mode has to

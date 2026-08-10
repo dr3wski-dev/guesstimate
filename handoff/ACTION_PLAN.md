@@ -1,7 +1,8 @@
 # Guesstimate — 0→1 Action Plan
 For handoff to Claude Code. This is the current source of truth for scope, architecture,
 security, and cost — supersedes prior planning docs (ROADMAP.md, CURRENT_SPEC.md) where
-they conflict. Working reference implementation: guesstimate-scatter.html.
+they conflict. Working reference implementation: site/index.html (formerly
+reference/guesstimate-scatter.html).
 
 ## 0. What this project actually is, in one paragraph
 A sports stats guessing game. Five questions a day, same for every player, no login
@@ -14,7 +15,7 @@ an exponential decay curve. Streaks and challenge-links, no backend required for
 the *only* game. The anonymized-chart guessing concept (caption multiple-choice, themed
 days across sports/survey/geography/random categories, the hot dog/AKC dog breed/
 pineapple pizza content) is scrapped entirely, not a parallel product and not a fallback.
-guesstimate-scatter.html is the sole reference implementation. Any doc or file describing
+site/index.html is the sole reference implementation. Any doc or file describing
 the anonymized-chart version (GUESS_THE_CHART_SPEC.md, CATEGORY_CLARITY_GUIDELINES.md,
 guess-the-chart.html, the original data-drawer.html portfolio site and its starter kit)
 is historical context only — nothing in them describes what's being built now. Don't
@@ -106,8 +107,8 @@ onerror=alert(document.cookie)>` — would have executed arbitrary script in the
 recipient's browser the moment they opened it. Confirmed exploitable, then confirmed
 fixed, by actually building and firing the payload against both versions of the code.
 That specific file is gone now, but the bug pattern isn't specific to it — the moment
-challenge links get added to guesstimate-scatter.html (they haven't yet), the exact
-same fix needs to go in from the start: sanitize untrusted URL params at the point of
+challenge links were added to site/index.html, the exact
+same fix went in from the start: sanitize untrusted URL params at the point of
 parsing, not case-by-case at each usage site downstream.
 
 **General rule this bug illustrates:** anything that arrives via a URL parameter,
@@ -153,12 +154,12 @@ been escaped correctly while others weren't).
   v1 has real usage data justifying it.
 
 ## 5. Scope for v1 — the actual 0→1 bar
-**Current state, precisely:** guesstimate-scatter.html has the click-to-plot mechanic,
+**Current state, precisely:** site/index.html has the click-to-plot mechanic,
 the scoring engine, and a working multi-round loop with real NBA/NFL data. It does
 *not* yet have the daily-selection function or the streak/challenge-link system —
 those were built and tested in the older guesstimate.html (the numeric-slider version,
 now itself superseded by the scatter mechanic). They need to be **ported into**
-guesstimate-scatter.html, not assumed already present there.
+site/index.html, not assumed already present there.
 
 - [x] 15-20 real, sourced questions across at least NBA and NFL (verified data, not
       placeholders) — **done: 16 questions, 7 NBA / 5 NFL / 4 MLB**, every number

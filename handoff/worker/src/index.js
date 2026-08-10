@@ -22,7 +22,7 @@
 // Node — which is what lets the test suite exercise the real Worker without a
 // Workers runtime in the loop.
 import POOL from '../../data/questions.json' with { type: 'json' };
-import { roundsForDate, seededShuffle, puzzleNumber, todayDateString, BAG_EPOCH, DAILY_COUNT } from './selection.js';
+import { roundsForDate, puzzleNumber, todayDateString, BAG_EPOCH } from './selection.js';
 
 const json = (body, cacheControl, extra = {}) => new Response(JSON.stringify(body), {
   headers: {
@@ -105,7 +105,6 @@ export default {
         date,
         today,
         puzzleNumber: puzzleNumber(date),
-        hasPractice: POOL.length > DAILY_COUNT,
         questions: roundsForDate(date, POOL),
       }, `public, max-age=${secondsUntilEtMidnight()}, s-maxage=${EDGE_TTL}`, { 'x-cache': 'MISS' });
 
@@ -115,19 +114,6 @@ export default {
         if(ctx?.waitUntil) ctx.waitUntil(write); else await write;
       }
       return res;
-    }
-
-    /* Practice is drawn server-side from everything that ISN'T in today's set,
-       preserving the old client-side contract (it can't be used to preview the
-       daily puzzle) without handing the client the pool it used to filter. */
-    if(path === '/practice'){
-      const todayIds = new Set(roundsForDate(today, POOL).map(q => q.id));
-      const avail = POOL.filter(q => !todayIds.has(q.id));
-      const source = avail.length ? avail : POOL;
-      const seed = (Math.random() * 4294967296) >>> 0;
-      return json({
-        questions: seededShuffle(source, seed).slice(0, Math.min(DAILY_COUNT, source.length)),
-      }, 'no-store');
     }
 
     return new Response('Not found', { status: 404 });
