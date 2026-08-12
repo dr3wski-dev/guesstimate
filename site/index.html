@@ -298,6 +298,12 @@
   .dist-row .db{ background:var(--ink); height:15px; min-width:3px; border-radius:2px; }
   .dist-row .dn{ color:var(--ink-faint); }
   .modal-empty{ font-size:13px; color:var(--ink-soft); line-height:1.55; }
+  .restore{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); }
+  .restore-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+  .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
+  .restore-label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin:10px 0 5px; }
+  .restore-code{ width:100%; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.45; padding:8px 9px; border:2px solid var(--ink); border-radius:3px; background:var(--paper-2); color:var(--ink); resize:vertical; word-break:break-all; margin:8px 0; }
+  .restore-status{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin:8px 0 0; min-height:16px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -378,6 +384,26 @@ let CHALLENGE = challengeParams.get('challenge') === '1' ? {
   score: clampScore(challengeParams.get('score'), CHALLENGE_MAX_SCORE),
   date: sanitizeDate(challengeParams.get('d')),
 } : { active: false };
+
+/* ============================= ANALYTICS =============================
+   Provider-agnostic, and a no-op unless a provider is actually installed — which
+   build_site.py does at deploy time via --analytics, so no key or vendor snippet is
+   ever hand-pasted into this file.
+
+   Without instrumentation, day one answers none of the questions that decide what to
+   build next: did anyone play, did they finish all five, where did they drop out, did
+   anyone share, did a shared link get opened. That's the whole reason this exists.
+
+   Nothing here sends personal data. The events carry a puzzle number, a score band
+   and a mode — no names, no free text, nothing a player typed. Keep it that way:
+   the site collects no PII today and that's a property worth not quietly losing. */
+function track(event, props){
+  try{
+    if(window.plausible){ window.plausible(event, props ? { props } : undefined); return; }
+    if(window.gtag){ window.gtag('event', event, props || {}); return; }
+    if(window.__gtEvents){ window.__gtEvents.push([event, props || {}]); }
+  }catch(e){ /* analytics must never break the game */ }
+}
 
 /* ============================= DATA LOADING =============================
    Question content lives in ../data/questions.json (the canonical schema — see
@@ -547,6 +573,71 @@ function loadStats(){
   return Object.assign({}, DEFAULT_STATS, { tiers:{} });
 }
 function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
+
+/* ---------- Restore codes ----------
+   Stats live in localStorage and nowhere else, so clearing a browser, switching
+   phones, or opening the game in a different browser loses a streak permanently with
+   no way back. For a game whose entire retention mechanic is the streak, that is the
+   one piece of player data that can't be rebuilt — and the complaint it generates
+   will arrive long before anyone wants a leaderboard.
+
+   A restore code is just the stats blob, base64'd with a version prefix and a short
+   checksum so a truncated or mistyped paste is rejected rather than silently
+   importing garbage. No accounts, no backend, no PII — it encodes a streak counter
+   and a date. Whatever is imported is still subject to the same one-completion-per-
+   day rule, so a code can't be used to fabricate a run of play. */
+const CODE_PREFIX = 'GT1';
+function checksum(str){
+  let h = 5381;
+  for(let i=0;i<str.length;i++){ h = ((h*33) ^ str.charCodeAt(i)) >>> 0; }
+  return h.toString(36).slice(0, 4).toUpperCase();
+}
+function b64encode(str){
+  return btoa(String.fromCharCode(...new TextEncoder().encode(str)))
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64decode(str){
+  const pad = str.replace(/-/g,'+').replace(/_/g,'/');
+  const bin = atob(pad + '==='.slice((pad.length + 3) % 4));
+  return new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
+}
+function makeRestoreCode(s){
+  const slim = {
+    lastPlayed: s.lastPlayed, currentStreak: s.currentStreak, bestStreak: s.bestStreak,
+    daysPlayed: s.daysPlayed, totalPoints: s.totalPoints, bestRound: s.bestRound,
+    tiers: s.tiers,
+  };
+  const body = b64encode(JSON.stringify(slim));
+  return `${CODE_PREFIX}-${checksum(body)}-${body}`;
+}
+// Returns a stats object, or throws with a message worth showing the player.
+function readRestoreCode(raw){
+  const code = (raw || '').trim().replace(/\s+/g, '');
+  const parts = code.split('-');
+  if(parts.length < 3 || parts[0] !== CODE_PREFIX) throw new Error("That doesn't look like a Guesstimate code.");
+  const [, sum, ...rest] = parts;
+  const body = rest.join('-');
+  if(checksum(body) !== sum) throw new Error('That code looks incomplete — copy the whole thing and try again.');
+  let parsed;
+  try{ parsed = JSON.parse(b64decode(body)); }
+  catch(e){ throw new Error("That code couldn't be read."); }
+  if(!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error("That code couldn't be read.");
+  const n = v => Number.isFinite(+v) && +v >= 0 ? Math.floor(+v) : 0;
+  const merged = Object.assign({}, DEFAULT_STATS, {
+    lastPlayed: /^\d{4}-\d{2}-\d{2}$/.test(parsed.lastPlayed) ? parsed.lastPlayed : null,
+    currentStreak: n(parsed.currentStreak), bestStreak: n(parsed.bestStreak),
+    daysPlayed: n(parsed.daysPlayed), totalPoints: n(parsed.totalPoints),
+    bestRound: n(parsed.bestRound),
+    tiers: {},
+  });
+  // Only tier names this build knows about, so an older or hand-edited code can't
+  // inject arbitrary keys into the breakdown.
+  if(parsed.tiers && typeof parsed.tiers === 'object'){
+    TIER_ORDER.forEach(k => { if(parsed.tiers[k]) merged.tiers[k] = n(parsed.tiers[k]); });
+  }
+  merged.bestStreak = Math.max(merged.bestStreak, merged.currentStreak);
+  return merged;
+}
 // The stored streak is only ever recomputed when a round is completed, so a lapsed
 // player used to be shown a streak they no longer had — set lastPlayed seven months
 // back and the start screen still cheerfully read "🔥 7-day streak", right up until
@@ -827,7 +918,10 @@ function startScreen(){
     ${streakHTML}
     <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
   `;
-  document.getElementById('startBtn').addEventListener('click', ()=>{ idx=0; roundScores=[]; showQuestion(); });
+  document.getElementById('startBtn').addEventListener('click', ()=>{
+    track('round_start', { mode: MODE, puzzle: MODE==='challenge' ? puzzleNumber(CHALLENGE.date) : PUZZLE_NO });
+    idx=0; roundScores=[]; showQuestion();
+  });
   const tb = document.getElementById('todayBtn');
   if(tb) tb.addEventListener('click', leaveChallenge);
 }
@@ -1154,6 +1248,7 @@ function showQuestion(){
       </div>
     `;
     countUp(document.getElementById('ptsNum'), points);
+    track('question_submit', { question: r.id, league: r.league, tier: t.label, index: idx+1 });
     submitBtn.textContent = idx+1<ROUNDS.length ? 'Next question →' : 'See results →';
     // On a phone the reveal used to render entirely below the fold — the player
     // tapped Submit, the button relabelled, and the score, the miss and the fact
@@ -1174,6 +1269,8 @@ function showResults(){
   // is filed against the Eastern date the puzzle was served for, not a UTC one.
   const stats = MODE === 'daily' ? registerCompletion(roundScores, TODAY) : loadStats();
   const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
+  track('round_complete', { mode: MODE, score: total, band: `${Math.floor(total/50)*50}-${Math.floor(total/50)*50+49}`,
+                            streak: MODE==='daily' ? liveStreak(stats, TODAY) : 0 });
   const headline = MODE === 'challenge'
     ? `Guesstimate #${puzzleNumber(CHALLENGE.date)}`
     : `Guesstimate #${PUZZLE_NO}`;
@@ -1225,6 +1322,7 @@ function showResults(){
     // gets the same five questions rather than a different day's set.
     url.searchParams.set('d', MODE === 'challenge' ? CHALLENGE.date : TODAY);
     const shareUrl = url.toString();
+    track('share_click', { mode: MODE, score: total, named: name ? 'yes' : 'no' });
     const shareText = `${headline}\n${strip}  ${total}/${max}`;
     const status = document.getElementById('shareStatus');
 
@@ -1252,7 +1350,11 @@ function renderStatsModal(){
   const s = loadStats();
   const body = document.getElementById('statsBody');
   if(!s.daysPlayed){
-    body.innerHTML = `<p class="modal-empty">No rounds yet. Finish today's five questions and your stats will show up here — days played, average score, and how your guesses break down.</p>`;
+    // The empty state is exactly when someone arriving on a new phone needs the
+    // paste box, so the restore panel has to render here too — not only once
+    // there's a record to export.
+    body.innerHTML = `<p class="modal-empty">No rounds yet. Finish today's five questions and your stats will show up here — days played, average score, and how your guesses break down.</p>${restoreHTML()}`;
+    wireRestore();
     return;
   }
   const avg = Math.round(s.totalPoints / s.daysPlayed);
@@ -1271,7 +1373,85 @@ function renderStatsModal(){
     </div>
     <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN — BEST ROUND ${s.bestRound}</div>
     ${rows}
+    ${restoreHTML()}
   `;
+  wireRestore();
+}
+
+// Shown whether or not there's a record yet — someone arriving on a new phone needs
+// the paste box before they have any stats to export.
+function restoreHTML(){
+  return `
+    <div class="restore">
+      <div class="restore-head">Move your streak to another device</div>
+      <p class="restore-note">Your streak is stored in this browser only. Clearing it, or
+        switching phones, loses it — this code is the way to carry it across.</p>
+      <div class="next-row" style="justify-content:flex-start;">
+        <button class="ghost" id="copyCodeBtn">Copy my code</button>
+        <button class="ghost" id="pasteCodeBtn">Paste a code</button>
+      </div>
+      <div id="restoreArea"></div>
+      <p class="restore-status" id="restoreStatus" aria-live="polite"></p>
+    </div>`;
+}
+
+function wireRestore(){
+  const area = document.getElementById('restoreArea');
+  const status = document.getElementById('restoreStatus');
+  const copyBtn = document.getElementById('copyCodeBtn');
+  const pasteBtn = document.getElementById('pasteCodeBtn');
+  if(!area) return;
+
+  copyBtn.addEventListener('click', async ()=>{
+    const s = loadStats();
+    if(!s.lastPlayed){ status.textContent = 'Nothing to save yet — play a round first.'; return; }
+    const code = makeRestoreCode(s);
+    track('restore_export', { streak: s.currentStreak });
+    area.innerHTML = `<textarea class="restore-code" id="myCode" readonly rows="3">${escapeHtml(code)}</textarea>`;
+    const ta = document.getElementById('myCode');
+    ta.focus(); ta.select();
+    try{
+      await navigator.clipboard.writeText(code);
+      status.textContent = 'Copied. Paste it into Guesstimate on your other device.';
+    }catch(e){
+      status.textContent = 'Copy this code and paste it on your other device.';
+    }
+  });
+
+  pasteBtn.addEventListener('click', ()=>{
+    area.innerHTML = `
+      <label class="restore-label" for="codeIn">Paste your code</label>
+      <textarea class="restore-code" id="codeIn" rows="3" placeholder="GT1-..."></textarea>
+      <div class="next-row" style="justify-content:flex-start;">
+        <button class="primary" id="applyCodeBtn">Restore</button>
+      </div>`;
+    document.getElementById('codeIn').focus();
+    document.getElementById('applyCodeBtn').addEventListener('click', ()=>{
+      let incoming;
+      try{ incoming = readRestoreCode(document.getElementById('codeIn').value); }
+      catch(err){ status.innerHTML = `<span class="error-text">${escapeHtml(err.message)}</span>`; return; }
+      const cur = loadStats();
+      // Merge rather than overwrite, keeping the better of each figure. Restoring
+      // onto a device that has its own history shouldn't silently destroy it.
+      const merged = Object.assign({}, cur, {
+        currentStreak: Math.max(cur.currentStreak||0, incoming.currentStreak||0),
+        bestStreak: Math.max(cur.bestStreak||0, incoming.bestStreak||0),
+        daysPlayed: Math.max(cur.daysPlayed||0, incoming.daysPlayed||0),
+        totalPoints: Math.max(cur.totalPoints||0, incoming.totalPoints||0),
+        bestRound: Math.max(cur.bestRound||0, incoming.bestRound||0),
+        lastPlayed: [cur.lastPlayed, incoming.lastPlayed].filter(Boolean).sort().pop() || null,
+        tiers: Object.assign({}, cur.tiers),
+      });
+      TIER_ORDER.forEach(k=>{
+        merged.tiers[k] = Math.max(cur.tiers[k]||0, incoming.tiers[k]||0);
+      });
+      saveStats(merged);
+      track('restore_import', { streak: merged.currentStreak });
+      renderStatsModal();
+      const st = document.getElementById('restoreStatus');
+      if(st) st.textContent = `Restored — ${liveStreak(merged, TODAY || todayDateString())}-day streak, best ${merged.bestStreak}.`;
+    });
+  });
 }
 document.getElementById('statsBtn').addEventListener('click', ()=>{
   renderStatsModal();
@@ -1314,6 +1494,7 @@ async function init(){
   PUZZLE_NO = puzzleNumber(TODAY);
   // A dated challenge link replays the sender's puzzle; anything else is today's.
   MODE = (CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY) ? 'challenge' : 'daily';
+  if(CHALLENGE.active) track('challenge_open', { mode: MODE, dated: CHALLENGE.date ? 'yes' : 'no' });
   DAILY_ROUNDS = roundsForDate(MODE === 'challenge' ? CHALLENGE.date : TODAY);
   ROUNDS = DAILY_ROUNDS;
   startScreen();

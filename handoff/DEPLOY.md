@@ -38,6 +38,10 @@ What the build changes, and why each one matters:
 # 1. Build for your real domain (must be an https origin, no path)
 python3 handoff/pipeline/build_site.py --url https://your-domain.com
 
+#    ...or with analytics installed in the same step (see below)
+python3 handoff/pipeline/build_site.py --url https://your-domain.com \
+    --analytics plausible --analytics-domain your-domain.com
+
 # 2. Sanity-check it locally before pushing
 cd site && python3 -m http.server 8900     # then open http://localhost:8900/
 
@@ -80,15 +84,32 @@ to build custom hosting.
 Two things from LAUNCH_CHECKLIST.md are worth doing in the same session, while you
 still have the host's dashboard open:
 
-1. **Analytics** (B3). Without it, day one tells you nothing. A script tag plus a
-   handful of events — `round_start`, `question_submit`, `round_complete`,
-   `share_click`, `challenge_open` — answers "did anyone play, did they finish, did
-   anyone share." Cloudflare Web Analytics is free and needs no cookie banner.
-   Note it will need a CSP `script-src` / `connect-src` entry; add it to `CSP` in
-   `build_site.py`, not to the built file.
-2. **A stats restore code.** Streaks live only in `localStorage`, so clearing a
-   browser or switching phones loses them with no recovery. An export/import code is
-   about an hour and it's the only player data that can't be rebuilt.
+1. **Analytics** (B3) — **the code side is done**, so this is now just an account.
+   Seven events are already instrumented: `round_start`, `question_submit`,
+   `round_complete`, `share_click`, `challenge_open`, `restore_export`,
+   `restore_import`. They no-op until a provider is installed, and the provider is a
+   build flag, so no vendor snippet is ever pasted into the game:
+
+   ```bash
+   # Plausible — custom events supported, ~$9/mo
+   --analytics plausible --analytics-domain your-domain.com
+   # Cloudflare Web Analytics — free, cookieless, pageviews only (no custom events)
+   --analytics cloudflare --analytics-domain <beacon-token>
+   ```
+
+   The build extends the CSP for exactly that provider's hosts rather than loosening
+   it globally. Building without `--analytics` produces a site with **no third-party
+   requests at all** — verify with `grep -oE 'https?://[a-z0-9.-]+' site/index.html`,
+   which should show only your own domain.
+
+   The events carry a puzzle number, a score band and a mode. No names, no free text,
+   nothing a player typed. The site collects no PII today; keep it that way.
+
+2. **A stats restore code** — **done.** The stats modal now exports a `GT1-…` code and
+   accepts one, with a checksum so a truncated paste is rejected rather than silently
+   importing garbage. Restoring merges rather than overwrites, and a restored
+   `lastPlayed` still blocks a second completion the same day, so a code can't be used
+   to farm streak credit.
 
 ## Shipping new content later
 

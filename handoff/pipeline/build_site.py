@@ -23,6 +23,8 @@ data and re-run.
 USAGE
   python3 pipeline/build_site.py --url https://guesstimate.example
   python3 pipeline/build_site.py --url https://guesstimate.example --check
+  python3 pipeline/build_site.py --url https://guesstimate.example \\
+      --analytics plausible --analytics-domain guesstimate.example
 """
 import argparse, json, os, re, shutil, sys
 
@@ -43,7 +45,46 @@ CSP = ("default-src 'self'; script-src 'self' 'unsafe-inline'; "
        "frame-ancestors 'none'")
 
 
-def build(site_url, check=False):
+# Analytics providers. The game calls track() unconditionally and no-ops when no
+# provider is installed, so this is purely a deploy-time decision — nothing here is
+# ever hand-pasted into the reference file, and building without --analytics produces
+# a site with no third-party requests at all.
+ANALYTICS = {
+    'plausible': {
+        'tag': ('<script defer data-domain="{domain}" '
+                'src="https://plausible.io/js/script.js"></script>\n'
+                '<script>window.plausible=window.plausible||function(){{'
+                '(window.plausible.q=window.plausible.q||[]).push(arguments)}}</script>'),
+        'csp': {'script-src': ['https://plausible.io'],
+                'connect-src': ['https://plausible.io']},
+    },
+    'cloudflare': {
+        # Free, cookieless, no consent banner needed. Custom events are not supported
+        # on the free tier — pageviews only — so the track() calls stay inert here.
+        'tag': ('<script defer src="https://static.cloudflareinsights.com/beacon.min.js" '
+                'data-cf-beacon=\'{{"token": "{domain}"}}\'></script>'),
+        'csp': {'script-src': ['https://static.cloudflareinsights.com'],
+                'connect-src': ['https://cloudflareinsights.com']},
+    },
+}
+
+
+def csp_with(provider):
+    """Extend the base policy for a provider rather than loosening it globally. Adding
+    an analytics host must not quietly become 'script-src *'."""
+    if not provider:
+        return CSP
+    extra = ANALYTICS[provider]['csp']
+    out = []
+    for directive in CSP.split('; '):
+        name = directive.split(' ', 1)[0]
+        if name in extra:
+            directive = directive + ' ' + ' '.join(extra[name])
+        out.append(directive)
+    return '; '.join(out)
+
+
+def build(site_url, check=False, provider=None, domain=None):
     site_url = site_url.rstrip('/')
     html = open(SRC_HTML, encoding='utf-8').read()
 
@@ -71,6 +112,10 @@ def build(site_url, check=False):
                             f'<meta property="og:type" content="website">\n'
                             f'<meta property="og:url" content="{site_url}/">')
     html = html.replace('<title>', f'<link rel="canonical" href="{site_url}/">\n<title>', 1)
+
+    if provider:
+        tag = ANALYTICS[provider]['tag'].format(domain=domain)
+        html = html.replace('</head>', tag + '\n</head>', 1)
 
     leftovers = re.findall(r'(?:content|href|src)="(?!https?:|data:|#)[^"]*\.\./[^"]*"', html)
     assert not leftovers, f'unresolved relative paths: {leftovers}'
@@ -108,8 +153,9 @@ def build(site_url, check=False):
     # Netlify / Cloudflare Pages. questions.json is deliberately short-cached: it is
     # the one file that changes when content ships, and a stale copy means a player
     # sees yesterday's puzzle. Fonts are immutable and cached hard.
+    csp = csp_with(provider)
     open(os.path.join(OUT, '_headers'), 'w').write(f"""/*
-  Content-Security-Policy: {CSP}
+  Content-Security-Policy: {csp}
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
@@ -132,7 +178,7 @@ def build(site_url, check=False):
         "$schema": "https://openapi.vercel.sh/vercel.json",
         "headers": [
             {"source": "/(.*)", "headers": [
-                {"key": "Content-Security-Policy", "value": CSP},
+                {"key": "Content-Security-Policy", "value": csp},
                 {"key": "X-Content-Type-Options", "value": "nosniff"},
                 {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"},
                 {"key": "Permissions-Policy",
@@ -169,10 +215,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--url', required=True, help='absolute site origin, e.g. https://guesstimate.app')
     ap.add_argument('--check', action='store_true', help='validate without writing')
+    ap.add_argument('--analytics', choices=sorted(ANALYTICS),
+                    help='install an analytics provider (adds its host to the CSP)')
+    ap.add_argument('--analytics-domain',
+                    help='plausible: your site domain. cloudflare: the beacon token.')
     a = ap.parse_args()
+    if a.analytics and not a.analytics_domain:
+        sys.exit('--analytics needs --analytics-domain')
     if not re.match(r'^https://[^/]+$', a.url.rstrip('/')):
         sys.exit('--url must be an absolute https origin with no path')
-    return build(a.url, a.check)
+    return build(a.url, a.check, a.analytics, a.analytics_domain)
 
 
 if __name__ == '__main__':

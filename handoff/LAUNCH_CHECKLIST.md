@@ -67,6 +67,11 @@ won't exist.
 piece of work remaining and it is content, not engineering. See "Research pass" below.
 
 ### B3. No analytics — you'd launch blind
+> **Status: code done, needs an account.** Seven events are instrumented and a
+> provider installs via a build flag (`--analytics plausible|cloudflare`), which also
+> extends the CSP for just that provider. All that's left is signing up and passing
+> the domain or token. See DEPLOY.md.
+
 There is no instrumentation of any kind. On day one you would not be able to answer:
 did anyone play, did they finish all five, where did they drop off, did anyone share,
 did any share link get opened. Those are exactly the questions that decide what to
@@ -87,6 +92,7 @@ launch-blocking.
 | S2 | **How-it-works screen** | Nothing anywhere explains scoring. New players see "+38" with no scale. The reveal heat map helps, but only after they've already guessed. | 2h |
 | S3 | **Keyboard nudge scaling** | Arrow keys move one guess-step, so crossing the Boldin chart takes 16,000 presses. The instruction text advertises the keyboard on every round. | 1h |
 | S4 | **Content hygiene** | The abbreviated NFL reference names are fixed. Still open: Nowitzki's `[60, 92]` domain spends a quarter of the axis on Muggsy Bogues, and batting averages render as `0.254` where baseball convention is `.254`. | 1h |
+| S5 | **Content to 50+** | 30 today (first repeat day 7). The pipeline now covers all three leagues, so this is curation time, not research time. | ongoing |
 
 ---
 
@@ -140,8 +146,10 @@ Cheap mitigations that don't need a backend:
 - Say so plainly in the UI, so losing it isn't a surprise
 - Accept it for v1 and let #3 solve it properly later
 
-**Recommendation: ship the restore code with launch. It's an hour and it's the only
-data the player can't get back.**
+**Done.** The stats modal exports and accepts a `GT1-…` restore code — checksummed so
+a truncated paste is rejected, merged rather than overwritten on import, and unable to
+buy extra streak credit because the one-completion-per-day rule still applies to the
+restored `lastPlayed`.
 
 ---
 
