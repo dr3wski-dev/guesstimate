@@ -1,6 +1,6 @@
 # Guesstimate — Competitive Analysis & Enhancement Backlog
 
-Written against the actual state of `reference/guesstimate-scatter.html` and
+Written against the actual state of the game (now `site/index.html`) and
 `data/questions.json` (10 questions), not against the plan. Companion to
 ACTION_PLAN.md — that doc covers scope/architecture/cost; this one covers
 *where this game sits against the daily-game genre* and what to build to
@@ -160,12 +160,15 @@ Cheapest high-leverage fix on this entire list: real title, `og:title` /
 5. **Stats modal.** Wordle and Immaculate Grid both have one. Played, average
    score, tier distribution ("you're a 🟢 62% player"), current/best streak.
    Pure `localStorage` aggregate, no backend.
-6. **Archive / practice mode.** The current "Play again" button re-serves *the
-   same five questions with the answers already known* — it inflates nothing
-   real but it promises new content and delivers a replay. At a 10-question pool
-   there's nothing better to offer; at 100+ this becomes the main session-length
-   lever, and it's the single feature most requested across every game in the
-   table above.
+6. **Archive / practice mode. BUILT, THEN REMOVED — read this before rebuilding
+   it.** A practice mode drawing from outside today's set shipped and was pulled
+   back out. The reason is the pool size: at 16 questions the rotation cycles in
+   3.2 days, so "questions outside today's set" is mostly *tomorrow's* set, and
+   an unlimited mode both spoils the daily puzzle and competes with the habit
+   loop the whole game is built on. The feature isn't wrong, the pool is too
+   small for it. It becomes the main session-length lever at 100+ questions,
+   which is where the content push is aimed — rebuild it then, server-side, and
+   note the endpoint that did exactly this is in the git history.
 7. **First-run worked example.** Every new user arrives cold from a text message
    with no idea what they're looking at. A one-time ghost animation showing a pin
    being dragged, or a throwaway tutorial round, is standard in this genre and

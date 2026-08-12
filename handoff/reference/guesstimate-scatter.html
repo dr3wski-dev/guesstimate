@@ -135,7 +135,16 @@
     letter-spacing:0.06em; text-transform:uppercase; margin-bottom:12px;
   }
   .topline-end{ display:flex; align-items:center; gap:10px; flex:none; }
+  /* The topline label doubles as the way back to the home screen. A real <button>
+     rather than a styled span so it's keyboard-reachable and announced as a
+     control; the reset strips the chrome so it still reads as a label. */
   #topLeft{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  button.home-btn{
+    font:inherit; letter-spacing:inherit; text-transform:inherit; color:inherit;
+    background:none; border:0; padding:0; margin:0; cursor:pointer;
+    border-bottom:1px solid transparent; text-align:left;
+  }
+  button.home-btn:hover, button.home-btn:focus-visible{ color:var(--ink); border-bottom-color:var(--ink); }
   .progress{ display:flex; gap:6px; margin-bottom:18px; }
   .progress .seg{ flex:1; height:6px; background:var(--paper-2); border:1.5px solid var(--ink); }
   .progress .seg.done{ background:var(--ink); }
@@ -322,7 +331,7 @@
 <body>
 <div class="app" id="app">
   <div class="topline">
-    <span id="topLeft">GUESSTIMATE</span>
+    <button id="topLeft" class="home-btn" title="Back to the home screen">GUESSTIMATE</button>
     <span class="topline-end">
       <span id="topRight">···</span>
       <span class="controls">
@@ -423,12 +432,25 @@ function track(event, props){
 }
 
 /* ============================= DATA LOADING =============================
-   Question content lives in ../data/questions.json (the canonical schema — see
-   README.md and CONTENT_BACKLOG.md) and is loaded at runtime instead of being
-   hardcoded here, so content edits never require touching this file or risk a
-   hardcoded copy drifting out of sync with the source of truth. */
-let QUESTION_POOL = [];
-let TODAY = '';
+   The client no longer holds the question pool. It asks the Worker for one day's
+   questions and gets exactly that — see worker/src/index.js. The pool used to be
+   fetched whole as data/questions.json, which meant every future day's answers
+   were one dev-tools panel away.
+
+   Worth being precise about what this does and doesn't fix: the five questions
+   being played still arrive with their answers attached (targetX/targetY/fact),
+   because scoring and the reveal happen here. A determined player can still read
+   today's five answers out of the network tab. Hiding those too would mean posting
+   guesses to the server for scoring, which is a real backend with real abuse
+   surface — out of scope per ACTION_PLAN.md section 6, and not what the leak was
+   about. */
+// The questions API — one stateless Worker routed at /api/* on this same origin,
+// so the CSP can stay connect-src 'self'. It exists because a client holding the
+// whole pool leaks every future day's answers to anyone who opens dev tools, and
+// because "today" from the device clock is spoofable.
+const API_BASE = '/api';
+let TODAY = '';          // authoritative date, from the server — never Date.now()
+let SERVED_DATE = '';    // the date the server actually served, not what we asked for
 let ROUNDS = [];
 let DAILY_ROUNDS = [];
 let PUZZLE_NO = null;
@@ -441,105 +463,28 @@ let PUZZLE_NO = null;
 // for a practice draw to be meaningfully separate from the next day's bag.)
 let MODE = 'daily';
 
-/* ============================= DAILY SELECTION (pure — portable to a server later) =============================
-   Ported unchanged from guesstimate-slider-legacy.html — already built and tested
-   there. Given a date string and the question pool, deterministically picks
-   today's questions: same date always produces the same result, so it doesn't
-   matter where this runs (browser today, an API later). */
-function hashString(str){
-  let h = 0;
-  for(let i=0;i<str.length;i++){ h = (Math.imul(31,h) + str.charCodeAt(i)) | 0; }
-  return h >>> 0;
-}
-function mulberry32(seed){
-  return function(){
-    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-function seededShuffle(arr, seed){
-  const rng = mulberry32(seed);
-  const a = [...arr];
-  for(let i=a.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-  return a;
-}
-// Fixed reference timezone so every player gets the same "today" regardless of
-// their own — otherwise players in different timezones could be on different
-// calendar days at the same real-world moment.
-function todayDateString(tz='America/New_York'){
-  return new Date().toLocaleDateString('en-CA', { timeZone: tz }); // e.g. "2026-08-05"
-}
-function selectDailyQuestions(dateStr, pool, count=5){
-  const seed = hashString(dateStr);
-  return seededShuffle(pool, seed).slice(0, Math.min(count, pool.length));
-}
-
-// Shuffled-bag anti-repeat rotation (ACTION_PLAN.md v1.1). Concatenate
-// independently-shuffled copies of the pool end-to-end ("cycle 0", "cycle 1", ...)
-// into one infinite sequence, then hand out `count` consecutive items per calendar
-// day. Every item appears exactly once before any item repeats, and it's still a
-// pure function of (dateStr, pool, count): no stored cursor, nothing to desync.
+/* Daily selection lives in worker/src/selection.js and runs server-side — there is
+   exactly one implementation and the client no longer has a vote. What remains here
+   is only what's needed to label a puzzle. */
 function daysSince(dateStr, epoch){
   return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
 }
 function puzzleNumber(dateStr){
   return Math.max(0, daysSince(dateStr, BAG_EPOCH)) + 1; // day one is #1
 }
-function selectDailyBag(dateStr, pool, count=5){
-  if(pool.length === 0) return [];
-  const dayIndex = Math.max(0, daysSince(dateStr, BAG_EPOCH));
-  const startIdx = dayIndex * count;
-  const cycleShuffles = new Map();
-  const result = [];
-  for(let i = startIdx; i < startIdx + count; i++){
-    const cycleIndex = Math.floor(i / pool.length);
-    const posInCycle = i % pool.length;
-    if(!cycleShuffles.has(cycleIndex)){
-      cycleShuffles.set(cycleIndex, seededShuffle(pool, hashString(`bag-cycle-${cycleIndex}`)));
-    }
-    result.push(cycleShuffles.get(cycleIndex)[posInCycle]);
+/* One round-trip for a day's questions. The only date the client may ask for is a
+   challenge link's, and the server refuses anything that isn't already in the past,
+   so this can't be walked forward to read tomorrow's puzzle. With no parameter the
+   server answers with its own today, which is the normal path. */
+async function fetchDaily(dateStr){
+  const q = dateStr ? `?d=${encodeURIComponent(dateStr)}` : '';
+  const res = await fetch(`${API_BASE}/daily${q}`);
+  if(!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  if(!Array.isArray(data.questions) || data.questions.length === 0){
+    throw new Error('no questions returned');
   }
-  return result;
-}
-/* Optional hand-scheduled days, loaded from data/schedule.json — `{ "2026-09-01":
-   ["id", ...] }`, authored as a spreadsheet and compiled by
-   pipeline/import_questions.py. A pinned date serves exactly those questions; every
-   other date keeps falling back to the shuffled bag, so this is an override rather
-   than a replacement and the daily selection stays a pure function of the date with
-   no server involved.
-
-   Questions that appear anywhere in the schedule are removed from the bag entirely.
-   That's deliberate: without it a themed day could be spoiled by the bag serving one
-   of its questions the week before, and the exclusion has to be date-independent or
-   replaying an old challenge link would no longer reproduce that day's puzzle. */
-let SCHEDULE = {};
-let SCHEDULED_IDS = new Set();
-function bagPool(){
-  if(SCHEDULED_IDS.size === 0) return QUESTION_POOL;
-  const rest = QUESTION_POOL.filter(q => !SCHEDULED_IDS.has(q.id));
-  // If scheduling has eaten so much of the pool that an unscheduled day can't be
-  // filled, the schedule is the broken thing — serve from everything rather than
-  // hand the player a short round.
-  return rest.length >= 5 ? rest : QUESTION_POOL;
-}
-// Questions for the daily set on `dateStr` — used both for today and for
-// replaying the day a challenge link was sent from.
-function roundsForDate(dateStr){
-  const DAILY_COUNT = 5;
-  const pinned = SCHEDULE[dateStr];
-  if(pinned && pinned.length){
-    const byId = new Map(QUESTION_POOL.map(q => [q.id, q]));
-    const picked = pinned.map(id => byId.get(id)).filter(Boolean);
-    if(picked.length) return picked;
-    // Every pinned id is unknown — the schedule is stale against the pool. Fall
-    // through to the bag rather than showing an empty round.
-  }
-  const pool = bagPool();
-  return pool.length >= DAILY_COUNT
-    ? selectDailyBag(dateStr, pool, DAILY_COUNT)
-    : selectDailyQuestions(dateStr, pool, pool.length);
+  return data;
 }
 
 /* ============================= STATS & STREAK =============================
@@ -669,7 +614,10 @@ function liveStreak(s, today){
 // with the answers already known can't inflate the aggregates or the streak.
 function registerCompletion(scores, dateStr){
   const s = loadStats();
-  const today = dateStr || todayDateString();
+  // No authoritative date means the server never answered; recording against a
+  // device clock is exactly what the Worker exists to prevent, so record nothing.
+  const today = dateStr || TODAY;
+  if(!today) return s;
   if(s.lastPlayed === today) return s;
   s.currentStreak = (s.lastPlayed === prevDateString(today)) ? (s.currentStreak||0)+1 : 1;
   s.bestStreak = Math.max(s.bestStreak||0, s.currentStreak);
@@ -930,10 +878,18 @@ function renderProgress(){
 }
 function setTopline(right){
   topLeft.textContent = MODE === 'challenge'
-    ? `GUESSTIMATE #${puzzleNumber(CHALLENGE.date)} · CHALLENGE`
+    ? `GUESSTIMATE #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
     : `GUESSTIMATE #${PUZZLE_NO}`;
   topRight.textContent = right;
 }
+
+/* A run is part-finished when some rounds are scored but not all. Tracked so the
+   home button can't quietly throw away four completed rounds on a mis-tap —
+   without this, "back to home" and "start over" would be the same action. */
+function runInProgress(){
+  return roundScores.length > 0 && roundScores.length < ROUNDS.length;
+}
+function goHome(){ startScreen(); }
 
 function startScreen(){
   appEl.removeAttribute('data-league');
@@ -946,7 +902,7 @@ function startScreen(){
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
     challengeHTML = MODE === 'challenge'
-      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(CHALLENGE.date)} (${CHALLENGE.date}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
+      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
   }
   // Offered before the player commits to five rounds of someone else's day, not
@@ -954,16 +910,30 @@ function startScreen(){
   // this game, and today's puzzle is the thing that actually starts a streak.
   const escapeHTML = MODE === 'challenge'
     ? `<button class="ghost" id="todayBtn">Play today's instead</button>` : '';
+  // Going home mid-run must not discard scored rounds, and replaying a finished
+  // puzzle shouldn't be dressed up as a fresh start.
+  const resuming = runInProgress();
+  const playedToday = MODE === 'daily' && !resuming && stats.lastPlayed === TODAY;
+  const startLabel = resuming
+    ? `Resume — question ${roundScores.length + 1} of ${ROUNDS.length} →`
+    : playedToday
+      ? `Replay today's questions →`
+      : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+  const replayNote = playedToday
+    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
+    : '';
   panel.innerHTML = `
     <h1 class="title">Guesstimate</h1>
     <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
-    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(CHALLENGE.date)} — ${CHALLENGE.date}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
+    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →</button></div>
+    <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">${startLabel}</button></div>
+    ${replayNote}
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
-    track('round_start', { mode: MODE, puzzle: MODE==='challenge' ? puzzleNumber(CHALLENGE.date) : PUZZLE_NO });
+    if(resuming){ idx = roundScores.length; showQuestion(); return; }
+    track('round_start', { mode: MODE, puzzle: MODE==='challenge' ? puzzleNumber(SERVED_DATE) : PUZZLE_NO });
     idx=0; roundScores=[]; roundDetails=[]; showQuestion();
   });
   const tb = document.getElementById('todayBtn');
@@ -981,11 +951,21 @@ function startScreen(){
 
    Clearing the URL as well as the in-memory state matters: without it a refresh,
    a bookmark, or a share from this session would drop them straight back in. */
-function leaveChallenge(){
+async function leaveChallenge(){
   CHALLENGE = { active:false, from:'', score:null, date:null };
   try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
+  // Today's questions come from the server like every other day's — the client
+  // can't compute them any more, which is the point.
+  let data;
+  try{ data = await fetchDaily(null); }
+  catch(err){
+    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
+    return;
+  }
   MODE = 'daily';
-  DAILY_ROUNDS = roundsForDate(TODAY);
+  TODAY = data.today; SERVED_DATE = data.date; PUZZLE_NO = data.puzzleNumber;
+  DAILY_ROUNDS = data.questions;
   ROUNDS = DAILY_ROUNDS;
   idx = 0; roundScores = []; roundDetails = [];
   startScreen();
@@ -1176,6 +1156,31 @@ function showQuestion(){
     // Reserve every dot before placing any label, so labels dodge dots they
     // aren't attached to as well as each other.
     r.referencePlayers.forEach(p=>{ placer.reserveDot(xPix(p.x), yPix(p.y), 9); });
+
+    /* The coach ring used to be pinned to the exact centre of the plot and drawn
+       AFTER the labels, so it never competed for space and landed straight on top
+       of any label near the middle — on the one screen a new player ever sees
+       first. It doesn't need to be the centre; it only needs to say "somewhere in
+       here is clickable". So pick whichever candidate sits furthest from every
+       reference dot, with a bonus that still prefers the centre when it's free,
+       and reserve it before the labels are placed. Radius 21 covers the ring at
+       the top of its pulse. */
+    const coachC = (function(){
+      if(!coachActive) return null;
+      const cx0 = padL+plotW/2, cy0 = padT+plotH/2;
+      const dots = r.referencePlayers.map(p=>({ x:xPix(p.x), y:yPix(p.y) }));
+      const cands = [
+        { x:cx0, y:cy0, bonus:26 },
+        { x:padL+plotW*0.28, y:padT+plotH*0.30, bonus:0 },
+        { x:padL+plotW*0.72, y:padT+plotH*0.30, bonus:0 },
+        { x:padL+plotW*0.28, y:padT+plotH*0.70, bonus:0 },
+        { x:padL+plotW*0.72, y:padT+plotH*0.70, bonus:0 },
+      ];
+      const clearance = c => Math.min(...dots.map(d=>Math.hypot(d.x-c.x, d.y-c.y))) + c.bonus;
+      return cands.reduce((best,c)=> clearance(c) > clearance(best) ? c : best, cands[0]);
+    })();
+    if(coachC) placer.reserveDot(coachC.x, coachC.y, 21);
+
     r.referencePlayers.forEach(p=>{
       const cx = xPix(p.x), cy = yPix(p.y);
       svg.appendChild(el('circle',{cx,cy,r:7, fill:'var(--paper)', stroke:'var(--ink)','stroke-width':2, style:'pointer-events:none;'}));
@@ -1186,14 +1191,16 @@ function showQuestion(){
       svg.appendChild(t);
     });
 
-    if(coachActive){
+    if(coachC){
       const g = el('g',{class:'coach', style:'pointer-events:none;'});
-      const ccx = padL+plotW/2, ccy = padT+plotH/2;
+      const { x:ccx, y:ccy } = coachC;
       g.appendChild(el('circle',{cx:ccx, cy:ccy, r:13, fill:'none', stroke:'var(--guess)','stroke-width':2.5, class:'coach-ring'}));
       g.appendChild(el('circle',{cx:ccx, cy:ccy, r:3.5, fill:'var(--guess)'}));
-      const ct = el('text',{x:ccx, y:ccy+40, 'text-anchor':'middle', 'font-size':11.5, fill:'var(--guess)', 'font-weight':600, class:'mono'});
-      ct.textContent = 'click or drag anywhere';
-      g.appendChild(ct);
+      /* The ring used to carry a "click or drag anywhere" caption. It's gone: at
+         ~147px wide there was nowhere for it to go in a crowded plot, and it was
+         redundant anyway — the readout directly below the chart already says
+         "Tap the chart to place your guess". The ring says where, the readout
+         says what. */
       svg.appendChild(g);
     }
 
@@ -1333,7 +1340,7 @@ function showResults(){
   track('round_complete', { mode: MODE, score: total, band: `${Math.floor(total/50)*50}-${Math.floor(total/50)*50+49}`,
                             streak: MODE==='daily' ? liveStreak(stats, TODAY) : 0 });
   const headline = MODE === 'challenge'
-    ? `Guesstimate #${puzzleNumber(CHALLENGE.date)}`
+    ? `Guesstimate #${puzzleNumber(SERVED_DATE)}`
     : `Guesstimate #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>{
     const tier = scoreTier(s);
@@ -1401,7 +1408,7 @@ function showResults(){
     url.searchParams.set('score', String(total));
     // Anchor the link to the puzzle that was actually played, so the recipient
     // gets the same five questions rather than a different day's set.
-    url.searchParams.set('d', MODE === 'challenge' ? CHALLENGE.date : TODAY);
+    url.searchParams.set('d', MODE === 'challenge' ? SERVED_DATE : TODAY);
     const shareUrl = url.toString();
     track('share_click', { mode: MODE, score: total, named: name ? 'yes' : 'no' });
     const shareText = `${headline}\n${strip}  ${total}/${max}`;
@@ -1449,7 +1456,7 @@ function renderStatsModal(){
     <div class="stat-grid">
       <div class="stat-cell"><div class="v">${s.daysPlayed}</div><div class="k">Days played</div></div>
       <div class="stat-cell"><div class="v">${avg}</div><div class="k">Avg score</div></div>
-      <div class="stat-cell"><div class="v">${liveStreak(s, TODAY || todayDateString())}</div><div class="k">Streak</div></div>
+      <div class="stat-cell"><div class="v">${liveStreak(s, TODAY)}</div><div class="k">Streak</div></div>
       <div class="stat-cell"><div class="v">${s.bestStreak}</div><div class="k">Best streak</div></div>
     </div>
     <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN — BEST ROUND ${s.bestRound}</div>
@@ -1530,7 +1537,7 @@ function wireRestore(){
       track('restore_import', { streak: merged.currentStreak });
       renderStatsModal();
       const st = document.getElementById('restoreStatus');
-      if(st) st.textContent = `Restored — ${liveStreak(merged, TODAY || todayDateString())}-day streak, best ${merged.bestStreak}.`;
+      if(st) st.textContent = `Restored — ${liveStreak(merged, TODAY)}-day streak, best ${merged.bestStreak}.`;
     });
   });
 }
@@ -1543,40 +1550,27 @@ document.getElementById('statsClose').addEventListener('click', ()=>{
 });
 
 /* ============================= INIT ============================= */
-// Content lives in ../data/questions.json (see DATA LOADING comment above) — fetch
-// it before anything else can render, and fail visibly rather than silently if it
-// doesn't load, instead of leaving the page stuck on nothing.
+// One round-trip to the questions API before anything can render. Fails visibly
+// rather than leaving the page stuck on nothing.
 async function init(){
   panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
-  let pool;
+  let data;
   try{
-    const res = await fetch('../data/questions.json');
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    pool = await res.json();
-    if(!Array.isArray(pool) || pool.length === 0) throw new Error('empty question pool');
+    data = await fetchDaily(CHALLENGE.date || null);
   }catch(err){
     panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
     return;
   }
-  QUESTION_POOL = pool;
-  // Optional: absent or malformed schedule just means "no pinned days", which is
-  // the normal state. Never let it block the game from starting.
-  try{
-    const res = await fetch('../data/schedule.json');
-    if(res.ok){
-      const sched = await res.json();
-      if(sched && typeof sched === 'object' && !Array.isArray(sched)){
-        SCHEDULE = sched;
-        SCHEDULED_IDS = new Set(Object.values(sched).flat());
-      }
-    }
-  }catch(err){ /* no schedule; the bag handles every day */ }
-  TODAY = todayDateString();
-  PUZZLE_NO = puzzleNumber(TODAY);
-  // A dated challenge link replays the sender's puzzle; anything else is today's.
-  MODE = (CHALLENGE.active && CHALLENGE.date && CHALLENGE.date !== TODAY) ? 'challenge' : 'daily';
+  // Every one of these is the server's answer, not this device's opinion.
+  TODAY = data.today;
+  SERVED_DATE = data.date;
+  PUZZLE_NO = data.puzzleNumber;
+  // `data.date` is what the server actually served, which isn't necessarily what
+  // was asked for — a refused date falls back to today, and the mode has to follow
+  // what was served or the banner would lie about which puzzle this is.
+  MODE = (CHALLENGE.active && data.date !== data.today) ? 'challenge' : 'daily';
   if(CHALLENGE.active) track('challenge_open', { mode: MODE, dated: CHALLENGE.date ? 'yes' : 'no' });
-  DAILY_ROUNDS = roundsForDate(MODE === 'challenge' ? CHALLENGE.date : TODAY);
+  DAILY_ROUNDS = data.questions;
   ROUNDS = DAILY_ROUNDS;
   startScreen();
 }
@@ -1602,6 +1596,10 @@ document.getElementById('themeToggle').addEventListener('click', ()=>{
   updateThemeToggleIcon();
 });
 updateThemeToggleIcon();
+
+// Safe mid-run because startScreen() offers Resume rather than restarting — see
+// runInProgress().
+topLeft.addEventListener('click', goHome);
 </script>
 </body>
 </html>

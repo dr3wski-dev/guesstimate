@@ -34,8 +34,8 @@ falls, scored by proximity.
 6. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-7. **data/questions.json** — 46 verified, sourced questions (19 NBA, 15 NFL, 12 MLB) in
-   the exact schema new content should follow. That is nine days before a repeat; see
+7. **data/questions.json** — 55 verified, sourced questions (21 NBA, 18 NFL, 16 MLB) in
+   the exact schema new content should follow. That is eleven days before a repeat; see
    USER_EXPERIENCE_REVIEW.md §1.3 for why growing this is the top-line launch metric,
    and **pipeline/** for the generator and the independent verifier that produce and
    check new ones.
@@ -43,7 +43,13 @@ falls, scored by proximity.
    implementation. Click-to-plot 2D mechanic, heat-map proximity scoring, multi-round
    loop. This is what the production build should extend, not replace. `verify.mjs`
    beside it is a 24-check browser regression suite — run it after any change.
-9. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
+9. **worker/** — the questions API, a single stateless Cloudflare Worker.
+   `src/selection.js` holds the daily-rotation logic and `src/index.js` serves one
+   day's questions and refuses any other. It exists because a client that holds the
+   whole pool leaks every future day's answers to anyone who opens dev tools, and
+   because "today" from the device clock is spoofable. It stores nothing and knows
+   nothing about who is playing.
+10. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
    of the mechanic. Kept only because it contains two pieces of tested logic not yet
    ported into the scatter version: the daily-selection pure function
    (`selectDailyQuestions`) and the streak/localStorage system. Port these, don't
@@ -57,7 +63,9 @@ form, and it would be easy for old context to leak back in:
 - No fabricated or estimated data, ever — every number in questions.json has a named
   source; every future addition needs the same
 - No live sports data API for v1 — see ACTION_PLAN.md section 1 for the reasoning
-- No accounts or backend for v1 — localStorage only, no PII
+- No accounts or database for v1 — localStorage only, no PII. There is one stateless
+  Worker (`worker/`) that decides the date and serves a single day's questions; it
+  stores nothing. See DEPLOY.md
 
 ## The one instruction to give Claude Code before anything else
 *"Read README.md, then ACTION_PLAN.md in full, before writing any code. Treat

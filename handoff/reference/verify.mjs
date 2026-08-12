@@ -5,12 +5,16 @@
    vanilla JS/SVG with nothing to install, per ACTION_PLAN.md §3. Playwright is only
    needed to run this file.
 
-     cd handoff && python3 -m http.server 8899 &
+     python3 pipeline/build_site.py --url https://example.com
+     node pipeline/devserver.mjs 8901 &
      node reference/verify.mjs
 
    Exits non-zero if any check fails. */
 import { chromium, devices } from 'playwright';
-const BASE = 'http://localhost:8899/reference/guesstimate-scatter.html';
+// Point at the dev server (handoff/pipeline/devserver.mjs), which serves the built
+// site AND /api/daily from the same selection module the deployed Worker uses.
+//   node handoff/pipeline/devserver.mjs 8901
+const BASE = process.env.GT_BASE || 'http://localhost:8901/';
 const log = (...a) => console.log(...a);
 const browser = await chromium.launch();
 let fails = 0;
@@ -85,7 +89,7 @@ check('evening play no longer eats the next day', sim.final.currentStreak === 3 
 const stale = await p.evaluate(() => {
   localStorage.setItem('guesstimate_stats_v2', JSON.stringify({ lastPlayed: '2026-01-15', currentStreak: 7, bestStreak: 12, daysPlayed: 20, totalPoints: 6000, bestRound: 410, tiers: {} }));
   const s = loadStats();
-  return { stored: s.currentStreak, live: liveStreak(s, todayDateString()), yesterdayCase: liveStreak({ lastPlayed: prevDateString(todayDateString()), currentStreak: 4 }, todayDateString()) };
+  return { stored: s.currentStreak, live: liveStreak(s, TODAY), yesterdayCase: liveStreak({ lastPlayed: prevDateString(TODAY), currentStreak: 4 }, TODAY) };
 });
 check('lapsed streak reads 0, not the stored value', stale.live === 0, `stored ${stale.stored} -> shown ${stale.live}`);
 check('yesterday still counts as live', stale.yesterdayCase === 4);
@@ -110,7 +114,10 @@ await d4.waitForSelector('#startBtn');
 check('"Play today\'s instead" offered before committing', await d4.locator('#todayBtn').count() === 1);
 const before = await d4.evaluate(() => ({ mode: MODE, rounds: ROUNDS.map(q => q.id) }));
 await d4.click('#todayBtn'); await d4.waitForSelector('#startBtn');
-const after = await d4.evaluate(() => ({ mode: MODE, rounds: ROUNDS.map(q => q.id), today: roundsForDate(TODAY).map(q => q.id), url: location.search, banner: !!document.querySelector('.challenge-banner') }));
+const after = await d4.evaluate(async () => {
+  const served = await (await fetch('/api/daily')).json();
+  return { mode: MODE, rounds: ROUNDS.map(q => q.id), today: served.questions.map(q => q.id), url: location.search, banner: !!document.querySelector('.challenge-banner') };
+});
 check('escape from start screen reaches today', JSON.stringify(after.rounds) === JSON.stringify(after.today), `${after.rounds[0]} vs ${after.today[0]}`);
 check('MODE back to daily', after.mode === 'daily');
 check('challenge params cleared from the URL', after.url === '', `url search = "${after.url}"`);
@@ -129,7 +136,10 @@ for (let i = 0; i < 5; i++) {
 await d4.waitForSelector('.share-card');
 check('challenge round did not touch the streak', (await d4.locator('.streak-line').innerText()).includes("doesn't affect"));
 await d4.click('#backBtn'); await d4.waitForSelector('#startBtn');
-const after2 = await d4.evaluate(() => ({ mode: MODE, rounds: ROUNDS.map(q => q.id), today: roundsForDate(TODAY).map(q => q.id), url: location.search }));
+const after2 = await d4.evaluate(async () => {
+  const served = await (await fetch('/api/daily')).json();
+  return { mode: MODE, rounds: ROUNDS.map(q => q.id), today: served.questions.map(q => q.id), url: location.search };
+});
 check('escape from results screen reaches today', JSON.stringify(after2.rounds) === JSON.stringify(after2.today) && after2.mode === 'daily' && after2.url === '');
 check('no "Play again" button on a daily result', true);
 

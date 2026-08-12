@@ -32,7 +32,7 @@
       ]
     },
     {
-      "source": "/data/questions.json",
+      "source": "/api/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

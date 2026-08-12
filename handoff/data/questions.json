@@ -1825,5 +1825,359 @@
     ],
     "fact": "Rachaad White gained 613 rushing yards in 2024 — the fewest here by nearly 200 — and 393 through the air, more than LeSean McCoy or Josh Jacobs managed in seasons where they ran for twice as much. Nearly 40% of White's offense came as a receiver, a split that would have been unthinkable for a starting back a generation ago.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-k9-bb9-martinez",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per 9 innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per 9 innings",
+    "yUnit": "BB/9",
+    "xStep": 0.01,
+    "yStep": 0.01,
+    "xDomain": [
+      4,
+      12
+    ],
+    "yDomain": [
+      1,
+      5
+    ],
+    "targetPlayer": "Pedro Martinez",
+    "targetX": 10.04,
+    "targetY": 2.42,
+    "referencePlayers": [
+      {
+        "name": "Greg Maddux",
+        "x": 6.06,
+        "y": 1.8
+      },
+      {
+        "name": "Nolan Ryan",
+        "x": 9.55,
+        "y": 4.67
+      },
+      {
+        "name": "Randy Johnson",
+        "x": 10.61,
+        "y": 3.26
+      }
+    ],
+    "fact": "Pedro Martinez struck out 10.04 batters per nine innings — essentially Randy Johnson territory (10.61) and more than Nolan Ryan's 9.55 — while walking only 2.42, closer to Greg Maddux, the control archetype at 1.80, than to either power pitcher. That combination is the entire argument for Pedro. Ryan bought his strikeouts with 4.67 walks per nine, nearly double Pedro's rate; Maddux bought his control by striking out 6.06, barely half as many. Pedro refused the trade. In 1999 he struck out 313 batters and walked 37.",
+    "source": "StatMuse career K/9 and BB/9; 1999 season strikeout and walk totals."
+  },
+  {
+    "id": "mlb-ba-hr-williams",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.2,
+      0.36
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Ted Williams",
+    "targetX": 0.344,
+    "targetY": 521,
+    "referencePlayers": [
+      {
+        "name": "Reggie Jackson",
+        "x": 0.262,
+        "y": 563
+      },
+      {
+        "name": "Hank Aaron",
+        "x": 0.305,
+        "y": 755
+      },
+      {
+        "name": "Tony Gwynn",
+        "x": 0.338,
+        "y": 135
+      }
+    ],
+    "fact": "The power/contact trade-off is real, and Ted Williams mostly ignored it. He hit .344 for his career — higher than Tony Gwynn's .338, and Gwynn built a Hall of Fame case almost entirely on batting titles, finishing with 135 home runs. Williams hit 521, within 42 of Reggie Jackson, who hit .262 and struck out more times (2,597) than any batter in history. Hank Aaron (.305, 755) marks the outer edge of sustained power. And Williams did it having lost nearly five full seasons in his prime to military service in two wars.",
+    "source": "StatMuse career batting average and home run totals; career strikeout leaderboard."
+  },
+  {
+    "id": "nfl-att-ypc-charles",
+    "league": "NFL",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "carries",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "xDomain": [
+      0,
+      4800
+    ],
+    "yDomain": [
+      2,
+      6
+    ],
+    "targetPlayer": "Jamaal Charles",
+    "targetX": 1407,
+    "targetY": 5.4,
+    "referencePlayers": [
+      {
+        "name": "Barry Sanders",
+        "x": 3062,
+        "y": 5.0
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3230,
+        "y": 4.6
+      },
+      {
+        "name": "Emmitt Smith",
+        "x": 4409,
+        "y": 4.2
+      }
+    ],
+    "fact": "Jamaal Charles averaged 5.4 yards per carry — the highest of any running back in NFL history with at least 1,000 attempts, ahead of Barry Sanders' 5.0 and Jim Brown's 5.2. The only players above him on the overall list are quarterbacks (Lamar Jackson, Russell Wilson, Cam Newton), who pick their runs. Charles did it on 1,407 carries, under a third of Emmitt Smith's 4,409. Smith holds the career rushing yards record and Charles holds the rate, which is a fair summary of how football remembers running backs: volume gets the record, efficiency gets forgotten.",
+    "source": "StatMuse career rushing attempts and yards per carry; yards-per-carry leaderboard with a 1,000-attempt minimum."
+  },
+  {
+    "id": "nfl-rec-ypr-moss",
+    "league": "NFL",
+    "xLabel": "Career receptions",
+    "xUnit": "rec",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/R",
+    "xStep": 1,
+    "xDomain": [
+      0,
+      1600
+    ],
+    "yDomain": [
+      8,
+      20
+    ],
+    "targetPlayer": "Randy Moss",
+    "targetX": 982,
+    "targetY": 15.6,
+    "referencePlayers": [
+      {
+        "name": "DeSean Jackson",
+        "x": 641,
+        "y": 17.6
+      },
+      {
+        "name": "Wes Welker",
+        "x": 903,
+        "y": 11.0
+      },
+      {
+        "name": "Jerry Rice",
+        "x": 1549,
+        "y": 14.8
+      }
+    ],
+    "fact": "Randy Moss is the definitive deep threat of his era and he averaged 15.6 yards a catch — two full yards below DeSean Jackson's 17.6, and less than a yard above Jerry Rice's 14.8. The reputation didn't come from where the catches started, it came from where they ended: 156 receiving touchdowns, second-most all time. Wes Welker is the archetype's opposite pole — 903 catches, nearly Moss's total, at 11.0 yards each. \"Deep threat\" describes what a defense is afraid of, not what the average play actually gains.",
+    "source": "StatMuse career receptions, yards per reception, and receiving touchdowns."
+  },
+  {
+    "id": "nba-career-peak-chamberlain",
+    "league": "NBA",
+    "xLabel": "Career points per game",
+    "xUnit": "PPG",
+    "yLabel": "Best single season",
+    "yUnit": "PPG",
+    "xDomain": [
+      15,
+      35
+    ],
+    "yDomain": [
+      20,
+      60
+    ],
+    "targetPlayer": "Wilt Chamberlain",
+    "targetX": 30.1,
+    "targetY": 50.4,
+    "referencePlayers": [
+      {
+        "name": "Tim Duncan",
+        "x": 19.0,
+        "y": 25.5
+      },
+      {
+        "name": "Kobe Bryant",
+        "x": 25.0,
+        "y": 35.4
+      },
+      {
+        "name": "Michael Jordan",
+        "x": 30.1,
+        "y": 37.1
+      }
+    ],
+    "fact": "Wilt Chamberlain and Michael Jordan have the same career scoring average — 30.1 points per game, the two highest in NBA history. Their peaks are not close. Jordan's best year was 37.1 in 1986-87. Wilt's was 50.4 in 1961-62: thirteen points per game higher than the best season Jordan ever played, and nearly double Tim Duncan's career average. Kobe's 35.4 in 2005-06 is the season with the 81-point game in it, and it still doesn't reach Jordan's peak. Wilt's career average and his best season are two entirely different players.",
+    "source": "StatMuse career and single-season points per game; all-time career PPG leaderboard."
+  },
+  {
+    "id": "mlb-hr-sb-mays",
+    "league": "MLB",
+    "xLabel": "Career home runs",
+    "xUnit": "HR",
+    "yLabel": "Career stolen bases",
+    "yUnit": "SB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      0,
+      1600
+    ],
+    "targetPlayer": "Willie Mays",
+    "targetX": 660,
+    "targetY": 338,
+    "referencePlayers": [
+      {
+        "name": "Ichiro Suzuki",
+        "x": 117,
+        "y": 509
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 297,
+        "y": 1406
+      },
+      {
+        "name": "Mark McGwire",
+        "x": 583,
+        "y": 12
+      }
+    ],
+    "fact": "Power and speed almost never share a career. Mark McGwire hit 583 home runs and stole 12 bases — total, across his entire career. Rickey Henderson stole 1,406, the all-time record and about 50% more than second place, and hit 297. Ichiro (117 HR, 509 SB) is the pure contact-and-speed pole. Willie Mays hit 660 home runs *and* stole 338 bases: more power than McGwire and more steals than most players who were known for stealing. That corner of this chart is essentially empty, and it's most of why Mays is in the greatest-player-ever argument at all.",
+    "source": "StatMuse career home run and stolen base totals; all-time career stolen base leaderboard."
+  },
+  {
+    "id": "nfl-passtd-rushyds-vick",
+    "league": "NFL",
+    "xLabel": "Career passing touchdowns",
+    "xUnit": "pass TD",
+    "yLabel": "Career rushing yards",
+    "yUnit": "rush yds",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      600
+    ],
+    "yDomain": [
+      0,
+      8000
+    ],
+    "targetPlayer": "Michael Vick",
+    "targetX": 133,
+    "targetY": 6109,
+    "referencePlayers": [
+      {
+        "name": "Dan Marino",
+        "x": 420,
+        "y": 87
+      },
+      {
+        "name": "Steve Young",
+        "x": 232,
+        "y": 4239
+      },
+      {
+        "name": "Peyton Manning",
+        "x": 539,
+        "y": 667
+      }
+    ],
+    "fact": "Dan Marino threw for 420 touchdowns and rushed for 87 yards. Not 87 per season — 87 total, across seventeen years. Peyton Manning managed 667 in the same number of seasons. Michael Vick rushed for 6,109, more than most of the running backs of his era and more than any quarterback in NFL history at the time he retired, while throwing 133 touchdown passes. The chart shows the trade the position used to demand: Marino and Manning bought passing volume by never leaving the pocket, and Vick bought a dimension nobody else had by never being a high-volume passer.",
+    "source": "StatMuse career passing touchdowns and career rushing yards."
+  },
+  {
+    "id": "mlb-hits-hr-ichiro",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      2500,
+      4500
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Ichiro Suzuki",
+    "targetX": 3089,
+    "targetY": 117,
+    "referencePlayers": [
+      {
+        "name": "Babe Ruth",
+        "x": 2873,
+        "y": 714
+      },
+      {
+        "name": "Derek Jeter",
+        "x": 3465,
+        "y": 260
+      },
+      {
+        "name": "Pete Rose",
+        "x": 4256,
+        "y": 160
+      }
+    ],
+    "fact": "Ichiro Suzuki collected 3,089 hits in the majors and hit 117 home runs — and he didn't play his first MLB game until he was 27. He had already recorded 1,278 hits in Japan, which puts his professional total at 4,367, more than Pete Rose's all-time MLB record of 4,256 (the combined figure isn't an official mark, since the two leagues are counted separately). Babe Ruth is the shape-inversion on this chart: 714 home runs on fewer hits than Ichiro, because a startling share of his contact left the park.",
+    "source": "StatMuse career hits and home runs; NPB hit total via MLB.com and Baseball-Reference Bullpen."
+  },
+  {
+    "id": "nba-reg-playoff-iverson",
+    "league": "NBA",
+    "xLabel": "Career regular season",
+    "xUnit": "PPG",
+    "yLabel": "Career playoffs",
+    "yUnit": "PPG",
+    "xDomain": [
+      15,
+      35
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Allen Iverson",
+    "targetX": 26.7,
+    "targetY": 29.7,
+    "referencePlayers": [
+      {
+        "name": "Tim Duncan",
+        "x": 19.0,
+        "y": 20.6
+      },
+      {
+        "name": "Larry Bird",
+        "x": 24.3,
+        "y": 23.8
+      },
+      {
+        "name": "Karl Malone",
+        "x": 25.0,
+        "y": 24.7
+      }
+    ],
+    "fact": "Almost nobody scores more in the playoffs than the regular season — the defenses tighten, the rotations shorten, and the games slow down. Larry Bird went 24.3 to 23.8. Karl Malone went 25.0 to 24.7. Allen Iverson went 26.7 to 29.7, a three-point jump, the largest of any high-volume scorer in league history. He is 6'0\" and 165 pounds and never won a title, and the thing people remember — carrying a team to the Finals and stealing Game 1 from a 56-win Lakers side — is exactly what this number describes.",
+    "source": "StatMuse career regular season and playoff points per game."
   }
 ]

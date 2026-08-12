@@ -99,12 +99,13 @@ def build(site_url, check=False, provider=None, domain=None):
 
     # 1. The data path. In the reference tree the game sits one directory below the
     #    data; at a web root they're siblings.
-    html, n = re.subn(r"fetch\('\.\./data/questions\.json'\)",
-                      "fetch('data/questions.json')", html)
-    assert n == 1, f'expected exactly one data fetch to rewrite, found {n}'
-    html, ns = re.subn(r"fetch\('\.\./data/schedule\.json'\)",
-                       "fetch('data/schedule.json')", html)
-    assert ns == 1, f'expected exactly one schedule fetch to rewrite, found {ns}'
+    # No data-path rewrite any more: the client fetches /api/daily and the pool is
+    # bundled into the Worker, never published as a static file. Assert that, since
+    # re-introducing a questions.json fetch would silently re-open the leak the
+    # Worker exists to close.
+    assert not re.search(r"fetch\(\s*['\"][^'\"]*questions\.json", html), \
+        'the site must not fetch the question pool — that leaks every future answer'
+    assert "API_BASE = '/api'" in html, 'expected the client to call the questions API'
 
     # 2. Fonts move from ../assets/fonts to assets/fonts for the same reason.
     html, nf = re.subn(r"url\('\.\./assets/fonts/", "url('assets/fonts/", html)
@@ -145,17 +146,8 @@ def build(site_url, check=False, provider=None, domain=None):
 
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
-    os.makedirs(os.path.join(OUT, 'data'), exist_ok=True)
+    os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
-    shutil.copy2(SRC_DATA, os.path.join(OUT, 'data', 'questions.json'))
-    # Always emit a schedule, even an empty one. The game treats a missing file as
-    # "no pinned days" and carries on, but the browser still logs a 404 for it on
-    # every single page load, which is noise in every player's console and in ours.
-    dest_sched = os.path.join(OUT, 'data', 'schedule.json')
-    if os.path.exists(SRC_SCHEDULE):
-        shutil.copy2(SRC_SCHEDULE, dest_sched)
-    else:
-        open(dest_sched, 'w').write('{}\n')
     shutil.copytree(SRC_ASSETS, os.path.join(OUT, 'assets'),
                     ignore=shutil.ignore_patterns('og-source.html'))
 
@@ -176,7 +168,7 @@ def build(site_url, check=False, provider=None, domain=None):
 /assets/*
   Cache-Control: public, max-age=86400
 
-/data/*.json
+/api/*
   Cache-Control: public, max-age=300, must-revalidate
 
 /index.html
@@ -195,7 +187,7 @@ def build(site_url, check=False, provider=None, domain=None):
             ]},
             {"source": "/assets/fonts/(.*)", "headers": [
                 {"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
-            {"source": "/data/questions.json", "headers": [
+            {"source": "/api/(.*)", "headers": [
                 {"key": "Cache-Control", "value": "public, max-age=300, must-revalidate"}]},
         ],
     }, open(os.path.join(OUT, 'vercel.json'), 'w'), indent=2)

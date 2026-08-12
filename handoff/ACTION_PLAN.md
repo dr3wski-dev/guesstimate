@@ -1,7 +1,8 @@
 # Guesstimate — 0→1 Action Plan
 For handoff to Claude Code. This is the current source of truth for scope, architecture,
 security, and cost — supersedes prior planning docs (ROADMAP.md, CURRENT_SPEC.md) where
-they conflict. Working reference implementation: guesstimate-scatter.html.
+they conflict. Working reference implementation: site/index.html (formerly
+reference/guesstimate-scatter.html).
 
 ## 0. What this project actually is, in one paragraph
 A sports stats guessing game. Five questions a day, same for every player, no login
@@ -14,7 +15,7 @@ an exponential decay curve. Streaks and challenge-links, no backend required for
 the *only* game. The anonymized-chart guessing concept (caption multiple-choice, themed
 days across sports/survey/geography/random categories, the hot dog/AKC dog breed/
 pineapple pizza content) is scrapped entirely, not a parallel product and not a fallback.
-guesstimate-scatter.html is the sole reference implementation. Any doc or file describing
+site/index.html is the sole reference implementation. Any doc or file describing
 the anonymized-chart version (GUESS_THE_CHART_SPEC.md, CATEGORY_CLARITY_GUIDELINES.md,
 guess-the-chart.html, the original data-drawer.html portfolio site and its starter kit)
 is historical context only — nothing in them describes what's being built now. Don't
@@ -84,16 +85,14 @@ and derives the answer on the spot.
 - **Fixed reference timezone.** Already designed — `America/New_York`, matching
   GeoSports' choice. Every player gets the same puzzle regardless of their own
   timezone; the "day" changes at midnight Eastern for everyone simultaneously.
-- **Client-side clock trust.** Computing "today" from the player's own device clock is
-  simple but spoofable — someone could set their system clock back to replay an old
-  puzzle or manipulate their streak. For a casual free game this is genuinely low
-  stakes (worst case: someone cheats a personal streak counter only they see). If it
-  ever matters — e.g., once there's a public leaderboard people might actually want to
-  cheat on — the fix is cheap: a tiny edge function (Vercel Edge Function or Cloudflare
-  Worker, a few lines) that returns the server's current time, fetched once on page
-  load instead of trusting `Date.now()`. Still no database, no cron, just an
-  authoritative clock. Don't build this for v1; note it as the v1.5 trigger condition
-  (see section 6).
+- **Client-side clock trust — BUILT, ahead of the v1.5 trigger below.** Computing
+  "today" from the player's own device clock was spoofable: set the system clock back,
+  replay an old puzzle, pad a streak. This is now decided server-side by the Worker in
+  `worker/`, which went in earlier than this plan plotted it because it was the same
+  change as closing the pool leak (below) — one Worker fixes both, so splitting them
+  across releases would have meant doing the work twice. It's still no database and no
+  cron, just a stateless function. Verified by shifting a real browser's clock 45 days
+  and confirming the served questions don't move. See DEPLOY.md.
 
 ## 3. Security — concrete findings, not a generic checklist
 I audited the existing prototypes rather than writing hypothetical guidance, and found
@@ -108,8 +107,8 @@ onerror=alert(document.cookie)>` — would have executed arbitrary script in the
 recipient's browser the moment they opened it. Confirmed exploitable, then confirmed
 fixed, by actually building and firing the payload against both versions of the code.
 That specific file is gone now, but the bug pattern isn't specific to it — the moment
-challenge links get added to guesstimate-scatter.html (they haven't yet), the exact
-same fix needs to go in from the start: sanitize untrusted URL params at the point of
+challenge links were added to site/index.html, the exact
+same fix went in from the start: sanitize untrusted URL params at the point of
 parsing, not case-by-case at each usage site downstream.
 
 **General rule this bug illustrates:** anything that arrives via a URL parameter,
@@ -155,26 +154,27 @@ been escaped correctly while others weren't).
   v1 has real usage data justifying it.
 
 ## 5. Scope for v1 — the actual 0→1 bar
-**Current state, precisely:** guesstimate-scatter.html has the click-to-plot mechanic,
+**Current state, precisely:** site/index.html has the click-to-plot mechanic,
 the scoring engine, and a working multi-round loop with real NBA/NFL data. It does
 *not* yet have the daily-selection function or the streak/challenge-link system —
 those were built and tested in the older guesstimate.html (the numeric-slider version,
 now itself superseded by the scatter mechanic). They need to be **ported into**
-guesstimate-scatter.html, not assumed already present there.
+site/index.html, not assumed already present there.
 
-- [ ] 15-20 real, sourced questions across at least NBA and NFL (verified data, not
-      placeholders) — matches the pace already demonstrated this session (5 NBA + 1 NFL
-      combo built and tested in a single session)
-- [ ] Port `selectDailyQuestions` (the pure daily-rotation function, tested and correct
-      in guesstimate.html) into guesstimate-scatter.html — don't rewrite it, just move it
-- [ ] Port the streak/localStorage system the same way
-- [ ] Build challenge-links for the scatter version fresh, with the XSS-safe escaping
-      pattern from section 3 included from the start — not ported from the old file,
-      since the old file's version of the feature doesn't fit the scatter UI anyway
-- [ ] Label-collision handling for the scatter chart (known gap — see
-      CURRENT_SPEC.md, still unresolved beyond a narrow patch)
-- [ ] Deployed to a real URL on a static host, custom domain
-- [ ] Played end-to-end by people who aren't you or me
+- [x] 15-20 real, sourced questions across at least NBA and NFL (verified data, not
+      placeholders) — **done: 16 questions, 7 NBA / 5 NFL / 4 MLB**, every number
+      verified against a named source
+- [x] Port `selectDailyQuestions` — done, and then moved again: it now lives in
+      `worker/src/selection.js` and runs server-side. Never rewritten, just relocated
+- [x] Port the streak/localStorage system the same way
+- [x] Build challenge-links for the scatter version fresh, with the XSS-safe escaping
+      pattern from section 3 included from the start
+- [x] Label-collision handling for the scatter chart — replaced the `i%2` alternation
+      with geometry-based placement
+- [ ] Deployed to a real URL on a static host, custom domain — **config is ready and
+      tested locally (see DEPLOY.md); the remaining steps need an interactive
+      Cloudflare login and a domain purchase, so they're a human's to run**
+- [ ] Played end-to-end by people who aren't you or me — the last real gap
 
 ## 6. Future features, in order — and what triggers each one
 Each phase has a concrete trigger condition, not just "do this next":
