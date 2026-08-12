@@ -34,8 +34,8 @@ falls, scored by proximity.
 6. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-7. **data/questions.json** — 22 verified, sourced questions (6 NBA, 9 NFL, 7 MLB) in
-   the exact schema new content should follow. That is four days before a repeat; see
+7. **data/questions.json** — 46 verified, sourced questions (19 NBA, 15 NFL, 12 MLB) in
+   the exact schema new content should follow. That is nine days before a repeat; see
    USER_EXPERIENCE_REVIEW.md §1.3 for why growing this is the top-line launch metric,
    and **pipeline/** for the generator and the independent verifier that produce and
    check new ones.

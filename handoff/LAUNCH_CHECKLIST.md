@@ -46,9 +46,10 @@ is on a URL, every other item here is theoretical.
 **Effort: an afternoon. Do this first.**
 
 ### B2. Ten questions is two days of content
-> **Status: 22 questions, first repeat on day 5.** A dataset pipeline now generates and
-> independently verifies candidates (`pipeline/`), so the remaining work to 50-100 is
-> curation time rather than research time. Still the top-line launch metric.
+> **Status: 46 questions, first repeat on day 10.** A dataset pipeline generates and
+> independently verifies candidates across all three leagues (`pipeline/`), so the
+> remaining work to 100 is curation time rather than research time. 46 clears the
+> "minimum I'd launch on" bar below; 100 is still the target.
 
 Measured: the pool exhausts on day 2, and every question reappears roughly every other
 day — 7 times in 14 days. A daily game whose content repeats before the first week is
@@ -58,7 +59,7 @@ won't exist.
 | pool size | days before the first repeat |
 |---|---|
 | 10 (before the pipeline) | 2 |
-| **22 (today)** | **4** |
+| **46 (today)** | **9** |
 | 25 | 5 |
 | 50 | 10 |
 | **100** | **20** |
@@ -93,7 +94,7 @@ launch-blocking.
 | S2 | **How-it-works screen** | Still open, and now the main remaining comprehension gap. The reveal heat map and its key explain the bands, but only after the first guess. | 2h |
 | ~~S3~~ | ~~**Keyboard nudge scaling**~~ | **Done.** Nudge is now ~1/100 of the axis (never below one snap step), Shift for a tenth. Worst case fell from 16,000 presses to 100. | — |
 | S4 | **Content hygiene** | Abbreviated NFL names and the `.254` batting-average format are both fixed. Still open: Nowitzki's `[60, 92]` domain spends a quarter of the axis on Muggsy Bogues — needs a replacement reference, which is hand-authored NBA career data with no dataset behind it. | 30m |
-| S5 | **Content to 50+** | 30 today (first repeat day 7). The pipeline now covers all three leagues, so this is curation time, not research time. | ongoing |
+| S5 | **Content to 100** | 46 today (first repeat day 10). Pipeline covers all three leagues; this is curation time now. | ongoing |
 
 ---
 
