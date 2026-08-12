@@ -13,14 +13,22 @@ stats, share artifact, dark mode, and phone layout all work and are covered by a
 24-check browser suite (`reference/verify.mjs`). Every functional defect found in the
 playtest review is fixed except the ones listed below.
 
-**What is not done is everything around the game:** it isn't deployed, there are ten
-questions, and there is no content pipeline. None of those are code problems.
+**What is not done is everything around the game.** There is now a deployable build
+(`site/`, see DEPLOY.md) and a content pipeline that generates and independently
+verifies questions — but nothing is live, the pool is 22 questions where it wants to be
+50-100, and there is still no analytics. None of those are code problems.
 
 ---
 
 ## Launch blockers
 
 ### B1. It isn't deployed — nobody can play it
+> **Status: unblocked, not done.** `pipeline/build_site.py` now produces a deployable
+> `site/` with root-relative paths, absolute OG URLs, and CSP/caching headers, and the
+> full regression suite passes against it served from a web root. What remains is
+> buying a domain, rebuilding with it, and pointing a host at the folder — see
+> DEPLOY.md.
+
 The game is a file in `handoff/reference/`. It fetches `../data/questions.json`, so it
 doesn't even run from disk (`file://` → "Couldn't load today's questions"). Until this
 is on a URL, every other item here is theoretical.
@@ -37,6 +45,10 @@ is on a URL, every other item here is theoretical.
 **Effort: an afternoon. Do this first.**
 
 ### B2. Ten questions is two days of content
+> **Status: 22 questions, first repeat on day 5.** A dataset pipeline now generates and
+> independently verifies candidates (`pipeline/`), so the remaining work to 50-100 is
+> curation time rather than research time. Still the top-line launch metric.
+
 Measured: the pool exhausts on day 2, and every question reappears roughly every other
 day — 7 times in 14 days. A daily game whose content repeats before the first week is
 out cannot form a habit, and everything else on this list compounds off retention that
@@ -44,7 +56,8 @@ won't exist.
 
 | pool size | days before the first repeat |
 |---|---|
-| 10 (today) | 2 |
+| 10 (before the pipeline) | 2 |
+| **22 (today)** | **4** |
 | 25 | 5 |
 | 50 | 10 |
 | **100** | **20** |
@@ -73,7 +86,7 @@ launch-blocking.
 | S1 | **Results recap** | Five pills, no question names, no answers, no facts. The `fact` is the only thing in this genre that teaches you anything, and it's discarded the second you hit Next. | half day |
 | S2 | **How-it-works screen** | Nothing anywhere explains scoring. New players see "+38" with no scale. The reveal heat map helps, but only after they've already guessed. | 2h |
 | S3 | **Keyboard nudge scaling** | Arrow keys move one guess-step, so crossing the Boldin chart takes 16,000 presses. The instruction text advertises the keyboard on every round. | 1h |
-| S4 | **Content hygiene** | NFL question uses `McCaffrey '23` while everything else uses full names — and `shortLabel()`'s own comment argues for full names to disambiguate surnames. Nowitzki's `[60, 92]` domain spends a quarter of the axis on Muggsy Bogues. | 1h |
+| S4 | **Content hygiene** | The abbreviated NFL reference names are fixed. Still open: Nowitzki's `[60, 92]` domain spends a quarter of the axis on Muggsy Bogues, and batting averages render as `0.254` where baseball convention is `.254`. | 1h |
 
 ---
 
@@ -134,7 +147,9 @@ data the player can't get back.**
 
 ## Research pass — status
 
-**Blocked in this environment, and I won't fabricate around it.**
+**Hand research is blocked in this environment. The pipeline routes around it without
+breaking the sourcing rule — 12 questions shipped this way, taking the pool from 10 to
+22.**
 
 Every stats source is blocked by the network egress proxy: Basketball-Reference,
 Pro-Football-Reference, Baseball-Reference, StatMuse, Wikipedia, NBA.com, ESPN, MLB.com,
@@ -145,7 +160,8 @@ verification channel.
 
 Per the project's own rule — *no fabricated or estimated data, ever; every number has a
 named source* — writing questions from recall and attaching a citation I never opened
-would be exactly the failure mode that rule exists to prevent. So the pool is still 10.
+would be exactly the failure mode that rule exists to prevent. So none of the content
+below came from recall.
 
 **There is one channel that works: `raw.githubusercontent.com` is reachable** (confirmed
 against arbitrary public repos). Open, citable sports datasets are published there and
@@ -154,8 +170,13 @@ and player-stats releases, and various NBA career-stat CSVs. That is a legitimat
 license-clean, *verifiable* source: the data is a file I can actually read, check for
 internal consistency, and cite by repo, commit, and column.
 
-**Proposed next step: build the content pipeline on open datasets rather than
-hand-research.** Pull the canonical per-league datasets, derive candidate stat pairs
+**This is what was built.** `pipeline/build_questions.py` generates candidates and
+`pipeline/verify_questions.py` re-derives every shipped number from the raw CSVs on a
+separate code path. Both are validated against the eight hand-verified values that were
+already in `questions.json`, and they reproduce them exactly. The original proposal
+follows, and still describes the approach:
+
+**Build the content pipeline on open datasets rather than hand-research.** Pull the canonical per-league datasets, derive candidate stat pairs
 against the archetypes in CONTENT_BACKLOG.md and the 527 names in `athlete_pool.csv`,
 auto-filter for questions where the target is genuinely counterintuitive relative to its
 reference set, and hand-write only the `fact` copy. That turns B2 from "a hundred manual
@@ -172,10 +193,11 @@ somewhere with network access to it, not here.
 
 ## Suggested order
 
-1. **B1 deploy** — an afternoon, unblocks everything
+1. **B1 deploy** — buy the domain, rebuild with it, point a host at `site/` (DEPLOY.md)
 2. **B3 analytics** — an hour, do it in the same pass
 3. **Restore code** — an hour, the only unrecoverable player data
-4. **B2 content to 50+** — the long pole; start the pipeline now, in parallel with 1-3
+4. **B2 content to 50+** — the long pole; the pipeline makes this curation time now,
+   not research time. Run it in parallel with 1-3
 5. **S1-S4 polish** — while content builds
 6. *Launch*
 7. Percentile backend, once there's traffic to aggregate

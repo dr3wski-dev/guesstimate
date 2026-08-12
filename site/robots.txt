@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://guesstimate.app/sitemap.xml

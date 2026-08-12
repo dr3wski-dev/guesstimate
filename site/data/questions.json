@@ -1,0 +1,869 @@
+[
+  {
+    "id": "nba-height-3p-nowitzki",
+    "league": "NBA",
+    "xLabel": "Height",
+    "xUnit": "in",
+    "yLabel": "Career 3-point percentage",
+    "yUnit": "3P%",
+    "xStep": 1,
+    "xDomain": [
+      60,
+      92
+    ],
+    "yDomain": [
+      0,
+      48
+    ],
+    "targetPlayer": "Dirk Nowitzki",
+    "targetX": 84,
+    "targetY": 38,
+    "referencePlayers": [
+      {
+        "name": "Muggsy Bogues",
+        "x": 63,
+        "y": 27.8
+      },
+      {
+        "name": "Reggie Miller",
+        "x": 79,
+        "y": 39.5
+      },
+      {
+        "name": "Shaquille O'Neal",
+        "x": 85,
+        "y": 4.5
+      }
+    ],
+    "fact": "Dirk Nowitzki stood 7'0\" (84 inches) - nearly as tall as Shaquille O'Neal (7'1\", 85 inches) - but shot 38.0% from three for his career, worlds ahead of Shaq's 4.5% (Shaq made exactly one three-pointer in 22 career attempts). Dirk even out-shot Muggsy Bogues, the shortest player in NBA history at 5'3\", who hit 27.8% from deep. Reggie Miller (6'7\", 39.5%) is the archetype pure sharpshooter - and Dirk, nearly half a foot taller, wasn't far behind him at all.",
+    "source": "StatMuse / Basketball-Reference height and career 3-point percentage."
+  },
+  {
+    "id": "nba-mpg-ppg-williams",
+    "league": "NBA",
+    "xLabel": "Career minutes per game",
+    "xUnit": "MPG",
+    "yLabel": "Career points per game",
+    "yUnit": "PPG",
+    "xDomain": [
+      16,
+      40
+    ],
+    "yDomain": [
+      8,
+      28
+    ],
+    "targetPlayer": "Lou Williams",
+    "targetX": 24.1,
+    "targetY": 13.9,
+    "referencePlayers": [
+      {
+        "name": "Manu Ginobili",
+        "x": 25.4,
+        "y": 13.3
+      },
+      {
+        "name": "DeMar DeRozan",
+        "x": 34.5,
+        "y": 21.1
+      },
+      {
+        "name": "Kobe Bryant",
+        "x": 36.1,
+        "y": 25
+      }
+    ],
+    "fact": "Lou Williams built a three-time Sixth Man of the Year career on 24.1 minutes a game — barely two-thirds of Kobe Bryant's 36.1-minute workload — while still averaging 13.9 points, close to a full starter's production squeezed into a bench role. Manu Ginobili (25.4 MPG, 13.3 PPG) landed in almost the exact same zone despite a Hall-of-Fame resume, deployed off the bench by design for most of his prime. DeMar DeRozan (34.5 MPG, 21.1 PPG) shows the traditional high-usage starter workload both bench legends were compared against, not with.",
+    "source": "StatMuse career per-game averages (regular season)."
+  },
+  {
+    "id": "nba-ppg-stuff-green",
+    "league": "NBA",
+    "xLabel": "Career points per game",
+    "xUnit": "PPG",
+    "yLabel": "Career rebounds + assists per game",
+    "yUnit": "REB+AST",
+    "xDomain": [
+      4,
+      28
+    ],
+    "yDomain": [
+      4,
+      20
+    ],
+    "targetPlayer": "Draymond Green",
+    "targetX": 8.7,
+    "targetY": 12.4,
+    "referencePlayers": [
+      {
+        "name": "Klay Thompson",
+        "x": 18.6,
+        "y": 5.6
+      },
+      {
+        "name": "Russell Westbrook",
+        "x": 20.9,
+        "y": 14.9
+      },
+      {
+        "name": "Nikola Jokic",
+        "x": 22.2,
+        "y": 18.6
+      }
+    ],
+    "fact": "Draymond Green scores less than half of what Klay Thompson does (8.7 PPG to 18.6) but combines for more rebounds and assists (12.4 to Klay's 5.6) — real proof a player can be a genuine star without scoring like one. Russell Westbrook (20.9 PPG, 14.9 combined) shows what happens when high scoring and stat-stuffing coexist, and Nikola Jokic (22.2 PPG, 18.6 combined) is the current extreme: elite at both at once, a center who also leads the league in rebounds and assists.",
+    "source": "StatMuse career per-game averages (regular season)."
+  },
+  {
+    "id": "nfl-ypg-tds-taylor",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "yStep": 1,
+    "xDomain": [
+      80,
+      140
+    ],
+    "yDomain": [
+      8,
+      24
+    ],
+    "targetPlayer": "Jonathan Taylor, 2021",
+    "targetX": 106.5,
+    "targetY": 18,
+    "referencePlayers": [
+      {
+        "name": "Christian McCaffrey, 2023",
+        "x": 91.2,
+        "y": 14
+      },
+      {
+        "name": "Derrick Henry, 2020",
+        "x": 126.7,
+        "y": 17
+      },
+      {
+        "name": "Adrian Peterson, 2012",
+        "x": 131.1,
+        "y": 12
+      }
+    ],
+    "fact": "Jonathan Taylor's 2021 season is the counterintuitive one here: his 106.5 rushing yards per game is actually the lowest of these four seasons, yet his 18 rushing touchdowns is the highest — the 17-game season gave him an extra game, and a huge share of his team's goal-line work. Adrian Peterson's 2012 MVP season (131.1 YPG) is the opposite profile: gaining more yards per game than anyone here, but with the fewest touchdowns.",
+    "source": "Pro Football Reference / StatMuse season totals. Yards-per-game computed from confirmed season yardage ÷ games played."
+  },
+  {
+    "id": "nba-stl-blk-pippen",
+    "league": "NBA",
+    "xLabel": "Career steals per game",
+    "xUnit": "SPG",
+    "yLabel": "Career blocks per game",
+    "yUnit": "BPG",
+    "xDomain": [
+      0,
+      2.8
+    ],
+    "yDomain": [
+      0,
+      3.6
+    ],
+    "targetPlayer": "Scottie Pippen",
+    "targetX": 2,
+    "targetY": 0.8,
+    "referencePlayers": [
+      {
+        "name": "Dikembe Mutombo",
+        "x": 0.4,
+        "y": 2.8
+      },
+      {
+        "name": "John Stockton",
+        "x": 2.2,
+        "y": 0.2
+      },
+      {
+        "name": "Hakeem Olajuwon",
+        "x": 1.7,
+        "y": 3.1
+      }
+    ],
+    "fact": "Scottie Pippen's 2.0 steals and 0.8 blocks a game is a genuinely rare wing profile — enough blocks to suggest a rim-protecting big, delivered by a 6'8\" forward who also picked pockets like a guard. Dikembe Mutombo (0.4 / 2.8) and John Stockton (2.2 / 0.2) are the two specialist extremes this pairing usually produces: a pure rim-protector and a pure ball-hawk. Hakeem Olajuwon (1.7 / 3.1) is the rare exception who tops both — a center with a guard's hands and a shot-blocker's timing.",
+    "source": "StatMuse career per-game averages (regular season)."
+  },
+  {
+    "id": "nba-fga-ts-jordan",
+    "league": "NBA",
+    "xLabel": "Career field goal attempts per game",
+    "xUnit": "FGA",
+    "yLabel": "Career true shooting percentage",
+    "yUnit": "TS%",
+    "xDomain": [
+      4,
+      28
+    ],
+    "yDomain": [
+      48,
+      68
+    ],
+    "targetPlayer": "Michael Jordan",
+    "targetX": 22.9,
+    "targetY": 56.9,
+    "referencePlayers": [
+      {
+        "name": "Allen Iverson",
+        "x": 21.8,
+        "y": 51.8
+      },
+      {
+        "name": "Stephen Curry",
+        "x": 17.9,
+        "y": 62.6
+      },
+      {
+        "name": "DeAndre Jordan",
+        "x": 5.1,
+        "y": 64.4
+      }
+    ],
+    "fact": "Michael Jordan took more shots per game (22.9) than anyone else here — even more than Allen Iverson (21.8), the standard reference for a pure volume scorer. But his efficiency (56.9 TS%) sits well below the elite tier: Stephen Curry (62.6) gets nearly as many shots up at a far higher efficiency, and DeAndre Jordan (64.4) shows the opposite extreme — a role player who barely shoots (5.1 attempts a game) but converts at an absurd rate, mostly dunks and putbacks. Jordan's greatness came from volume and shot difficulty, not from posting efficiency numbers like the specialists at either end of this chart.",
+    "source": "StatMuse career true shooting percentage and field goal attempts per game (regular season)."
+  },
+  {
+    "id": "nfl-int-td-winston",
+    "league": "NFL",
+    "xLabel": "Career interception percentage",
+    "xUnit": "INT%",
+    "yLabel": "Career touchdown percentage",
+    "yUnit": "TD%",
+    "xDomain": [
+      1,
+      4.2
+    ],
+    "yDomain": [
+      3,
+      7
+    ],
+    "targetPlayer": "Jameis Winston",
+    "targetX": 3.5,
+    "targetY": 4.8,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": 2.1,
+        "y": 3.8
+      },
+      {
+        "name": "Brett Favre",
+        "x": 3.3,
+        "y": 5
+      },
+      {
+        "name": "Aaron Rodgers",
+        "x": 1.4,
+        "y": 6
+      }
+    ],
+    "fact": "Jameis Winston throws touchdowns at almost the same rate as Brett Favre (4.8% vs. 5.0%) — but his interception rate (3.5%) is even higher than Favre's, the quarterback whose whole reputation is built on high-risk gunslinging. Alex Smith (2.1% / 3.8%) is the pure game-manager opposite: low risk, low reward. Aaron Rodgers (1.4% / 6.0%) shows the tradeoff isn't actually mandatory — the best touchdown rate in this set paired with the best career interception percentage in NFL history.",
+    "source": "StatMuse career passing touchdown percentage and interception percentage."
+  },
+  {
+    "id": "nba-as-ppg-randolph",
+    "league": "NBA",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career points per game",
+    "yUnit": "PPG",
+    "xStep": 1,
+    "xDomain": [
+      0,
+      16
+    ],
+    "yDomain": [
+      12,
+      28
+    ],
+    "targetPlayer": "Zach Randolph",
+    "targetX": 2,
+    "targetY": 16.6,
+    "referencePlayers": [
+      {
+        "name": "Joe Johnson",
+        "x": 7,
+        "y": 16
+      },
+      {
+        "name": "Vince Carter",
+        "x": 8,
+        "y": 16.7
+      },
+      {
+        "name": "Karl Malone",
+        "x": 14,
+        "y": 25
+      }
+    ],
+    "fact": "Zach Randolph made just 2 All-Star teams in his career — yet his 16.6 career points per game is basically identical to Joe Johnson's 16.0 (7 All-Star nods) and Vince Carter's 16.7 (8 nods). All-Star selections reward more than raw scoring average — team success, era, and position all factor in — and Randolph's Memphis grit-and-grind identity earned him far less recognition than his actual production. Karl Malone (14 AS, 25.0 PPG) anchors the other extreme: a player whose selections actually matched his all-time-great scoring.",
+    "source": "StatMuse career per-game averages and career All-Star selection counts."
+  },
+  {
+    "id": "nfl-pb-recyds-boldin",
+    "league": "NFL",
+    "xLabel": "Career Pro Bowl selections",
+    "xUnit": "PB",
+    "yLabel": "Career receiving yards",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      16
+    ],
+    "yDomain": [
+      10000,
+      26000
+    ],
+    "targetPlayer": "Anquan Boldin",
+    "targetX": 3,
+    "targetY": 13779,
+    "referencePlayers": [
+      {
+        "name": "Randy Moss",
+        "x": 6,
+        "y": 15292
+      },
+      {
+        "name": "Larry Fitzgerald",
+        "x": 11,
+        "y": 17492
+      },
+      {
+        "name": "Jerry Rice",
+        "x": 13,
+        "y": 22895
+      }
+    ],
+    "fact": "Anquan Boldin made only 3 Pro Bowls in his career, but his 13,779 receiving yards is within shouting distance of Randy Moss's 15,292 — a player who made twice as many Pro Bowls. Boldin's game was built on contested catches and physicality rather than the highlight-reel speed that tends to win Pro Bowl votes, and it cost him recognition his production arguably earned. Jerry Rice (13 PB, 22,895 yards) remains the standard nobody else in NFL history has matched.",
+    "source": "StatMuse / Pro Football Reference career Pro Bowl selections and receiving yards."
+  },
+  {
+    "id": "mlb-as-hr-abreu",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      16
+    ],
+    "yDomain": [
+      200,
+      800
+    ],
+    "targetPlayer": "Bobby Abreu",
+    "targetX": 2,
+    "targetY": 288,
+    "referencePlayers": [
+      {
+        "name": "Adam Dunn",
+        "x": 2,
+        "y": 462
+      },
+      {
+        "name": "Ken Griffey Jr.",
+        "x": 13,
+        "y": 630
+      },
+      {
+        "name": "Alex Rodriguez",
+        "x": 14,
+        "y": 696
+      }
+    ],
+    "fact": "Bobby Abreu and Adam Dunn each made exactly 2 All-Star teams — but Dunn hit 174 more career home runs (462 to Abreu's 288). Abreu's value came from on-base percentage, doubles, and stolen bases rather than pure power, a game sabermetricians rate highly but All-Star voters historically haven't rewarded the same way as a big home run total. Griffey (13 AS, 630 HR) and Rodriguez (14 AS, 696 HR) show what it looks like when a player's power and his recognition actually line up.",
+    "source": "StatMuse career All-Star selections and home run totals."
+  },
+  {
+    "id": "mlb-as-hr-carew",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Rod Carew",
+    "targetX": 18,
+    "targetY": 92,
+    "referencePlayers": [
+      {
+        "name": "Alan Trammell",
+        "x": 6,
+        "y": 185
+      },
+      {
+        "name": "Gary Sheffield",
+        "x": 9,
+        "y": 509
+      },
+      {
+        "name": "George Brett",
+        "x": 13,
+        "y": 317
+      }
+    ],
+    "fact": "Rod Carew was an All-Star in 18 different seasons — more than George Brett (13) or Gary Sheffield (9) — and hit 92 home runs in his entire career. Sheffield hit 509. Carew's case was built almost entirely on batting average and on-base skill: he won seven batting titles and reached base constantly, which is a kind of stardom the home-run column simply doesn't record.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-sb-hr-smith",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Ozzie Smith",
+    "targetX": 580,
+    "targetY": 28,
+    "referencePlayers": [
+      {
+        "name": "Fred McGriff",
+        "x": 72,
+        "y": 493
+      },
+      {
+        "name": "Mike Schmidt",
+        "x": 174,
+        "y": 548
+      },
+      {
+        "name": "Andre Dawson",
+        "x": 314,
+        "y": 438
+      }
+    ],
+    "fact": "Ozzie Smith stole 580 bases and hit 28 home runs — for his whole career. Andre Dawson, the closest of these three in steals at 314, hit 438. Smith is the clearest case in baseball of a first-ballot Hall of Famer whose value lived almost entirely in places the box score barely tracks: defense at shortstop, and legs.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-2b-hr-killebrew",
+    "league": "MLB",
+    "xLabel": "Career doubles",
+    "xUnit": "2B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      650
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Harmon Killebrew",
+    "targetX": 290,
+    "targetY": 573,
+    "referencePlayers": [
+      {
+        "name": "Tim Raines",
+        "x": 430,
+        "y": 170
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 510,
+        "y": 297
+      },
+      {
+        "name": "Eddie Murray",
+        "x": 560,
+        "y": 504
+      }
+    ],
+    "fact": "Harmon Killebrew hit 573 home runs and only 290 doubles — nearly twice as many homers as doubles, which is close to backwards for a hitter. Eddie Murray, with a similar 504 home runs, hit 560 doubles. Killebrew simply didn't hit many balls that stayed in the park: he either cleared the fence or he didn't.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-avg-hr-cobb",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.225,
+      0.425
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Ty Cobb",
+    "targetX": 0.366,
+    "targetY": 117,
+    "referencePlayers": [
+      {
+        "name": "Andruw Jones",
+        "x": 0.254,
+        "y": 434
+      },
+      {
+        "name": "Barry Larkin",
+        "x": 0.295,
+        "y": 198
+      },
+      {
+        "name": "Ted Williams",
+        "x": 0.344,
+        "y": 521
+      }
+    ],
+    "fact": "Ty Cobb's .366 career batting average is the highest in major-league history, and he hit 117 home runs doing it — fewer than a quarter of Ted Williams' 521, and Williams is the one player here who did both. Cobb played nearly his whole career in the dead-ball era, when the game was built on contact, speed and place-hitting rather than power.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv). Career regular-season totals summed by playerID; batting average computed as H/AB."
+  },
+  {
+    "id": "mlb-sb-hr-raines",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Tim Raines",
+    "targetX": 808,
+    "targetY": 170,
+    "referencePlayers": [
+      {
+        "name": "Mark McGwire",
+        "x": 12,
+        "y": 583
+      },
+      {
+        "name": "Mike Schmidt",
+        "x": 174,
+        "y": 548
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 1406,
+        "y": 297
+      }
+    ],
+    "fact": "Tim Raines stole 808 bases — more than four times Mike Schmidt's and Mark McGwire's combined — while hitting 170 home runs. He is second on this chart in steals and still miles behind Rickey Henderson's 1,406, which is the single most untouchable counting record in baseball. Raines waited ten years on the Hall of Fame ballot largely because the skills he was best at don't photograph well.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-so-hr-ruth",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1000,
+      3000
+    ],
+    "yDomain": [
+      200,
+      1000
+    ],
+    "targetPlayer": "Babe Ruth",
+    "targetX": 1330,
+    "targetY": 714,
+    "referencePlayers": [
+      {
+        "name": "Bernie Williams",
+        "x": 1212,
+        "y": 287
+      },
+      {
+        "name": "Willie McCovey",
+        "x": 1550,
+        "y": 521
+      },
+      {
+        "name": "Reggie Jackson",
+        "x": 2597,
+        "y": 563
+      }
+    ],
+    "fact": "Babe Ruth struck out 1,330 times, which was considered reckless in his era — and it is fewer strikeouts than Willie McCovey, Reggie Jackson, or plenty of ordinary modern hitters. He hit 714 home runs against them. Reggie Jackson, the all-time strikeout leader at 2,597, needed nearly twice as many strikeouts to hit 563.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "nfl-passtd-int-manning-2013",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Eli Manning, 2013",
+    "targetX": 27,
+    "targetY": 18,
+    "referencePlayers": [
+      {
+        "name": "Aaron Rodgers, 2018",
+        "x": 2,
+        "y": 25
+      },
+      {
+        "name": "Peyton Manning, 2003",
+        "x": 10,
+        "y": 29
+      },
+      {
+        "name": "Ben Roethlisberger, 2013",
+        "x": 14,
+        "y": 28
+      }
+    ],
+    "fact": "Eli Manning threw 27 interceptions and 18 touchdowns in 2013 — one of the very few modern seasons where a full-time starter finished with more interceptions than touchdown passes. Ben Roethlisberger, playing the same season, threw 28 touchdowns against 14 picks. Manning won two Super Bowl MVPs and also produced this.",
+    "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  },
+  {
+    "id": "nfl-ypc-rushyds-achane-2023",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      700,
+      1500
+    ],
+    "targetPlayer": "Devon Achane, 2023",
+    "targetX": 7.8,
+    "targetY": 800,
+    "referencePlayers": [
+      {
+        "name": "Jamal Lewis, 2005",
+        "x": 3.4,
+        "y": 906
+      },
+      {
+        "name": "Steven Jackson, 2009",
+        "x": 4.4,
+        "y": 1424
+      },
+      {
+        "name": "Lamar Jackson, 2019",
+        "x": 6.9,
+        "y": 1206
+      }
+    ],
+    "fact": "Devon Achane averaged 7.8 yards per carry as a rookie in 2023 — a figure that would be an all-time record over a full workload — and finished with 800 rushing yards, the fewest on this chart. He was that efficient precisely because he was used sparingly. Volume and efficiency in the running game usually pull against each other, and this is the cleanest example of it.",
+    "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  },
+  {
+    "id": "nfl-rushyds-recyds-alexander-2005",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Shaun Alexander, 2005",
+    "targetX": 1880,
+    "targetY": 78,
+    "referencePlayers": [
+      {
+        "name": "Matt Forte, 2016",
+        "x": 813,
+        "y": 263
+      },
+      {
+        "name": "Steven Jackson, 2005",
+        "x": 1046,
+        "y": 320
+      },
+      {
+        "name": "Fred Taylor, 2002",
+        "x": 1314,
+        "y": 408
+      }
+    ],
+    "fact": "Shaun Alexander's 2005 MVP season was 1,880 rushing yards and 78 receiving yards. Fred Taylor, with 566 fewer rushing yards, had five times the receiving production. Alexander was a pure between-the-tackles runner in an offense that never asked him to catch anything — a role that has essentially disappeared from the modern NFL.",
+    "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  },
+  {
+    "id": "nfl-rec-recyds-welker-2007",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      150
+    ],
+    "yDomain": [
+      1150,
+      1350
+    ],
+    "targetPlayer": "Wes Welker, 2007",
+    "targetX": 112,
+    "targetY": 1175,
+    "referencePlayers": [
+      {
+        "name": "Terrell Owens, 2004",
+        "x": 77,
+        "y": 1200
+      },
+      {
+        "name": "Calvin Johnson, 2015",
+        "x": 88,
+        "y": 1214
+      },
+      {
+        "name": "Torry Holt, 2005",
+        "x": 102,
+        "y": 1331
+      }
+    ],
+    "fact": "Wes Welker caught 112 passes in 2007 — the most on this chart by ten — for 1,175 yards, which is fewer than Terrell Owens gained on 35 fewer catches. That is 10.5 yards a reception against Owens' 15.6. Welker's whole game was volume underneath, and it made him one of the most productive receivers of his era without ever being a deep threat.",
+    "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  },
+  {
+    "id": "nfl-rushypg-td-dillon-2006",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Corey Dillon, 2006",
+    "targetX": 50.8,
+    "targetY": 13,
+    "referencePlayers": [
+      {
+        "name": "Lamar Jackson, 2021",
+        "x": 63.9,
+        "y": 2
+      },
+      {
+        "name": "Steven Jackson, 2011",
+        "x": 76.3,
+        "y": 5
+      },
+      {
+        "name": "Adrian Peterson, 2013",
+        "x": 90.4,
+        "y": 10
+      }
+    ],
+    "fact": "Corey Dillon rushed for 50.8 yards a game in 2006 — the least of these four — and scored 13 rushing touchdowns, the most. Adrian Peterson needed nearly twice the yardage per game to score ten. Dillon was splitting carries with Laurence Maroney by then but kept the goal-line work, which is the single most efficient way to look productive in the column fans actually remember.",
+    "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  },
+  {
+    "id": "nfl-passtd-int-rodgers-2011",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      15,
+      55
+    ],
+    "targetPlayer": "Aaron Rodgers, 2011",
+    "targetX": 6,
+    "targetY": 45,
+    "referencePlayers": [
+      {
+        "name": "Justin Herbert, 2022",
+        "x": 10,
+        "y": 25
+      },
+      {
+        "name": "Eli Manning, 2017",
+        "x": 13,
+        "y": 19
+      },
+      {
+        "name": "Peyton Manning, 2014",
+        "x": 15,
+        "y": 39
+      }
+    ],
+    "fact": "Aaron Rodgers threw 45 touchdowns against 6 interceptions in 2011, a ratio of 7.5 to 1 in a season where he also posted the highest single-season passer rating in NFL history at the time. Peyton Manning's 2014 — 39 touchdowns, 15 picks — is an excellent season and is not close to this.",
+    "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  }
+]

@@ -15,8 +15,8 @@ falls, scored by proximity.
    chart guessing, no multi-category content, that entire direction was scrapped.
 2. **SECURITY_NOTES.md** — a real vulnerability that was found and fixed (reflected XSS
    in a challenge-link feature), the fix pattern, and the general security posture.
-   Read this before adding challenge links to the current reference implementation —
-   they don't exist there yet, and need to be built with this pattern from day one.
+   Challenge links now exist in the reference implementation and were built with this
+   pattern; read this before touching them or adding any other URL-driven feature.
 3. **USER_EXPERIENCE_REVIEW.md** — a playtest-driven review of the current reference
    implementation, written by actually driving it in a browser on phone and desktop
    rather than reading it. Contains five reproducible functional defects (the challenge
@@ -24,20 +24,26 @@ falls, scored by proximity.
    for four hours a day, the mobile reveal renders below the fold, practice mode serves
    tomorrow's exact puzzle, two of the five score tiers are unreachable) plus a
    prioritized fix order. Read this before starting new feature work.
-4. **LAUNCH_CHECKLIST.md** — where the project stands against going live: the three
-   launch blockers (not deployed, ten questions of content, no analytics), the polish
+4. **DEPLOY.md** — the runbook for getting this on a real URL: what the build step
+   produces and why, the pre-flight checklist (the OG tags bake the domain in, so
+   rebuilding with the final URL is not optional), and how to ship new content.
+5. **LAUNCH_CHECKLIST.md** — where the project stands against going live: the three
+   launch blockers (not deployed, thin content, no analytics), the polish
    worth doing first, and a straight answer on whether this needs a backend. Also
    records the current sourcing constraint for new content.
-5. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
+6. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-6. **data/questions.json** — 10 fully verified, sourced questions (6 NBA, 3 NFL, 1 MLB)
-   in the exact schema new content should follow. Ten is two days of non-repeating play;
-   see USER_EXPERIENCE_REVIEW.md §1.3 for why growing this is the top-line launch metric.
-7. **reference/guesstimate-scatter.html** — the working, tested reference
-   implementation. Click-to-plot 2D mechanic, exponential-decay scoring, multi-round
-   loop. This is what the production build should extend, not replace.
-8. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
+7. **data/questions.json** — 22 verified, sourced questions (6 NBA, 9 NFL, 7 MLB) in
+   the exact schema new content should follow. That is four days before a repeat; see
+   USER_EXPERIENCE_REVIEW.md §1.3 for why growing this is the top-line launch metric,
+   and **pipeline/** for the generator and the independent verifier that produce and
+   check new ones.
+8. **reference/guesstimate-scatter.html** — the working, tested reference
+   implementation. Click-to-plot 2D mechanic, heat-map proximity scoring, multi-round
+   loop. This is what the production build should extend, not replace. `verify.mjs`
+   beside it is a 24-check browser regression suite — run it after any change.
+9. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
    of the mechanic. Kept only because it contains two pieces of tested logic not yet
    ported into the scatter version: the daily-selection pure function
    (`selectDailyQuestions`) and the streak/localStorage system. Port these, don't
