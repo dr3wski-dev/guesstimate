@@ -414,8 +414,12 @@ let CHALLENGE = challengeParams.get('challenge') === '1' ? {
    the site collects no PII today and that's a property worth not quietly losing. */
 function track(event, props){
   try{
+    if(window.umami && window.umami.track){ window.umami.track(event, props || {}); return; }
     if(window.plausible){ window.plausible(event, props ? { props } : undefined); return; }
+    if(window.posthog && window.posthog.capture){ window.posthog.capture(event, props || {}); return; }
     if(window.gtag){ window.gtag('event', event, props || {}); return; }
+    // Nothing installed: park them so a console check can confirm the call sites
+    // fire before an account exists.
     if(window.__gtEvents){ window.__gtEvents.push([event, props || {}]); }
   }catch(e){ /* analytics must never break the game */ }
 }

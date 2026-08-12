@@ -91,11 +91,20 @@ still have the host's dashboard open:
    build flag, so no vendor snippet is ever pasted into the game:
 
    ```bash
-   # Plausible — custom events supported, ~$9/mo
+   # Umami Cloud — free to 100k events/mo, ~2KB, custom events supported. Recommended.
+   --analytics umami --analytics-domain <website-id-uuid>
+   # Plausible — custom events, lightest script, ~$9/mo (no free tier)
    --analytics plausible --analytics-domain your-domain.com
-   # Cloudflare Web Analytics — free, cookieless, pageviews only (no custom events)
+   # Cloudflare Web Analytics — free and unlimited, but PAGEVIEWS ONLY.
+   # The seven events above will not fire. Fine as a second, parallel tracker.
    --analytics cloudflare --analytics-domain <beacon-token>
    ```
+
+   **On Cloudflare Pages, run two:** turn on Cloudflare Web Analytics in the dashboard
+   (free, unlimited, zero config, nothing in this repo) for traffic and referrers, and
+   build with `--analytics umami` for the funnel. Cloudflare's own analytics cannot
+   answer "did they finish all five", which is the question that decides what to build
+   next.
 
    The build extends the CSP for exactly that provider's hosts rather than loosening
    it globally. Building without `--analytics` produces a site with **no third-party

@@ -58,6 +58,15 @@ ANALYTICS = {
         'csp': {'script-src': ['https://plausible.io'],
                 'connect-src': ['https://plausible.io']},
     },
+    'umami': {
+        # Umami Cloud free tier. ~2 KB script, cookieless, no consent banner, and it
+        # supports the custom events this game is instrumented for — which Cloudflare
+        # Web Analytics does not. --analytics-domain takes the website ID (a UUID).
+        'tag': ('<script defer src="https://cloud.umami.is/script.js" '
+                'data-website-id="{domain}"></script>'),
+        'csp': {'script-src': ['https://cloud.umami.is'],
+                'connect-src': ['https://cloud.umami.is', 'https://api-gateway.umami.dev']},
+    },
     'cloudflare': {
         # Free, cookieless, no consent banner needed. Custom events are not supported
         # on the free tier — pageviews only — so the track() calls stay inert here.
