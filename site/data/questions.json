@@ -865,5 +865,325 @@
     ],
     "fact": "Aaron Rodgers threw 45 touchdowns against 6 interceptions in 2011, a ratio of 7.5 to 1 in a season where he also posted the highest single-season passer rating in NFL history at the time. Peyton Manning's 2014 — 39 touchdowns, 15 picks — is an excellent season and is not close to this.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
+  },
+  {
+    "id": "nba-fga-ts-davis-2003",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      47.5,
+      67.5
+    ],
+    "targetPlayer": "Baron Davis, 2003-04",
+    "targetX": 20.9,
+    "targetY": 49.2,
+    "referencePlayers": [
+      {
+        "name": "Aaron Gordon, 2022-23",
+        "x": 11.2,
+        "y": 61.7
+      },
+      {
+        "name": "Bam Adebayo, 2023-24",
+        "x": 14.3,
+        "y": 57.6
+      },
+      {
+        "name": "Vince Carter, 2002-03",
+        "x": 17.7,
+        "y": 53.2
+      }
+    ],
+    "fact": "Baron Davis took 20.9 shots a game in 2003-04 — more than anyone else here — and converted at a 49.2 true shooting percentage, the worst of the four by eight points. Aaron Gordon's 2022-23 is the mirror image: barely half the shots, and the most efficient season on the chart. Volume scoring and efficient scoring are close to opposite skills, and the box score rewards the first one.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-walker-2018",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      9,
+      17
+    ],
+    "targetPlayer": "Kemba Walker, 2018-19",
+    "targetX": 25.6,
+    "targetY": 10.3,
+    "referencePlayers": [
+      {
+        "name": "Tim Duncan, 2011-12",
+        "x": 15.4,
+        "y": 11.3
+      },
+      {
+        "name": "Bam Adebayo, 2021-22",
+        "x": 19.1,
+        "y": 13.5
+      },
+      {
+        "name": "Karl Malone, 2000-01",
+        "x": 23.2,
+        "y": 12.8
+      }
+    ],
+    "fact": "Kemba Walker scored 25.6 a game in 2018-19, the most here by two points over Karl Malone's 2000-01 — and contributed the fewest rebounds and assists of the four. Tim Duncan, ten points behind him in scoring, out-produced him everywhere else. Walker was an All-NBA guard that year on almost pure scoring volume.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-allen-2020",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      45,
+      85
+    ],
+    "targetPlayer": "Jarrett Allen, 2020-21",
+    "targetX": 16.3,
+    "targetY": 66.1,
+    "referencePlayers": [
+      {
+        "name": "Marc Gasol, 2012-13",
+        "x": 19.2,
+        "y": 55.9
+      },
+      {
+        "name": "Baron Davis, 2009-10",
+        "x": 23.7,
+        "y": 50.1
+      },
+      {
+        "name": "Zach Randolph, 2008-09",
+        "x": 27.7,
+        "y": 53.1
+      }
+    ],
+    "fact": "Jarrett Allen used 16.3% of his team's possessions in 2020-21 — the lowest share on this chart — and finished with a 66.1 true shooting percentage, the highest by ten points. That is the role-player bargain in one data point: he only ever shot when it was already a good shot. Zach Randolph used almost twice the possessions to score far less efficiently.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-williamson-2020",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      10.5,
+      14.5
+    ],
+    "targetPlayer": "Zion Williamson, 2020-21",
+    "targetX": 27,
+    "targetY": 10.9,
+    "referencePlayers": [
+      {
+        "name": "Shawn Marion, 2007-08",
+        "x": 15.4,
+        "y": 12.4
+      },
+      {
+        "name": "Bam Adebayo, 2021-22",
+        "x": 19.1,
+        "y": 13.5
+      },
+      {
+        "name": "Ja Morant, 2024-25",
+        "x": 23.2,
+        "y": 11.4
+      }
+    ],
+    "fact": "Zion Williamson averaged 27.0 points in 2020-21 — more than Ja Morant's best scoring season here — while his rebounds and assists combined stayed at 10.9, below Bam Adebayo's 13.5 on eight fewer points a game. Williamson's production is unusually concentrated: he is one of the most efficient interior scorers on record and does comparatively little of everything else.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-marion-2004",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      40
+    ],
+    "yDomain": [
+      18,
+      26
+    ],
+    "targetPlayer": "Shawn Marion, 2004-05",
+    "targetX": 38.8,
+    "targetY": 19.4,
+    "referencePlayers": [
+      {
+        "name": "Nikola Vučević, 2018-19",
+        "x": 31.4,
+        "y": 20.8
+      },
+      {
+        "name": "CJ McCollum, 2020-21",
+        "x": 34,
+        "y": 23.1
+      },
+      {
+        "name": "Paul Pierce, 2004-05",
+        "x": 36.1,
+        "y": 21.6
+      }
+    ],
+    "fact": "Shawn Marion played 38.8 minutes a game in 2004-05, the most on this chart, and scored the fewest points of the four. Nikola Vučević scored more in seven fewer minutes. Marion was the defensive engine of a 62-win Suns team that ran its offense through Steve Nash and Amar'e Stoudemire — minutes measure trust, not usage.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-nowitzki-2005",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0.3,
+      1.1
+    ],
+    "targetPlayer": "Dirk Nowitzki, 2005-06",
+    "targetX": 0.7,
+    "targetY": 1,
+    "referencePlayers": [
+      {
+        "name": "CJ McCollum, 2024-25",
+        "x": 0.8,
+        "y": 0.4
+      },
+      {
+        "name": "Draymond Green, 2023-24",
+        "x": 1,
+        "y": 0.9
+      },
+      {
+        "name": "Kobe Bryant, 2006-07",
+        "x": 1.4,
+        "y": 0.5
+      }
+    ],
+    "fact": "In his 2005-06 MVP-calibre season Dirk Nowitzki blocked more shots (1.0 a game) than he took steals (0.7) — the only player here that's true of, and a genuinely unusual shape for a perimeter-oriented seven-footer. Kobe Bryant, playing guard, had twice the steals and half the blocks.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-webber-2000",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Chris Webber, 2000-01",
+    "targetX": 31.1,
+    "targetY": 51.6,
+    "referencePlayers": [
+      {
+        "name": "P.J. Tucker, 2022-23",
+        "x": 6.6,
+        "y": 56.6
+      },
+      {
+        "name": "JJ Redick, 2018-19",
+        "x": 20.9,
+        "y": 60.2
+      },
+      {
+        "name": "Marc Gasol, 2016-17",
+        "x": 26.2,
+        "y": 55.4
+      }
+    ],
+    "fact": "Chris Webber used 31.1% of Sacramento's possessions in 2000-01, the highest share here by five points, and turned them into a 51.6 true shooting percentage — the lowest. JJ Redick, at two-thirds the usage, was nine points more efficient. Usage measures how often an offense runs through you, not how well it works when it does.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-aldridge-2014",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "LaMarcus Aldridge, 2014-15",
+    "targetX": 19.9,
+    "targetY": 52.8,
+    "referencePlayers": [
+      {
+        "name": "Shaquille O'Neal, 2008-09",
+        "x": 11.2,
+        "y": 62.3
+      },
+      {
+        "name": "Bam Adebayo, 2024-25",
+        "x": 14.3,
+        "y": 56.1
+      },
+      {
+        "name": "LeBron James, 2013-14",
+        "x": 17.6,
+        "y": 64.9
+      }
+    ],
+    "fact": "LaMarcus Aldridge took 19.9 shots a game in 2014-15 and posted a 52.8 true shooting percentage. LeBron James, taking two fewer shots that same era, scored at 64.9 — twelve points better. Aldridge's signature shot was the long two, the least efficient in basketball, and it is the single clearest reason the league stopped taking it.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   }
 ]

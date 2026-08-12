@@ -47,7 +47,7 @@ USAGE
   python3 pipeline/build_questions.py --league nfl --top 12 --json out.json
 """
 
-import argparse, csv, json, math, os, re, sys, urllib.request
+import argparse, csv, json, math, os, re, sys, unicodedata, urllib.request
 from collections import defaultdict, Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -58,11 +58,19 @@ POOL_CSV = os.path.join(HERE, '..', 'data', 'athlete_pool.csv')
 MLB_BASE = 'https://raw.githubusercontent.com/cbwinslow/baseballdatabank/master/core'
 MLB_FILES = ['Batting', 'People', 'AllstarFull']
 NFL_URL = 'https://github.com/nflverse/nflverse-data/releases/download/player_stats/player_stats.csv'
+# hoopR / sportsdataverse republishes stats.nba.com's leaguedashplayerstats per season.
+# One file per season, so fetch() collapses the ones we need into a single compact CSV.
+NBA_URL = ('https://github.com/sportsdataverse/sportsdataverse-data/releases/download/'
+           'nba_stats_player_season_stats/player_season_stats_{season}.csv')
+NBA_SEASONS = range(2000, 2025)          # season = start year; 2024 is 2024-25
+NBA_COMPACT = 'nba_player_seasons.csv'
 
 MLB_SOURCE = ('Lahman / Chadwick Bureau baseball databank (core/Batting.csv, '
               'core/AllstarFull.csv), regular season.')
 NFL_SOURCE = ('nflverse-data player_stats release (regular season weekly stats, '
               'aggregated by season).')
+NBA_SOURCE = ('stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR '
+              'nba_stats_player_season_stats release. Regular-season per-game averages.')
 
 
 # ---------------------------------------------------------------- fetching
@@ -77,6 +85,53 @@ def fetch():
     print('  nfl_player_stats.csv ...', end='', flush=True)
     urllib.request.urlretrieve(NFL_URL, dest)
     print(f' {os.path.getsize(dest)//1024} KB')
+    fetch_nba()
+
+
+def fetch_nba():
+    """Season files are ~3.7 MB each and carry six measure types x two per-modes x
+    two season types. We want one slice of that — regular season, per-game, with the
+    'base' and 'advanced' rows merged so counting stats and TS% land on one row — so
+    collapse it here rather than caching 90 MB of mostly-unused columns."""
+    keep = ['pts','reb','ast','stl','blk','fga','fg3a','fg3_pct','fg3m','min','tov',
+            'usg_pct','ts_pct']
+    rows = []
+    for season in NBA_SEASONS:
+        print(f'  nba {season} ...', end='', flush=True)
+        with urllib.request.urlopen(NBA_URL.format(season=season)) as fh:
+            data = fh.read().decode('utf-8', 'replace')
+        merged = {}
+        rows_by_measure = {'base': [], 'advanced': []}
+        for r in csv.DictReader(data.splitlines()):
+            if (r['season_type'] != 'regular-season' or r['per_mode'] != 'pergame'
+                    or r['measure_type'] not in ('base', 'advanced')):
+                continue
+            rows_by_measure[r['measure_type']].append(r)
+        # base FIRST, and it wins: in pergame mode the 'advanced' rows still carry
+        # FGA as a season total (Curry 2016-17 is 18.3 in base and 1443 in advanced),
+        # so taking whichever appeared first in the file quietly mixed per-game and
+        # total values on the same row. advanced only fills what base doesn't have —
+        # ts_pct and usg_pct.
+        for measure in ('base', 'advanced'):
+            for r in rows_by_measure[measure]:
+                d = merged.setdefault(r['player_id'], {
+                    'season': season, 'player_id': r['player_id'],
+                    'player_name': r['player_name'], 'gp': r['gp']})
+                for c in keep:
+                    v = r.get(c, '')
+                    if v not in ('', None) and not d.get(c):
+                        d[c] = v
+        rows.extend(merged.values())
+        print(f' {len(merged)}')
+    dest = os.path.join(CACHE, NBA_COMPACT)
+    cols = ['season', 'player_id', 'player_name', 'gp'] + keep
+    with open(dest, 'w', newline='', encoding='utf-8') as fh:
+        w = csv.DictWriter(fh, fieldnames=cols, extrasaction='ignore')
+        w.writeheader()
+        for d in rows:
+            w.writerow(d)
+    print(f'  {NBA_COMPACT}: {len(rows)} player-seasons, '
+          f'{os.path.getsize(dest)//1024} KB')
 
 
 def _read(name):
@@ -89,9 +144,10 @@ def _read(name):
 
 # ---------------------------------------------------------------- name matching
 def norm(s):
-    s = s.lower().strip()
-    for a, b in [('á','a'),('é','e'),('í','i'),('ó','o'),('ú','u'),('ñ','n'),('ü','u')]:
-        s = s.replace(a, b)
+    # Decompose and drop combining marks rather than listing substitutions — the NBA
+    # data is full of names a hand-written table misses (Jokić, Dončić, Šengün).
+    s = unicodedata.normalize('NFD', s.lower().strip())
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
     s = re.sub(r'\b(jr|sr|ii|iii|iv)\b\.?', '', s)
     return re.sub(r"[^a-z ]", '', s).strip()
 
@@ -253,6 +309,64 @@ def nfl_seasons(pool_all, gate=True):
     return out, max(seasons)
 
 
+# ---------------------------------------------------------------- NBA
+def nba_seasons(pool_all, gate=True):
+    """Season-level per-game averages, keyed by stats.nba.com player_id.
+
+    Season questions only, never careers: the data starts at 2000, so a career line
+    for anyone who played earlier would be a partial career presented as a whole —
+    the same class of error as an active player's totals going stale, but silent.
+    A single season is frozen history and safe forever.
+    """
+    pool = pool_all['NBA']
+    rows = _read(NBA_COMPACT)
+    names, career = {}, Counter()
+    for r in rows:
+        names[r['player_id']] = r['player_name']
+        career[r['player_id']] += float(r['gp'] or 0)
+    by_name = defaultdict(list)
+    for pid, nm in names.items():
+        by_name[norm(nm)].append(pid)
+    chosen = disambiguate(by_name, lambda pid: career[pid])
+    id_key = {pid: key for key, pid in chosen.items()}
+
+    def num(v):
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return None
+
+    out, seasons = {}, set()
+    for r in rows:
+        pid = r['player_id']
+        if pid not in id_key:
+            continue
+        key = id_key[pid]
+        if gate and key not in pool:
+            continue
+        gp, yr = num(r['gp']), int(r['season'])
+        seasons.add(yr)
+        if not gp or gp < 40:                       # a partial season isn't a season
+            continue
+        st = {k: num(r.get(k)) for k in
+              ('pts', 'reb', 'ast', 'stl', 'blk', 'fga', 'fg3a', 'fg3_pct', 'min',
+               'tov', 'usg_pct', 'ts_pct')}
+        if st['pts'] is None:
+            continue
+        st['ra'] = (round(st['reb'] + st['ast'], 1)
+                    if None not in (st['reb'], st['ast']) else None)
+        # Percentages ship as 0-1 in the source; the game labels them as percentages.
+        for k in ('ts_pct', 'fg3_pct', 'usg_pct'):
+            if st[k] is not None:
+                st[k] = round(st[k] * 100, 1)
+        out[(key, yr)] = {
+            'name': names[pid], 'season': yr, 'games': int(gp), 'who': key,
+            'player_id': pid, 'pool': pool.get(key, {'Tier': '', 'Status': ''}),
+            'stats': st,
+        }
+    return out, max(seasons)
+
+
 # ---------------------------------------------------------------- archetypes
 # Each: the two axes, a filter, and how the chart should be labelled.
 MLB_ARCHETYPES = [
@@ -288,6 +402,28 @@ NFL_ARCHETYPES = [
     dict(id='ypc-rushyds', x='ypc', y='rush_yds', xl='Yards per carry (season)', xu='YPC',
          yl='Rushing yards (season)', yu='yards', xstep=0.1, ystep=1,
          need=('rush_yds', 800)),
+]
+
+
+NBA_ARCHETYPES = [
+    dict(id='ppg-ra', x='pts', y='ra', xl='Points per game (season)', xu='PPG',
+         yl='Rebounds + assists per game (season)', yu='REB+AST',
+         xstep=0.1, ystep=0.1, need=('pts', 12)),
+    dict(id='fga-ts', x='fga', y='ts_pct', xl='Field goal attempts per game (season)',
+         xu='FGA', yl='True shooting percentage (season)', yu='TS%',
+         xstep=0.1, ystep=0.1, need=('fga', 8)),
+    dict(id='stl-blk', x='stl', y='blk', xl='Steals per game (season)', xu='SPG',
+         yl='Blocks per game (season)', yu='BPG', xstep=0.1, ystep=0.1,
+         need=('min', 24)),
+    dict(id='mpg-ppg', x='min', y='pts', xl='Minutes per game (season)', xu='MPG',
+         yl='Points per game (season)', yu='PPG', xstep=0.1, ystep=0.1,
+         need=('pts', 12)),
+    dict(id='3pa-3pct', x='fg3a', y='fg3_pct', xl='3-point attempts per game (season)',
+         xu='3PA', yl='3-point percentage (season)', yu='3P%', xstep=0.1, ystep=0.1,
+         need=('fg3a', 3)),
+    dict(id='usg-ts', x='usg_pct', y='ts_pct', xl='Usage rate (season)', xu='USG%',
+         yl='True shooting percentage (season)', yu='TS%', xstep=0.1, ystep=0.1,
+         need=('min', 24)),
 ]
 
 
@@ -402,7 +538,10 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
             for combo in ((0, n // 2, n - 1), (n // 4, n // 2, 3 * n // 4),
                           (0, n // 3, 2 * n // 3), (n // 3, 2 * n // 3, n - 1)):
                 refs = [others[i] for i in combo]
-                if len({id(r) for r in refs}) < 3:
+                # Three distinct players, not three seasons of the same one: a chart
+                # with Shawn Marion 2001-02 and Shawn Marion 2007-08 as two separate
+                # reference dots reads as a mistake.
+                if len({r['who'] for r in refs}) < 3:
                     continue
                 s = score_candidate(tgt, refs, xk, yk)
                 if s is None:
@@ -424,6 +563,7 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
                     'xDomain': nice_domain(xs, arch['xstep']),
                     'yDomain': nice_domain(ys, arch['ystep']),
                     'targetPlayer': label_fn(tgt),
+                    'target_who': tgt['who'],
                     'targetX': tgt['stats'][xk], 'targetY': tgt['stats'][yk],
                     'referencePlayers': [
                         {'name': label_fn(r), 'x': r['stats'][xk], 'y': r['stats'][yk]}
@@ -438,7 +578,7 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
     per, used, final = Counter(), set(), []
     for c in out:
         a = c['id'].split('-')[1]
-        who = c['targetPlayer']
+        who = c['target_who']
         if per[a] >= per_arch or who in used:
             continue
         per[a] += 1
@@ -489,10 +629,33 @@ def validate():
     print(f"  Ricky Williams 2003 = {rw['stats']['rush_yds'] if rw else '?'} yds / "
           f"{rw['stats']['carries'] if rw else '?'} car   (must be 1372/392, not the "
           f"1527/440 of two players summed)   {'ok' if good else 'MISMATCH'}")
+    kobe = nba.get((norm('Kobe Bryant'), 2005))
+    fga_ok = bool(kobe) and 20 < kobe['stats']['fga'] < 30
+    ok &= fga_ok
+    print(f"  NBA FGA is per-game, not a season total: Kobe 2005-06 = "
+          f"{kobe['stats']['fga'] if kobe else '?'} (must be ~27, not ~2173)   "
+          f"{'ok' if fga_ok else 'MISMATCH'}")
     amb = norm('Ken Griffey') not in mlb
     ok &= amb
     print(f"  'Ken Griffey' dropped as ambiguous (Sr and Jr both qualify)   "
           f"{'ok' if amb else 'STILL PRESENT'}")
+
+    nba, nbamax = nba_seasons(pool, gate=False)
+    print(f'NBA (hoopR / stats.nba.com) — data through {nbamax}')
+    for nm, yr, pts, reb, ast in [('Stephen Curry', 2016, 25.3, 4.5, 6.6),
+                                  ('Russell Westbrook', 2016, 31.6, 10.7, 10.4),
+                                  ('James Harden', 2018, 36.1, 6.6, 7.5),
+                                  ('Nikola Jokic', 2021, 27.1, 13.8, 7.9),
+                                  ('Rudy Gobert', 2016, 14.0, 12.8, 1.2)]:
+        e = nba.get((norm(nm), yr))
+        if not e:
+            print(f'  {nm:22} NOT FOUND'); ok = False; continue
+        st = e['stats']
+        good = (abs(st['pts']-pts) < .05 and abs(st['reb']-reb) < .05
+                and abs(st['ast']-ast) < .05)
+        ok &= good
+        print(f"  {nm:20}{yr}-{str(yr+1)[2:]}  {st['pts']:>5} pts / {st['reb']:>5} reb / "
+              f"{st['ast']:>5} ast  (exp {pts}/{reb}/{ast})   {'ok' if good else 'MISMATCH'}")
 
     print('\nVALIDATION', 'PASSED' if ok else 'FAILED')
     return 0 if ok else 1
@@ -503,7 +666,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--fetch', action='store_true')
     ap.add_argument('--validate', action='store_true')
-    ap.add_argument('--league', choices=['mlb', 'nfl'])
+    ap.add_argument('--league', choices=['mlb', 'nfl', 'nba'])
     ap.add_argument('--top', type=int, default=10)
     ap.add_argument('--per-archetype', type=int, default=2)
     ap.add_argument('--json')
@@ -517,7 +680,13 @@ def main():
         ap.print_help(); return 1
 
     pool = load_pool()
-    if a.league == 'mlb':
+    if a.league == 'nba':
+        entries, dmax = nba_seasons(pool)
+        elig = list(entries.values())
+        cands = build(elig, NBA_ARCHETYPES, 'NBA',
+                      lambda e: f"{e['name']}, {e['season']}-{str(e['season']+1)[2:]}",
+                      NBA_SOURCE, a.top, a.per_archetype)
+    elif a.league == 'mlb':
         entries, dmax = mlb_careers(pool)
         # career questions only for players whose career finished inside the data
         elig = [e for e in entries.values()
@@ -541,6 +710,8 @@ def main():
             print(f"        ref     {r['name']}: {r['x']} / {r['y']}")
         print(f"        domains x={c['xDomain']} y={c['yDomain']}\n")
 
+    for c in cands:
+        c.pop('target_who', None)
     if a.json:
         with open(a.json, 'w') as fh:
             json.dump(cands, fh, indent=2)

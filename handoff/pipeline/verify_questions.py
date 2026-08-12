@@ -15,7 +15,7 @@ behind it yet (see LAUNCH_CHECKLIST.md).
 
   python3 pipeline/verify_questions.py
 """
-import csv, json, os, re, sys
+import csv, json, os, re, sys, unicodedata
 from collections import defaultdict, Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +29,18 @@ MLB_LABELS = {
     'Career batting average': 'AVG',
     'Career doubles': '2B',
     'Career strikeouts': 'SO',
+}
+NBA_LABELS = {
+    'Points per game (season)': 'pts',
+    'Rebounds + assists per game (season)': 'ra',
+    'Field goal attempts per game (season)': 'fga',
+    'True shooting percentage (season)': 'ts_pct',
+    'Steals per game (season)': 'stl',
+    'Blocks per game (season)': 'blk',
+    'Minutes per game (season)': 'min',
+    '3-point attempts per game (season)': 'fg3a',
+    '3-point percentage (season)': 'fg3_pct',
+    'Usage rate (season)': 'usg_pct',
 }
 NFL_LABELS = {
     'Rushing yards per game (season)': 'rush_ypg',
@@ -53,9 +65,8 @@ MLB_ALIAS = {
 
 
 def norm(s):
-    s = s.lower().strip()
-    for a, b in [('á','a'),('é','e'),('í','i'),('ó','o'),('ú','u'),('ñ','n'),('ü','u')]:
-        s = s.replace(a, b)
+    s = unicodedata.normalize('NFD', s.lower().strip())
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
     s = re.sub(r'\b(jr|sr|ii|iii|iv)\b\.?', '', s)
     return re.sub(r"[^a-z ]", '', s).strip()
 
@@ -101,6 +112,45 @@ def mlb_table():
     return out
 
 
+def nba_table():
+    """{(normalized name, season): {stat: value}} from the compact NBA cache."""
+    rows = read('nba_player_seasons.csv')
+    names, career = {}, Counter()
+    for r in rows:
+        names[r['player_id']] = r['player_name']
+        career[r['player_id']] += float(r['gp'] or 0)
+    claims = defaultdict(list)
+    for pid, nm in names.items():
+        claims[norm(nm)].append(pid)
+    keep = set()
+    for key, pids in claims.items():
+        pids.sort(key=lambda p: -career[p])
+        if len(pids) > 1 and career[pids[0]] > 0 and career[pids[1]] / career[pids[0]] >= 0.5:
+            continue
+        keep.add(pids[0])
+
+    def num(v):
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return None
+
+    out = {}
+    for r in rows:
+        if r['player_id'] not in keep:
+            continue
+        st = {k: num(r.get(k)) for k in
+              ('pts', 'reb', 'ast', 'stl', 'blk', 'fga', 'fg3a', 'fg3_pct', 'min',
+               'usg_pct', 'ts_pct')}
+        if None not in (st['reb'], st['ast']):
+            st['ra'] = round(st['reb'] + st['ast'], 1)
+        for k in ('ts_pct', 'fg3_pct', 'usg_pct'):
+            if st[k] is not None:
+                st[k] = round(st[k] * 100, 1)
+        out[(norm(names[r['player_id']]), int(r['season']))] = st
+    return out
+
+
 def nfl_table():
     """{(normalized name, season): {stat: value}} — keyed by player_id throughout."""
     rows = [r for r in read('nfl_player_stats.csv') if r.get('season_type') == 'REG']
@@ -143,18 +193,21 @@ def nfl_table():
 
 
 def split_season(label):
-    m = re.match(r'^(.*?),\s*(\d{4})$', label)
+    # "Derrick Henry, 2020" and "Baron Davis, 2003-04" — the NBA form spans two
+    # calendar years and is keyed on the start year.
+    m = re.match(r'^(.*?),\s*(\d{4})(?:-\d{2})?$', label)
     return (m.group(1), int(m.group(2))) if m else (label, None)
 
 
 def main():
     questions = json.load(open(QJSON))
-    mlb, nfl = mlb_table(), nfl_table()
+    mlb, nfl, nba = mlb_table(), nfl_table(), nba_table()
     checked = mismatched = unverified = 0
     problems, skipped = [], []
 
     for q in questions:
-        labels = MLB_LABELS if q['league'] == 'MLB' else NFL_LABELS if q['league'] == 'NFL' else {}
+        labels = ({'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
+                  .get(q['league'], {}))
         xk, yk = labels.get(q['xLabel']), labels.get(q['yLabel'])
         if not xk or not yk:
             unverified += 1
@@ -166,6 +219,8 @@ def main():
             nm, season = split_season(who)
             if q['league'] == 'MLB':
                 rec = mlb.get('@' + who) or mlb.get(norm(nm))
+            elif q['league'] == 'NBA':
+                rec = nba.get((norm(nm), season))
             else:
                 rec = nfl.get((norm(nm), season))
             if rec is None:

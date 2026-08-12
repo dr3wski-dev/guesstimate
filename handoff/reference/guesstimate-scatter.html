@@ -458,13 +458,43 @@ function selectDailyBag(dateStr, pool, count=5){
   }
   return result;
 }
+/* Optional hand-scheduled days, loaded from data/schedule.json — `{ "2026-09-01":
+   ["id", ...] }`, authored as a spreadsheet and compiled by
+   pipeline/import_questions.py. A pinned date serves exactly those questions; every
+   other date keeps falling back to the shuffled bag, so this is an override rather
+   than a replacement and the daily selection stays a pure function of the date with
+   no server involved.
+
+   Questions that appear anywhere in the schedule are removed from the bag entirely.
+   That's deliberate: without it a themed day could be spoiled by the bag serving one
+   of its questions the week before, and the exclusion has to be date-independent or
+   replaying an old challenge link would no longer reproduce that day's puzzle. */
+let SCHEDULE = {};
+let SCHEDULED_IDS = new Set();
+function bagPool(){
+  if(SCHEDULED_IDS.size === 0) return QUESTION_POOL;
+  const rest = QUESTION_POOL.filter(q => !SCHEDULED_IDS.has(q.id));
+  // If scheduling has eaten so much of the pool that an unscheduled day can't be
+  // filled, the schedule is the broken thing — serve from everything rather than
+  // hand the player a short round.
+  return rest.length >= 5 ? rest : QUESTION_POOL;
+}
 // Questions for the daily set on `dateStr` — used both for today and for
 // replaying the day a challenge link was sent from.
 function roundsForDate(dateStr){
   const DAILY_COUNT = 5;
-  return QUESTION_POOL.length >= DAILY_COUNT
-    ? selectDailyBag(dateStr, QUESTION_POOL, DAILY_COUNT)
-    : selectDailyQuestions(dateStr, QUESTION_POOL, QUESTION_POOL.length);
+  const pinned = SCHEDULE[dateStr];
+  if(pinned && pinned.length){
+    const byId = new Map(QUESTION_POOL.map(q => [q.id, q]));
+    const picked = pinned.map(id => byId.get(id)).filter(Boolean);
+    if(picked.length) return picked;
+    // Every pinned id is unknown — the schedule is stale against the pool. Fall
+    // through to the bag rather than showing an empty round.
+  }
+  const pool = bagPool();
+  return pool.length >= DAILY_COUNT
+    ? selectDailyBag(dateStr, pool, DAILY_COUNT)
+    : selectDailyQuestions(dateStr, pool, pool.length);
 }
 
 /* ============================= STATS & STREAK =============================
@@ -613,7 +643,11 @@ function prefersReducedMotion(){
 // Taylor, 2021" — that's identifying a season, not a person, and the prompt text
 // above the chart already states it.
 function shortLabel(name){
-  return name.replace(/,?\s*\d{4}$/, '') || name;
+  // Handles both season formats the content uses: "Jonathan Taylor, 2021" (NFL/MLB
+  // single seasons) and "Baron Davis, 2003-04" (NBA, which spans two calendar
+  // years). The prompt above the chart already states the season, so the dot only
+  // needs the person.
+  return name.replace(/,?\s*\d{4}(-\d{2})?$/, '') || name;
 }
 
 // Guess-snapping precision. A fixed "round to nearest 0.1" (the old behavior)
@@ -1262,6 +1296,18 @@ async function init(){
     return;
   }
   QUESTION_POOL = pool;
+  // Optional: absent or malformed schedule just means "no pinned days", which is
+  // the normal state. Never let it block the game from starting.
+  try{
+    const res = await fetch('../data/schedule.json');
+    if(res.ok){
+      const sched = await res.json();
+      if(sched && typeof sched === 'object' && !Array.isArray(sched)){
+        SCHEDULE = sched;
+        SCHEDULED_IDS = new Set(Object.values(sched).flat());
+      }
+    }
+  }catch(err){ /* no schedule; the bag handles every day */ }
   TODAY = todayDateString();
   PUZZLE_NO = puzzleNumber(TODAY);
   // A dated challenge link replays the sender's puzzle; anything else is today's.

@@ -4,3 +4,5 @@
 
 # Pipeline dataset cache — large, re-downloadable with `build_questions.py --fetch`
 handoff/pipeline/cache/
+__pycache__/
+*.pyc

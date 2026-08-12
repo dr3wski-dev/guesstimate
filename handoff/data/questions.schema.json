@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://guesstimate/questions.schema.json",
+  "title": "Guesstimate question pool",
+  "description": "The contract for data/questions.json. Enforced by pipeline/import_questions.py on every import; the numbers themselves are separately re-derived from the source datasets by pipeline/verify_questions.py. Schema validity means the shape is right, NOT that the stats are true — both gates have to pass before content ships.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "$ref": "#/$defs/question"
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "league",
+        "xLabel",
+        "xUnit",
+        "yLabel",
+        "yUnit",
+        "xDomain",
+        "yDomain",
+        "targetPlayer",
+        "targetX",
+        "targetY",
+        "referencePlayers",
+        "fact",
+        "source"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)+$",
+          "description": "Stable, unique, kebab-case. Convention: <league>-<xstat><ystat>-<player>[-<season>]. Never reuse an id for different content — a player's stats history is keyed on it."
+        },
+        "league": {
+          "enum": [
+            "NBA",
+            "NFL",
+            "MLB"
+          ]
+        },
+        "xLabel": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 60
+        },
+        "xUnit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12
+        },
+        "yLabel": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 60
+        },
+        "yUnit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12
+        },
+        "xStep": {
+          "$ref": "#/$defs/step"
+        },
+        "yStep": {
+          "$ref": "#/$defs/step"
+        },
+        "xDomain": {
+          "$ref": "#/$defs/domain"
+        },
+        "yDomain": {
+          "$ref": "#/$defs/domain"
+        },
+        "targetPlayer": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 48,
+          "description": "Full name. Append a season for season-scoped questions: 'Derrick Henry, 2020' (NFL/MLB) or 'Baron Davis, 2003-04' (NBA). The chart strips the season from the dot label; the prompt above it already states the season."
+        },
+        "targetX": {
+          "type": "number"
+        },
+        "targetY": {
+          "type": "number"
+        },
+        "referencePlayers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 5,
+          "description": "Plotted, named, with their values listed under the chart. Two is thin; three is the house standard. Must be distinct people — two seasons of the same player as separate dots reads as a bug.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "x",
+              "y"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 48
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "fact": {
+          "type": "string",
+          "minLength": 80,
+          "maxLength": 700,
+          "description": "The reveal payload, and the actual product — it is the only thing in this genre that teaches you something. Should explain WHY the answer is counterintuitive, not restate the numbers. Existing content runs 280-610 characters; the 700 ceiling is a guard against a pasted wall of text, not a target."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300,
+          "description": "Named source for every number in this question. A dataset citation must identify the dataset and the aggregation (e.g. 'nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season')."
+        }
+      }
+    },
+    "step": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Guess snapping granularity, in stat units. 1 for whole-number stats (All-Star counts, home runs), 0.1 for per-game rates, 0.001 for batting average. Defaults to 0.1 if omitted. Getting this wrong collapses the usable chart: a fixed 0.1 step on batting average leaves only two clickable values across the whole axis."
+    },
+    "domain": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "number"
+      },
+      "description": "[min, max] plotted range. MUST NOT be derived from the answer — deriving bounds from the target leaks it, which was a real shipped bug (COMPETITIVE_ANALYSIS.md §2). Prefer round numbers four tick-steps wide so the axis labels read cleanly."
+    }
+  }
+}

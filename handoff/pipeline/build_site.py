@@ -30,6 +30,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..'))
 SRC_HTML = os.path.join(ROOT, 'reference', 'guesstimate-scatter.html')
 SRC_DATA = os.path.join(ROOT, 'data', 'questions.json')
+SRC_SCHEDULE = os.path.join(ROOT, 'data', 'schedule.json')
 SRC_ASSETS = os.path.join(ROOT, 'assets')
 OUT = os.path.join(ROOT, '..', 'site')
 
@@ -51,6 +52,9 @@ def build(site_url, check=False):
     html, n = re.subn(r"fetch\('\.\./data/questions\.json'\)",
                       "fetch('data/questions.json')", html)
     assert n == 1, f'expected exactly one data fetch to rewrite, found {n}'
+    html, ns = re.subn(r"fetch\('\.\./data/schedule\.json'\)",
+                       "fetch('data/schedule.json')", html)
+    assert ns == 1, f'expected exactly one schedule fetch to rewrite, found {ns}'
 
     # 2. Fonts move from ../assets/fonts to assets/fonts for the same reason.
     html, nf = re.subn(r"url\('\.\./assets/fonts/", "url('assets/fonts/", html)
@@ -90,6 +94,14 @@ def build(site_url, check=False):
     os.makedirs(os.path.join(OUT, 'data'), exist_ok=True)
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
     shutil.copy2(SRC_DATA, os.path.join(OUT, 'data', 'questions.json'))
+    # Always emit a schedule, even an empty one. The game treats a missing file as
+    # "no pinned days" and carries on, but the browser still logs a 404 for it on
+    # every single page load, which is noise in every player's console and in ours.
+    dest_sched = os.path.join(OUT, 'data', 'schedule.json')
+    if os.path.exists(SRC_SCHEDULE):
+        shutil.copy2(SRC_SCHEDULE, dest_sched)
+    else:
+        open(dest_sched, 'w').write('{}\n')
     shutil.copytree(SRC_ASSETS, os.path.join(OUT, 'assets'),
                     ignore=shutil.ignore_patterns('og-source.html'))
 
@@ -109,7 +121,7 @@ def build(site_url, check=False):
 /assets/*
   Cache-Control: public, max-age=86400
 
-/data/questions.json
+/data/*.json
   Cache-Control: public, max-age=300, must-revalidate
 
 /index.html
