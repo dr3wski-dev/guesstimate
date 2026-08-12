@@ -257,6 +257,21 @@
   .share-card .sc-strip{ font-size:22px; letter-spacing:3px; line-height:1.3; }
   .share-card .sc-score{ font-size:13px; color:var(--ink-soft); margin-top:4px; }
 
+  .recap{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); text-align:left; }
+  .recap-head{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px; }
+  .recap-row{ border-bottom:1px solid var(--line); }
+  .recap-row:last-child{ border-bottom:none; }
+  .recap-row summary{ display:flex; align-items:baseline; gap:9px; cursor:pointer; padding:9px 2px; list-style:none; font-family:'IBM Plex Mono',monospace; font-size:12.5px; }
+  .recap-row summary::-webkit-details-marker{ display:none; }
+  .recap-row summary::after{ content:'+'; margin-left:auto; color:var(--ink-faint); font-weight:600; }
+  .recap-row[open] summary::after{ content:'–'; }
+  .rc-emoji{ flex:none; }
+  .rc-who{ color:var(--ink); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .rc-pts{ font-weight:600; flex:none; }
+  .rc-body{ padding:0 2px 12px; }
+  .rc-line{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); line-height:1.6; }
+  .rc-fact{ font-size:13.5px; line-height:1.6; color:var(--ink); margin:8px 0 0; border-left:3px solid var(--accent); padding-left:11px; }
+
   /* Concentric score bands drawn around the answer on reveal — the literal heat map.
      They show the player which band they landed in and how much room each one had,
      which is the only place the scoring model is ever explained. Faded in rather than
@@ -760,7 +775,14 @@ function roundToStep(v, step){
 }
 function fmtVal(v, step){
   const d = stepDecimals(step);
-  return v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+  const s = v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+  // Baseball rate stats are written without the leading zero — ".366", never
+  // "0.366" — and getting that wrong is the kind of detail a baseball audience
+  // reads as the game not knowing the sport. Only applies to three-decimal stats
+  // bounded by 1, which is batting average and its relatives; the percentages in
+  // this project are stored 0-100 and are unaffected.
+  if(d >= 3 && Math.abs(v) < 1) return s.replace(/^(-?)0\./, '$1.');
+  return s;
 }
 
 /* ---------- Axis domain ----------
@@ -875,6 +897,10 @@ function makeLabelPlacer(bounds){
 
 let idx = 0;
 let roundScores = [];
+// Per-round detail, kept so the results screen can recap what was actually learned.
+// The `fact` is the only thing in this genre that teaches you anything and it used
+// to be discarded the instant you pressed Next.
+let roundDetails = [];
 
 function renderProgress(){
   progressEl.innerHTML = '';
@@ -920,7 +946,7 @@ function startScreen(){
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     track('round_start', { mode: MODE, puzzle: MODE==='challenge' ? puzzleNumber(CHALLENGE.date) : PUZZLE_NO });
-    idx=0; roundScores=[]; showQuestion();
+    idx=0; roundScores=[]; roundDetails=[]; showQuestion();
   });
   const tb = document.getElementById('todayBtn');
   if(tb) tb.addEventListener('click', leaveChallenge);
@@ -943,7 +969,7 @@ function leaveChallenge(){
   MODE = 'daily';
   DAILY_ROUNDS = roundsForDate(TODAY);
   ROUNDS = DAILY_ROUNDS;
-  idx = 0; roundScores = [];
+  idx = 0; roundScores = []; roundDetails = [];
   startScreen();
 }
 
@@ -1111,7 +1137,17 @@ function showQuestion(){
         e.preventDefault();
         const baseX = guess ? guess.x : (xMin+xMax)/2;
         const baseY = guess ? guess.y : (yMin+yMax)/2;
-        applyGuess(baseX + dir[0]*xStep, baseY + dir[1]*yStep);
+        // One guess-step per press is unusable on a coarse-domain question: on a
+        // 10,000-26,000 receiving-yards axis with a 1-yard step it takes 16,000
+        // presses to cross the chart, and the instruction text advertises the
+        // keyboard on every round. Scale the nudge to the axis instead — about a
+        // hundred presses edge to edge — and never below one snap step, since a
+        // smaller move wouldn't change the guess at all. Shift jumps a tenth of
+        // the axis for getting across quickly.
+        const coarse = e.shiftKey ? 10 : 1;
+        const nudge = (step, range) => Math.max(step, range/100) * coarse;
+        applyGuess(baseX + dir[0]*nudge(xStep, xMax-xMin),
+                   baseY + dir[1]*nudge(yStep, yMax-yMin));
       } else if(e.key === 'Enter' && guess){
         e.preventDefault();
         submitBtn.click();
@@ -1249,6 +1285,13 @@ function showQuestion(){
     `;
     countUp(document.getElementById('ptsNum'), points);
     track('question_submit', { question: r.id, league: r.league, tier: t.label, index: idx+1 });
+    roundDetails.push({
+      league: r.league, matchup: `${r.xLabel} vs. ${r.yLabel}`, player: r.targetPlayer,
+      points, tier: t,
+      guess: `${fmtVal(guess.x, xStep)} ${r.xUnit} · ${fmtVal(guess.y, yStep)} ${r.yUnit}`,
+      actual: `${fmtVal(r.targetX, xStep)} ${r.xUnit} · ${fmtVal(r.targetY, yStep)} ${r.yUnit}`,
+      fact: r.fact,
+    });
     submitBtn.textContent = idx+1<ROUNDS.length ? 'Next question →' : 'See results →';
     // On a phone the reveal used to render entirely below the fold — the player
     // tapped Submit, the button relabelled, and the score, the miss and the fact
@@ -1278,6 +1321,25 @@ function showResults(){
     const tier = scoreTier(s);
     return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tier.emoji} +${s}</span>`;
   }).join('');
+  // The recap. Collapsed by default so the score still lands first, but the facts
+  // are one tap away instead of gone.
+  const recapHTML = roundDetails.length ? `
+    <div class="recap">
+      <div class="recap-head">What you just learned</div>
+      ${roundDetails.map((d,i)=>`
+        <details class="recap-row">
+          <summary>
+            <span class="rc-emoji">${d.tier.emoji}</span>
+            <span class="rc-who">${escapeHtml(shortLabel(d.player))}</span>
+            <span class="rc-pts" style="color:${d.tier.color}">+${d.points}</span>
+          </summary>
+          <div class="rc-body">
+            <div class="rc-line">${escapeHtml(d.matchup)}</div>
+            <div class="rc-line">You said <b>${escapeHtml(d.guess)}</b> · actual <b>${escapeHtml(d.actual)}</b></div>
+            <p class="rc-fact">${escapeHtml(d.fact)}</p>
+          </div>
+        </details>`).join('')}
+    </div>` : '';
   const streakHTML = MODE === 'daily'
     ? `<div class="streak-line">🔥 <b>${liveStreak(stats, TODAY)}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
     : `<div class="streak-line">Challenge round — doesn't affect your streak</div>`;
@@ -1294,6 +1356,7 @@ function showResults(){
         <div class="sc-score">${total}/${max}</div>
       </div>
     </div>
+    ${recapHTML}
     <div class="challenge-box">
       <label for="challengeName">Your name (optional, shown to whoever you send this to)</label>
       <input type="text" id="challengeName" maxlength="30" placeholder="e.g. Drew">

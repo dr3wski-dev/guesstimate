@@ -9,9 +9,10 @@ defects) — this one lists *decisions and work remaining*.
 ## Where we are
 
 **The game is done.** The mechanic, scoring, daily rotation, challenge links, streaks,
-stats, share artifact, dark mode, and phone layout all work and are covered by a
-24-check browser suite (`reference/verify.mjs`). Every functional defect found in the
-playtest review is fixed except the ones listed below.
+stats, share artifact, dark mode, phone layout, restore codes, analytics events and
+the results recap all work, covered by three browser suites (`reference/verify.mjs`
+plus the restore and polish suites). Every functional defect found in the playtest
+review is fixed.
 
 **What is not done is everything around the game.** There is now a deployable build
 (`site/`, see DEPLOY.md) and a content pipeline that generates and independently
@@ -88,10 +89,10 @@ launch-blocking.
 
 | | item | why | effort |
 |---|---|---|---|
-| S1 | **Results recap** | Five pills, no question names, no answers, no facts. The `fact` is the only thing in this genre that teaches you anything, and it's discarded the second you hit Next. | half day |
-| S2 | **How-it-works screen** | Nothing anywhere explains scoring. New players see "+38" with no scale. The reveal heat map helps, but only after they've already guessed. | 2h |
-| S3 | **Keyboard nudge scaling** | Arrow keys move one guess-step, so crossing the Boldin chart takes 16,000 presses. The instruction text advertises the keyboard on every round. | 1h |
-| S4 | **Content hygiene** | The abbreviated NFL reference names are fixed. Still open: Nowitzki's `[60, 92]` domain spends a quarter of the axis on Muggsy Bogues, and batting averages render as `0.254` where baseball convention is `.254`. | 1h |
+| ~~S1~~ | ~~**Results recap**~~ | **Done.** The results screen now lists each round — tier, player, score — collapsed, expanding to your guess, the actual, and the fact. | — |
+| S2 | **How-it-works screen** | Still open, and now the main remaining comprehension gap. The reveal heat map and its key explain the bands, but only after the first guess. | 2h |
+| ~~S3~~ | ~~**Keyboard nudge scaling**~~ | **Done.** Nudge is now ~1/100 of the axis (never below one snap step), Shift for a tenth. Worst case fell from 16,000 presses to 100. | — |
+| S4 | **Content hygiene** | Abbreviated NFL names and the `.254` batting-average format are both fixed. Still open: Nowitzki's `[60, 92]` domain spends a quarter of the axis on Muggsy Bogues — needs a replacement reference, which is hand-authored NBA career data with no dataset behind it. | 30m |
 | S5 | **Content to 50+** | 30 today (first repeat day 7). The pipeline now covers all three leagues, so this is curation time, not research time. | ongoing |
 
 ---
