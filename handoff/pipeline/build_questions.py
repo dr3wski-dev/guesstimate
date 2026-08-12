@@ -67,8 +67,17 @@ NBA_COMPACT = 'nba_player_seasons.csv'
 
 MLB_SOURCE = ('Lahman / Chadwick Bureau baseball databank (core/Batting.csv, '
               'core/AllstarFull.csv), regular season.')
-NFL_SOURCE = ('nflverse-data player_stats release (regular season weekly stats, '
-              'aggregated by season).')
+# Aggregated from play-by-play, which is stated plainly because it is not identical
+# to the official gamebook. Spot-checked against 18 well-known season figures: every
+# discrete count (touchdowns, receptions, interceptions, completions) matched exactly,
+# while yardage totals drifted by a yard or two in a few seasons — and by 114 yards
+# for Marshall Faulk in 1999. Hence NFL_MIN_SEASON below.
+NFL_SOURCE = ('nflverse-data player_stats release, regular-season weekly rows '
+              'aggregated by player_id and season. Season yardage is derived from '
+              'play-by-play and can differ from official gamebook totals by a yard '
+              'or two.')
+# 1999-2001 play-by-play is materially less complete than 2002 onward.
+NFL_MIN_SEASON = 2002
 NBA_SOURCE = ('stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR '
               'nba_stats_player_season_stats release. Regular-season per-game averages.')
 
@@ -622,6 +631,8 @@ def validate():
               f"TD {e['stats']['rush_td']:>3} (exp {td:>3})   {'ok' if good else 'MISMATCH'}")
     # Regression guards for the name-collision bug. These are as important as the
     # value checks: the wrong numbers they produced looked entirely plausible.
+    nba, nbamax = nba_seasons(pool, gate=False)
+
     print('Name-collision guards')
     rw = nfl.get((norm('Ricky Williams'), 2003))
     good = bool(rw) and rw['stats']['rush_yds'] == 1372 and rw['stats']['carries'] == 392
@@ -629,6 +640,23 @@ def validate():
     print(f"  Ricky Williams 2003 = {rw['stats']['rush_yds'] if rw else '?'} yds / "
           f"{rw['stats']['carries'] if rw else '?'} car   (must be 1372/392, not the "
           f"1527/440 of two players summed)   {'ok' if good else 'MISMATCH'}")
+    # Era guard: these are the checks that established NFL_MIN_SEASON. Counts are
+    # exact in every era; the 1999 yardage gap is why pre-2002 seasons are excluded.
+    faulk = nfl.get((norm('Marshall Faulk'), 1999))
+    drift = faulk and abs(faulk['stats']['rush_yds'] - 1381) > 50
+    ok &= bool(drift)
+    print(f"  pre-2002 yardage drift still present (Faulk 1999 = "
+          f"{faulk['stats']['rush_yds'] if faulk else '?'} vs official 1381), so "
+          f"NFL content stays >= {NFL_MIN_SEASON}   {'ok' if drift else 'RECHECK'}")
+    for nm, yr, col, exp in [('Peyton Manning', 2004, 'pass_td', 49),
+                             ('Randy Moss', 2007, 'rec_td', 23),
+                             ('Larry Fitzgerald', 2016, 'rec', 107),
+                             ('Chris Johnson', 2009, 'rush_yds', 2006)]:
+        e = nfl.get((norm(nm), yr))
+        good = bool(e) and e['stats'][col] == exp
+        ok &= good
+        print(f"  {nm:20}{yr} {col:9} {e['stats'][col] if e else '?':>6} (exp {exp:>6})   "
+              f"{'ok' if good else 'MISMATCH'}")
     kobe = nba.get((norm('Kobe Bryant'), 2005))
     fga_ok = bool(kobe) and 20 < kobe['stats']['fga'] < 30
     ok &= fga_ok
@@ -640,7 +668,6 @@ def validate():
     print(f"  'Ken Griffey' dropped as ambiguous (Sr and Jr both qualify)   "
           f"{'ok' if amb else 'STILL PRESENT'}")
 
-    nba, nbamax = nba_seasons(pool, gate=False)
     print(f'NBA (hoopR / stats.nba.com) — data through {nbamax}')
     for nm, yr, pts, reb, ast in [('Stephen Curry', 2016, 25.3, 4.5, 6.6),
                                   ('Russell Westbrook', 2016, 31.6, 10.7, 10.4),
@@ -695,7 +722,7 @@ def main():
     else:
         entries, dmax = nfl_seasons(pool)
         # season questions are frozen history — no staleness risk at all
-        elig = list(entries.values())
+        elig = [e for e in entries.values() if e['season'] >= NFL_MIN_SEASON]
         cands = build(elig, NFL_ARCHETYPES, 'NFL',
                       lambda e: f"{e['name']}, {e['season']}", NFL_SOURCE, a.top, a.per_archetype)
 

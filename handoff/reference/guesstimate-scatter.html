@@ -717,12 +717,28 @@ function distForScore(points){
 // an exact pixel hit. Every band below is reachable on every question, and the
 // emoji form a heat ramp so the share strip carries as much information as the
 // tiers do — the previous strip used one green for two different tiers.
+/* Band edges, calibrated by simulation against the real question pool rather than
+   picked as round numbers. Two ends needed moving from the first cut (95/80/60/40/15):
+
+   Bullseye at >=95 was a 23px radius, which an expert hit on 40% of questions — it
+   was measuring mouse precision more than knowledge, and a top band that fires two
+   times in five isn't a top band. At >=97 it's ~16px and fires 25% of the time for an
+   expert, 3% for a good-but-not-expert player.
+
+   Miss at <15 was catching 7% of a genuinely-trying casual player's guesses, and a
+   black square reads as a failure state. At <10 it essentially only fires for someone
+   who isn't engaging with the chart (10% of centre-clicks, 59% of random ones), which
+   is what it should mean.
+
+   Only the edges moved; the curve is untouched, so the scores themselves keep the
+   property that matters — a player who isn't trying still lands near 120/500, so the
+   /500 denominator isn't flattering anyone. */
 const TIERS = [
-  { min:95, emoji:'🎯', label:'Bullseye', color:'var(--t1)' },
+  { min:97, emoji:'🎯', label:'Bullseye', color:'var(--t1)' },
   { min:80, emoji:'🟩', label:'Great',    color:'var(--t2)' },
   { min:60, emoji:'🟨', label:'Close',    color:'var(--t3)' },
   { min:40, emoji:'🟧', label:'Off',      color:'var(--t4)' },
-  { min:15, emoji:'🟥', label:'Way off',  color:'var(--t5)' },
+  { min:10, emoji:'🟥', label:'Way off',  color:'var(--t5)' },
   { min:0,  emoji:'⬛', label:'Miss',     color:'var(--t6)' },
 ];
 const TIER_ORDER = TIERS.map(t => t.label);
@@ -1217,7 +1233,7 @@ function showQuestion(){
     const t = scoreTier(points);
     // Reveal "juice", ported from guesstimate-slider-legacy.html: a great guess
     // pulses, a bad one shakes. Rebased onto the new bands (Great+ / Miss).
-    const tierAnimClass = points>=80 ? 'tier-perfect' : points<15 ? 'tier-bad' : '';
+    const tierAnimClass = points>=80 ? 'tier-perfect' : points<10 ? 'tier-bad' : '';
 
     const tx = xPix(r.targetX), ty = yPix(r.targetY);
 
