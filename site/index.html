@@ -234,6 +234,11 @@
   .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
   .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:6px; }
   .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; white-space:nowrap; }
+  /* The score used to be separated from the tier label by an em dash — "Way off —
+     +27" — which sits immediately before the plus and reads as a minus sign at a
+     glance. Every score in this game is a gain, so nothing here should ever look
+     negative. Spacing does the separating instead. */
+  .verdict-row .pts-num{ margin-left:0.4em; }
   .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; line-height:1.5; }
   .verdict-row .compare .miss{ color:var(--guess); }
 
@@ -1296,7 +1301,7 @@ function showQuestion(){
     revealArea.innerHTML = `
       <div class="reveal ${tierAnimClass}">
         <div class="verdict-row ${tierAnimClass}">
-          <div class="pts" style="color:${t.color}">${t.emoji} ${t.label} — <span id="ptsNum">+0</span></div>
+          <div class="pts" style="color:${t.color}">${t.emoji} ${t.label} <span class="pts-num" id="ptsNum">+0</span></div>
           <div class="compare">
             Actual: ${fmtVal(r.targetX, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(r.targetY, yStep)} ${escapeHtml(r.yUnit)}<br>
             <span class="miss">You were ${escapeHtml(missText(guess.x, r.targetX, r.xUnit, xStep))} · ${escapeHtml(missText(guess.y, r.targetY, r.yUnit, yStep))}</span>
