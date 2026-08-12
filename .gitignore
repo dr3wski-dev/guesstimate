@@ -1,3 +1,6 @@
 .claude/settings.local.json
 *.log
 .DS_Store
+
+# Pipeline dataset cache — large, re-downloadable with `build_questions.py --fetch`
+handoff/pipeline/cache/
