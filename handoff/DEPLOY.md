@@ -1,7 +1,23 @@
 # Deploying Guesstimate
 
-The game is a static site with no backend, no build toolchain, and no npm
-dependencies. Deploying it is genuinely a 20-minute job. This is the runbook.
+Two pieces, both on Cloudflare, both free at this scale:
+
+| piece | what it serves | where |
+|---|---|---|
+| the site | the game, fonts, OG image | Cloudflare Pages, publish dir `site/` |
+| `guesstimate-api` | one day's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
+
+**They must share a domain.** The page's CSP is `connect-src 'self'`, so the game can
+only call an API on its own origin. That's deliberate: no CORS, no third-party origin
+in the policy, and a preflight can never be the reason the game fails to load. If the
+Worker ends up on a `*.workers.dev` host instead, that origin has to be added to
+**both** the `CSP` constant in `pipeline/build_site.py` **and** the `<meta
+http-equiv>` CSP in the reference file — otherwise every request the game makes is
+blocked, with nothing useful in the console.
+
+**The game does not start without the Worker.** There is no static fallback, on
+purpose — a fallback would mean shipping the pool again, which is the leak the Worker
+exists to close.
 
 ## What gets deployed
 
@@ -52,14 +68,63 @@ node handoff/reference/verify.mjs
 
 Then point a host at it:
 
-- **Netlify / Cloudflare Pages** — publish directory `site`, no build command.
-  `_headers` is picked up automatically.
+- **Cloudflare Pages** — publish directory `site`, no build command. `_headers` is
+  picked up automatically from the root of that directory.
+- **Netlify** — same: publish directory `site`, no build command.
 - **Vercel** — root directory `site`, framework preset "Other", no build command.
   `vercel.json` is picked up automatically.
 
-All three free tiers cover this comfortably, and all three give HTTPS and basic DDoS
+All three free tiers cover this comfortably, and all give HTTPS and basic DDoS
 protection without configuration — which is the whole reason ACTION_PLAN §3 says not
 to build custom hosting.
+
+## Deploying the Worker
+
+The API has to be deployed separately, and it needs an interactive Cloudflare login,
+so this part cannot be done from a terminal-only session.
+
+```bash
+cd handoff/worker
+wrangler login          # opens a browser
+wrangler deploy         # first deploy lands on *.workers.dev, which is fine for testing
+```
+
+Then, once the Pages project has its custom domain:
+
+1. Uncomment the `routes` block in `worker/wrangler.toml` and set the real domain.
+2. `wrangler deploy` again, so `/api/*` resolves on the site's own origin.
+
+The question pool is **bundled into the Worker** at build time via a JSON import of
+`data/questions.json` — the same canonical file the content workflow edits. There is
+no second copy to keep in sync, which also means **shipping new content requires
+redeploying the Worker**, not just pushing the site. The same is true of
+`data/schedule.json`.
+
+The Worker has no KV, no D1, no Durable Objects, no secrets, and no bindings. If that
+ever changes, the "stateless pure function" property that makes it free and hard to
+abuse is gone, and ACTION_PLAN §3 needs rereading first.
+
+## The leak this is all protecting against
+
+`site/` is published wholesale by Pages, so **anything inside it is downloadable**.
+The question pool must never be in there — if `data/questions.json` were served, every
+future day's answers would be one URL away and the Worker would be pointless, the
+exact hole it was built to close, reopened by a directory layout.
+
+`pipeline/build_site.py` asserts the built HTML never fetches the pool and that the
+client calls `/api/daily`, so re-introducing the leak fails the build rather than
+shipping. Verify on the live site anyway after any restructure:
+
+```sh
+curl -sI https://<site>/data/questions.json     # must be 404
+```
+
+Worth being precise about what this does *not* fix: today's five questions still
+travel to the browser with their answers attached, because scoring and the reveal
+happen client-side. A determined player can read today's answers from the network tab.
+They cannot read tomorrow's, and they cannot move their system clock to farm a streak.
+Hiding today's too would mean posting guesses to the server for scoring — a real
+backend with real abuse surface, out of scope per ACTION_PLAN §6.
 
 ## Before you point the domain at it
 
@@ -76,8 +141,11 @@ to build custom hosting.
       violations. The policy allows `'unsafe-inline'` for scripts and styles because
       the game is a single self-contained file; that's a deliberate trade, not an
       oversight.
-- [ ] **Confirm `data/questions.json` is served with a short cache.** `_headers` sets
-      300s. If a CDN overrides it, shipping new content won't reach players.
+- [ ] **Confirm the Worker is routed on the site's domain**, not `*.workers.dev` —
+      otherwise the CSP blocks every API call. `curl -s https://<site>/api/daily`
+      should return JSON, not a 404 from Pages.
+- [ ] **Confirm `/api/*` is served with a short cache.** `_headers` sets 300s. If a
+      CDN overrides it, shipping new content won't reach players.
 
 ## After deploying
 
@@ -128,12 +196,27 @@ python3 handoff/pipeline/build_questions.py --league mlb --top 20
 # pick candidates, write the fact copy, add to handoff/data/questions.json
 python3 handoff/pipeline/verify_questions.py                 # must report 0 mismatches
 python3 handoff/pipeline/build_site.py --url https://your-domain.com
+cd handoff/worker && wrangler deploy   # the pool is bundled INTO the Worker
 ```
+
+Pushing the site alone is not enough — the Worker holds the questions, so a content
+change that isn't followed by `wrangler deploy` reaches nobody.
 
 `verify_questions.py` re-derives every number in `questions.json` straight from the
 raw datasets, on a separate code path from the generator. Treat a non-zero exit as
 blocking — it exists because the generator has already shipped a plausible-looking
 number that never happened (see its docstring).
+
+## Verify after deploying
+
+```sh
+curl -sI https://<site>/ | grep -i content-security-policy    # header present
+curl -s  https://<site>/api/daily | jq '.questions | length'  # 5, never the whole pool
+curl -sI https://<site>/data/questions.json                   # 404
+```
+
+Then open dev tools on the live site and confirm the Network tab shows a request to
+`/api/daily` returning five questions, and **no** request for the pool.
 
 ## Rollback
 

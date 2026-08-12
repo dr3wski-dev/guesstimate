@@ -30,6 +30,15 @@
 <meta name="twitter:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls.">
 <meta name="twitter:image" content="assets/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1810'/%3E%3Cpath d='M6 26 H27' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M6 26 V5' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='2.6' fill='%23f0b429'/%3E%3Ccircle cx='20' cy='12' r='3.4' fill='%232f5fd6' stroke='%23f2efe4' stroke-width='1.6'/%3E%3C/svg%3E">
+<!-- The first screen renders in all three families at once: the title is Fraunces,
+     the body copy Work Sans, and the topline and buttons IBM Plex Mono. Without
+     these, the browser can't discover any of them until it has parsed the stylesheet,
+     so the fetch starts late and text swaps in visibly. Only the faces the first
+     screen actually uses are preloaded — preloading the rest would compete with the
+     questions API call for the same connection. -->
+<link rel="preload" href="../assets/fonts/worksans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/ibmplexmono-400.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 // Applied synchronously, before CSS paints, so a returning player with a saved
 // dark-mode preference doesn't see a flash of the light theme first.
@@ -45,11 +54,15 @@
      third-party requests, kills the font-swap flash, and lets the CSP above drop
      its googleapis/gstatic allowances entirely — consistent with the project's
      stated "minimize dependencies and attack surface" posture. Fraunces and Work
-     Sans ship as variable fonts, so one file each covers every weight used. */
+     Sans ship as variable fonts, so one file each covers every weight used.
+
+     Mono ships 400, 600 and 700 — the three weights actually applied to elements.
+     A 500 file was being served and never used by any rule; fonts are already
+     woff2-compressed so the CDN can't shrink them, which makes an unused face pure
+     transfer cost. Check before adding one back: `grep -o "font-weight:[^;]*"`. */
   @font-face{font-family:'Fraunces';font-style:normal;font-weight:600 900;font-display:swap;src:url('../assets/fonts/fraunces-var.woff2') format('woff2');}
   @font-face{font-family:'Work Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('../assets/fonts/worksans-var.woff2') format('woff2');}
   @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('../assets/fonts/ibmplexmono-400.woff2') format('woff2');}
-  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('../assets/fonts/ibmplexmono-500.woff2') format('woff2');}
   @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/ibmplexmono-600.woff2') format('woff2');}
   @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('../assets/fonts/ibmplexmono-700.woff2') format('woff2');}
 

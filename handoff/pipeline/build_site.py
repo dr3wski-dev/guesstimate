@@ -110,6 +110,10 @@ def build(site_url, check=False, provider=None, domain=None):
     # 2. Fonts move from ../assets/fonts to assets/fonts for the same reason.
     html, nf = re.subn(r"url\('\.\./assets/fonts/", "url('assets/fonts/", html)
     assert nf > 0, 'expected font URLs to rewrite'
+    # Same rewrite for the <link rel=preload> hrefs, which sit in the head rather
+    # than inside a CSS url().
+    html, np = re.subn(r'href="\.\./assets/', 'href="assets/', html)
+    assert np > 0, 'expected font preload hrefs to rewrite'
 
     # 3. Absolute OG/Twitter URLs. Relative ones are the single most common reason a
     #    link card renders blank, and for a game distributed by pasted links that card
