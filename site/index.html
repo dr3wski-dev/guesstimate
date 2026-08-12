@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Defense-in-depth per SECURITY_NOTES.md: this page parses URL params
+     (?challenge=1&from=...&score=...&d=...) into the DOM. They're sanitized in JS
+     regardless, but a CSP costs nothing and would have blocked the earlier
+     reflected-XSS bug documented there even before the code-level fix existed.
+     Fonts are self-hosted now, so this no longer needs to allow googleapis/gstatic
+     at all — the only non-'self' source left is data: for the inline SVG favicon. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self';">
+<link rel="canonical" href="https://guesstimate.app/">
+<title>Guesstimate — Daily Sports Stat Guessing Game</title>
+<meta name="description" content="Five sports stat questions a day. Real players are plotted on a chart — you guess where another one falls. Same questions for everyone, every day.">
+<!-- Open Graph / Twitter. This game's distribution model is people pasting a link
+     into a group chat, which means this card IS the landing page for most players.
+     NOTE FOR DEPLOY: og:image and og:url must become absolute URLs on the real
+     domain — most crawlers (including iMessage's) will not resolve a relative
+     og:image. Regenerate the image from assets/og-source.html; see that file. -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://guesstimate.app/">
+<meta property="og:site_name" content="Guesstimate">
+<meta property="og:title" content="Guesstimate — Daily Sports Stat Guessing Game">
+<meta property="og:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls. How close can you get?">
+<meta property="og:image" content="https://guesstimate.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Guesstimate — a scatter chart with plotted sports players and a guess marker.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Guesstimate — Daily Sports Stat Guessing Game">
+<meta name="twitter:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls.">
+<meta name="twitter:image" content="https://guesstimate.app/assets/og-image.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1810'/%3E%3Cpath d='M6 26 H27' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M6 26 V5' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='2.6' fill='%23f0b429'/%3E%3Ccircle cx='20' cy='12' r='3.4' fill='%232f5fd6' stroke='%23f2efe4' stroke-width='1.6'/%3E%3C/svg%3E">
+<!-- The first screen renders in all three families at once: the title is Fraunces,
+     the body copy Work Sans, and the topline and buttons IBM Plex Mono. Without
+     these, the browser can't discover any of them until it has parsed the stylesheet,
+     so the fetch starts late and text swaps in visibly. Only the faces the first
+     screen actually uses are preloaded — preloading the rest would compete with the
+     questions API call for the same connection. -->
+<link rel="preload" href="assets/fonts/worksans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibmplexmono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+// Applied synchronously, before CSS paints, so a returning player with a saved
+// dark-mode preference doesn't see a flash of the light theme first.
+(function(){
+  try{
+    var t = localStorage.getItem('guesstimate_theme');
+    if(t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  }catch(e){}
+})();
+</script>
+<style>
+  /* Self-hosted fonts (latin subset only). Removes three render-blocking
+     third-party requests, kills the font-swap flash, and lets the CSP above drop
+     its googleapis/gstatic allowances entirely — consistent with the project's
+     stated "minimize dependencies and attack surface" posture. Fraunces and Work
+     Sans ship as variable fonts, so one file each covers every weight used.
+
+     Mono ships 400, 600 and 700 — the three weights actually applied to elements.
+     A 500 file was being served and never used by any rule; fonts are already
+     woff2-compressed so the CDN can't shrink them, which makes an unused face pure
+     transfer cost. Check before adding one back: `grep -o "font-weight:[^;]*"`. */
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:600 900;font-display:swap;src:url('assets/fonts/fraunces-var.woff2') format('woff2');}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('assets/fonts/worksans-var.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/ibmplexmono-400.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('assets/fonts/ibmplexmono-600.woff2') format('woff2');}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/ibmplexmono-700.woff2') format('woff2');}
+
+  :root{
+    --paper: #f2efe4; --paper-2: #e9e4d4;
+    --ink: #1b1810; --ink-rgb: 27,24,16; --ink-soft: #55503f; --ink-faint: #5f5946;
+    --line: rgba(27,24,16,0.18);
+    --accent: #f0b429; --accent-ink: #4d3a06;
+    --good: #1e6a41; --good-rgb: 30,106,65; --good-bg: #e4f3ea;
+    --mid: #c88a00; --bad: #b53a2e;
+    --guess: #2f5fd6;
+    --panel-pad: 26px;
+    /* Heat ramp for the six score bands. Ordered best -> worst, and used in three
+       places that must agree: the verdict colour, the concentric bands drawn around
+       the answer on reveal, and the emoji in the share strip. Green->gold->orange->red
+       keeps the Wordle "green is good" convention while still reading as a heat map. */
+    --t1: #12703a; --t2: #5a9e2f; --t3: #c9a227;
+    --t4: #d97b29; --t5: #c0392b; --t6: #5d5347;
+  }
+  /* Per-league accent. Every question used to look identical — same paper, same
+     axes, same three hollow dots — so five rounds a day read as one thing five
+     times. Immaculate Grid gets this variety free from team logos; this is the
+     cheap equivalent. Set on .app (not .panel) because the progress bar lives
+     outside the panel and needs the same accent. */
+  .app[data-league="NBA"]{ --accent:#ef8c3b; --accent-ink:#3a2405; }
+  .app[data-league="NFL"]{ --accent:#57a877; --accent-ink:#0d2b1a; }
+  .app[data-league="MLB"]{ --accent:#6d9ce0; --accent-ink:#0f2445; }
+  /* Dark palette applies automatically for players whose OS is set to dark mode
+     (unless they've explicitly picked light via the toggle), and always applies
+     once data-theme="dark" is set explicitly. Mostly a straight paper/ink swap
+     to keep the same retro-paper look; good/mid/bad/guess get brightened a touch
+     since the muted light-mode versions read as too dark against a dark page. */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #17140f; --paper-2: #211d16;
+      --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
+      --line: rgba(242,237,224,0.18);
+      --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
+      --mid: #e0a83c; --bad: #ff6b57;
+      --guess: #6d93ff;
+      --t1: #3ddc84; --t2: #8fd94a; --t3: #e8c34a;
+      --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #17140f; --paper-2: #211d16;
+    --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
+    --line: rgba(242,237,224,0.18);
+    --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
+    --mid: #e0a83c; --bad: #ff6b57;
+    --guess: #6d93ff;
+    --t1: #3ddc84; --t2: #8fd94a; --t3: #e8c34a;
+    --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh;
+    background:var(--paper);
+    background-image:repeating-linear-gradient(0deg, rgba(var(--ink-rgb),0.025) 0px, rgba(var(--ink-rgb),0.025) 1px, transparent 1px, transparent 3px);
+    color:var(--ink); font-family:'Work Sans', sans-serif;
+    display:flex; align-items:center; justify-content:center; padding:5vh 5vw;
+  }
+  /* The icon buttons used to be position:fixed at the top-right of the viewport,
+     which collided with the topline's round counter on any narrow screen — on an
+     iPhone the "1 / 5" rendered underneath two opaque circles. They live in the
+     topline row now, so they can't overlap anything at any width. */
+  .controls{ display:flex; gap:6px; }
+  .icon-btn{
+    width:32px; height:32px; display:flex; align-items:center; justify-content:center;
+    font-size:13px; line-height:1; background:var(--paper); color:var(--ink);
+    border:2px solid var(--ink); border-radius:50%; cursor:pointer;
+    box-shadow:2px 2px 0 rgba(var(--ink-rgb),0.35); transition:transform .15s ease;
+    font-family:'IBM Plex Mono',monospace; padding:0; flex:none;
+  }
+  .icon-btn:hover{ transform:translate(-1px,-1px); }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  :focus-visible{ outline:3px solid var(--ink); outline-offset:3px; }
+  .app{ width:100%; max-width:620px; }
+
+  .topline{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint);
+    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:12px;
+  }
+  .topline-end{ display:flex; align-items:center; gap:10px; flex:none; }
+  /* The topline label doubles as the way back to the home screen. A real <button>
+     rather than a styled span so it's keyboard-reachable and announced as a
+     control; the reset strips the chrome so it still reads as a label. */
+  #topLeft{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  button.home-btn{
+    font:inherit; letter-spacing:inherit; text-transform:inherit; color:inherit;
+    background:none; border:0; padding:0; margin:0; cursor:pointer;
+    border-bottom:1px solid transparent; text-align:left;
+  }
+  button.home-btn:hover, button.home-btn:focus-visible{ color:var(--ink); border-bottom-color:var(--ink); }
+  .progress{ display:flex; gap:6px; margin-bottom:18px; }
+  .progress .seg{ flex:1; height:6px; background:var(--paper-2); border:1.5px solid var(--ink); }
+  .progress .seg.done{ background:var(--ink); }
+  .progress .seg.active{ background:var(--accent); }
+  .panel{
+    background:var(--paper); border:2.5px solid var(--ink); border-radius:3px;
+    box-shadow:7px 7px 0 var(--ink); padding:var(--panel-pad);
+  }
+  h1.title{ font-family:'Fraunces',serif; font-weight:700; font-size:clamp(24px,5vw,32px); margin:0 0 8px; line-height:1.05; }
+  p.sub{ color:var(--ink-soft); margin:0 0 18px; line-height:1.5; font-size:14.5px; }
+  button.primary{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; letter-spacing:0.03em;
+    background:var(--ink); color:var(--paper); border:2px solid var(--ink); border-radius:3px;
+    padding:12px 22px; cursor:pointer; box-shadow:4px 4px 0 rgba(var(--ink-rgb),0.35);
+    transition:transform .15s ease;
+  }
+  button.primary:hover:not(:disabled){ transform:translate(-2px,-2px); }
+  button.primary:disabled{ opacity:0.4; cursor:default; }
+  button.ghost{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px;
+    background:transparent; color:var(--ink); border:2px solid var(--ink); border-radius:3px;
+    padding:10px 18px; cursor:pointer; transition:transform .15s ease;
+  }
+  button.ghost:hover{ transform:translate(-1px,-1px); }
+
+  .league-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; background:var(--accent); color:var(--accent-ink); padding:3px 9px; border:1.5px solid var(--ink); margin-bottom:10px; }
+  .prompt{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1.3; margin-bottom:4px; }
+  .prompt .player{ color:var(--guess); }
+  .instructions{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin-bottom:14px; }
+
+  .chart-frame{
+    background:color-mix(in srgb, var(--accent) 12%, var(--paper));
+    border:2.5px solid var(--ink); border-radius:3px; padding:6px;
+    margin-bottom:12px; position:relative; touch-action:none;
+  }
+  .chart-frame svg{ width:100%; height:auto; display:block; cursor:crosshair; touch-action:none; }
+  .chart-frame svg rect[tabindex]:focus-visible{ outline:3px solid var(--ink); outline-offset:-3px; }
+
+  /* Reference values, listed under the chart. Without these you can see a dot and
+     a name but have to eyeball its coordinates off the gridlines — which makes the
+     guess a vibe rather than an inference. Stating them turns it into reasoning.
+     A list rather than a hover tooltip on the dots, because the dots deliberately
+     have pointer-events:none (so they don't swallow drags) and hover doesn't
+     exist on touch anyway. */
+  .legend{ display:flex; flex-wrap:wrap; gap:5px 16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .legend span{ white-space:nowrap; }
+  .legend i{ display:inline-block; width:8px; height:8px; border-radius:50%; border:1.5px solid var(--ink); background:var(--paper); margin-right:6px; vertical-align:baseline; }
+  .legend b{ color:var(--ink); font-weight:600; }
+
+  /* The action bar pins the readout and the submit button to the bottom of the
+     viewport whenever the panel is taller than the screen. Previously, on a 390x664
+     phone, the submit button sat at y=649-700 and the reveal that followed it started
+     at y=670 — so the player tapped a button they had to hunt for, and the score, the
+     miss and the fact all rendered off the bottom of the screen with no cue. Sticky
+     costs nothing on desktop (it only engages once the page actually scrolls) and
+     means the action is always in reach. The reveal is rendered ABOVE this bar, so
+     the score lands directly where the thumb already is. */
+  .actionbar{
+    position:sticky; bottom:0; z-index:5;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    background:var(--paper); border-top:2px dashed var(--line);
+    margin:14px calc(var(--panel-pad) * -1) calc(var(--panel-pad) * -1);
+    padding:12px var(--panel-pad) calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .actionbar .readout{ flex:1 1 auto; min-width:0; }
+  .actionbar button.primary{ flex:none; }
+  .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:left; min-height:18px; }
+
+  /* Reveal "juice", ported from guesstimate-slider-legacy.html: the target marker
+     bounce-drops in, and the verdict row pulses (great guess) or shakes (bad
+     guess). Respects prefers-reduced-motion — see the override below. */
+  @keyframes targetDrop{ 0%{ transform:scale(0.3); opacity:0; } 60%{ transform:scale(1.25); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
+  @keyframes pulseGlow{ 0%{ box-shadow:0 0 0 0 rgba(var(--good-rgb),0.5); } 100%{ box-shadow:0 0 0 16px rgba(var(--good-rgb),0); } }
+  @keyframes shakeBad{ 0%,100%{ transform:translateX(0); } 20%{ transform:translateX(-6px); } 40%{ transform:translateX(6px); } 60%{ transform:translateX(-4px); } 80%{ transform:translateX(4px); } }
+  @keyframes coachPulse{ 0%{ transform:scale(0.75); opacity:0.9; } 70%{ transform:scale(1.6); opacity:0; } 100%{ transform:scale(1.6); opacity:0; } }
+  .target-marker{ transform-box:fill-box; transform-origin:center; animation:targetDrop .5s cubic-bezier(.3,1.5,.4,1) both; }
+  .verdict-row.tier-perfect{ animation:pulseGlow 0.9s ease-out; border-radius:8px; }
+  .reveal.tier-bad{ animation:shakeBad 0.4s ease-in-out; }
+  .coach-ring{ transform-box:fill-box; transform-origin:center; animation:coachPulse 1.9s ease-out infinite; }
+  @media (prefers-reduced-motion: reduce){
+    .target-marker, .verdict-row.tier-perfect, .reveal.tier-bad, .coach-ring{ animation:none !important; }
+    .coach-ring{ opacity:0.55; }
+  }
+
+  .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
+  .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; white-space:nowrap; }
+  /* The score used to be separated from the tier label by an em dash — "Way off —
+     +27" — which sits immediately before the plus and reads as a minus sign at a
+     glance. Every score in this game is a gain, so nothing here should ever look
+     negative. Spacing does the separating instead. */
+  .verdict-row .pts-num{ margin-left:0.4em; }
+  .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; line-height:1.5; }
+  .verdict-row .compare .miss{ color:var(--guess); }
+
+  /* The fact is the actual product — it's the only thing in this genre that
+     teaches you something, and it was previously rendered at 13.5px in muted grey
+     below the fold. Give it the weight it earns. */
+  .fact-block{ margin:14px 0 16px; border-left:3px solid var(--accent); padding-left:13px; }
+  .fact-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px; }
+  .fact{ color:var(--ink); line-height:1.6; font-size:14.5px; margin:0; }
+  .fact-source{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:8px 0 0; }
+
+  .next-row{ display:flex; justify-content:flex-end; gap:10px; align-items:center; flex-wrap:wrap; }
+  .note{ font-size:12px; color:var(--ink-faint); margin-top:22px; line-height:1.6; }
+  .pill{ font-family:'IBM Plex Mono',monospace; font-size:12px; border:2px solid var(--ink); border-radius:20px; padding:5px 10px; }
+  .streak-line{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); text-align:center; margin-bottom:16px; }
+  .streak-line b{ color:var(--ink); font-family:'Fraunces',serif; font-size:16px; }
+  .error-text{ color:var(--bad); }
+  .challenge-banner{ font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.55; background:color-mix(in srgb, var(--accent) 18%, var(--paper)); border:2px solid var(--ink); border-radius:4px; padding:10px 12px; margin-bottom:16px; }
+  .challenge-box{ margin-top:18px; padding-top:16px; border-top:2px dashed var(--line); text-align:left; }
+  .challenge-box label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); display:block; margin-bottom:6px; }
+  .challenge-box input{ width:100%; font-family:'Work Sans',sans-serif; font-size:14px; padding:9px 10px; border:2px solid var(--ink); border-radius:3px; background:var(--paper); color:var(--ink); margin-bottom:10px; }
+  .challenge-box input::placeholder{ color:var(--ink-faint); }
+
+  /* The shareable artifact. Wordle's emoji grid isn't decoration — it's the
+     growth engine: spoiler-free, instantly parseable in a message thread, and it
+     invites a reply in a way a bare number never does. Shown here too, because
+     people like seeing the thing they're about to send. */
+  .share-card{ font-family:'IBM Plex Mono',monospace; background:var(--paper-2); border:2px solid var(--ink); border-radius:4px; padding:12px 14px; margin:16px 0 4px; text-align:left; }
+  .share-card .sc-head{ font-size:12px; color:var(--ink-soft); letter-spacing:0.05em; margin-bottom:6px; }
+  .share-card .sc-strip{ font-size:22px; letter-spacing:3px; line-height:1.3; }
+  .share-card .sc-score{ font-size:13px; color:var(--ink-soft); margin-top:4px; }
+
+  .recap{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); text-align:left; }
+  .recap-head{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px; }
+  .recap-row{ border-bottom:1px solid var(--line); }
+  .recap-row:last-child{ border-bottom:none; }
+  .recap-row summary{ display:flex; align-items:baseline; gap:9px; cursor:pointer; padding:9px 2px; list-style:none; font-family:'IBM Plex Mono',monospace; font-size:12.5px; }
+  .recap-row summary::-webkit-details-marker{ display:none; }
+  .recap-row summary::after{ content:'+'; margin-left:auto; color:var(--ink-faint); font-weight:600; }
+  .recap-row[open] summary::after{ content:'–'; }
+  .rc-emoji{ flex:none; }
+  .rc-who{ color:var(--ink); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .rc-pts{ font-weight:600; flex:none; }
+  .rc-body{ padding:0 2px 12px; }
+  .rc-line{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); line-height:1.6; }
+  .rc-fact{ font-size:13.5px; line-height:1.6; color:var(--ink); margin:8px 0 0; border-left:3px solid var(--accent); padding-left:11px; }
+
+  /* Concentric score bands drawn around the answer on reveal — the literal heat map.
+     They show the player which band they landed in and how much room each one had,
+     which is the only place the scoring model is ever explained. Faded in rather than
+     popped so they read as background, not as another marker. */
+  @keyframes heatIn{ from{ opacity:0; } to{ opacity:1; } }
+  .heat{ animation:heatIn .45s ease-out both; }
+  @media (prefers-reduced-motion: reduce){ .heat{ animation:none !important; } }
+  .heat-key{ display:flex; flex-wrap:wrap; gap:3px 12px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:10px 0 0; }
+  .heat-key span{ white-space:nowrap; }
+
+  /* Phone layout. The old header stack (a 3-line Fraunces prompt plus a 3-line mono
+     instruction) pushed the chart down to y=296 on a 390x664 screen — 45% of the
+     viewport spent before the game started. */
+  @media (max-width: 560px){
+    :root{ --panel-pad: 18px; }
+    body{ padding:14px 12px; align-items:flex-start; }
+    .topline{ font-size:11px; letter-spacing:0.04em; }
+    .prompt{ font-size:17px; line-height:1.25; }
+    .instructions{ font-size:11px; margin-bottom:10px; }
+    h1.title{ margin-bottom:6px; }
+    .legend{ font-size:11px; gap:4px 12px; margin-bottom:12px; }
+    .verdict-row{ flex-direction:column; align-items:flex-start; gap:2px; }
+    .verdict-row .compare{ text-align:left; }
+    .fact{ font-size:14px; }
+    .note{ font-size:11.5px; }
+    button.primary{ padding:12px 18px; }
+  }
+    box-shadow:7px 7px 0 var(--ink); padding:22px; max-width:400px; width:calc(100% - 40px);
+  }
+  dialog.modal::backdrop{ background:rgba(0,0,0,0.45); }
+  .modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:12px; }
+  .modal-head h2{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; margin:0; }
+  .stat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px; }
+  .stat-cell{ text-align:center; }
+  .stat-cell .v{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; line-height:1.1; }
+  .stat-cell .k{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:3px; }
+  .dist-row{ display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; margin-bottom:5px; }
+  .dist-row .dl{ width:78px; color:var(--ink-soft); flex:none; }
+  .dist-row .db{ background:var(--ink); height:15px; min-width:3px; border-radius:2px; }
+  .dist-row .dn{ color:var(--ink-faint); }
+  .modal-empty{ font-size:13px; color:var(--ink-soft); line-height:1.55; }
+  .restore{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); }
+  .restore-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+  .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
+  .restore-label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin:10px 0 5px; }
+  .restore-code{ width:100%; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.45; padding:8px 9px; border:2px solid var(--ink); border-radius:3px; background:var(--paper-2); color:var(--ink); resize:vertical; word-break:break-all; margin:8px 0; }
+  .restore-status{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin:8px 0 0; min-height:16px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="topline">
+    <button id="topLeft" class="home-btn" title="Back to the home screen">GUESSTIMATE</button>
+    <span class="topline-end">
+      <span id="topRight">···</span>
+      <span class="controls">
+        <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
+      </span>
+    </span>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div class="panel" id="panel"></div>
+  <p class="note">Every number here is a real, verified career or season stat, cited on each reveal. The hollow dots are reference players with their values listed — you're estimating where the named player falls against them.</p>
+</div>
+
+<dialog class="modal" id="statsModal" aria-labelledby="statsTitle">
+  <div class="modal-head">
+    <h2 id="statsTitle">Your stats</h2>
+    <button class="icon-btn" id="statsClose" aria-label="Close stats">✕</button>
+  </div>
+  <div id="statsBody"></div>
+</dialog>
+
+<script>
+/* ============================= UNTRUSTED INPUT (challenge links) =============================
+   Anything arriving via a URL parameter is untrusted the moment it's going to touch
+   the DOM — see SECURITY_NOTES.md, which documents a real reflected-XSS bug from
+   exactly this pattern (a challenge link's `from` name interpolated unescaped). The
+   fix there was to sanitize once, at the point of parsing, rather than case-by-case
+   at each downstream usage site — that's what this block does, before anything else
+   in the app runs. escapeHtml is applied again at the actual render call below, as
+   belt-and-suspenders on top of the whitelist here. */
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+function sanitizeName(raw){
+  if(!raw) return '';
+  return raw.replace(/[^a-zA-Z0-9 '\-]/g, '').trim().slice(0, 30);
+}
+function clampScore(raw, max){
+  const n = parseInt(raw, 10);
+  if(!Number.isFinite(n)) return null;
+  return Math.max(0, Math.min(max, n));
+}
+// Fixed origin for the daily rotation so day numbering never shifts across
+// sessions. Declared up here rather than with the rotation code below because the
+// challenge-date sanitizer needs it, and this block deliberately runs first.
+const BAG_EPOCH = '2026-01-01';
+// A challenge link carries the date it was played on, so the recipient gets the
+// *same five questions* the sender did. Without it the banner claims "beat their
+// 350" while serving an entirely different puzzle. Bounded on both ends: nothing
+// before the epoch (no such puzzle) and nothing beyond tomorrow (no peeking at
+// future puzzles by hand-editing the parameter).
+function sanitizeDate(raw){
+  if(!raw || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
+  const t = Date.parse(raw + 'T00:00:00Z');
+  if(!Number.isFinite(t)) return null;
+  if(t < Date.parse(BAG_EPOCH + 'T00:00:00Z')) return null;
+  if(t > Date.now() + 86400000) return null;
+  return raw;
+}
+// Generous fixed cap rather than tying it to today's pool size — the sender's max
+// possible score (the day they played) may not match the recipient's (today), since
+// the pool keeps growing.
+const CHALLENGE_MAX_SCORE = 5000;
+const challengeParams = new URLSearchParams(location.search);
+// Mutable: leaveChallenge() clears this so a player who arrived on a friend's link
+// can get out of it and reach today's puzzle. See the note there.
+let CHALLENGE = challengeParams.get('challenge') === '1' ? {
+  active: true,
+  from: sanitizeName(challengeParams.get('from') || ''),
+  score: clampScore(challengeParams.get('score'), CHALLENGE_MAX_SCORE),
+  date: sanitizeDate(challengeParams.get('d')),
+} : { active: false };
+
+/* ============================= ANALYTICS =============================
+   Provider-agnostic, and a no-op unless a provider is actually installed — which
+   build_site.py does at deploy time via --analytics, so no key or vendor snippet is
+   ever hand-pasted into this file.
+
+   Without instrumentation, day one answers none of the questions that decide what to
+   build next: did anyone play, did they finish all five, where did they drop out, did
+   anyone share, did a shared link get opened. That's the whole reason this exists.
+
+   Nothing here sends personal data. The events carry a puzzle number, a score band
+   and a mode — no names, no free text, nothing a player typed. Keep it that way:
+   the site collects no PII today and that's a property worth not quietly losing. */
+function track(event, props){
+  try{
+    if(window.umami && window.umami.track){ window.umami.track(event, props || {}); return; }
+    if(window.plausible){ window.plausible(event, props ? { props } : undefined); return; }
+    if(window.posthog && window.posthog.capture){ window.posthog.capture(event, props || {}); return; }
+    if(window.gtag){ window.gtag('event', event, props || {}); return; }
+    // Nothing installed: park them so a console check can confirm the call sites
+    // fire before an account exists.
+    if(window.__gtEvents){ window.__gtEvents.push([event, props || {}]); }
+  }catch(e){ /* analytics must never break the game */ }
+}
+
+/* ============================= DATA LOADING =============================
+   The client no longer holds the question pool. It asks the Worker for one day's
+   questions and gets exactly that — see worker/src/index.js. The pool used to be
+   fetched whole as data/questions.json, which meant every future day's answers
+   were one dev-tools panel away.
+
+   Worth being precise about what this does and doesn't fix: the five questions
+   being played still arrive with their answers attached (targetX/targetY/fact),
+   because scoring and the reveal happen here. A determined player can still read
+   today's five answers out of the network tab. Hiding those too would mean posting
+   guesses to the server for scoring, which is a real backend with real abuse
+   surface — out of scope per ACTION_PLAN.md section 6, and not what the leak was
+   about. */
+// The questions API — one stateless Worker routed at /api/* on this same origin,
+// so the CSP can stay connect-src 'self'. It exists because a client holding the
+// whole pool leaks every future day's answers to anyone who opens dev tools, and
+// because "today" from the device clock is spoofable.
+const API_BASE = '/api';
+let TODAY = '';          // authoritative date, from the server — never Date.now()
+let SERVED_DATE = '';    // the date the server actually served, not what we asked for
+let ROUNDS = [];
+let DAILY_ROUNDS = [];
+let PUZZLE_NO = null;
+// 'daily' — today's puzzle, counts toward the streak.
+// 'challenge' — a friend's older puzzle, replayed for comparison; never counts.
+// (A third 'practice' mode was removed: with a 10-question pool and 5 a day, its
+// "draw from everything that isn't in today's set" rule selected precisely
+// tomorrow's five questions — a 5/5 overlap, the exact opposite of what its own
+// comment claimed it guaranteed. It can come back when the pool is large enough
+// for a practice draw to be meaningfully separate from the next day's bag.)
+let MODE = 'daily';
+
+/* Daily selection lives in worker/src/selection.js and runs server-side — there is
+   exactly one implementation and the client no longer has a vote. What remains here
+   is only what's needed to label a puzzle. */
+function daysSince(dateStr, epoch){
+  return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
+}
+function puzzleNumber(dateStr){
+  return Math.max(0, daysSince(dateStr, BAG_EPOCH)) + 1; // day one is #1
+}
+/* One round-trip for a day's questions. The only date the client may ask for is a
+   challenge link's, and the server refuses anything that isn't already in the past,
+   so this can't be walked forward to read tomorrow's puzzle. With no parameter the
+   server answers with its own today, which is the normal path. */
+async function fetchDaily(dateStr){
+  const q = dateStr ? `?d=${encodeURIComponent(dateStr)}` : '';
+  const res = await fetch(`${API_BASE}/daily${q}`);
+  if(!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  if(!Array.isArray(data.questions) || data.questions.length === 0){
+    throw new Error('no questions returned');
+  }
+  return data;
+}
+
+/* ============================= STATS & STREAK =============================
+   The streak used to be recorded against a UTC date (`new Date().toISOString()`)
+   while the puzzle itself is served against America/New_York. Those two clocks
+   disagree for four hours every day — 8pm to midnight ET, which is prime time for
+   a daily game. The measured consequence: play at 9pm ET Monday and the app files
+   it under Tuesday; play Tuesday morning and `lastPlayed === today` is already
+   true, so that round is silently discarded — no streak credit, no day counted, no
+   points, and no message explaining why. Everything below now runs on the same
+   Eastern calendar date the puzzle does. */
+const STATS_KEY = 'guesstimate_stats_v2';
+const LEGACY_STATS_KEY = 'guesstimate_stats_v1';
+const INTRO_KEY = 'guesstimate_seen_intro';
+const DEFAULT_STATS = { lastPlayed:null, currentStreak:0, bestStreak:0, daysPlayed:0, totalPoints:0, bestRound:0, tiers:{} };
+// Calendar-date arithmetic on the ET date string. Parsing the date-only string as
+// UTC and stepping a whole day is safe here precisely because there's no time
+// component — it's a calendar decrement, so DST transitions can't shift it.
+function prevDateString(dateStr){
+  return new Date(Date.parse(dateStr + 'T00:00:00Z') - 86400000).toISOString().slice(0,10);
+}
+// v1 records were written against the old scoring curve, so their point totals and
+// tier histogram aren't comparable to anything scored now — carrying them forward
+// would quietly corrupt the average. The streak is the part that would actually
+// hurt to lose, so that comes across and the score aggregates restart.
+function migrateLegacyStats(){
+  try{
+    const old = JSON.parse(localStorage.getItem(LEGACY_STATS_KEY));
+    if(!old) return null;
+    return Object.assign({}, DEFAULT_STATS, {
+      lastPlayed: old.lastPlayed || null,
+      currentStreak: old.currentStreak || 0,
+      bestStreak: old.bestStreak || 0,
+      tiers: {},
+    });
+  }catch(e){ return null; }
+}
+function loadStats(){
+  try{
+    const raw = localStorage.getItem(STATS_KEY);
+    if(raw){
+      const s = JSON.parse(raw) || {};
+      return Object.assign({}, DEFAULT_STATS, s, { tiers: Object.assign({}, s.tiers) });
+    }
+    const migrated = migrateLegacyStats();
+    if(migrated) return migrated;
+  }catch(e){}
+  return Object.assign({}, DEFAULT_STATS, { tiers:{} });
+}
+function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
+
+/* ---------- Restore codes ----------
+   Stats live in localStorage and nowhere else, so clearing a browser, switching
+   phones, or opening the game in a different browser loses a streak permanently with
+   no way back. For a game whose entire retention mechanic is the streak, that is the
+   one piece of player data that can't be rebuilt — and the complaint it generates
+   will arrive long before anyone wants a leaderboard.
+
+   A restore code is just the stats blob, base64'd with a version prefix and a short
+   checksum so a truncated or mistyped paste is rejected rather than silently
+   importing garbage. No accounts, no backend, no PII — it encodes a streak counter
+   and a date. Whatever is imported is still subject to the same one-completion-per-
+   day rule, so a code can't be used to fabricate a run of play. */
+const CODE_PREFIX = 'GT1';
+function checksum(str){
+  let h = 5381;
+  for(let i=0;i<str.length;i++){ h = ((h*33) ^ str.charCodeAt(i)) >>> 0; }
+  return h.toString(36).slice(0, 4).toUpperCase();
+}
+function b64encode(str){
+  return btoa(String.fromCharCode(...new TextEncoder().encode(str)))
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64decode(str){
+  const pad = str.replace(/-/g,'+').replace(/_/g,'/');
+  const bin = atob(pad + '==='.slice((pad.length + 3) % 4));
+  return new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
+}
+function makeRestoreCode(s){
+  const slim = {
+    lastPlayed: s.lastPlayed, currentStreak: s.currentStreak, bestStreak: s.bestStreak,
+    daysPlayed: s.daysPlayed, totalPoints: s.totalPoints, bestRound: s.bestRound,
+    tiers: s.tiers,
+  };
+  const body = b64encode(JSON.stringify(slim));
+  return `${CODE_PREFIX}-${checksum(body)}-${body}`;
+}
+// Returns a stats object, or throws with a message worth showing the player.
+function readRestoreCode(raw){
+  const code = (raw || '').trim().replace(/\s+/g, '');
+  const parts = code.split('-');
+  if(parts.length < 3 || parts[0] !== CODE_PREFIX) throw new Error("That doesn't look like a Guesstimate code.");
+  const [, sum, ...rest] = parts;
+  const body = rest.join('-');
+  if(checksum(body) !== sum) throw new Error('That code looks incomplete — copy the whole thing and try again.');
+  let parsed;
+  try{ parsed = JSON.parse(b64decode(body)); }
+  catch(e){ throw new Error("That code couldn't be read."); }
+  if(!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error("That code couldn't be read.");
+  const n = v => Number.isFinite(+v) && +v >= 0 ? Math.floor(+v) : 0;
+  const merged = Object.assign({}, DEFAULT_STATS, {
+    lastPlayed: /^\d{4}-\d{2}-\d{2}$/.test(parsed.lastPlayed) ? parsed.lastPlayed : null,
+    currentStreak: n(parsed.currentStreak), bestStreak: n(parsed.bestStreak),
+    daysPlayed: n(parsed.daysPlayed), totalPoints: n(parsed.totalPoints),
+    bestRound: n(parsed.bestRound),
+    tiers: {},
+  });
+  // Only tier names this build knows about, so an older or hand-edited code can't
+  // inject arbitrary keys into the breakdown.
+  if(parsed.tiers && typeof parsed.tiers === 'object'){
+    TIER_ORDER.forEach(k => { if(parsed.tiers[k]) merged.tiers[k] = n(parsed.tiers[k]); });
+  }
+  merged.bestStreak = Math.max(merged.bestStreak, merged.currentStreak);
+  return merged;
+}
+// The stored streak is only ever recomputed when a round is completed, so a lapsed
+// player used to be shown a streak they no longer had — set lastPlayed seven months
+// back and the start screen still cheerfully read "🔥 7-day streak", right up until
+// it snapped to 1 the moment they finished. Read it through here instead: a streak
+// is live only if the last completed day was today or yesterday.
+function liveStreak(s, today){
+  if(!s.lastPlayed) return 0;
+  if(s.lastPlayed === today || s.lastPlayed === prevDateString(today)) return s.currentStreak || 0;
+  return 0;
+}
+// Only ever counts once per Eastern calendar day, so replaying today's questions
+// with the answers already known can't inflate the aggregates or the streak.
+function registerCompletion(scores, dateStr){
+  const s = loadStats();
+  // No authoritative date means the server never answered; recording against a
+  // device clock is exactly what the Worker exists to prevent, so record nothing.
+  const today = dateStr || TODAY;
+  if(!today) return s;
+  if(s.lastPlayed === today) return s;
+  s.currentStreak = (s.lastPlayed === prevDateString(today)) ? (s.currentStreak||0)+1 : 1;
+  s.bestStreak = Math.max(s.bestStreak||0, s.currentStreak);
+  s.lastPlayed = today;
+  s.daysPlayed = (s.daysPlayed||0) + 1;
+  const total = scores.reduce((a,b)=>a+b,0);
+  s.totalPoints = (s.totalPoints||0) + total;
+  s.bestRound = Math.max(s.bestRound||0, total);
+  scores.forEach(p=>{ const k = scoreTier(p).label; s.tiers[k] = (s.tiers[k]||0) + 1; });
+  saveStats(s); return s;
+}
+
+/* ============================= SCORING =============================
+   Distance is computed in normalized chart-space (0-1 on each axis, based on the
+   plotted range) rather than raw stat units, so two stats on different scales
+   contribute fairly to one error number.
+
+   The curve replaces the old `0.5^(err%/25)` half-life model, which had three
+   measured problems: it bottomed out at 2 points rather than 0 (so a uniformly
+   random click averaged 188/500 and the "/500" denominator implied a floor that
+   didn't exist), a 100-point "Perfect" needed a sub-pixel hit on most questions,
+   and the single "Off" band swallowed ~80% of all outcomes — which is why a normal
+   round shared as a wall of red.
+
+   points = 100 * exp(-(d / 0.30) ^ 1.6)
+
+   SHAPE below 2 sharpens the peak, so the top band stays genuinely rare instead of
+   being a flat plateau every decent guess lands on; SIGMA sets how fast it falls
+   away. Calibrated by simulation against the real target positions in
+   questions.json — see USER_EXPERIENCE_REVIEW.md §2. Resulting means, per 500:
+   random click 113, always-click-the-middle 165, casual 273, good 389, expert 457.
+   Chance is now visibly bad and a full 500 is effectively unreachable. */
+const SCORE_SIGMA = 0.30;
+const SCORE_SHAPE = 1.6;
+function scoreGuess2D(gx, gy, tx, ty, xRange, yRange){
+  const ndx = (gx - tx) / xRange;
+  const ndy = (gy - ty) / yRange;
+  const dist = Math.sqrt(ndx*ndx + ndy*ndy);
+  return { points: Math.round(100 * Math.exp(-Math.pow(dist / SCORE_SIGMA, SCORE_SHAPE))), dist };
+}
+// Inverse of the curve: the normalized distance at which a guess scores exactly
+// `points`. Used to draw the heat bands around the answer, so the rings on the
+// chart are the scoring model rather than a decorative approximation of it.
+function distForScore(points){
+  return SCORE_SIGMA * Math.pow(-Math.log(points/100), 1/SCORE_SHAPE);
+}
+// Six bands instead of five. The old set had two that could never fire: "Way off"
+// required 0 points when the minimum achievable score was 2, and "Perfect" required
+// an exact pixel hit. Every band below is reachable on every question, and the
+// emoji form a heat ramp so the share strip carries as much information as the
+// tiers do — the previous strip used one green for two different tiers.
+/* Band edges, calibrated by simulation against the real question pool rather than
+   picked as round numbers. Two ends needed moving from the first cut (95/80/60/40/15):
+
+   Bullseye at >=95 was a 23px radius, which an expert hit on 40% of questions — it
+   was measuring mouse precision more than knowledge, and a top band that fires two
+   times in five isn't a top band. At >=97 it's ~16px and fires 25% of the time for an
+   expert, 3% for a good-but-not-expert player.
+
+   Miss at <15 was catching 7% of a genuinely-trying casual player's guesses, and a
+   black square reads as a failure state. At <10 it essentially only fires for someone
+   who isn't engaging with the chart (10% of centre-clicks, 59% of random ones), which
+   is what it should mean.
+
+   Only the edges moved; the curve is untouched, so the scores themselves keep the
+   property that matters — a player who isn't trying still lands near 120/500, so the
+   /500 denominator isn't flattering anyone. */
+const TIERS = [
+  { min:97, emoji:'🎯', label:'Bullseye', color:'var(--t1)' },
+  { min:80, emoji:'🟩', label:'Great',    color:'var(--t2)' },
+  { min:60, emoji:'🟨', label:'Close',    color:'var(--t3)' },
+  { min:40, emoji:'🟧', label:'Off',      color:'var(--t4)' },
+  { min:10, emoji:'🟥', label:'Way off',  color:'var(--t5)' },
+  { min:0,  emoji:'⬛', label:'Miss',     color:'var(--t6)' },
+];
+const TIER_ORDER = TIERS.map(t => t.label);
+function scoreTier(points){
+  return TIERS.find(t => points >= t.min) || TIERS[TIERS.length-1];
+}
+
+/* ============================= RENDER ============================= */
+const panel = document.getElementById('panel');
+const appEl = document.getElementById('app');
+const topLeft = document.getElementById('topLeft');
+const topRight = document.getElementById('topRight');
+const progressEl = document.getElementById('progress');
+const SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs={}){ const n=document.createElementNS(SVGNS, tag); for(const k in attrs) n.setAttribute(k, attrs[k]); return n; }
+function prefersReducedMotion(){
+  return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+// Chart labels show the full name rather than abbreviating to a last name — a
+// last-name-only label is ambiguous the moment two reference players in the same
+// question share a surname (this pool already has both Michael Jordan and DeAndre
+// Jordan), and that only gets more likely as the player pool grows toward 500.
+// Still strip a trailing season year from target players written like "Jonathan
+// Taylor, 2021" — that's identifying a season, not a person, and the prompt text
+// above the chart already states it.
+function shortLabel(name){
+  // Handles both season formats the content uses: "Jonathan Taylor, 2021" (NFL/MLB
+  // single seasons) and "Baron Davis, 2003-04" (NBA, which spans two calendar
+  // years). The prompt above the chart already states the season, so the dot only
+  // needs the person.
+  return name.replace(/,?\s*\d{4}(-\d{2})?$/, '') || name;
+}
+
+// Guess-snapping precision. A fixed "round to nearest 0.1" (the old behavior)
+// is wrong the moment a stat's whole meaningful range is itself close to 0.1 —
+// batting average (.236-.342) is the case that broke it: nearly the entire
+// chart collapsed onto two clickable values. Each question can declare xStep/
+// yStep explicitly (e.g. 1 for a stat that's only ever a whole number, like an
+// All-Star count or a home run total; 0.001 for batting average); anything that
+// doesn't is assumed to be a normal one-decimal per-game rate stat.
+const DEFAULT_STEP = 0.1;
+function stepDecimals(step){
+  if(step >= 1) return 0;
+  return Math.max(0, -Math.floor(Math.log10(step)));
+}
+function roundToStep(v, step){
+  return Number((Math.round(v/step)*step).toFixed(stepDecimals(step)));
+}
+function fmtVal(v, step){
+  const d = stepDecimals(step);
+  const s = v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+  // Baseball rate stats are written without the leading zero — ".366", never
+  // "0.366" — and getting that wrong is the kind of detail a baseball audience
+  // reads as the game not knowing the sport. Only applies to three-decimal stats
+  // bounded by 1, which is batting average and its relatives; the percentages in
+  // this project are stored 0-100 and are unaffected.
+  if(d >= 3 && Math.abs(v) < 1) return s.replace(/^(-?)0\./, '$1.');
+  return s;
+}
+
+/* ---------- Axis domain ----------
+   This used to be `min(allPoints)*0.7 .. max(allPoints)*1.15`, where allPoints
+   INCLUDED the hidden answer. Whenever the target was an axis extreme — which the
+   "sneaky stud" content premise makes the common case, not the rare one — the
+   printed tick labels were a direct function of the answer: leftmost label ÷ 0.7
+   recovered targetX exactly. 8 of the first 10 questions leaked at least one axis
+   that way, and the visual tell (a conspicuous empty band on the side the answer
+   is hiding in) needed no arithmetic at all.
+
+   Now the domain never depends on the target. Questions declare xDomain/yDomain
+   explicitly — round human numbers, which also give far nicer tick labels — and
+   anything that doesn't gets a fallback derived from the REFERENCE players only,
+   snapped outward to a round step. The fallback still has to contain the target,
+   so it widens in whole steps if the target sits outside the reference spread;
+   quantizing that expansion means it reveals "within one step of the edge" rather
+   than the exact value. Explicit domains are the recommended path. */
+function niceStep(span){
+  const raw = span/4;
+  const mag = Math.pow(10, Math.floor(Math.log10(Math.abs(raw) || 1)));
+  const n = raw/mag;
+  const nice = n<=1 ? 1 : n<=2 ? 2 : n<=2.5 ? 2.5 : n<=5 ? 5 : 10;
+  return nice*mag;
+}
+function tidy(v){ return Number(v.toPrecision(12)); }
+function autoDomain(refVals, target){
+  const lo0 = Math.min(...refVals), hi0 = Math.max(...refVals);
+  const spread = (hi0 - lo0) || Math.abs(hi0) || 1;
+  const step = niceStep(spread*1.7);
+  let lo = Math.floor((lo0 - spread*0.35)/step)*step;
+  let hi = Math.ceil((hi0 + spread*0.35)/step)*step;
+  let guard = 0;
+  while(target < lo && guard++ < 500) lo -= step;
+  while(target > hi && guard++ < 500) hi += step;
+  return [tidy(lo), tidy(hi)];
+}
+function resolveDomain(explicit, refVals, target){
+  if(Array.isArray(explicit) && explicit.length === 2 && explicit[0] < explicit[1]){
+    let [lo, hi] = explicit;
+    // A hand-authored domain that doesn't actually contain the answer would draw
+    // the target off-chart; widen rather than fail silently.
+    if(target < lo || target > hi){
+      const pad = (hi-lo)*0.1;
+      lo = Math.min(lo, target-pad); hi = Math.max(hi, target+pad);
+    }
+    return [lo, hi];
+  }
+  return autoDomain(refVals, target);
+}
+// Tick decimals come from the tick values themselves, not from the guess step —
+// a domain of [0, 48] with a 0.1 guess step should print "12", not "12.0".
+function tickDecimals(vals){
+  for(let d=0; d<=3; d++){
+    if(vals.every(v => Math.abs(v - Number(v.toFixed(d))) < 1e-9)) return d;
+  }
+  return 3;
+}
+function fmtTick(v, d){
+  return v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+}
+
+/* ---------- Chart label placement ----------
+   Replaces `const above = i%2===0`, which alternated labels above/below by array
+   index and knew nothing about where anything actually was. Labels now get a
+   ranked list of candidate positions and take the first one that collides with
+   nothing already placed and stays inside the chart. */
+function textBox(text, fontSize, ax, ay, anchor){
+  // Approximate metrics. getBBox() would be exact but only works once the node is
+  // in the document, and measuring-then-replacing means two layout passes and
+  // visible jitter on the reveal. The chart labels are monospace, so a fixed
+  // advance ratio is close enough to make the right decision.
+  const w = text.length * fontSize * 0.58;
+  const x0 = anchor === 'middle' ? ax - w/2 : anchor === 'end' ? ax - w : ax;
+  return { x0, x1: x0+w, y0: ay - fontSize*0.82, y1: ay + fontSize*0.26 };
+}
+function boxesOverlap(a, b, pad=2){
+  return !(a.x1+pad < b.x0 || b.x1+pad < a.x0 || a.y1+pad < b.y0 || b.y1+pad < a.y0);
+}
+function makeLabelPlacer(bounds){
+  const occupied = [];
+  const CANDIDATES = [
+    [0,-12,'middle'], [0,20,'middle'],
+    [11,4,'start'], [-11,4,'end'],
+    [0,-24,'middle'], [0,32,'middle'],
+    [11,-9,'start'], [-11,-9,'end'],
+    [11,17,'start'], [-11,17,'end'],
+  ];
+  return {
+    reserve(box){ occupied.push(box); },
+    reserveDot(cx, cy, r){ occupied.push({ x0:cx-r, x1:cx+r, y0:cy-r, y1:cy+r }); },
+    place(text, cx, cy, fontSize){
+      let fallback = null;
+      for(const [dx, dy, anchor] of CANDIDATES){
+        const ax = cx+dx, ay = cy+dy;
+        const box = textBox(text, fontSize, ax, ay, anchor);
+        if(box.x0 < bounds.x0 || box.x1 > bounds.x1 || box.y0 < bounds.y0 || box.y1 > bounds.y1) continue;
+        if(!fallback) fallback = { ax, ay, anchor, box };
+        if(occupied.some(o => boxesOverlap(box, o))) continue;
+        occupied.push(box);
+        return { x:ax, y:ay, anchor };
+      }
+      // Nothing clean fits: take the best in-bounds option anyway rather than
+      // drawing a label off the edge of the chart.
+      if(fallback){ occupied.push(fallback.box); return { x:fallback.ax, y:fallback.ay, anchor:fallback.anchor }; }
+      const ax = Math.min(Math.max(cx, bounds.x0+24), bounds.x1-24);
+      const ay = Math.min(Math.max(cy-12, bounds.y0+10), bounds.y1-4);
+      return { x:ax, y:ay, anchor:'middle' };
+    }
+  };
+}
+
+let idx = 0;
+let roundScores = [];
+// Per-round detail, kept so the results screen can recap what was actually learned.
+// The `fact` is the only thing in this genre that teaches you anything and it used
+// to be discarded the instant you pressed Next.
+let roundDetails = [];
+
+function renderProgress(){
+  progressEl.innerHTML = '';
+  ROUNDS.forEach((_,i)=>{
+    const seg = document.createElement('div');
+    seg.className = 'seg' + (i<idx?' done':'') + (i===idx?' active':'');
+    progressEl.appendChild(seg);
+  });
+}
+function setTopline(right){
+  topLeft.textContent = MODE === 'challenge'
+    ? `GUESSTIMATE #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
+    : `GUESSTIMATE #${PUZZLE_NO}`;
+  topRight.textContent = right;
+}
+
+/* A run is part-finished when some rounds are scored but not all. Tracked so the
+   home button can't quietly throw away four completed rounds on a mis-tap —
+   without this, "back to home" and "start over" would be the same action. */
+function runInProgress(){
+  return roundScores.length > 0 && roundScores.length < ROUNDS.length;
+}
+function goHome(){ startScreen(); }
+
+function startScreen(){
+  appEl.removeAttribute('data-league');
+  setTopline(`${ROUNDS.length} QUESTIONS`);
+  progressEl.innerHTML = '';
+  const stats = loadStats();
+  const streak = liveStreak(stats, TODAY);
+  const streakHTML = streak>0 ? `<div class="streak-line">🔥 <b>${streak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  let challengeHTML = '';
+  if(CHALLENGE.active){
+    const who = escapeHtml(CHALLENGE.from || 'A friend');
+    challengeHTML = MODE === 'challenge'
+      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
+      : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
+  }
+  // Offered before the player commits to five rounds of someone else's day, not
+  // only after. Arriving on a challenge link is how most people will ever reach
+  // this game, and today's puzzle is the thing that actually starts a streak.
+  const escapeHTML = MODE === 'challenge'
+    ? `<button class="ghost" id="todayBtn">Play today's instead</button>` : '';
+  // Going home mid-run must not discard scored rounds, and replaying a finished
+  // puzzle shouldn't be dressed up as a fresh start.
+  const resuming = runInProgress();
+  const playedToday = MODE === 'daily' && !resuming && stats.lastPlayed === TODAY;
+  const startLabel = resuming
+    ? `Resume — question ${roundScores.length + 1} of ${ROUNDS.length} →`
+    : playedToday
+      ? `Replay today's questions →`
+      : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+  const replayNote = playedToday
+    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
+    : '';
+  panel.innerHTML = `
+    <h1 class="title">Guesstimate</h1>
+    <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
+    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
+    ${challengeHTML}
+    ${streakHTML}
+    <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">${startLabel}</button></div>
+    ${replayNote}
+  `;
+  document.getElementById('startBtn').addEventListener('click', ()=>{
+    if(resuming){ idx = roundScores.length; showQuestion(); return; }
+    track('round_start', { mode: MODE, puzzle: MODE==='challenge' ? puzzleNumber(SERVED_DATE) : PUZZLE_NO });
+    idx=0; roundScores=[]; roundDetails=[]; showQuestion();
+  });
+  const tb = document.getElementById('todayBtn');
+  if(tb) tb.addEventListener('click', leaveChallenge);
+}
+
+/* Leaving a challenge had no working exit. `init()` sets DAILY_ROUNDS to the
+   challenge day when one is active, and the old backToToday() just reassigned
+   ROUNDS = DAILY_ROUNDS and recomputed MODE from the still-present CHALLENGE
+   object — so "Back to today" re-served the challenge puzzle, kept the
+   "#217 · CHALLENGE" topline and kept the banner up. There was no route to today's
+   puzzle at all short of hand-editing the query string, which meant every player
+   arriving through the game's only growth channel was pinned to a stale day and
+   could never start a streak.
+
+   Clearing the URL as well as the in-memory state matters: without it a refresh,
+   a bookmark, or a share from this session would drop them straight back in. */
+async function leaveChallenge(){
+  CHALLENGE = { active:false, from:'', score:null, date:null };
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
+  // Today's questions come from the server like every other day's — the client
+  // can't compute them any more, which is the point.
+  let data;
+  try{ data = await fetchDaily(null); }
+  catch(err){
+    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
+    return;
+  }
+  MODE = 'daily';
+  TODAY = data.today; SERVED_DATE = data.date; PUZZLE_NO = data.puzzleNumber;
+  DAILY_ROUNDS = data.questions;
+  ROUNDS = DAILY_ROUNDS;
+  idx = 0; roundScores = []; roundDetails = [];
+  startScreen();
+}
+
+function showQuestion(){
+  const r = ROUNDS[idx];
+  appEl.setAttribute('data-league', r.league);
+  setTopline(`${idx+1} / ${ROUNDS.length}`);
+  renderProgress();
+
+  const xStep = r.xStep || DEFAULT_STEP, yStep = r.yStep || DEFAULT_STEP;
+  const [xMin, xMax] = resolveDomain(r.xDomain, r.referencePlayers.map(p=>p.x), r.targetX);
+  const [yMin, yMax] = resolveDomain(r.yDomain, r.referencePlayers.map(p=>p.y), r.targetY);
+  const W = 560, H = 420, padL = 54, padR = 20, padT = 20, padB = 44;
+  const plotW = W-padL-padR, plotH = H-padT-padB;
+  const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
+  const yPix = (v)=> padT + plotH - ((v-yMin)/(yMax-yMin))*plotH;
+  const xVal = (px)=> xMin + ((px-padL)/plotW)*(xMax-xMin);
+  const yVal = (py)=> yMin + ((padT+plotH-py)/plotH)*(yMax-yMin);
+  const xTicks = [0,1,2,3,4].map(i=> xMin + (i/4)*(xMax-xMin));
+  const yTicks = [0,1,2,3,4].map(i=> yMin + (i/4)*(yMax-yMin));
+  const xTickD = tickDecimals(xTicks), yTickD = tickDecimals(yTicks);
+
+  const legendHTML = r.referencePlayers.map(p =>
+    `<span><i></i><b>${escapeHtml(shortLabel(p.name))}</b> — ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
+  ).join('');
+
+  panel.innerHTML = `
+    <div class="league-tag">${escapeHtml(r.league)}</div>
+    <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br>— <span class="player">${escapeHtml(r.targetPlayer)}</span></div>
+    <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once — or tab in and use the arrow keys</div>
+    <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
+    <div class="legend">${legendHTML}</div>
+    <div id="revealArea" aria-live="polite"></div>
+    <div class="actionbar">
+      <div class="readout" id="readout" aria-live="polite">Tap the chart to place your guess</div>
+      <button class="primary" id="submitBtn" disabled>Submit guess</button>
+    </div>
+  `;
+
+  const svg = document.getElementById('chartSvg');
+  const readout = document.getElementById('readout');
+  const submitBtn = document.getElementById('submitBtn');
+  let guess = null;
+  let answered = false;
+  let guessEl = null;
+  let guideXEl = null, guideYEl = null;
+  let placer = null;
+  let coachActive = false;
+  try{ coachActive = !localStorage.getItem(INTRO_KEY); }catch(e){ coachActive = false; }
+
+  // Everyone who ever arrives here comes cold from a link in a group chat, looks
+  // at an empty chart, and has to infer the interaction. One pulsing ring and a
+  // line of text, dismissed forever on first contact.
+  function dismissCoach(){
+    if(!coachActive) return;
+    coachActive = false;
+    try{ localStorage.setItem(INTRO_KEY, '1'); }catch(e){}
+    const g = svg.querySelector('.coach');
+    if(g) g.remove();
+  }
+
+  // Takes a position already in data space (stat units, not pixels) and applies
+  // it as the current guess: updates the readout live, and updates (or creates)
+  // the guess marker plus its dashed guide lines to both axes, so the player can
+  // calibrate precisely against the gridlines and reference dots while dragging
+  // or nudging with arrow keys — not just see the result after letting go.
+  // Mutates existing elements in place rather than tearing down and rebuilding
+  // the whole chart on every move, which would be janky at drag speed.
+  function applyGuess(gx, gy){
+    dismissCoach();
+    gx = Math.max(xMin, Math.min(xMax, gx));
+    gy = Math.max(yMin, Math.min(yMax, gy));
+    guess = { x: roundToStep(gx, xStep), y: roundToStep(gy, yStep) };
+    readout.innerHTML = `Your guess: <b>${fmtVal(guess.x, xStep)} ${escapeHtml(r.xUnit)}</b>, <b>${fmtVal(guess.y, yStep)} ${escapeHtml(r.yUnit)}</b>`;
+    submitBtn.disabled = false;
+    const gxPix = xPix(guess.x), gyPix = yPix(guess.y);
+
+    if(!guideXEl){
+      guideXEl = el('line',{stroke:'var(--guess)','stroke-width':1.5,'stroke-dasharray':'4 4','stroke-opacity':0.55, style:'pointer-events:none;'});
+      svg.appendChild(guideXEl);
+    }
+    guideXEl.setAttribute('x1', gxPix); guideXEl.setAttribute('x2', gxPix);
+    guideXEl.setAttribute('y1', gyPix); guideXEl.setAttribute('y2', padT+plotH);
+
+    if(!guideYEl){
+      guideYEl = el('line',{stroke:'var(--guess)','stroke-width':1.5,'stroke-dasharray':'4 4','stroke-opacity':0.55, style:'pointer-events:none;'});
+      svg.appendChild(guideYEl);
+    }
+    guideYEl.setAttribute('x1', padL); guideYEl.setAttribute('x2', gxPix);
+    guideYEl.setAttribute('y1', gyPix); guideYEl.setAttribute('y2', gyPix);
+
+    if(guessEl){
+      guessEl.setAttribute('cx', gxPix);
+      guessEl.setAttribute('cy', gyPix);
+    } else {
+      guessEl = el('circle',{cx:gxPix,cy:gyPix,r:9, fill:'var(--guess)', stroke:'var(--ink)','stroke-width':2.5, style:'pointer-events:none;'});
+      svg.appendChild(guessEl);
+    }
+  }
+
+  // Pointer coordinates (client pixels) -> data space, then hands off to applyGuess.
+  function placeGuess(clientX, clientY){
+    const rect = svg.getBoundingClientRect();
+    const scaleX = W/rect.width, scaleY = H/rect.height;
+    const px = (clientX - rect.left)*scaleX, py = (clientY - rect.top)*scaleY;
+    applyGuess(xVal(px), yVal(py));
+  }
+
+  function draw(){
+    svg.innerHTML = '';
+    // svg just got wiped, so any prior element references are stale
+    guessEl = null; guideXEl = null; guideYEl = null;
+    placer = makeLabelPlacer({ x0:4, x1:W-4, y0:padT+2, y1:padT+plotH+2 });
+
+    svg.appendChild(el('line',{x1:padL,y1:padT,x2:padL,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
+    svg.appendChild(el('line',{x1:padL,y1:padT+plotH,x2:padL+plotW,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
+    xTicks.forEach(xv=>{
+      const px = xPix(xv);
+      svg.appendChild(el('line',{x1:px,y1:padT,x2:px,y2:padT+plotH, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
+      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'});
+      t.textContent = fmtTick(xv, xTickD); svg.appendChild(t);
+    });
+    yTicks.forEach(yv=>{
+      const py = yPix(yv);
+      svg.appendChild(el('line',{x1:padL,y1:py,x2:padL+plotW,y2:py, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
+      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'});
+      t.textContent = fmtTick(yv, yTickD); svg.appendChild(t);
+    });
+    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;'});
+    xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
+    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;', transform:`rotate(-90 14 ${padT+plotH/2})`});
+    yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
+
+    // The hit rect already spans the full plot area (hundreds of CSS px on any
+    // real screen), so the draggable target is far larger than the 44x44px
+    // minimum touch target regardless of the drawn marker's small visual radius
+    // — a touch can start a drag anywhere in the chart, not just precisely on
+    // the existing pin.
+    const hit = el('rect',{x:padL,y:padT,width:plotW,height:plotH, fill:'transparent', tabindex:'0', role:'application'});
+    hit.setAttribute('aria-label', `${r.xLabel} versus ${r.yLabel} chart for ${r.targetPlayer}. Click or drag to place a guess. When focused, use the arrow keys to move it and Enter to submit.`);
+    let dragging = false;
+    hit.addEventListener('pointerdown', (e)=>{
+      if(answered) return;
+      dragging = true;
+      try{ hit.setPointerCapture(e.pointerId); }catch(err){}
+      placeGuess(e.clientX, e.clientY);
+    });
+    hit.addEventListener('pointermove', (e)=>{
+      if(!dragging || answered) return;
+      placeGuess(e.clientX, e.clientY);
+    });
+    hit.addEventListener('pointerup', (e)=>{
+      if(dragging && navigator.vibrate) navigator.vibrate(12);
+      dragging = false;
+      try{ hit.releasePointerCapture(e.pointerId); }catch(err){}
+    });
+    hit.addEventListener('pointercancel', ()=>{ dragging = false; });
+    // Keyboard path: tab to focus the chart, arrow keys nudge the guess one
+    // step per press on each axis, Enter submits. Mirrors the pointer/drag
+    // interaction rather than being a bolted-on separate mode.
+    hit.addEventListener('keydown', (e)=>{
+      if(answered) return;
+      const dir = { ArrowLeft:[-1,0], ArrowRight:[1,0], ArrowUp:[0,1], ArrowDown:[0,-1] }[e.key];
+      if(dir){
+        e.preventDefault();
+        const baseX = guess ? guess.x : (xMin+xMax)/2;
+        const baseY = guess ? guess.y : (yMin+yMax)/2;
+        // One guess-step per press is unusable on a coarse-domain question: on a
+        // 10,000-26,000 receiving-yards axis with a 1-yard step it takes 16,000
+        // presses to cross the chart, and the instruction text advertises the
+        // keyboard on every round. Scale the nudge to the axis instead — about a
+        // hundred presses edge to edge — and never below one snap step, since a
+        // smaller move wouldn't change the guess at all. Shift jumps a tenth of
+        // the axis for getting across quickly.
+        const coarse = e.shiftKey ? 10 : 1;
+        const nudge = (step, range) => Math.max(step, range/100) * coarse;
+        applyGuess(baseX + dir[0]*nudge(xStep, xMax-xMin),
+                   baseY + dir[1]*nudge(yStep, yMax-yMin));
+      } else if(e.key === 'Enter' && guess){
+        e.preventDefault();
+        submitBtn.click();
+      }
+    });
+    svg.appendChild(hit);
+
+    // Reserve every dot before placing any label, so labels dodge dots they
+    // aren't attached to as well as each other.
+    r.referencePlayers.forEach(p=>{ placer.reserveDot(xPix(p.x), yPix(p.y), 9); });
+
+    /* The coach ring used to be pinned to the exact centre of the plot and drawn
+       AFTER the labels, so it never competed for space and landed straight on top
+       of any label near the middle — on the one screen a new player ever sees
+       first. It doesn't need to be the centre; it only needs to say "somewhere in
+       here is clickable". So pick whichever candidate sits furthest from every
+       reference dot, with a bonus that still prefers the centre when it's free,
+       and reserve it before the labels are placed. Radius 21 covers the ring at
+       the top of its pulse. */
+    const coachC = (function(){
+      if(!coachActive) return null;
+      const cx0 = padL+plotW/2, cy0 = padT+plotH/2;
+      const dots = r.referencePlayers.map(p=>({ x:xPix(p.x), y:yPix(p.y) }));
+      const cands = [
+        { x:cx0, y:cy0, bonus:26 },
+        { x:padL+plotW*0.28, y:padT+plotH*0.30, bonus:0 },
+        { x:padL+plotW*0.72, y:padT+plotH*0.30, bonus:0 },
+        { x:padL+plotW*0.28, y:padT+plotH*0.70, bonus:0 },
+        { x:padL+plotW*0.72, y:padT+plotH*0.70, bonus:0 },
+      ];
+      const clearance = c => Math.min(...dots.map(d=>Math.hypot(d.x-c.x, d.y-c.y))) + c.bonus;
+      return cands.reduce((best,c)=> clearance(c) > clearance(best) ? c : best, cands[0]);
+    })();
+    if(coachC) placer.reserveDot(coachC.x, coachC.y, 21);
+
+    r.referencePlayers.forEach(p=>{
+      const cx = xPix(p.x), cy = yPix(p.y);
+      svg.appendChild(el('circle',{cx,cy,r:7, fill:'var(--paper)', stroke:'var(--ink)','stroke-width':2, style:'pointer-events:none;'}));
+      const text = shortLabel(p.name);
+      const pos = placer.place(text, cx, cy, 10.5);
+      const t = el('text',{x:pos.x, y:pos.y, 'text-anchor':pos.anchor, 'font-size':10.5, 'font-weight':600, fill:'var(--ink)', class:'mono plabel', style:'pointer-events:none;'});
+      t.textContent = text;
+      svg.appendChild(t);
+    });
+
+    if(coachC){
+      const g = el('g',{class:'coach', style:'pointer-events:none;'});
+      const { x:ccx, y:ccy } = coachC;
+      g.appendChild(el('circle',{cx:ccx, cy:ccy, r:13, fill:'none', stroke:'var(--guess)','stroke-width':2.5, class:'coach-ring'}));
+      g.appendChild(el('circle',{cx:ccx, cy:ccy, r:3.5, fill:'var(--guess)'}));
+      /* The ring used to carry a "click or drag anywhere" caption. It's gone: at
+         ~147px wide there was nowhere for it to go in a crowded plot, and it was
+         redundant anyway — the readout directly below the chart already says
+         "Tap the chart to place your guess". The ring says where, the readout
+         says what. */
+      svg.appendChild(g);
+    }
+
+    if(guess){
+      const gx = xPix(guess.x), gy = yPix(guess.y);
+      guessEl = el('circle',{cx:gx,cy:gy,r:9, fill:'var(--guess)', stroke:'var(--ink)','stroke-width':2.5, style:'pointer-events:none;'});
+      svg.appendChild(guessEl);
+    }
+  }
+  draw();
+
+  // "You were 2.3 PPG high" reads as an outcome; "Actual: 16.6" makes you do the
+  // subtraction yourself. GeoGuessr's whole reveal is built on stating the miss.
+  function missText(g, t, unit, step){
+    const d = g - t;
+    if(Math.abs(d) < step/2) return `exact on ${unit}`;
+    return `${fmtVal(Math.abs(d), step)} ${unit} ${d>0 ? 'high' : 'low'}`;
+  }
+  function countUp(node, to){
+    if(prefersReducedMotion() || to === 0){ node.textContent = `+${to}`; return; }
+    const dur = 650, t0 = performance.now();
+    (function frame(now){
+      const p = Math.min(1, (now-t0)/dur);
+      node.textContent = `+${Math.round(to * (1 - Math.pow(1-p, 3)))}`;
+      if(p < 1) requestAnimationFrame(frame);
+    })(t0);
+  }
+
+  submitBtn.addEventListener('click', ()=>{
+    if(answered){
+      idx++;
+      if(idx>=ROUNDS.length) showResults(); else showQuestion();
+      return;
+    }
+    if(!guess) return;
+    answered = true;
+    dismissCoach();
+    const xRange = xMax-xMin, yRange = yMax-yMin;
+    const { points } = scoreGuess2D(guess.x, guess.y, r.targetX, r.targetY, xRange, yRange);
+    roundScores.push(points);
+    const t = scoreTier(points);
+    // Reveal "juice", ported from guesstimate-slider-legacy.html: a great guess
+    // pulses, a bad one shakes. Rebased onto the new bands (Great+ / Miss).
+    const tierAnimClass = points>=80 ? 'tier-perfect' : points<10 ? 'tier-bad' : '';
+
+    const tx = xPix(r.targetX), ty = yPix(r.targetY);
+
+    /* The heat map. One ellipse per score band, drawn outermost-first and inserted
+       at the front of the SVG so everything else stays on top of them. They're
+       ellipses rather than circles because the two axes have different pixel
+       scales, and the score is normalized per-axis — a circle would misrepresent
+       what the model actually charges for a miss. This is also the only place the
+       scoring is ever explained: the player can see how much room "Great" had. */
+    // Clipped to the plot rect: the widest band has a 218px radius on a 486px plot,
+    // so without this it washes over the tick labels and past the edge of the SVG.
+    const clipId = `plotclip-${idx}`;
+    const clip = el('clipPath',{id:clipId});
+    clip.appendChild(el('rect',{x:padL, y:padT, width:plotW, height:plotH}));
+    const defs = el('defs');
+    defs.appendChild(clip);
+    const heat = el('g',{class:'heat', 'clip-path':`url(#${clipId})`, style:'pointer-events:none;'});
+    [...TIERS].reverse().forEach(tier=>{
+      if(tier.min <= 0) return;
+      const d = distForScore(tier.min);
+      heat.appendChild(el('ellipse',{
+        cx:tx, cy:ty, rx:Math.abs(d*plotW), ry:Math.abs(d*plotH),
+        fill:tier.color, 'fill-opacity':0.13, stroke:tier.color,
+        'stroke-opacity':0.3, 'stroke-width':1,
+      }));
+    });
+    svg.insertBefore(heat, svg.firstChild);
+    svg.insertBefore(defs, svg.firstChild);
+    const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
+    svg.appendChild(connector);
+    svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
+    // Same placer the reference labels used, so the answer label dodges them too.
+    const targetText = shortLabel(r.targetPlayer);
+    placer.reserveDot(tx, ty, 11);
+    const tpos = placer.place(targetText, tx, ty, 11);
+    const targetLbl = el('text',{x:tpos.x, y:tpos.y, 'text-anchor':tpos.anchor, 'font-size':11, 'font-weight':700, fill:'var(--good)', class:'mono target-marker plabel'});
+    targetLbl.textContent = targetText;
+    svg.appendChild(targetLbl);
+
+    // The emoji already carries the colour and is what shows up in the share strip,
+    // so no separate swatch — that rendered every band as two identical squares.
+    const keyHTML = TIERS.map(tier =>
+      `<span${tier.label===t.label?' style="color:var(--ink);font-weight:700;"':''}>${tier.emoji} ${tier.label}</span>`
+    ).join('');
+
+    const revealArea = document.getElementById('revealArea');
+    revealArea.innerHTML = `
+      <div class="reveal ${tierAnimClass}">
+        <div class="verdict-row ${tierAnimClass}">
+          <div class="pts" style="color:${t.color}">${t.emoji} ${t.label} <span class="pts-num" id="ptsNum">+0</span></div>
+          <div class="compare">
+            Actual: ${fmtVal(r.targetX, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(r.targetY, yStep)} ${escapeHtml(r.yUnit)}<br>
+            <span class="miss">You were ${escapeHtml(missText(guess.x, r.targetX, r.xUnit, xStep))} · ${escapeHtml(missText(guess.y, r.targetY, r.yUnit, yStep))}</span>
+          </div>
+        </div>
+        <div class="heat-key">${keyHTML}</div>
+        <div class="fact-block">
+          <div class="fact-label">Why it's interesting</div>
+          <p class="fact">${escapeHtml(r.fact)}</p>
+          <p class="fact-source">${escapeHtml(r.source)}</p>
+        </div>
+      </div>
+    `;
+    countUp(document.getElementById('ptsNum'), points);
+    track('question_submit', { question: r.id, league: r.league, tier: t.label, index: idx+1 });
+    roundDetails.push({
+      league: r.league, matchup: `${r.xLabel} vs. ${r.yLabel}`, player: r.targetPlayer,
+      points, tier: t,
+      guess: `${fmtVal(guess.x, xStep)} ${r.xUnit} · ${fmtVal(guess.y, yStep)} ${r.yUnit}`,
+      actual: `${fmtVal(r.targetX, xStep)} ${r.xUnit} · ${fmtVal(r.targetY, yStep)} ${r.yUnit}`,
+      fact: r.fact,
+    });
+    submitBtn.textContent = idx+1<ROUNDS.length ? 'Next question →' : 'See results →';
+    // On a phone the reveal used to render entirely below the fold — the player
+    // tapped Submit, the button relabelled, and the score, the miss and the fact
+    // were all off-screen with nothing indicating they existed.
+    try{
+      revealArea.scrollIntoView({ block:'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    }catch(e){ revealArea.scrollIntoView(false); }
+  });
+}
+
+function showResults(){
+  appEl.removeAttribute('data-league');
+  setTopline('RESULTS');
+  renderProgress();
+  const total = roundScores.reduce((a,b)=>a+b,0);
+  const max = ROUNDS.length*100;
+  // Challenge replays are explicitly outside the daily record. The daily completion
+  // is filed against the Eastern date the puzzle was served for, not a UTC one.
+  const stats = MODE === 'daily' ? registerCompletion(roundScores, TODAY) : loadStats();
+  const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
+  track('round_complete', { mode: MODE, score: total, band: `${Math.floor(total/50)*50}-${Math.floor(total/50)*50+49}`,
+                            streak: MODE==='daily' ? liveStreak(stats, TODAY) : 0 });
+  const headline = MODE === 'challenge'
+    ? `Guesstimate #${puzzleNumber(SERVED_DATE)}`
+    : `Guesstimate #${PUZZLE_NO}`;
+  const pills = roundScores.map(s=>{
+    const tier = scoreTier(s);
+    return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tier.emoji} +${s}</span>`;
+  }).join('');
+  // The recap. Collapsed by default so the score still lands first, but the facts
+  // are one tap away instead of gone.
+  const recapHTML = roundDetails.length ? `
+    <div class="recap">
+      <div class="recap-head">What you just learned</div>
+      ${roundDetails.map((d,i)=>`
+        <details class="recap-row">
+          <summary>
+            <span class="rc-emoji">${d.tier.emoji}</span>
+            <span class="rc-who">${escapeHtml(shortLabel(d.player))}</span>
+            <span class="rc-pts" style="color:${d.tier.color}">+${d.points}</span>
+          </summary>
+          <div class="rc-body">
+            <div class="rc-line">${escapeHtml(d.matchup)}</div>
+            <div class="rc-line">You said <b>${escapeHtml(d.guess)}</b> · actual <b>${escapeHtml(d.actual)}</b></div>
+            <p class="rc-fact">${escapeHtml(d.fact)}</p>
+          </div>
+        </details>`).join('')}
+    </div>` : '';
+  const streakHTML = MODE === 'daily'
+    ? `<div class="streak-line">🔥 <b>${liveStreak(stats, TODAY)}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
+    : `<div class="streak-line">Challenge round — doesn't affect your streak</div>`;
+
+  panel.innerHTML = `
+    <div style="text-align:center;">
+      <div class="topline" style="justify-content:center;">ROUND COMPLETE</div>
+      <div style="font-family:'Fraunces',serif;font-weight:900;font-size:52px;margin:10px 0;">${total}<span style="font-size:22px;color:var(--ink-faint);font-weight:600;">/${max}</span></div>
+      <div style="display:flex;justify-content:center;gap:8px;margin:16px 0;flex-wrap:wrap;">${pills}</div>
+      ${streakHTML}
+      <div class="share-card">
+        <div class="sc-head">${escapeHtml(headline)}</div>
+        <div class="sc-strip">${strip}</div>
+        <div class="sc-score">${total}/${max}</div>
+      </div>
+    </div>
+    ${recapHTML}
+    <div class="challenge-box">
+      <label for="challengeName">Your name (optional, shown to whoever you send this to)</label>
+      <input type="text" id="challengeName" maxlength="30" placeholder="e.g. Drew">
+      <div class="next-row">
+        ${MODE==='challenge' ? '<button class="ghost" id="backBtn">Play today\'s puzzle →</button>' : ''}
+        <button class="primary" id="shareBtn">Share your score</button>
+      </div>
+      <p class="instructions" id="shareStatus" style="margin-top:8px;"></p>
+    </div>
+  `;
+  // "Play again" is gone with practice mode: on a daily round it re-served the same
+  // five questions with every answer already revealed, which promised new content
+  // and delivered a replay.
+  const backBtn = document.getElementById('backBtn');
+  if(backBtn) backBtn.addEventListener('click', leaveChallenge);
+
+  document.getElementById('shareBtn').addEventListener('click', async ()=>{
+    const nameInput = document.getElementById('challengeName');
+    const name = sanitizeName(nameInput ? nameInput.value : '');
+    const url = new URL(location.href);
+    url.search = '';
+    url.searchParams.set('challenge', '1');
+    if(name) url.searchParams.set('from', name);
+    url.searchParams.set('score', String(total));
+    // Anchor the link to the puzzle that was actually played, so the recipient
+    // gets the same five questions rather than a different day's set.
+    url.searchParams.set('d', MODE === 'challenge' ? SERVED_DATE : TODAY);
+    const shareUrl = url.toString();
+    track('share_click', { mode: MODE, score: total, named: name ? 'yes' : 'no' });
+    const shareText = `${headline}\n${strip}  ${total}/${max}`;
+    const status = document.getElementById('shareStatus');
+
+    if(navigator.share){
+      try{
+        await navigator.share({ title: 'Guesstimate', text: shareText, url: shareUrl });
+        return;
+      }catch(err){
+        if(err && err.name === 'AbortError') return; // player closed the share sheet - not a failure
+        // any other failure (e.g. share unsupported for this content) falls through to the clipboard below
+      }
+    }
+    try{
+      await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+      status.textContent = 'Copied! Paste it in Messages, or anywhere.';
+    }catch(err){
+      status.textContent = shareUrl;
+    }
+  });
+}
+
+/* ============================= STATS MODAL ============================= */
+const statsModal = document.getElementById('statsModal');
+function renderStatsModal(){
+  const s = loadStats();
+  const body = document.getElementById('statsBody');
+  if(!s.daysPlayed){
+    // The empty state is exactly when someone arriving on a new phone needs the
+    // paste box, so the restore panel has to render here too — not only once
+    // there's a record to export.
+    body.innerHTML = `<p class="modal-empty">No rounds yet. Finish today's five questions and your stats will show up here — days played, average score, and how your guesses break down.</p>${restoreHTML()}`;
+    wireRestore();
+    return;
+  }
+  const avg = Math.round(s.totalPoints / s.daysPlayed);
+  const counts = TIERS.map(t => s.tiers[t.label] || 0);
+  const maxCount = Math.max(1, ...counts);
+  const rows = TIERS.map((t,i)=>{
+    const w = Math.round((counts[i]/maxCount)*100);
+    return `<div class="dist-row"><span class="dl">${t.emoji} ${t.label}</span><span class="db" style="width:${w}%;background:${t.color}"></span><span class="dn">${counts[i]}</span></div>`;
+  }).join('');
+  body.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="v">${s.daysPlayed}</div><div class="k">Days played</div></div>
+      <div class="stat-cell"><div class="v">${avg}</div><div class="k">Avg score</div></div>
+      <div class="stat-cell"><div class="v">${liveStreak(s, TODAY)}</div><div class="k">Streak</div></div>
+      <div class="stat-cell"><div class="v">${s.bestStreak}</div><div class="k">Best streak</div></div>
+    </div>
+    <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN — BEST ROUND ${s.bestRound}</div>
+    ${rows}
+    ${restoreHTML()}
+  `;
+  wireRestore();
+}
+
+// Shown whether or not there's a record yet — someone arriving on a new phone needs
+// the paste box before they have any stats to export.
+function restoreHTML(){
+  return `
+    <div class="restore">
+      <div class="restore-head">Move your streak to another device</div>
+      <p class="restore-note">Your streak is stored in this browser only. Clearing it, or
+        switching phones, loses it — this code is the way to carry it across.</p>
+      <div class="next-row" style="justify-content:flex-start;">
+        <button class="ghost" id="copyCodeBtn">Copy my code</button>
+        <button class="ghost" id="pasteCodeBtn">Paste a code</button>
+      </div>
+      <div id="restoreArea"></div>
+      <p class="restore-status" id="restoreStatus" aria-live="polite"></p>
+    </div>`;
+}
+
+function wireRestore(){
+  const area = document.getElementById('restoreArea');
+  const status = document.getElementById('restoreStatus');
+  const copyBtn = document.getElementById('copyCodeBtn');
+  const pasteBtn = document.getElementById('pasteCodeBtn');
+  if(!area) return;
+
+  copyBtn.addEventListener('click', async ()=>{
+    const s = loadStats();
+    if(!s.lastPlayed){ status.textContent = 'Nothing to save yet — play a round first.'; return; }
+    const code = makeRestoreCode(s);
+    track('restore_export', { streak: s.currentStreak });
+    area.innerHTML = `<textarea class="restore-code" id="myCode" readonly rows="3">${escapeHtml(code)}</textarea>`;
+    const ta = document.getElementById('myCode');
+    ta.focus(); ta.select();
+    try{
+      await navigator.clipboard.writeText(code);
+      status.textContent = 'Copied. Paste it into Guesstimate on your other device.';
+    }catch(e){
+      status.textContent = 'Copy this code and paste it on your other device.';
+    }
+  });
+
+  pasteBtn.addEventListener('click', ()=>{
+    area.innerHTML = `
+      <label class="restore-label" for="codeIn">Paste your code</label>
+      <textarea class="restore-code" id="codeIn" rows="3" placeholder="GT1-..."></textarea>
+      <div class="next-row" style="justify-content:flex-start;">
+        <button class="primary" id="applyCodeBtn">Restore</button>
+      </div>`;
+    document.getElementById('codeIn').focus();
+    document.getElementById('applyCodeBtn').addEventListener('click', ()=>{
+      let incoming;
+      try{ incoming = readRestoreCode(document.getElementById('codeIn').value); }
+      catch(err){ status.innerHTML = `<span class="error-text">${escapeHtml(err.message)}</span>`; return; }
+      const cur = loadStats();
+      // Merge rather than overwrite, keeping the better of each figure. Restoring
+      // onto a device that has its own history shouldn't silently destroy it.
+      const merged = Object.assign({}, cur, {
+        currentStreak: Math.max(cur.currentStreak||0, incoming.currentStreak||0),
+        bestStreak: Math.max(cur.bestStreak||0, incoming.bestStreak||0),
+        daysPlayed: Math.max(cur.daysPlayed||0, incoming.daysPlayed||0),
+        totalPoints: Math.max(cur.totalPoints||0, incoming.totalPoints||0),
+        bestRound: Math.max(cur.bestRound||0, incoming.bestRound||0),
+        lastPlayed: [cur.lastPlayed, incoming.lastPlayed].filter(Boolean).sort().pop() || null,
+        tiers: Object.assign({}, cur.tiers),
+      });
+      TIER_ORDER.forEach(k=>{
+        merged.tiers[k] = Math.max(cur.tiers[k]||0, incoming.tiers[k]||0);
+      });
+      saveStats(merged);
+      track('restore_import', { streak: merged.currentStreak });
+      renderStatsModal();
+      const st = document.getElementById('restoreStatus');
+      if(st) st.textContent = `Restored — ${liveStreak(merged, TODAY)}-day streak, best ${merged.bestStreak}.`;
+    });
+  });
+}
+document.getElementById('statsBtn').addEventListener('click', ()=>{
+  renderStatsModal();
+  if(statsModal.showModal) statsModal.showModal(); else statsModal.setAttribute('open','');
+});
+document.getElementById('statsClose').addEventListener('click', ()=>{
+  if(statsModal.close) statsModal.close(); else statsModal.removeAttribute('open');
+});
+
+/* ============================= INIT ============================= */
+// One round-trip to the questions API before anything can render. Fails visibly
+// rather than leaving the page stuck on nothing.
+async function init(){
+  panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
+  let data;
+  try{
+    data = await fetchDaily(CHALLENGE.date || null);
+  }catch(err){
+    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
+    return;
+  }
+  // Every one of these is the server's answer, not this device's opinion.
+  TODAY = data.today;
+  SERVED_DATE = data.date;
+  PUZZLE_NO = data.puzzleNumber;
+  // `data.date` is what the server actually served, which isn't necessarily what
+  // was asked for — a refused date falls back to today, and the mode has to follow
+  // what was served or the banner would lie about which puzzle this is.
+  MODE = (CHALLENGE.active && data.date !== data.today) ? 'challenge' : 'daily';
+  if(CHALLENGE.active) track('challenge_open', { mode: MODE, dated: CHALLENGE.date ? 'yes' : 'no' });
+  DAILY_ROUNDS = data.questions;
+  ROUNDS = DAILY_ROUNDS;
+  startScreen();
+}
+init();
+
+/* ============================= THEME (light/dark) ============================= */
+const THEME_KEY = 'guesstimate_theme';
+function loadThemePref(){ try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; } }
+function saveThemePref(t){ try{ localStorage.setItem(THEME_KEY, t); }catch(e){} }
+function effectiveTheme(){
+  const stored = loadThemePref();
+  if(stored === 'light' || stored === 'dark') return stored;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+function updateThemeToggleIcon(){
+  const btn = document.getElementById('themeToggle');
+  if(btn) btn.textContent = effectiveTheme() === 'dark' ? '☀' : '☾';
+}
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  saveThemePref(next);
+  updateThemeToggleIcon();
+});
+updateThemeToggleIcon();
+
+// Safe mid-run because startScreen() offers Resume rather than restarting — see
+// runInProgress().
+topLeft.addEventListener('click', goHome);
+</script>
+</body>
+</html>

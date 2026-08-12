@@ -22,6 +22,9 @@
 // Node — which is what lets the test suite exercise the real Worker without a
 // Workers runtime in the loop.
 import POOL from '../../data/questions.json' with { type: 'json' };
+// Optional pinned days. Bundled the same way as the pool so the Worker stays a
+// pure function of its bundle — an empty object simply means "no pinned days".
+import SCHEDULE from '../../data/schedule.json' with { type: 'json' };
 import { roundsForDate, puzzleNumber, todayDateString, BAG_EPOCH } from './selection.js';
 
 const json = (body, cacheControl, extra = {}) => new Response(JSON.stringify(body), {
@@ -105,7 +108,7 @@ export default {
         date,
         today,
         puzzleNumber: puzzleNumber(date),
-        questions: roundsForDate(date, POOL),
+        questions: roundsForDate(date, POOL, SCHEDULE),
       }, `public, max-age=${secondsUntilEtMidnight()}, s-maxage=${EDGE_TTL}`, { 'x-cache': 'MISS' });
 
       if(cache){

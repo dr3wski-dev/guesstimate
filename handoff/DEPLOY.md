@@ -1,102 +1,226 @@
 # Deploying Guesstimate
 
-Two pieces, both on Cloudflare, both free at this project's scale:
+Two pieces, both on Cloudflare, both free at this scale:
 
-| Piece | What | Where |
+| piece | what it serves | where |
 |---|---|---|
-| Static site | the game itself | Cloudflare Pages |
-| `guesstimate-api` | today's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
+| the site | the game, fonts, OG image | Cloudflare Pages, publish dir `site/` |
+| `guesstimate-api` | one day's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
 
-**They must share a domain.** The page's CSP is `connect-src 'self'`, so the game
-can only call an API on its own origin. That's deliberate — it means no CORS, no
-third-party origin in the policy, and a preflight can never be the reason the
-game fails to load. If the Worker ends up on a `*.workers.dev` host instead, the
-origin has to be added to *both* `_headers` and the `<meta http-equiv>` CSP in
-`site/index.html`, or every request the game makes is blocked
-with nothing useful in the console.
+**They must share a domain.** The page's CSP is `connect-src 'self'`, so the game can
+only call an API on its own origin. That's deliberate: no CORS, no third-party origin
+in the policy, and a preflight can never be the reason the game fails to load. If the
+Worker ends up on a `*.workers.dev` host instead, that origin has to be added to
+**both** the `CSP` constant in `pipeline/build_site.py` **and** the `<meta
+http-equiv>` CSP in the reference file — otherwise every request the game makes is
+blocked, with nothing useful in the console.
 
----
+**The game does not start without the Worker.** There is no static fallback, on
+purpose — a fallback would mean shipping the pool again, which is the leak the Worker
+exists to close.
 
-## What has to be done by a human, in a browser
+## What gets deployed
 
-None of this can happen from a terminal session — it all needs an interactive
-Cloudflare login.
+`site/` at the repo root, produced by `handoff/pipeline/build_site.py` from the
+canonical sources:
 
-1. **Connect the repo to Cloudflare Pages.** Dashboard → Workers & Pages → Create
-   → Pages → Connect to Git → pick `dr3wski-dev/guesstimate`.
-   - Build command: none (there is no build step)
-   - Build output directory: `handoff/site`
-   - `_headers` sits at `handoff/site/_headers`, i.e. the root of that output
-     directory, which is the only place Pages will read it from. If the output
-     directory is ever changed, move `_headers` with it — a misplaced `_headers`
-     fails silently, with no warning and no headers.
+```
+handoff/reference/guesstimate-scatter.html   the game (source of truth)
+handoff/data/questions.json                  the content
+handoff/assets/                              fonts + OG image
+                    |
+                    v
+site/index.html, site/data/, site/assets/, site/_headers, site/vercel.json,
+site/robots.txt, site/sitemap.xml
+```
 
-   **`handoff/site/` contains the entire published site and nothing else. That
-   separation is load-bearing, not tidiness.** Pages serves every file in the
-   output directory, so if `data/questions.json` lived inside it, the full
-   question pool would be downloadable at `/data/questions.json` and the Worker
-   would be pointless — the exact leak it was built to close, reopened by a
-   directory layout. `data/` and `worker/` sit outside `site/` deliberately.
-   Verify after any restructure: `curl -sI https://<site>/data/questions.json`
-   must be a 404.
-2. **Deploy the Worker.** From `handoff/worker/`: `wrangler login` (opens a
-   browser), then `wrangler deploy`. The dashboard's "create Worker" flow works
-   too — paste `src/index.js` and `src/selection.js`.
-3. **Add the custom domain** to the Pages project, then uncomment the `routes`
-   block in `worker/wrangler.toml`, set the real domain, and redeploy the Worker
-   so `/api/*` resolves on it.
-4. **Make the OG tags absolute.** `og:image` and `og:url` in the HTML are
-   relative. iMessage and most crawlers won't resolve a relative `og:image`, so
-   the link preview — which for this game *is* the landing page — will be blank
-   until these are absolute URLs on the real domain.
+**Never hand-edit `site/`.** It is regenerated wholesale on every build. Edit the
+reference file or the data and rebuild. The build exists specifically so there is no
+second copy of the game to drift out of sync.
+
+What the build changes, and why each one matters:
+
+| change | why |
+|---|---|
+| `fetch('../data/…')` → `fetch('data/…')` | at a web root the data is a sibling, not a parent |
+| `url('../assets/fonts/…')` → `url('assets/fonts/…')` | same |
+| `og:image` → absolute URL | **relative `og:image` is the most common cause of a blank link card**, and iMessage will not resolve one. For a game distributed by pasted links, that card is the landing page |
+| adds `og:url` + `<link rel="canonical">` | so shares of `?challenge=…` URLs still resolve to the canonical page |
+| `_headers` / `vercel.json` | CSP as a real header, plus caching |
+
+## Deploy
+
+```bash
+# 1. Build for your real domain (must be an https origin, no path)
+python3 handoff/pipeline/build_site.py --url https://your-domain.com
+
+#    ...or with analytics installed in the same step (see below)
+python3 handoff/pipeline/build_site.py --url https://your-domain.com \
+    --analytics plausible --analytics-domain your-domain.com
+
+# 2. Sanity-check it locally before pushing
+cd site && python3 -m http.server 8900     # then open http://localhost:8900/
+
+# 3. Optional but recommended: run the regression suite against the built site
+#    (edit BASE in reference/verify.mjs to http://localhost:8900/)
+node handoff/reference/verify.mjs
+```
+
+Then point a host at it:
+
+- **Cloudflare Pages** — publish directory `site`, no build command. `_headers` is
+  picked up automatically from the root of that directory.
+- **Netlify** — same: publish directory `site`, no build command.
+- **Vercel** — root directory `site`, framework preset "Other", no build command.
+  `vercel.json` is picked up automatically.
+
+All three free tiers cover this comfortably, and all give HTTPS and basic DDoS
+protection without configuration — which is the whole reason ACTION_PLAN §3 says not
+to build custom hosting.
+
+## Deploying the Worker
+
+The API has to be deployed separately, and it needs an interactive Cloudflare login,
+so this part cannot be done from a terminal-only session.
+
+```bash
+cd handoff/worker
+wrangler login          # opens a browser
+wrangler deploy         # first deploy lands on *.workers.dev, which is fine for testing
+```
+
+Then, once the Pages project has its custom domain:
+
+1. Uncomment the `routes` block in `worker/wrangler.toml` and set the real domain.
+2. `wrangler deploy` again, so `/api/*` resolves on the site's own origin.
+
+The question pool is **bundled into the Worker** at build time via a JSON import of
+`data/questions.json` — the same canonical file the content workflow edits. There is
+no second copy to keep in sync, which also means **shipping new content requires
+redeploying the Worker**, not just pushing the site. The same is true of
+`data/schedule.json`.
+
+The Worker has no KV, no D1, no Durable Objects, no secrets, and no bindings. If that
+ever changes, the "stateless pure function" property that makes it free and hard to
+abuse is gone, and ACTION_PLAN §3 needs rereading first.
+
+## The leak this is all protecting against
+
+`site/` is published wholesale by Pages, so **anything inside it is downloadable**.
+The question pool must never be in there — if `data/questions.json` were served, every
+future day's answers would be one URL away and the Worker would be pointless, the
+exact hole it was built to close, reopened by a directory layout.
+
+`pipeline/build_site.py` asserts the built HTML never fetches the pool and that the
+client calls `/api/daily`, so re-introducing the leak fails the build rather than
+shipping. Verify on the live site anyway after any restructure:
+
+```sh
+curl -sI https://<site>/data/questions.json     # must be 404
+```
+
+Worth being precise about what this does *not* fix: today's five questions still
+travel to the browser with their answers attached, because scoring and the reveal
+happen client-side. A determined player can read today's answers from the network tab.
+They cannot read tomorrow's, and they cannot move their system clock to farm a streak.
+Hiding today's too would mean posting guesses to the server for scoring — a real
+backend with real abuse surface, out of scope per ACTION_PLAN §6.
+
+## Before you point the domain at it
+
+- [ ] **Rebuild with the final URL.** The OG tags bake the domain in. If you build
+      with a placeholder and then buy a different domain, the link card breaks and
+      you won't notice, because it renders fine for you.
+- [ ] **Regenerate the OG image** if the design changed — `handoff/assets/og-source.html`
+      is the source, 1200×630.
+- [ ] **Test the link card for real.** Paste the URL into iMessage and Slack, not just
+      a validator. This is the first impression for essentially every player.
+- [ ] **Open it on an actual phone.** The layout is tested at 390×664 in a headless
+      browser, which is not the same as a thumb.
+- [ ] **Check the CSP didn't break anything** — open the console and confirm no
+      violations. The policy allows `'unsafe-inline'` for scripts and styles because
+      the game is a single self-contained file; that's a deliberate trade, not an
+      oversight.
+- [ ] **Confirm the Worker is routed on the site's domain**, not `*.workers.dev` —
+      otherwise the CSP blocks every API call. `curl -s https://<site>/api/daily`
+      should return JSON, not a 404 from Pages.
+- [ ] **Confirm `/api/*` is served with a short cache.** `_headers` sets 300s. If a
+      CDN overrides it, shipping new content won't reach players.
+
+## After deploying
+
+Two things from LAUNCH_CHECKLIST.md are worth doing in the same session, while you
+still have the host's dashboard open:
+
+1. **Analytics** (B3) — **the code side is done**, so this is now just an account.
+   Seven events are already instrumented: `round_start`, `question_submit`,
+   `round_complete`, `share_click`, `challenge_open`, `restore_export`,
+   `restore_import`. They no-op until a provider is installed, and the provider is a
+   build flag, so no vendor snippet is ever pasted into the game:
+
+   ```bash
+   # Umami Cloud — free to 100k events/mo, ~2KB, custom events supported. Recommended.
+   --analytics umami --analytics-domain <website-id-uuid>
+   # Plausible — custom events, lightest script, ~$9/mo (no free tier)
+   --analytics plausible --analytics-domain your-domain.com
+   # Cloudflare Web Analytics — free and unlimited, but PAGEVIEWS ONLY.
+   # The seven events above will not fire. Fine as a second, parallel tracker.
+   --analytics cloudflare --analytics-domain <beacon-token>
+   ```
+
+   **On Cloudflare Pages, run two:** turn on Cloudflare Web Analytics in the dashboard
+   (free, unlimited, zero config, nothing in this repo) for traffic and referrers, and
+   build with `--analytics umami` for the funnel. Cloudflare's own analytics cannot
+   answer "did they finish all five", which is the question that decides what to build
+   next.
+
+   The build extends the CSP for exactly that provider's hosts rather than loosening
+   it globally. Building without `--analytics` produces a site with **no third-party
+   requests at all** — verify with `grep -oE 'https?://[a-z0-9.-]+' site/index.html`,
+   which should show only your own domain.
+
+   The events carry a puzzle number, a score band and a mode. No names, no free text,
+   nothing a player typed. The site collects no PII today; keep it that way.
+
+2. **A stats restore code** — **done.** The stats modal now exports a `GT1-…` code and
+   accepts one, with a checksum so a truncated paste is rejected rather than silently
+   importing garbage. Restoring merges rather than overwrites, and a restored
+   `lastPlayed` still blocks a second completion the same day, so a code can't be used
+   to farm streak credit.
+
+## Shipping new content later
+
+```bash
+python3 handoff/pipeline/build_questions.py --fetch          # refresh datasets
+python3 handoff/pipeline/build_questions.py --league mlb --top 20
+# pick candidates, write the fact copy, add to handoff/data/questions.json
+python3 handoff/pipeline/verify_questions.py                 # must report 0 mismatches
+python3 handoff/pipeline/build_site.py --url https://your-domain.com
+cd handoff/worker && wrangler deploy   # the pool is bundled INTO the Worker
+```
+
+Pushing the site alone is not enough — the Worker holds the questions, so a content
+change that isn't followed by `wrangler deploy` reaches nobody.
+
+`verify_questions.py` re-derives every number in `questions.json` straight from the
+raw datasets, on a separate code path from the generator. Treat a non-zero exit as
+blocking — it exists because the generator has already shipped a plausible-looking
+number that never happened (see its docstring).
 
 ## Verify after deploying
 
 ```sh
-curl -sI https://<site>/ | grep -i content-security-policy   # header present
-curl -s  https://<site>/api/daily | jq '.questions | length'  # 5, never 16
-curl -sI https://<site>/api/daily | grep -i x-cache           # MISS then HIT
+curl -sI https://<site>/ | grep -i content-security-policy    # header present
+curl -s  https://<site>/api/daily | jq '.questions | length'  # 5, never the whole pool
+curl -sI https://<site>/data/questions.json                   # 404
 ```
 
-Then open dev tools on the live site and confirm the Network tab shows a request
-to `/api/daily` returning five questions, and **no** request to
-`data/questions.json`. That file is still in the repo — it's the canonical
-content source and the Worker bundles it at build time — but the browser must
-never fetch it.
+Then open dev tools on the live site and confirm the Network tab shows a request to
+`/api/daily` returning five questions, and **no** request for the pool.
 
----
+## Rollback
 
-## Why the API exists at all
-
-Both reasons are things a client holding the whole pool cannot fix:
-
-- **The pool was public.** The page used to fetch `data/questions.json`, so every
-  future day's answers were one dev-tools panel away.
-- **The date was the player's to choose.** "Today" came from the device clock, so
-  setting the system clock back replayed old puzzles and padded streaks.
-
-Now the Worker decides both. The client sends no date except a challenge link's,
-and the Worker refuses any date that isn't already in the past.
-
-**What this does *not* fix, stated plainly so it isn't over-read:** the five
-questions being played still reach the browser with their answers attached
-(`targetX`, `targetY`, `fact`), because scoring and the reveal happen
-client-side. Today's five answers remain readable in the network tab. Closing
-that would mean posting guesses to the server to be scored — a real backend with
-real abuse surface, gated to v2 in ACTION_PLAN.md section 6, and not what either
-of the above gaps was about.
-
-## Cost and limits
-
-Free tier: 100,000 Worker requests/day. Every visitor triggers at most one
-`/daily` call, and the response is cached at the edge per date, so the selection
-logic runs roughly once per day per edge location no matter how many people
-play. Nothing here approaches a paid tier. There is no database, no KV, no
-Durable Object, and no secret — if any of those ever get added, the "free and
-stateless" property is gone and ACTION_PLAN.md section 3 needs rereading first.
-
-## Adding questions after launch
-
-Edit `data/questions.json`, then **redeploy the Worker** — the pool is bundled
-into it at build time. Pushing a content change alone will update the Pages site
-but not the questions the API serves.
+The site is static and the build is deterministic, so rollback is `git revert` plus a
+rebuild, or the host's own "redeploy previous build" button. There is no database to
+migrate and no state on the server — the only persistent state is in each player's
+`localStorage`, which is why the stats key is versioned (`guesstimate_stats_v2`).

@@ -78,8 +78,36 @@ export function selectDailyBag(dateStr, pool, count=5){
 // replaying the day a challenge link was sent from. The pool-size branch is
 // preserved exactly: the bag rotation needs at least a full day's worth of
 // questions, and below that it falls back to the plain seeded selection.
-export function roundsForDate(dateStr, pool){
-  return pool.length >= DAILY_COUNT
-    ? selectDailyBag(dateStr, pool, DAILY_COUNT)
-    : selectDailyQuestions(dateStr, pool, pool.length);
+/* Optional hand-scheduled days, authored as a spreadsheet and compiled to
+   data/schedule.json by pipeline/import_questions.py — `{ "2026-09-01": ["id", …] }`.
+   A pinned date serves exactly those questions; every other date keeps falling back
+   to the shuffled bag, so this is an override rather than a replacement and the
+   selection stays a pure function of (date, pool, schedule).
+
+   Questions appearing anywhere in the schedule are removed from the bag entirely.
+   Without that, the bag could serve one of a themed day's questions the week
+   before and spoil it — and the exclusion has to be date-independent, or replaying
+   an old challenge link would stop reproducing that day's puzzle. */
+export function bagPool(pool, schedule){
+  const pinned = new Set(Object.values(schedule || {}).flat());
+  if(pinned.size === 0) return pool;
+  const rest = pool.filter(q => !pinned.has(q.id));
+  // If scheduling has eaten so much of the pool that an unscheduled day can't be
+  // filled, the schedule is the broken thing — serve from everything rather than
+  // hand the player a short round.
+  return rest.length >= DAILY_COUNT ? rest : pool;
+}
+export function roundsForDate(dateStr, pool, schedule){
+  const pins = schedule && schedule[dateStr];
+  if(pins && pins.length){
+    const byId = new Map(pool.map(q => [q.id, q]));
+    const picked = pins.map(id => byId.get(id)).filter(Boolean);
+    // Every pinned id unknown means the schedule is stale against the pool; fall
+    // through to the bag rather than serving an empty round.
+    if(picked.length) return picked;
+  }
+  const usable = bagPool(pool, schedule);
+  return usable.length >= DAILY_COUNT
+    ? selectDailyBag(dateStr, usable, DAILY_COUNT)
+    : selectDailyQuestions(dateStr, usable, usable.length);
 }
