@@ -6,3 +6,6 @@
 handoff/pipeline/cache/
 __pycache__/
 *.pyc
+
+# Dev-only test deps (see handoff/package.json) — the game itself has none
+node_modules/

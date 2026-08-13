@@ -1,5 +1,5 @@
 import { chromium, devices } from 'playwright';
-const BASE='http://localhost:8901/';
+const BASE = process.env.BASE || 'http://localhost:8903/';
 const b=await chromium.launch(); let fails=0;
 const ck=(n,ok,d='')=>{console.log(`  ${ok?'PASS':'FAIL'}  ${n}${d?'  — '+d:''}`); if(!ok)fails++;};
 
