@@ -46,8 +46,8 @@ const SRC_DATA = path.join(ROOT, 'data', 'questions.json');
 // round numbers: the median question gives a centre-clicker 20 and a lift of 56, so
 // these sit far enough out to catch genuine outliers without condemning the middle
 // of the pack. Tightening them is a content decision, not a code one.
-const MAX_CENTRE = 35;   // above this the chart hands out too much for free
-const MIN_LIFT   = 30;   // below this the question barely rewards knowing
+export const MAX_CENTRE = 35;   // above this the chart hands out too much for free
+export const MIN_LIFT   = 30;   // below this the question barely rewards knowing
 
 // ---- scoring constants, read from the game so they cannot drift ----
 const html = fs.readFileSync(SRC_HTML, 'utf8');

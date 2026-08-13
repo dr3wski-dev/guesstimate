@@ -72,6 +72,23 @@ BB/9) make weak axes for the same reason: if every player in the league falls wi
 few units, every guess is close once normalised, and the axis carries no signal. They
 work as the *second* stat against a wide-range first one, not as both.
 
+## Growing the pool
+
+The expensive step is writing fact copy against real sources, so don't spend it on
+candidates that will fail the gate anyway. Screen first:
+
+```bash
+python3 pipeline/build_questions.py --league nba --top 60 --json cand-nba.json
+python3 pipeline/build_questions.py --league nfl --top 60 --json cand-nfl.json
+node pipeline/screen_candidates.mjs cand-*.json -o passing.json
+```
+
+`screen_candidates.mjs` drops candidates that don't reward knowing the answer and
+ranks the survivors by lift, so the list is already in the order worth working
+through. What comes out is **not questions yet** — each still needs fact copy naming
+its source, and still has to clear `verify_questions.py`. Neither gate is bypassed by
+having been screened.
+
 ## Scheduling specific days
 
 Optional. Pin questions to dates; every unpinned date keeps using the deterministic
