@@ -46,11 +46,11 @@
     "yLabel": "Career points per game",
     "yUnit": "PPG",
     "xDomain": [
-      16,
+      20,
       40
     ],
     "yDomain": [
-      8,
+      12,
       28
     ],
     "targetPlayer": "Lou Williams",
@@ -84,12 +84,12 @@
     "yLabel": "Career rebounds + assists per game",
     "yUnit": "REB+AST",
     "xDomain": [
-      4,
-      28
+      8,
+      24
     ],
     "yDomain": [
-      4,
-      20
+      5,
+      25
     ],
     "targetPlayer": "Draymond Green",
     "targetX": 8.7,
@@ -115,121 +115,6 @@
     "source": "StatMuse career per-game averages (regular season)."
   },
   {
-    "id": "nfl-ypg-tds-taylor",
-    "league": "NFL",
-    "xLabel": "Rushing yards per game (season)",
-    "xUnit": "YPG",
-    "yLabel": "Rushing touchdowns (season)",
-    "yUnit": "TDs",
-    "yStep": 1,
-    "xDomain": [
-      80,
-      140
-    ],
-    "yDomain": [
-      8,
-      24
-    ],
-    "targetPlayer": "Jonathan Taylor, 2021",
-    "targetX": 106.5,
-    "targetY": 18,
-    "referencePlayers": [
-      {
-        "name": "Christian McCaffrey, 2023",
-        "x": 91.2,
-        "y": 14
-      },
-      {
-        "name": "Derrick Henry, 2020",
-        "x": 126.7,
-        "y": 17
-      },
-      {
-        "name": "Adrian Peterson, 2012",
-        "x": 131.1,
-        "y": 12
-      }
-    ],
-    "fact": "Jonathan Taylor's 2021 season is the counterintuitive one here: his 106.5 rushing yards per game is actually the lowest of these four seasons, yet his 18 rushing touchdowns is the highest — the 17-game season gave him an extra game, and a huge share of his team's goal-line work. Adrian Peterson's 2012 MVP season (131.1 YPG) is the opposite profile: gaining more yards per game than anyone here, but with the fewest touchdowns.",
-    "source": "Pro Football Reference / StatMuse season totals. Yards-per-game computed from confirmed season yardage ÷ games played."
-  },
-  {
-    "id": "nba-stl-blk-pippen",
-    "league": "NBA",
-    "xLabel": "Career steals per game",
-    "xUnit": "SPG",
-    "yLabel": "Career blocks per game",
-    "yUnit": "BPG",
-    "xDomain": [
-      0,
-      2.8
-    ],
-    "yDomain": [
-      0,
-      3.6
-    ],
-    "targetPlayer": "Scottie Pippen",
-    "targetX": 2,
-    "targetY": 0.8,
-    "referencePlayers": [
-      {
-        "name": "Dikembe Mutombo",
-        "x": 0.4,
-        "y": 2.8
-      },
-      {
-        "name": "John Stockton",
-        "x": 2.2,
-        "y": 0.2
-      },
-      {
-        "name": "Hakeem Olajuwon",
-        "x": 1.7,
-        "y": 3.1
-      }
-    ],
-    "fact": "Scottie Pippen's 2.0 steals and 0.8 blocks a game is a genuinely rare wing profile — enough blocks to suggest a rim-protecting big, delivered by a 6'8\" forward who also picked pockets like a guard. Dikembe Mutombo (0.4 / 2.8) and John Stockton (2.2 / 0.2) are the two specialist extremes this pairing usually produces: a pure rim-protector and a pure ball-hawk. Hakeem Olajuwon (1.7 / 3.1) is the rare exception who tops both — a center with a guard's hands and a shot-blocker's timing.",
-    "source": "StatMuse career per-game averages (regular season)."
-  },
-  {
-    "id": "nba-fga-ts-jordan",
-    "league": "NBA",
-    "xLabel": "Career field goal attempts per game",
-    "xUnit": "FGA",
-    "yLabel": "Career true shooting percentage",
-    "yUnit": "TS%",
-    "xDomain": [
-      4,
-      28
-    ],
-    "yDomain": [
-      48,
-      68
-    ],
-    "targetPlayer": "Michael Jordan",
-    "targetX": 22.9,
-    "targetY": 56.9,
-    "referencePlayers": [
-      {
-        "name": "Allen Iverson",
-        "x": 21.8,
-        "y": 51.8
-      },
-      {
-        "name": "Stephen Curry",
-        "x": 17.9,
-        "y": 62.6
-      },
-      {
-        "name": "DeAndre Jordan",
-        "x": 5.1,
-        "y": 64.4
-      }
-    ],
-    "fact": "Michael Jordan took more shots per game (22.9) than anyone else here — even more than Allen Iverson (21.8), the standard reference for a pure volume scorer. But his efficiency (56.9 TS%) sits well below the elite tier: Stephen Curry (62.6) gets nearly as many shots up at a far higher efficiency, and DeAndre Jordan (64.4) shows the opposite extreme — a role player who barely shoots (5.1 attempts a game) but converts at an absurd rate, mostly dunks and putbacks. Jordan's greatness came from volume and shot difficulty, not from posting efficiency numbers like the specialists at either end of this chart.",
-    "source": "StatMuse career true shooting percentage and field goal attempts per game (regular season)."
-  },
-  {
     "id": "nfl-int-td-winston",
     "league": "NFL",
     "xLabel": "Career interception percentage",
@@ -237,8 +122,8 @@
     "yLabel": "Career touchdown percentage",
     "yUnit": "TD%",
     "xDomain": [
-      1,
-      4.2
+      0,
+      4
     ],
     "yDomain": [
       3,
@@ -1530,11 +1415,11 @@
       {
         "name": "Lauri Markkanen, 2024-25",
         "x": 31.4,
-        "y": 19.0
+        "y": 19
       },
       {
         "name": "Anthony Davis, 2022-23",
-        "x": 34.0,
+        "x": 34,
         "y": 25.9
       },
       {
@@ -1565,7 +1450,7 @@
     ],
     "targetPlayer": "Nikola Vučević, 2020-21",
     "targetX": 29.2,
-    "targetY": 56.0,
+    "targetY": 56,
     "referencePlayers": [
       {
         "name": "P.J. Tucker, 2022-23",
@@ -1614,7 +1499,7 @@
       },
       {
         "name": "CJ McCollum, 2020-21",
-        "x": 34.0,
+        "x": 34,
         "y": 23.1
       },
       {
@@ -1716,11 +1601,11 @@
     "xStep": 0.1,
     "yStep": 1,
     "xDomain": [
-      50,
-      130
+      60,
+      100
     ],
     "yDomain": [
-      0,
+      4,
       20
     ],
     "targetPlayer": "Jamaal Charles, 2012",
@@ -1739,7 +1624,7 @@
       },
       {
         "name": "Arian Foster, 2012",
-        "x": 89.0,
+        "x": 89,
         "y": 15
       }
     ],
@@ -1827,46 +1712,6 @@
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
-    "id": "mlb-k9-bb9-martinez",
-    "league": "MLB",
-    "xLabel": "Career strikeouts per 9 innings",
-    "xUnit": "K/9",
-    "yLabel": "Career walks per 9 innings",
-    "yUnit": "BB/9",
-    "xStep": 0.01,
-    "yStep": 0.01,
-    "xDomain": [
-      4,
-      12
-    ],
-    "yDomain": [
-      1,
-      5
-    ],
-    "targetPlayer": "Pedro Martinez",
-    "targetX": 10.04,
-    "targetY": 2.42,
-    "referencePlayers": [
-      {
-        "name": "Greg Maddux",
-        "x": 6.06,
-        "y": 1.8
-      },
-      {
-        "name": "Nolan Ryan",
-        "x": 9.55,
-        "y": 4.67
-      },
-      {
-        "name": "Randy Johnson",
-        "x": 10.61,
-        "y": 3.26
-      }
-    ],
-    "fact": "Pedro Martinez struck out 10.04 batters per nine innings — essentially Randy Johnson territory (10.61) and more than Nolan Ryan's 9.55 — while walking only 2.42, closer to Greg Maddux, the control archetype at 1.80, than to either power pitcher. That combination is the entire argument for Pedro. Ryan bought his strikeouts with 4.67 walks per nine, nearly double Pedro's rate; Maddux bought his control by striking out 6.06, barely half as many. Pedro refused the trade. In 1999 he struck out 313 batters and walked 37.",
-    "source": "StatMuse career K/9 and BB/9; 1999 season strikeout and walk totals."
-  },
-  {
     "id": "mlb-ba-hr-williams",
     "league": "MLB",
     "xLabel": "Career batting average",
@@ -1929,7 +1774,7 @@
       {
         "name": "Barry Sanders",
         "x": 3062,
-        "y": 5.0
+        "y": 5
       },
       {
         "name": "Adrian Peterson",
@@ -1944,45 +1789,6 @@
     ],
     "fact": "Jamaal Charles averaged 5.4 yards per carry — the highest of any running back in NFL history with at least 1,000 attempts, ahead of Barry Sanders' 5.0 and Jim Brown's 5.2. The only players above him on the overall list are quarterbacks (Lamar Jackson, Russell Wilson, Cam Newton), who pick their runs. Charles did it on 1,407 carries, under a third of Emmitt Smith's 4,409. Smith holds the career rushing yards record and Charles holds the rate, which is a fair summary of how football remembers running backs: volume gets the record, efficiency gets forgotten.",
     "source": "StatMuse career rushing attempts and yards per carry; yards-per-carry leaderboard with a 1,000-attempt minimum."
-  },
-  {
-    "id": "nfl-rec-ypr-moss",
-    "league": "NFL",
-    "xLabel": "Career receptions",
-    "xUnit": "rec",
-    "yLabel": "Career yards per reception",
-    "yUnit": "Y/R",
-    "xStep": 1,
-    "xDomain": [
-      0,
-      1600
-    ],
-    "yDomain": [
-      8,
-      20
-    ],
-    "targetPlayer": "Randy Moss",
-    "targetX": 982,
-    "targetY": 15.6,
-    "referencePlayers": [
-      {
-        "name": "DeSean Jackson",
-        "x": 641,
-        "y": 17.6
-      },
-      {
-        "name": "Wes Welker",
-        "x": 903,
-        "y": 11.0
-      },
-      {
-        "name": "Jerry Rice",
-        "x": 1549,
-        "y": 14.8
-      }
-    ],
-    "fact": "Randy Moss is the definitive deep threat of his era and he averaged 15.6 yards a catch — two full yards below DeSean Jackson's 17.6, and less than a yard above Jerry Rice's 14.8. The reputation didn't come from where the catches started, it came from where they ended: 156 receiving touchdowns, second-most all time. Wes Welker is the archetype's opposite pole — 903 catches, nearly Moss's total, at 11.0 yards each. \"Deep threat\" describes what a defense is afraid of, not what the average play actually gains.",
-    "source": "StatMuse career receptions, yards per reception, and receiving touchdowns."
   },
   {
     "id": "nba-career-peak-chamberlain",
@@ -2005,12 +1811,12 @@
     "referencePlayers": [
       {
         "name": "Tim Duncan",
-        "x": 19.0,
+        "x": 19,
         "y": 25.5
       },
       {
         "name": "Kobe Bryant",
-        "x": 25.0,
+        "x": 25,
         "y": 35.4
       },
       {
@@ -2150,12 +1956,12 @@
     "yLabel": "Career playoffs",
     "yUnit": "PPG",
     "xDomain": [
-      15,
-      35
+      17.5,
+      27.5
     ],
     "yDomain": [
-      15,
-      35
+      16,
+      32
     ],
     "targetPlayer": "Allen Iverson",
     "targetX": 26.7,
@@ -2163,7 +1969,7 @@
     "referencePlayers": [
       {
         "name": "Tim Duncan",
-        "x": 19.0,
+        "x": 19,
         "y": 20.6
       },
       {
@@ -2173,7 +1979,7 @@
       },
       {
         "name": "Karl Malone",
-        "x": 25.0,
+        "x": 25,
         "y": 24.7
       }
     ],
@@ -2398,7 +2204,7 @@
       70
     ],
     "targetPlayer": "Deandre Ayton, 2020-21",
-    "targetX": 10.0,
+    "targetX": 10,
     "targetY": 65.3,
     "referencePlayers": [
       {
@@ -2414,7 +2220,7 @@
       {
         "name": "DeMar DeRozan, 2015-16",
         "x": 17.7,
-        "y": 55.0
+        "y": 55
       }
     ],
     "fact": "Deandre Ayton took 10.0 shots a game in 2020-21 at a 65.3 true shooting percentage — the fewest attempts here and by far the most efficient. DeMar DeRozan took nearly twice as many at ten points worse. Ayton was the fourth option on a Suns team that reached the Finals, and shooting less is a large part of why his numbers look like that.",
@@ -2483,7 +2289,7 @@
     "referencePlayers": [
       {
         "name": "Kemba Walker, 2012-13",
-        "x": 4.0,
+        "x": 4,
         "y": 32.2
       },
       {
@@ -2518,7 +2324,7 @@
       27.5
     ],
     "targetPlayer": "Pau Gasol, 2008-09",
-    "targetX": 37.0,
+    "targetX": 37,
     "targetY": 18.9,
     "referencePlayers": [
       {
@@ -2528,7 +2334,7 @@
       },
       {
         "name": "Anthony Davis, 2022-23",
-        "x": 34.0,
+        "x": 34,
         "y": 25.9
       },
       {
@@ -2573,7 +2379,7 @@
       },
       {
         "name": "LaDainian Tomlinson, 2004",
-        "x": 89.0,
+        "x": 89,
         "y": 17
       }
     ],
@@ -2638,7 +2444,7 @@
       1750
     ],
     "targetPlayer": "Alvin Kamara, 2020",
-    "targetX": 5.0,
+    "targetX": 5,
     "targetY": 932,
     "referencePlayers": [
       {

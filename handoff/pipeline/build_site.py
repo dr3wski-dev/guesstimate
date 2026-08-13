@@ -26,7 +26,7 @@ USAGE
   python3 pipeline/build_site.py --url https://guesstimate.example \\
       --analytics plausible --analytics-domain guesstimate.example
 """
-import argparse, json, os, re, shutil, sys
+import argparse, json, os, re, shutil, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..'))
@@ -93,8 +93,31 @@ def csp_with(provider):
     return '; '.join(out)
 
 
+def fairness_gate():
+    """Refuse to build a site containing a question that doesn't reward knowing the
+    answer. This is a hard gate rather than a warning on purpose: the failure it
+    catches is invisible from the outside — a question with perfectly verified stats
+    where clicking the middle of the chart beats knowing the answer looks completely
+    normal in review, and two of them shipped before anyone measured it. A warning
+    printed during a build nobody reads would not have caught them either."""
+    audit = os.path.join(HERE, 'audit_fairness.mjs')
+    try:
+        r = subprocess.run(['node', audit], capture_output=True, text=True)
+    except FileNotFoundError:
+        sys.exit('node is required to run the fairness audit before a build.\n'
+                 'The audit reads the scoring curve out of the game itself, so it '
+                 'cannot be reimplemented here in Python without the two drifting '
+                 'apart — which would make the gate meaningless.')
+    if r.returncode != 0:
+        print(r.stdout + r.stderr)
+        sys.exit('fairness audit failed — fix or quarantine the questions above, then '
+                 'rebuild.\n  node handoff/pipeline/audit_fairness.mjs --suggest')
+    print(r.stdout.strip().splitlines()[-1])
+
+
 def build(site_url, check=False, provider=None, domain=None):
     site_url = site_url.rstrip('/')
+    fairness_gate()
     html = open(SRC_HTML, encoding='utf-8').read()
 
     # 1. The data path. In the reference tree the game sits one directory below the
