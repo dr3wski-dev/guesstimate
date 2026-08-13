@@ -44,9 +44,33 @@ const havePlayer = new Set(pool.map(q => q.targetPlayer));
 let cands = [];
 for (const f of files) cands = cands.concat(JSON.parse(fs.readFileSync(f, 'utf8')));
 
+/* Two questions on the same axes showing the same three reference players are the
+ * same chart with a different answer. The fairness audit scores both as fine —
+ * they are fine, individually — but a pool built this way feels repetitive in a way
+ * players notice and cannot name. The generator produces these readily, because it
+ * picks references at fixed quantiles: one batch offered four "career strikeouts vs
+ * career home runs" questions all anchored on Lofton, Aaron and Henderson.
+ *
+ * Keyed on axes plus the reference set, ignoring order. The pool is included in the
+ * key space so a new candidate can't duplicate a question that already shipped. */
+const shape = q => q.xLabel + '|' + q.yLabel + '|' +
+  q.referencePlayers.map(p => p.name).sort().join(',');
+const seenShape = new Set(pool.map(shape));
+
 const fresh = cands.filter(q => !haveId.has(q.id));
 const scored = fresh.map(q => ({ q, a: audit(q) }));
-const pass = scored.filter(r => r.a.centre <= MAX_CENTRE && r.a.lift >= MIN_LIFT);
+const fair = scored.filter(r => r.a.centre <= MAX_CENTRE && r.a.lift >= MIN_LIFT);
+
+// Best-first, so when several candidates share a chart the strongest one survives.
+fair.sort((a, b) => b.a.lift - a.a.lift);
+const pass = [];
+let dupes = 0;
+for (const r of fair) {
+  const k = shape(r.q);
+  if (seenShape.has(k)) { dupes++; continue; }
+  seenShape.add(k);
+  pass.push(r);
+}
 // Not a rejection — a returning player is fine and often welcome — but worth
 // surfacing so a batch doesn't quietly become the same twelve names again.
 const repeats = pass.filter(r => havePlayer.has(r.q.targetPlayer)).length;
@@ -56,7 +80,7 @@ for (const r of pass) byLeague[r.q.league] = (byLeague[r.q.league] || 0) + 1;
 
 console.log(`candidates ${cands.length}   new ids ${fresh.length}   ` +
             `pass fairness ${pass.length}   rejected ${fresh.length - pass.length}`);
-console.log(`by league  ${JSON.stringify(byLeague)}   ` +
+console.log(`by league  ${JSON.stringify(byLeague)}   dropped as duplicate charts: ${dupes}   ` +
             `reusing a player already in the pool: ${repeats}`);
 console.log(`pool would go ${pool.length} -> ${pool.length + pass.length} ` +
             `(${Math.floor((pool.length + pass.length) / 5)} days before a repeat)`);

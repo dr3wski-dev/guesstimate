@@ -947,7 +947,11 @@ function startScreen(){
   // Offered before the player commits to five rounds of someone else's day, not
   // only after. Arriving on a challenge link is how most people will ever reach
   // this game, and today's puzzle is the thing that actually starts a streak.
-  const escapeHTML = MODE === 'challenge'
+  // Named for what it is, not what it looks like. This used to be `escapeHTML`,
+  // one character from the escaping helper `escapeHtml` — so `${escapeHTML(name)}`
+  // would have read as correctly escaped to every future reader while actually
+  // being a TypeError, and "fixing" the casing would have silently unescaped it.
+  const leaveChallengeBtn = MODE === 'challenge'
     ? `<button class="ghost" id="todayBtn">Play today's instead</button>` : '';
   // Going home mid-run must not discard scored rounds, and replaying a finished
   // puzzle shouldn't be dressed up as a fresh start.
@@ -967,7 +971,7 @@ function startScreen(){
     <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">${startLabel}</button></div>
+    <div class="next-row">${leaveChallengeBtn}<button class="primary" id="startBtn">${startLabel}</button></div>
     ${replayNote}
     <div><button class="how-link" id="howLink">How does scoring work?</button></div>
   `;
