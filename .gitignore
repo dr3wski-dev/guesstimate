@@ -9,3 +9,5 @@ __pycache__/
 
 # Dev-only test deps (see handoff/package.json) — the game itself has none
 node_modules/
+handoff/v-*.png
+handoff/*.png
