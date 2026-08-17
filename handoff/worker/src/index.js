@@ -58,11 +58,22 @@ function acceptPastDate(raw, today){
 /* How long a BROWSER may reuse a daily response. Deliberately not 24 hours: the
    edge cache is keyed by date and so re-keys itself the moment the date rolls,
    but a browser cache has no such key — it would just hold a stale entry and
-   serve yesterday's puzzle to a returning player after midnight. Expiring the
-   browser copy exactly at the ET rollover is the whole fix, and it means the
-   24-hour lifetime applies where it's actually safe: the shared edge cache,
-   via s-maxage. */
-const EDGE_TTL = 86400; // 24h, matching the daily rotation
+   serve yesterday's puzzle to a returning player after midnight.
+
+   The first version of this set the browser TTL to the seconds remaining until ET
+   midnight, so the copy expired exactly at the rollover. Correct for the rollover,
+   and wrong for everything else: it also meant a browser that loaded at noon could
+   not be reached by ANY deploy for the rest of the day. That is not hypothetical —
+   a puzzle-numbering fix shipped, deployed cleanly, showed 0 errors, and the site
+   kept serving the old number for hours because every browser that had already
+   asked was holding a five-hour-old answer.
+
+   So the browser TTL is now short and the shared edge cache keeps the long one. The
+   edge absorbs the traffic either way — every visitor on a given date gets the same
+   bytes — so a browser re-asking every few minutes costs a conditional hit on a
+   cache that is already warm, and buys the ability to fix something mid-day. */
+const EDGE_TTL = 86400;     // 24h at the edge, matching the daily rotation
+const BROWSER_TTL = 300;    // 5 min in the browser, so a deploy can actually land
 /* A fingerprint of everything this bundle would serve. Computed once per isolate
    over the pool, the schedule and the epoch, so it changes when and only when the
    answer could change — which is what makes it safe to put in a cache key.
@@ -77,11 +88,18 @@ const BUILD = (() => {
 })();
 
 
-function secondsUntilEtMidnight(now = new Date()){
+/* Never longer than the time left until the rollover — a browser must not hold a
+   copy across midnight — and never longer than BROWSER_TTL, so a deploy reaches
+   people within minutes rather than at the end of the day. */
+function browserTtl(now = new Date()){
   const et = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
   const next = new Date(et);
   next.setHours(24, 0, 0, 0);
-  return Math.max(60, Math.min(EDGE_TTL, Math.round((next - et) / 1000)));
+  const untilRollover = Math.round((next - et) / 1000);
+  // No floor. A floor of even 30s lets a copy fetched at 23:59:40 outlive the
+  // rollover, which is the exact thing this function exists to prevent; in the last
+  // seconds of a day the right answer is simply "revalidate".
+  return Math.max(0, Math.min(BROWSER_TTL, untilRollover));
 }
 
 export default {
@@ -118,7 +136,7 @@ export default {
         // that was correct when it was computed, which shrinks as the day goes on.
         if(hit){
           const fresh = new Response(hit.body, hit);
-          fresh.headers.set('cache-control', `public, max-age=${secondsUntilEtMidnight()}, s-maxage=${EDGE_TTL}`);
+          fresh.headers.set('cache-control', `public, max-age=${browserTtl()}, s-maxage=${EDGE_TTL}`);
           fresh.headers.set('x-cache', 'HIT');
           return fresh;
         }
@@ -129,7 +147,7 @@ export default {
         today,
         puzzleNumber: puzzleNumber(date),
         questions: roundsForDate(date, POOL, SCHEDULE),
-      }, `public, max-age=${secondsUntilEtMidnight()}, s-maxage=${EDGE_TTL}`, { 'x-cache': 'MISS' });
+      }, `public, max-age=${browserTtl()}, s-maxage=${EDGE_TTL}`, { 'x-cache': 'MISS' });
 
       if(cache){
         // Don't make the player wait on the cache write.
