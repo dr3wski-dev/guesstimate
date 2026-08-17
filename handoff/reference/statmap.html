@@ -539,13 +539,40 @@ function puzzleNumber(dateStr){
    challenge link's, and the server refuses anything that isn't already in the past,
    so this can't be walked forward to read tomorrow's puzzle. With no parameter the
    server answers with its own today, which is the normal path. */
+/* Errors here are shown to a player, not to a developer, so they are written for a
+   player. The raw failure still goes to the console for whoever is debugging.
+
+   The case that made this necessary: when the API route is missing, the host answers
+   with its own 404 HTML page, res.json() chokes on the doctype, and the screen read
+   "Unexpected token '<', "<!DOCTYPE "... is not valid JSON" — which tells a player
+   nothing except that something is broken in a way they can't fix. */
 async function fetchDaily(dateStr){
   const q = dateStr ? `?d=${encodeURIComponent(dateStr)}` : '';
-  const res = await fetch(`${API_BASE}/daily${q}`);
-  if(!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
+  let res;
+  try{
+    res = await fetch(`${API_BASE}/daily${q}`);
+  }catch(err){
+    console.error('[StatMap] network error reaching the questions API', err);
+    throw new Error("Couldn't reach the server. Check your connection and refresh.");
+  }
+  if(!res.ok){
+    console.error(`[StatMap] questions API returned HTTP ${res.status}`);
+    throw new Error(res.status >= 500
+      ? "The questions server is having a moment. Try again in a minute."
+      : "Today's questions aren't available right now. Try refreshing.");
+  }
+  let data;
+  try{
+    data = await res.json();
+  }catch(err){
+    // Almost always the API route not being wired up, so the host's own HTML 404
+    // arrives where JSON was expected.
+    console.error('[StatMap] questions API did not return JSON', err);
+    throw new Error("Today's questions aren't available right now. Try refreshing.");
+  }
   if(!Array.isArray(data.questions) || data.questions.length === 0){
-    throw new Error('no questions returned');
+    console.error('[StatMap] questions API returned no questions', data);
+    throw new Error("Today's questions aren't available right now. Try refreshing.");
   }
   return data;
 }
@@ -1036,7 +1063,7 @@ async function leaveChallenge(){
   let data;
   try{ data = await fetchDaily(null); }
   catch(err){
-    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
+    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
     return;
   }
   MODE = 'daily';
@@ -1671,7 +1698,7 @@ async function init(){
   try{
     data = await fetchDaily(CHALLENGE.date || null);
   }catch(err){
-    panel.innerHTML = `<p class="sub error-text">Couldn't load today's questions (${escapeHtml(err.message)}). Try refreshing the page.</p>`;
+    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
     return;
   }
   // Every one of these is the server's answer, not this device's opinion.
