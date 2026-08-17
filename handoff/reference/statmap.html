@@ -197,12 +197,16 @@
      the score lands directly where the thumb already is. */
   .actionbar{
     position:sticky; bottom:0; z-index:5;
-    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    /* nowrap, not wrap: the readout used to be long enough to take the whole first
+       line, which pushed the button onto a second line at the LEFT. The one control
+       on the screen has to stay where the thumb last found it. */
+    display:flex; align-items:center; gap:12px; flex-wrap:nowrap;
     background:var(--paper); border-top:2px dashed var(--line);
     margin:14px calc(var(--panel-pad) * -1) calc(var(--panel-pad) * -1);
     padding:12px var(--panel-pad) calc(12px + env(safe-area-inset-bottom, 0px));
   }
-  .actionbar .readout{ flex:1 1 auto; min-width:0; }
+  .actionbar .readout{ flex:1 1 auto; min-width:0;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .actionbar button.primary{ flex:none; }
   .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:left; min-height:18px; }
 
@@ -333,6 +337,72 @@
   .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
   .restore-label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin:10px 0 5px; }
   .restore-code{ width:100%; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.45; padding:8px 9px; border:2px solid var(--ink); border-radius:3px; background:var(--paper-2); color:var(--ink); resize:vertical; word-break:break-all; margin:8px 0; }
+
+  /* PHONE LANDSCAPE.
+     A phone turned sideways has roughly 390px of height and 850px of width. The
+     portrait layout stacks everything, so the chart alone came out 411px tall — taller
+     than the screen — and the player had to scroll down to reach the thing they are
+     meant to tap, while 300px of width sat empty beside it.
+
+     Sideways the constraint flips: height is scarce, width is plentiful. So the chart
+     is sized by HEIGHT and everything else moves into a second column.
+
+     Bounded by max-height rather than orientation alone, so a landscape iPad — which
+     has plenty of height — keeps the portrait layout it already reads well in. */
+  @media (orientation:landscape) and (max-height:560px){
+    body{ padding:6px 10px; align-items:flex-start; }
+    .app{ max-width:none; }
+    /* The header stack cost 104px before the chart even began, on a screen with 390
+       to spend. Everything above the panel gets compressed rather than the chart
+       being shrunk to pay for it. */
+    .topline{ margin-bottom:5px; }
+    .progress{ margin-bottom:7px; }
+    .panel{ padding:10px 12px; box-shadow:4px 4px 0 var(--ink); }
+    .panel{
+      display:grid;
+      grid-template-columns:minmax(0,auto) minmax(240px,1fr);
+      column-gap:16px;
+      align-items:start;
+    }
+    /* The chart spans every row of the grid, so the right column can grow past it
+       without dragging the chart taller. */
+    /* span, not `1 / -1`: with no explicit grid-template-rows there is only one
+       explicit row line, so -1 resolves back to line 1 and the chart occupies a
+       single row — which puts every right-hand item BELOW it instead of beside it.
+       The span count just needs to exceed the number of items in column two. */
+    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; }
+    /* An inline SVG with a viewBox and only a max-height has nothing to resolve its
+       size from and collapses to 0x0. Give it a real height and let aspect-ratio
+       derive the width — the viewBox is 560x420, so the two must agree. */
+    .chart-frame svg{
+      height:calc(100dvh - 104px);
+      min-height:150px;
+      width:auto;
+      aspect-ratio:560 / 420;
+      max-width:58vw;
+    }
+    .league-tag,.prompt,.legend,#revealArea,.actionbar{ grid-column:2; }
+    /* The readout already says "Tap the chart to place your guess", so the long-form
+       instruction is pure vertical cost in the dimension there is least of. */
+    .instructions{ display:none; }
+    .prompt{ font-size:15px; line-height:1.25; margin-bottom:6px; }
+    .legend{ font-size:11px; gap:3px 10px; margin-bottom:8px; }
+    /* Stays stuck to the bottom of the viewport, as in portrait. Making it static
+       here was a mistake: once the reveal text lands the right column outgrows the
+       screen and the button — the only control on the page — scrolled away with it. */
+    .actionbar{
+      margin:8px 0 0;
+      padding:8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+      border-top:2px dashed var(--line);
+    }
+    /* The reveal outgrows a 390px screen and something has to give. An inner scroll
+       box keeps the chart in view but hides the fact behind an invisible overflow,
+       with no affordance saying more exists. Letting the page scroll is the ordinary
+       pattern people already know, and the sticky bar above keeps the only control
+       reachable throughout — so the chart leaves the screen while you read, which is
+       the cheaper thing to lose. */
+    .fact{ font-size:13px; line-height:1.5; }
+  }
 
   @media (pointer:coarse){
     /* 16px is the threshold below which iOS zooms a focused field. Touch only, so
@@ -1099,6 +1169,7 @@ function showQuestion(){
   // the whole chart on every move, which would be janky at drag speed.
   function applyGuess(gx, gy){
     dismissCoach();
+    if(readout) readout.style.visibility = 'visible';
     gx = Math.max(xMin, Math.min(xMax, gx));
     gy = Math.max(yMin, Math.min(yMax, gy));
     guess = { x: roundToStep(gx, xStep), y: roundToStep(gy, yStep) };
@@ -1353,8 +1424,11 @@ function showQuestion(){
 
     const revealArea = document.getElementById('revealArea');
     // The miss line below restates this guess as a distance, which is strictly more
-    // useful, so the live readout retires once the answer is on screen.
-    if(readout) readout.style.display = 'none';
+    // useful, so the live readout retires once the answer is on screen. Hidden with
+    // visibility rather than display so its box still holds the row open — with
+    // display:none the flex spacer collapses and the button jumps to the left,
+    // which is exactly the thing the nowrap rule above exists to prevent.
+    if(readout) readout.style.visibility = 'hidden';
     // Still telling the player how to place a guess they have already placed.
     const howToPlot = panel.querySelector('.instructions');
     if(howToPlot) howToPlot.style.display = 'none';

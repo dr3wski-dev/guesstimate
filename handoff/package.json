@@ -2,7 +2,7 @@
   "name": "statmap-dev",
   "private": true,
   "type": "module",
-  "description": "Dev-only tooling for StatMap. THE GAME ITSELF HAS NO DEPENDENCIES — it is one self-contained HTML file and the deployed Worker imports nothing but its own two JSON files. Everything here exists to run the regression suites, which drive a real headless browser because that is the only way to test a game whose entire behaviour is in the DOM. Nothing in this file is shipped to a player.",
+  "description": "Dev-only tooling for StatMap. THE GAME ITSELF HAS NO DEPENDENCIES \u2014 it is one self-contained HTML file and the deployed Worker imports nothing but its own two JSON files. Everything here exists to run the regression suites, which drive a real headless browser because that is the only way to test a game whose entire behaviour is in the DOM. Nothing in this file is shipped to a player.",
   "scripts": {
     "serve": "node pipeline/devserver.mjs 8903",
     "fairness": "node pipeline/audit_fairness.mjs",
@@ -10,7 +10,8 @@
     "test:verify": "node reference/verify.mjs",
     "test:polish": "node reference/polish.mjs",
     "test:restore": "node reference/restore.mjs",
-    "test": "node reference/verify.mjs && node reference/polish.mjs && node reference/restore.mjs && node reference/security.mjs"
+    "test": "node reference/verify.mjs && node reference/polish.mjs && node reference/restore.mjs && node reference/security.mjs && node reference/orientation.mjs",
+    "test:orientation": "node reference/orientation.mjs"
   },
   "devDependencies": {
     "playwright": "1.56.1"
