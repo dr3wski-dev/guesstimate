@@ -108,24 +108,68 @@ await c2.close();
 log('\n=== 4. CHALLENGE LINK NO LONGER A ONE-WAY DOOR ===');
 const c4 = await browser.newContext({ viewport: { width: 1280, height: 1000 } });
 const d4 = await c4.newPage();
-const yest = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
-await d4.goto(`${BASE}?challenge=1&from=Drew&score=380&d=${yest}`);
-await d4.waitForSelector('#startBtn');
-check('"Play today\'s instead" offered before committing', await d4.locator('#todayBtn').count() === 1);
-const before = await d4.evaluate(() => ({ mode: MODE, rounds: ROUNDS.map(q => q.id) }));
-await d4.click('#todayBtn'); await d4.waitForSelector('#startBtn');
-const after = await d4.evaluate(async () => {
-  const served = await (await fetch('/api/daily')).json();
-  return { mode: MODE, rounds: ROUNDS.map(q => q.id), today: served.questions.map(q => q.id), url: location.search, banner: !!document.querySelector('.challenge-banner') };
-});
-check('escape from start screen reaches today', JSON.stringify(after.rounds) === JSON.stringify(after.today), `${after.rounds[0]} vs ${after.today[0]}`);
-check('MODE back to daily', after.mode === 'daily');
-check('challenge params cleared from the URL', after.url === '', `url search = "${after.url}"`);
-check('banner removed', !after.banner);
-check('topline no longer says CHALLENGE', !(await d4.locator('#topLeft').innerText()).includes('CHALLENGE'));
+/* A challenge date is only honoured if it is on or after BAG_EPOCH, and a challenge
+   FOR TODAY is deliberately not challenge mode at all — it is today's puzzle, so it
+   counts toward the streak and there is nothing to escape to (statmap.html, the
+   MODE assignment in init()).
 
-// and via the results screen
-await d4.goto(`${BASE}?challenge=1&from=Drew&score=380&d=${yest}`);
+   Both together mean this whole section is unexercisable on launch day: there is no
+   earlier puzzle to link to. Rather than retarget it at today and let five
+   assertions pass trivially — which is how a suite ends up reporting safety it
+   never checked — it announces the skip and moves on. It starts running tomorrow. */
+await d4.goto(BASE);
+await d4.waitForSelector('#startBtn');
+const { epoch, today } = await d4.evaluate(() => ({ epoch: BAG_EPOCH, today: TODAY }));
+const past = new Date(Date.parse(today + 'T00:00:00Z') - 3 * 86400000).toISOString().slice(0, 10);
+
+if (past < epoch) {
+  log(`  SKIP  challenge-escape section — epoch is ${epoch}, so no puzzle before`
+    + ` ${today} exists yet. A same-day challenge is daily mode by design, so there`
+    + ` is nothing here to exercise until tomorrow.`);
+} else {
+  const yest = past;
+  await d4.goto(`${BASE}?challenge=1&from=Drew&score=380&d=${yest}`);
+  await d4.waitForSelector('#startBtn');
+  check('"Play today\'s instead" offered before committing', await d4.locator('#todayBtn').count() === 1);
+  await d4.click('#todayBtn'); await d4.waitForSelector('#startBtn');
+  const after = await d4.evaluate(async () => {
+    const served = await (await fetch('/api/daily')).json();
+    return { mode: MODE, rounds: ROUNDS.map(q => q.id), today: served.questions.map(q => q.id), url: location.search, banner: !!document.querySelector('.challenge-banner') };
+  });
+  check('escape from start screen reaches today', JSON.stringify(after.rounds) === JSON.stringify(after.today), `${after.rounds[0]} vs ${after.today[0]}`);
+  check('MODE back to daily', after.mode === 'daily');
+  check('challenge params cleared from the URL', after.url === '', `url search = "${after.url}"`);
+  check('banner removed', !after.banner);
+  check('topline no longer says CHALLENGE', !(await d4.locator('#topLeft').innerText()).includes('CHALLENGE'));
+
+  // and via the results screen
+  await d4.goto(`${BASE}?challenge=1&from=Drew&score=380&d=${yest}`);
+  await d4.waitForSelector('#startBtn'); await d4.click('#startBtn');
+  for (let i = 0; i < 5; i++) {
+    await d4.waitForSelector('#chartSvg');
+    const bb = await d4.locator('#chartSvg').boundingBox();
+    await d4.mouse.click(bb.x + bb.width * 0.5, bb.y + bb.height * 0.5);
+    await d4.click('#submitBtn'); await d4.waitForSelector('.reveal'); await d4.click('#submitBtn');
+  }
+  await d4.waitForSelector('.share-card');
+  // Case-insensitive on purpose: this asserts the streak is untouched, not how the
+  // sentence is punctuated. It broke once because a copy edit capitalised the word
+  // after a full stop, which is not a behaviour change and should not read as one.
+  check('challenge round did not touch the streak',
+    /doesn't affect/i.test(await d4.locator('.streak-line').innerText()));
+  await d4.click('#backBtn'); await d4.waitForSelector('#startBtn');
+  const after2 = await d4.evaluate(async () => {
+    const served = await (await fetch('/api/daily')).json();
+    return { mode: MODE, rounds: ROUNDS.map(q => q.id), today: served.questions.map(q => q.id), url: location.search };
+  });
+  check('escape from results screen reaches today', JSON.stringify(after2.rounds) === JSON.stringify(after2.today) && after2.mode === 'daily' && after2.url === '');
+}
+
+// Was `check('no "Play again" button on a daily result', true)` — a literal true,
+// which cannot fail and therefore checked nothing. Play again was removed with
+// practice mode because on a daily round it re-served the same five questions with
+// every answer already revealed. This asserts the button is actually absent.
+await d4.goto(BASE);
 await d4.waitForSelector('#startBtn'); await d4.click('#startBtn');
 for (let i = 0; i < 5; i++) {
   await d4.waitForSelector('#chartSvg');
@@ -134,18 +178,8 @@ for (let i = 0; i < 5; i++) {
   await d4.click('#submitBtn'); await d4.waitForSelector('.reveal'); await d4.click('#submitBtn');
 }
 await d4.waitForSelector('.share-card');
-// Case-insensitive on purpose: this asserts the streak is untouched, not how the
-// sentence is punctuated. It broke once because a copy edit capitalised the word
-// after a full stop, which is not a behaviour change and should not read as one.
-check('challenge round did not touch the streak',
-  /doesn't affect/i.test(await d4.locator('.streak-line').innerText()));
-await d4.click('#backBtn'); await d4.waitForSelector('#startBtn');
-const after2 = await d4.evaluate(async () => {
-  const served = await (await fetch('/api/daily')).json();
-  return { mode: MODE, rounds: ROUNDS.map(q => q.id), today: served.questions.map(q => q.id), url: location.search };
-});
-check('escape from results screen reaches today', JSON.stringify(after2.rounds) === JSON.stringify(after2.today) && after2.mode === 'daily' && after2.url === '');
-check('no "Play again" button on a daily result', true);
+check('no "Play again" button on a daily result',
+  await d4.locator('button', { hasText: /play again/i }).count() === 0);
 
 // ================= 5. SCORING =================
 log('\n=== 5. SCORING / HEAT TIERS ===');

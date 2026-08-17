@@ -130,6 +130,20 @@ def build(site_url, check=False, provider=None, domain=None):
         'the site must not fetch the question pool — that leaks every future answer'
     assert "API_BASE = '/api'" in html, 'expected the client to call the questions API'
 
+    # BAG_EPOCH is declared in both the game and the Worker: the client needs it to
+    # label a puzzle and sanitise a challenge date, the Worker needs it to select the
+    # day's questions. If the two drift, the page prints one puzzle number while the
+    # server serves a different day's questions, and nothing anywhere errors.
+    client_epoch = re.search(r"const BAG_EPOCH = '(\d{4}-\d{2}-\d{2})'", html)
+    worker_epoch = re.search(r"BAG_EPOCH = '(\d{4}-\d{2}-\d{2})'",
+                             open(os.path.join(ROOT, 'worker', 'src', 'selection.js'),
+                                  encoding='utf-8').read())
+    assert client_epoch and worker_epoch, 'could not read BAG_EPOCH from both sources'
+    assert client_epoch.group(1) == worker_epoch.group(1), (
+        f'BAG_EPOCH mismatch: game says {client_epoch.group(1)}, '
+        f'Worker says {worker_epoch.group(1)} — the puzzle number and the questions '
+        f'served would disagree')
+
     # 2. Fonts move from ../assets/fonts to assets/fonts for the same reason.
     html, nf = re.subn(r"url\('\.\./assets/fonts/", "url('assets/fonts/", html)
     assert nf > 0, 'expected font URLs to rewrite'
