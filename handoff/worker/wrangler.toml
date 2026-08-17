@@ -1,4 +1,4 @@
-name = "guesstimate-api"
+name = "statmap-api"
 main = "src/index.js"
 compatibility_date = "2026-08-10"
 
@@ -14,7 +14,7 @@ compatibility_date = "2026-08-10"
 # commented out so a first `wrangler deploy` succeeds on workers.dev for testing
 # before a domain exists.
 # routes = [
-#   { pattern = "guesstimate.app/api/*", zone_name = "guesstimate.app" }
+#   { pattern = "statmap.app/api/*", zone_name = "statmap.app" }
 # ]
 
 # No KV, no D1, no Durable Objects, no secrets, no bindings of any kind. If this

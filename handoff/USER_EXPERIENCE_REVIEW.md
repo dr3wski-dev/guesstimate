@@ -1,7 +1,7 @@
-# Guesstimate — User-Perspective Review
+# StatMap — User-Perspective Review
 
 Written by playing the game, not by reading it. Every claim below was reproduced against
-`reference/guesstimate-scatter.html` + `data/questions.json` at commit `0f143dc`, driven
+`reference/statmap.html` + `data/questions.json` at commit `0f143dc`, driven
 through a headless browser on an iPhone 13 viewport and a 1280×900 desktop viewport.
 Measured numbers are quoted as measured.
 
@@ -58,7 +58,7 @@ the findings below are functional defects with reproductions, not opinions.
 ## Tier 0 — Nobody can play it yet
 
 ### 0.1 There is no playable URL, and the file doesn't work standalone
-The game lives at `handoff/reference/guesstimate-scatter.html` and fetches
+The game lives at `handoff/reference/statmap.html` and fetches
 `../data/questions.json` at runtime. Opened directly from disk:
 
 ```
@@ -161,7 +161,7 @@ repeat gaps: every question is served 7 times in 14 days
 By day three every question a player sees is one they have already answered, with the
 answer already revealed and the fact already read. The daily habit cannot form.
 
-This is the single biggest gap between Guesstimate and everything in the competitive
+This is the single biggest gap between StatMap and everything in the competitive
 table, and it is a content problem, not an engineering one. ACTION_PLAN §5 sets the v1
 bar at 15–20 questions; that is 3–4 days of non-repeating play. `CONTENT_BACKLOG.md`
 already has the archetypes — the pipeline just needs to run.
@@ -221,7 +221,7 @@ A full honest playthrough (clicking the middle of the reference cloud each round
 roughly what a casual player who doesn't know the answer does) produced:
 
 ```
-Guesstimate #219
+StatMap #219
 🔴🔴🔴🔴🟡  214/500
 ```
 
@@ -466,6 +466,6 @@ scores; escape from a challenge link reaching today's puzzle from both the start
 and the results screen with the URL cleared; and an exact hit scoring 100 with a maximum
 miss scoring 0. All 24 pass.
 
-**Storage note:** stats moved to `guesstimate_stats_v2`. v1 records carry their streak
+**Storage note:** stats moved to `statmap_stats_v1`. v1 records carry their streak
 fields across; point totals and the tier histogram restart, because they were recorded
 on the old curve and averaging them against new-curve rounds would be meaningless.

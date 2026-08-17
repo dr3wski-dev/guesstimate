@@ -1,11 +1,11 @@
-# Deploying Guesstimate
+# Deploying StatMap
 
 Two pieces, both on Cloudflare, both free at this scale:
 
 | piece | what it serves | where |
 |---|---|---|
 | the site | the game, fonts, OG image | Cloudflare Pages, publish dir `site/` |
-| `guesstimate-api` | one day's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
+| `statmap-api` | one day's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
 
 **They must share a domain.** The page's CSP is `connect-src 'self'`, so the game can
 only call an API on its own origin. That's deliberate: no CORS, no third-party origin
@@ -25,7 +25,7 @@ exists to close.
 canonical sources:
 
 ```
-handoff/reference/guesstimate-scatter.html   the game (source of truth)
+handoff/reference/statmap.html   the game (source of truth)
 handoff/data/questions.json                  the content
 handoff/assets/                              fonts + OG image
                     |
@@ -205,7 +205,7 @@ still have the host's dashboard open:
    The events carry a puzzle number, a score band and a mode. No names, no free text,
    nothing a player typed. The site collects no PII today; keep it that way.
 
-2. **A stats restore code** — **done.** The stats modal now exports a `GT1-…` code and
+2. **A stats restore code** — **done.** The stats modal now exports an `SM1-…` code and
    accepts one, with a checksum so a truncated paste is rejected rather than silently
    importing garbage. Restoring merges rather than overwrites, and a restored
    `lastPlayed` still blocks a second completion the same day, so a code can't be used
@@ -250,4 +250,4 @@ Then open dev tools on the live site and confirm the Network tab shows a request
 The site is static and the build is deterministic, so rollback is `git revert` plus a
 rebuild, or the host's own "redeploy previous build" button. There is no database to
 migrate and no state on the server — the only persistent state is in each player's
-`localStorage`, which is why the stats key is versioned (`guesstimate_stats_v2`).
+`localStorage`, which is why the stats key is versioned (`statmap_stats_v1`).

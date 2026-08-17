@@ -1,4 +1,4 @@
-# Guesstimate — Competitive Analysis & Enhancement Backlog
+# StatMap — Competitive Analysis & Enhancement Backlog
 
 Written against the actual state of the game (now `site/index.html`) and
 `data/questions.json` (10 questions), not against the plan. Companion to
@@ -8,7 +8,7 @@ close the gaps.
 
 ---
 
-## 1. Where Guesstimate sits in the landscape
+## 1. Where StatMap sits in the landscape
 
 The daily sports-game space is crowded but structurally uniform. Nearly every
 successful entry is a **discrete identification game**: guess the name, fill the
@@ -23,7 +23,7 @@ square, pick from a set.
 | MLB/NBA Pickle | Daily trivia, several modes | Multiple modes = longer sessions |
 | GeoGuessr | Drop a pin on a map | Distance line + animated score bar |
 
-**Guesstimate's actual differentiation:** it is the only one doing *continuous
+**StatMap's actual differentiation:** it is the only one doing *continuous
 2D spatial estimation*. You're not identifying a player, you're estimating a
 position — which means partial credit, which means every single player gets a
 different score on the same question. That's genuinely novel in this space and
@@ -36,13 +36,13 @@ proximity. Worth stealing from deliberately.
 **The corresponding weakness, stated plainly:** identification games are *easy to
 talk about*. "I got Bobby Abreu on the Angels/300-HR square" is a story you can
 tell in a group chat. "I clicked slightly above and left of Draymond Green" is
-not. Estimation games are harder to make social, and right now Guesstimate does
+not. Estimation games are harder to make social, and right now StatMap does
 almost nothing to compensate for that. Most of the recommendations below are
 about making outcomes **legible and tellable**.
 
 **The thing this game has that none of the others do:** the `fact` payload on
 every reveal. Wordle teaches you nothing. Immaculate Grid teaches you nothing.
-Guesstimate ends every round with "huh, I didn't know that." That is the real
+StatMap ends every round with "huh, I didn't know that." That is the real
 product and it's currently buried below the fold in a 13.5px paragraph.
 
 ---
@@ -102,20 +102,20 @@ The entire distribution model is "paste a link into iMessage." Three concrete
 gaps, all cheap:
 
 ### 3.1 The share text is a number, not an artifact
-Currently: `Guesstimate — I scored 350/500. Think you can beat me? <url>`
+Currently: `StatMap — I scored 350/500. Think you can beat me? <url>`
 
 Wordle's emoji grid is not decoration — it *is* the growth engine. It's
 spoiler-free, instantly parseable, visually distinctive in a message thread, and
 it invites a reply. A bare number invites nothing.
 
-Guesstimate already computes everything needed. `scoreTier()` already returns an
+StatMap already computes everything needed. `scoreTier()` already returns an
 emoji per round, and `daysSince(TODAY, BAG_EPOCH)` already yields a puzzle
 number. This is nearly free:
 
 ```
-Guesstimate #218
+StatMap #218
 🟢🟡🟢🔴🟢  412/500
-guesstimate.app
+statmap.app
 ```
 
 The puzzle number matters more than it looks — it's what makes the artifact feel
@@ -132,7 +132,7 @@ entirely different set of five questions. The comparison is incoherent.
 puzzle as a challenge round that doesn't touch the streak.
 
 ### 3.3 The link preview is a prototype title and no image
-`<title>Guesstimate — Scatter Prototype</title>`, no `og:*` tags, no favicon, no
+`<title>StatMap — Scatter Prototype</title>`, no `og:*` tags, no favicon, no
 meta description. iMessage renders a rich card from Open Graph tags — for a game
 distributed by pasted links, **that card is the landing page**, and right now it
 says "Scatter Prototype" with a blank thumbnail.
@@ -200,7 +200,7 @@ Cheapest high-leverage fix on this entire list: real title, `og:title` /
    reason anyone comes back.
 5. **Visual identity per question.** Every chart looks identical: same paper, same
    axes, same three hollow dots. Immaculate Grid gets enormous visual variety free
-   from team logos. Guesstimate has a league tag and nothing else. Even
+   from team logos. StatMap has a league tag and nothing else. Even
    league-tinted accents (NBA / NFL / MLB) would make the five daily rounds feel
    like five different things instead of one thing five times.
 6. **Self-host the fonts.** Three Google Fonts families are render-blocking

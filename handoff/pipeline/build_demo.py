@@ -27,7 +27,7 @@ import argparse, base64, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..'))
-SRC_HTML = os.path.join(ROOT, 'reference', 'guesstimate-scatter.html')
+SRC_HTML = os.path.join(ROOT, 'reference', 'statmap.html')
 SRC_DATA = os.path.join(ROOT, 'data', 'questions.json')
 SRC_SCHEDULE = os.path.join(ROOT, 'data', 'schedule.json')
 SRC_SELECTION = os.path.join(ROOT, 'worker', 'src', 'selection.js')
@@ -132,7 +132,7 @@ window.fetch = async function(input, init){{
 
     # Just the product name. The gallery shows a description under the title, so an
     # appended "— Demo" would only be noise; the banner on the page says it anyway.
-    out = (f'<title>Guesstimate</title>\n'
+    out = (f'<title>StatMap</title>\n'
            f'<style>\n{style}\n</style>\n'
            f'<script>\n{head_script}\n</script>\n'
            f'{BANNER}\n{body}\n')

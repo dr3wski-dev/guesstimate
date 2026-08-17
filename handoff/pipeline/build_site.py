@@ -3,7 +3,7 @@
 Assemble the deployable site into site/ from the canonical sources.
 
 WHY A BUILD STEP
-The game currently lives at handoff/reference/guesstimate-scatter.html and fetches
+The game lives at handoff/reference/statmap.html and fetches
 `../data/questions.json`, which means it can't be served from a web root and can't
 be opened from disk at all. The obvious fix — copy the file and hand-edit it — creates
 a second copy that drifts. So the reference file stays the single source of truth and
@@ -21,16 +21,16 @@ Everything here is derived. Never hand-edit site/ — edit the reference file or
 data and re-run.
 
 USAGE
-  python3 pipeline/build_site.py --url https://guesstimate.example
-  python3 pipeline/build_site.py --url https://guesstimate.example --check
-  python3 pipeline/build_site.py --url https://guesstimate.example \\
-      --analytics plausible --analytics-domain guesstimate.example
+  python3 pipeline/build_site.py --url https://statmap.example
+  python3 pipeline/build_site.py --url https://statmap.example --check
+  python3 pipeline/build_site.py --url https://statmap.example \\
+      --analytics plausible --analytics-domain statmap.example
 """
 import argparse, json, os, re, shutil, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..'))
-SRC_HTML = os.path.join(ROOT, 'reference', 'guesstimate-scatter.html')
+SRC_HTML = os.path.join(ROOT, 'reference', 'statmap.html')
 SRC_DATA = os.path.join(ROOT, 'data', 'questions.json')
 SRC_SCHEDULE = os.path.join(ROOT, 'data', 'schedule.json')
 SRC_ASSETS = os.path.join(ROOT, 'assets')
@@ -241,7 +241,7 @@ def build(site_url, check=False, provider=None, domain=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--url', required=True, help='absolute site origin, e.g. https://guesstimate.app')
+    ap.add_argument('--url', required=True, help='absolute site origin, e.g. https://statmap.app')
     ap.add_argument('--check', action='store_true', help='validate without writing')
     ap.add_argument('--analytics', choices=sorted(ANALYTICS),
                     help='install an analytics provider (adds its host to the CSP)')

@@ -1,4 +1,4 @@
-# Guesstimate — Go-Live Checklist
+# StatMap — Go-Live Checklist
 
 Where the project actually stands, what blocks launch, and an honest answer to
 "is the backend the problem." Companion to USER_EXPERIENCE_REVIEW.md (which lists
@@ -123,7 +123,7 @@ no PII, no auth needed for the percentile itself.
 **Done.** The Worker decides the date.
 
 ### 3. Accounts and cross-device streaks
-**Solved without accounts.** The stats modal exports and accepts a `GT1-…` restore
+**Solved without accounts.** The stats modal exports and accepts an `SM1-…` restore
 code — checksummed so a truncated paste is rejected, merged rather than overwritten,
 and unable to buy streak credit because the one-completion-per-day rule still applies
 to the restored `lastPlayed`. That covers the actual user need with no login, no

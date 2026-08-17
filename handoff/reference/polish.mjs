@@ -2,7 +2,12 @@ import { chromium, devices } from 'playwright';
 import fs from 'node:fs';
 // The client no longer holds the pool (the Worker does), so read the source of
 // truth from disk rather than out of the page.
-const POOL = JSON.parse(fs.readFileSync('/home/user/guesstimate/handoff/data/questions.json','utf8'));
+import path from 'path';
+import { fileURLToPath } from 'url';
+// Resolved from this file, not from an absolute path baked in on one machine —
+// the suite is committed, so it has to run on any checkout.
+const POOL = JSON.parse(fs.readFileSync(
+  path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'data', 'questions.json'), 'utf8'));
 const BASE = process.env.BASE || 'http://localhost:8903/';
 const b=await chromium.launch(); let fails=0;
 const ck=(n,ok,d='')=>{console.log(`  ${ok?'PASS':'FAIL'}  ${n}${d?'  — '+d:''}`); if(!ok)fails++;};

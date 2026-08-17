@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://guesstimate/questions.schema.json",
-  "title": "Guesstimate question pool",
+  "$id": "https://statmap/questions.schema.json",
+  "title": "StatMap question pool",
   "description": "The contract for data/questions.json. Enforced by pipeline/import_questions.py on every import; the numbers themselves are separately re-derived from the source datasets by pipeline/verify_questions.py. Schema validity means the shape is right, NOT that the stats are true — both gates have to pass before content ships.",
   "type": "array",
   "minItems": 1,

@@ -1,8 +1,8 @@
-# Guesstimate — 0→1 Action Plan
+# StatMap — 0→1 Action Plan
 For handoff to Claude Code. This is the current source of truth for scope, architecture,
 security, and cost — supersedes prior planning docs (ROADMAP.md, CURRENT_SPEC.md) where
 they conflict. Working reference implementation: site/index.html (formerly
-reference/guesstimate-scatter.html).
+reference/statmap.html).
 
 ## 0. What this project actually is, in one paragraph
 A sports stats guessing game. Five questions a day, same for every player, no login

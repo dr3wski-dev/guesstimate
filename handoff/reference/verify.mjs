@@ -1,4 +1,4 @@
-/* Regression suite for guesstimate-scatter.html — drives the real page in a browser
+/* Regression suite for the StatMap reference implementation — drives the real page in a browser
    and asserts the fixes from USER_EXPERIENCE_REVIEW.md stay fixed.
 
    This is a development tool, NOT a runtime dependency: the game itself is still
@@ -81,13 +81,13 @@ const sim = await p.evaluate(() => {
   out.push(`Wed 10am ET (puzzle 2026-08-12): lastPlayed=${s.lastPlayed} streak=${s.currentStreak} days=${s.daysPlayed}`);
   const dup = registerCompletion([99, 99, 99, 99, 99], '2026-08-12');
   out.push(`replay of Wed:                   streak=${dup.currentStreak} days=${dup.daysPlayed} (must be unchanged)`);
-  return { out, final: JSON.parse(localStorage.getItem('guesstimate_stats_v2')) };
+  return { out, final: JSON.parse(localStorage.getItem('statmap_stats_v1')) };
 });
 sim.out.forEach(l => log('    ' + l));
 check('evening play no longer eats the next day', sim.final.currentStreak === 3 && sim.final.daysPlayed === 3, `streak ${sim.final.currentStreak}, days ${sim.final.daysPlayed}`);
 
 const stale = await p.evaluate(() => {
-  localStorage.setItem('guesstimate_stats_v2', JSON.stringify({ lastPlayed: '2026-01-15', currentStreak: 7, bestStreak: 12, daysPlayed: 20, totalPoints: 6000, bestRound: 410, tiers: {} }));
+  localStorage.setItem('statmap_stats_v1', JSON.stringify({ lastPlayed: '2026-01-15', currentStreak: 7, bestStreak: 12, daysPlayed: 20, totalPoints: 6000, bestRound: 410, tiers: {} }));
   const s = loadStats();
   return { stored: s.currentStreak, live: liveStreak(s, TODAY), yesterdayCase: liveStreak({ lastPlayed: prevDateString(TODAY), currentStreak: 4 }, TODAY) };
 });
@@ -134,7 +134,11 @@ for (let i = 0; i < 5; i++) {
   await d4.click('#submitBtn'); await d4.waitForSelector('.reveal'); await d4.click('#submitBtn');
 }
 await d4.waitForSelector('.share-card');
-check('challenge round did not touch the streak', (await d4.locator('.streak-line').innerText()).includes("doesn't affect"));
+// Case-insensitive on purpose: this asserts the streak is untouched, not how the
+// sentence is punctuated. It broke once because a copy edit capitalised the word
+// after a full stop, which is not a behaviour change and should not read as one.
+check('challenge round did not touch the streak',
+  /doesn't affect/i.test(await d4.locator('.streak-line').innerText()));
 await d4.click('#backBtn'); await d4.waitForSelector('#startBtn');
 const after2 = await d4.evaluate(async () => {
   const served = await (await fetch('/api/daily')).json();

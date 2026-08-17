@@ -39,7 +39,7 @@ import { fileURLToPath } from 'url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');
-const SRC_HTML = path.join(ROOT, 'reference', 'guesstimate-scatter.html');
+const SRC_HTML = path.join(ROOT, 'reference', 'statmap.html');
 const SRC_DATA = path.join(ROOT, 'data', 'questions.json');
 
 // Thresholds. Both were read off the pool's own distribution rather than picked as

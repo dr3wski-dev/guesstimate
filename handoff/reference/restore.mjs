@@ -14,7 +14,7 @@ await A.click('#statsBtn'); await A.waitForTimeout(200);
 await A.click('#copyCodeBtn'); await A.waitForTimeout(250);
 const code = await A.locator('#myCode').inputValue();
 console.log('  code:', code.slice(0,52)+'...', `(${code.length} chars)`);
-ck('code has version prefix and checksum', /^GT1-[A-Z0-9]{1,4}-/.test(code));
+ck('code has version prefix and checksum', /^SM1-[A-Z0-9]{1,4}-/.test(code));
 ck('no JS errors on device A', errs.length===0, errs[0]||'');
 
 // Device B: fresh browser, paste it
@@ -39,8 +39,8 @@ await B.screenshot({path:'v-restore.png'});
 // Corruption handling
 const bad=await B.evaluate(()=>{
   const out={};
-  const cases={ 'truncated':'GT1-ABCD-eyJsYXN0', 'wrong prefix':'XX1-ABCD-eyJhIjoxfQ',
-                'garbage':'hello world', 'bad checksum':'GT1-ZZZZ-eyJhIjoxfQ' };
+  const cases={ 'truncated':'SM1-ABCD-eyJsYXN0', 'wrong prefix':'XX1-ABCD-eyJhIjoxfQ',
+                'garbage':'hello world', 'bad checksum':'SM1-ZZZZ-eyJhIjoxfQ' };
   for(const [k,v] of Object.entries(cases)){
     try{ readRestoreCode(v); out[k]='ACCEPTED (bad)'; }catch(e){ out[k]='rejected: '+e.message; }
   }
