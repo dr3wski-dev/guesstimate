@@ -46,7 +46,11 @@ jobs:
       # Also asserts the pool is never published as a static file and that the game
       # and the Worker agree on BAG_EPOCH.
       - name: Build the site
-        run: python3 handoff/pipeline/build_site.py --url https://statmap.app
+        # These flags must match the ones DEPLOY.md tells you to deploy with, or the
+        # next step compares the committed site against a build it never came from.
+        run: >
+          python3 handoff/pipeline/build_site.py --url https://statmap.app
+          --analytics umami --analytics-domain 3acb4aa9-ff47-4133-8bad-a14e592a0ebb
 
       # The committed site/ must match what the sources produce. Without this, a
       # hand-edit to site/index.html survives — and site/ is what Pages actually
