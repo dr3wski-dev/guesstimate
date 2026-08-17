@@ -8,6 +8,12 @@ __pycache__/
 *.pyc
 
 # Dev-only test deps (see handoff/package.json) — the game itself has none
-node_modules/
+node_modules
 handoff/v-*.png
 handoff/*.png
+
+# Working exports — regenerate with `import_questions.py --export`.
+# A stale copy committed here is a silent revert waiting to happen: the pool has
+# been 46, 63, 68 and 104 questions, and importing an old export drops the rest.
+handoff/content/questions.csv
+handoff/content/questions.xlsx
