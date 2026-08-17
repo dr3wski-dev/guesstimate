@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <!-- Defense-in-depth per SECURITY_NOTES.md: this page parses URL params
      (?challenge=1&from=...&score=...&d=...) into the DOM. They're sanitized in JS
      regardless, but a CSP costs nothing and would have blocked the earlier
@@ -10,26 +10,33 @@
      Fonts are self-hosted now, so this no longer needs to allow googleapis/gstatic
      at all — the only non-'self' source left is data: for the inline SVG favicon. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self';">
-<title>Guesstimate — Daily Sports Stat Guessing Game</title>
-<meta name="description" content="Five sports stat questions a day. Real players are plotted on a chart — you guess where another one falls. Same questions for everyone, every day.">
+<title>StatMap: Daily Sports Stat Guessing Game</title>
+<meta name="author" content="Drew Tanous">
+<meta name="description" content="Five sports stat questions a day. Real players are plotted on a chart. You guess where another one falls. Same questions for everyone, every day.">
 <!-- Open Graph / Twitter. This game's distribution model is people pasting a link
      into a group chat, which means this card IS the landing page for most players.
      NOTE FOR DEPLOY: og:image and og:url must become absolute URLs on the real
      domain — most crawlers (including iMessage's) will not resolve a relative
      og:image. Regenerate the image from assets/og-source.html; see that file. -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Guesstimate">
-<meta property="og:title" content="Guesstimate — Daily Sports Stat Guessing Game">
-<meta property="og:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls. How close can you get?">
+<meta property="og:site_name" content="StatMap">
+<meta property="og:title" content="StatMap: Daily Sports Stat Guessing Game">
+<meta property="og:description" content="Five questions a day. Real players plotted on a chart. Guess where the next one falls. How close can you get?">
 <meta property="og:image" content="assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Guesstimate — a scatter chart with plotted sports players and a guess marker.">
+<meta property="og:image:alt" content="StatMap: a scatter chart with plotted sports players and a guess marker.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Guesstimate — Daily Sports Stat Guessing Game">
-<meta name="twitter:description" content="Five questions a day. Real players plotted on a chart — guess where the next one falls.">
+<meta name="twitter:title" content="StatMap: Daily Sports Stat Guessing Game">
+<meta name="twitter:description" content="Five questions a day. Real players plotted on a chart. Guess where the next one falls.">
 <meta name="twitter:image" content="assets/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1810'/%3E%3Cpath d='M6 26 H27' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M6 26 V5' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='2.6' fill='%23f0b429'/%3E%3Ccircle cx='20' cy='12' r='3.4' fill='%232f5fd6' stroke='%23f2efe4' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="StatMap">
+<!-- Mobile browser chrome. Two values so the bar matches the page in both themes
+     rather than flashing the wrong ground behind a dark layout. -->
+<meta name="theme-color" content="#f2efe4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12110f" media="(prefers-color-scheme: dark)">
 <!-- The first screen renders in all three families at once: the title is Fraunces,
      the body copy Work Sans, and the topline and buttons IBM Plex Mono. Without
      these, the browser can't discover any of them until it has parsed the stylesheet,
@@ -44,7 +51,7 @@
 // dark-mode preference doesn't see a flash of the light theme first.
 (function(){
   try{
-    var t = localStorage.getItem('guesstimate_theme');
+    var t = localStorage.getItem('statmap_theme');
     if(t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
   }catch(e){}
 })();
@@ -118,8 +125,21 @@
     --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
   }
   *{box-sizing:border-box;}
+  .byline{
+    margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    letter-spacing:0.04em; color:var(--ink-faint);
+  }
+  html{
+    /* Safari inflates text when a phone rotates to landscape unless this is pinned. */
+    -webkit-text-size-adjust:100%; text-size-adjust:100%;
+  }
+  *{
+    /* The grey flash Safari paints on every tap reads as a rendering glitch on a
+       game where tapping the chart is the core interaction. */
+    -webkit-tap-highlight-color:transparent;
+  }
   body{
-    margin:0; min-height:100vh;
+    margin:0; min-height:100vh; min-height:100dvh;
     background:var(--paper);
     background-image:repeating-linear-gradient(0deg, rgba(var(--ink-rgb),0.025) 0px, rgba(var(--ink-rgb),0.025) 1px, transparent 1px, transparent 3px);
     color:var(--ink); font-family:'Work Sans', sans-serif;
@@ -353,13 +373,19 @@
   .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
   .restore-label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin:10px 0 5px; }
   .restore-code{ width:100%; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.45; padding:8px 9px; border:2px solid var(--ink); border-radius:3px; background:var(--paper-2); color:var(--ink); resize:vertical; word-break:break-all; margin:8px 0; }
+
+  @media (pointer:coarse){
+    /* 16px is the threshold below which iOS zooms a focused field. Touch only, so
+       the desktop layout keeps the compact code box. */
+    .restore-code{ font-size:16px; }
+  }
   .restore-status{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin:8px 0 0; min-height:16px; line-height:1.5; }
 </style>
 </head>
 <body>
 <div class="app" id="app">
   <div class="topline">
-    <button id="topLeft" class="home-btn" title="Back to the home screen">GUESSTIMATE</button>
+    <button id="topLeft" class="home-btn" title="Back to the home screen">STATMAP</button>
     <span class="topline-end">
       <span id="topRight">···</span>
       <span class="controls">
@@ -371,7 +397,7 @@
   </div>
   <div class="progress" id="progress"></div>
   <div class="panel" id="panel"></div>
-  <p class="note">Every number here is a real, verified career or season stat, cited on each reveal. The hollow dots are reference players with their values listed — you're estimating where the named player falls against them.</p>
+  <p class="note">Every number here is a real, verified career or season stat, cited on each reveal. The hollow dots are reference players with their values listed. You're estimating where the named player falls against them.</p>
 </div>
 
 <dialog class="modal" id="howModal" aria-labelledby="howTitle">
@@ -533,9 +559,14 @@ async function fetchDaily(dateStr){
    true, so that round is silently discarded — no streak credit, no day counted, no
    points, and no message explaining why. Everything below now runs on the same
    Eastern calendar date the puzzle does. */
-const STATS_KEY = 'guesstimate_stats_v2';
+const STATS_KEY = 'statmap_stats_v1';
+// Vestigial since the rename to StatMap: the whole localStorage namespace moved to
+// statmap_*, and this names a key from a build that was never deployed, so no browser
+// on the production origin can hold one. Kept because it costs nothing at runtime and
+// the path is covered by verify.mjs — but do not extend it. If a real migration is
+// ever needed, it should migrate FROM statmap_stats_v1, not from this.
 const LEGACY_STATS_KEY = 'guesstimate_stats_v1';
-const INTRO_KEY = 'guesstimate_seen_intro';
+const INTRO_KEY = 'statmap_seen_intro';
 const DEFAULT_STATS = { lastPlayed:null, currentStreak:0, bestStreak:0, daysPlayed:0, totalPoints:0, bestRound:0, tiers:{} };
 // Calendar-date arithmetic on the ET date string. Parsing the date-only string as
 // UTC and stepping a whole day is safe here precisely because there's no time
@@ -585,7 +616,7 @@ function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); 
    importing garbage. No accounts, no backend, no PII — it encodes a streak counter
    and a date. Whatever is imported is still subject to the same one-completion-per-
    day rule, so a code can't be used to fabricate a run of play. */
-const CODE_PREFIX = 'GT1';
+const CODE_PREFIX = 'SM1';
 function checksum(str){
   let h = 5381;
   for(let i=0;i<str.length;i++){ h = ((h*33) ^ str.charCodeAt(i)) >>> 0; }
@@ -613,10 +644,10 @@ function makeRestoreCode(s){
 function readRestoreCode(raw){
   const code = (raw || '').trim().replace(/\s+/g, '');
   const parts = code.split('-');
-  if(parts.length < 3 || parts[0] !== CODE_PREFIX) throw new Error("That doesn't look like a Guesstimate code.");
+  if(parts.length < 3 || parts[0] !== CODE_PREFIX) throw new Error("That doesn't look like a StatMap code.");
   const [, sum, ...rest] = parts;
   const body = rest.join('-');
-  if(checksum(body) !== sum) throw new Error('That code looks incomplete — copy the whole thing and try again.');
+  if(checksum(body) !== sum) throw new Error('That code looks incomplete. Copy the whole thing and try again.');
   let parsed;
   try{ parsed = JSON.parse(b64decode(body)); }
   catch(e){ throw new Error("That code couldn't be read."); }
@@ -915,8 +946,8 @@ function renderProgress(){
 }
 function setTopline(right){
   topLeft.textContent = MODE === 'challenge'
-    ? `GUESSTIMATE #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
-    : `GUESSTIMATE #${PUZZLE_NO}`;
+    ? `STATMAP #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
+    : `STATMAP #${PUZZLE_NO}`;
   topRight.textContent = right;
 }
 
@@ -939,8 +970,8 @@ function startScreen(){
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
     challengeHTML = MODE === 'challenge'
-      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}) — you're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
-      : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> — think you can beat them?</div>`;
+      ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}). You're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
+      : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b>. Think you can beat them?</div>`;
   }
   // Offered before the player commits to five rounds of someone else's day, not
   // only after. Arriving on a challenge link is how most people will ever reach
@@ -956,7 +987,7 @@ function startScreen(){
   const resuming = runInProgress();
   const playedToday = MODE === 'daily' && !resuming && stats.lastPlayed === TODAY;
   const startLabel = resuming
-    ? `Resume — question ${roundScores.length + 1} of ${ROUNDS.length} →`
+    ? `Resume: question ${roundScores.length + 1} of ${ROUNDS.length} →`
     : playedToday
       ? `Replay today's questions →`
       : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
@@ -964,14 +995,15 @@ function startScreen(){
     ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
     : '';
   panel.innerHTML = `
-    <h1 class="title">Guesstimate</h1>
-    <p class="sub">Real reference players are plotted on a 2D chart — click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
-    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
+    <h1 class="title">StatMap</h1>
+    <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
+    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}. Same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
     <div class="next-row">${leaveChallengeBtn}<button class="primary" id="startBtn">${startLabel}</button></div>
     ${replayNote}
     <div><button class="how-link" id="howLink">How does scoring work?</button></div>
+    <p class="byline">Built by Drew Tanous</p>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     if(resuming){ idx = roundScores.length; showQuestion(); return; }
@@ -1035,13 +1067,13 @@ function showQuestion(){
   const xTickD = tickDecimals(xTicks), yTickD = tickDecimals(yTicks);
 
   const legendHTML = r.referencePlayers.map(p =>
-    `<span><i></i><b>${escapeHtml(shortLabel(p.name))}</b> — ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
+    `<span><i></i><b>${escapeHtml(shortLabel(p.name))}</b> · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
   ).join('');
 
   panel.innerHTML = `
     <div class="league-tag">${escapeHtml(r.league)}</div>
-    <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br>— <span class="player">${escapeHtml(r.targetPlayer)}</span></div>
-    <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once — or tab in and use the arrow keys</div>
+    <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br><span class="player">${escapeHtml(r.targetPlayer)}</span></div>
+    <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once. Or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
     <div class="legend">${legendHTML}</div>
     <div id="revealArea" aria-live="polite"></div>
@@ -1384,8 +1416,8 @@ function showResults(){
   track('round_complete', { mode: MODE, score: total, band: `${Math.floor(total/50)*50}-${Math.floor(total/50)*50+49}`,
                             streak: MODE==='daily' ? liveStreak(stats, TODAY) : 0 });
   const headline = MODE === 'challenge'
-    ? `Guesstimate #${puzzleNumber(SERVED_DATE)}`
-    : `Guesstimate #${PUZZLE_NO}`;
+    ? `StatMap #${puzzleNumber(SERVED_DATE)}`
+    : `StatMap #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>{
     const tier = scoreTier(s);
     return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tier.emoji} +${s}</span>`;
@@ -1411,7 +1443,7 @@ function showResults(){
     </div>` : '';
   const streakHTML = MODE === 'daily'
     ? `<div class="streak-line">🔥 <b>${liveStreak(stats, TODAY)}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
-    : `<div class="streak-line">Challenge round — doesn't affect your streak</div>`;
+    : `<div class="streak-line">Challenge round. Doesn't affect your streak</div>`;
 
   panel.innerHTML = `
     <div style="text-align:center;">
@@ -1460,7 +1492,7 @@ function showResults(){
 
     if(navigator.share){
       try{
-        await navigator.share({ title: 'Guesstimate', text: shareText, url: shareUrl });
+        await navigator.share({ title: 'StatMap', text: shareText, url: shareUrl });
         return;
       }catch(err){
         if(err && err.name === 'AbortError') return; // player closed the share sheet - not a failure
@@ -1493,13 +1525,13 @@ function renderHow(){
     <div class="how-step"><span class="n">1</span><div>Five questions a day, the <b>same five for everyone</b>, until midnight ET.</div></div>
     <div class="how-step"><span class="n">2</span><div>Each chart plots real players on <b>two stats at once</b>. Their exact values are listed underneath.</div></div>
     <div class="how-step"><span class="n">3</span><div>Tap, drag or arrow-key to place your guess for the named player, then submit.</div></div>
-    <div class="how-step"><span class="n">4</span><div><b>The closer you land, the more you score</b> — up to 100 a question, 500 a day. Distance counts on both stats together.</div></div>
+    <div class="how-step"><span class="n">4</span><div><b>The closer you land, the more you score</b>: up to 100 a question, 500 a day. Distance counts on both stats together.</div></div>
     <div class="how-bands">
       <div class="fact-label" style="margin-bottom:7px;">Score bands</div>
       ${bands}
     </div>
     <p class="how-note">On the reveal, those bands are drawn around the answer so you
-      can see how close you needed to be. Nothing is ever negative — every guess earns
+      can see how close you needed to be. Nothing is ever negative. Every guess earns
       what it earns.</p>
     <p class="how-note">Every number is a real, verified career or season stat, with its
       source shown on each reveal.</p>`;
@@ -1522,7 +1554,7 @@ function renderStatsModal(){
     // The empty state is exactly when someone arriving on a new phone needs the
     // paste box, so the restore panel has to render here too — not only once
     // there's a record to export.
-    body.innerHTML = `<p class="modal-empty">No rounds yet. Finish today's five questions and your stats will show up here — days played, average score, and how your guesses break down.</p>${restoreHTML()}`;
+    body.innerHTML = `<p class="modal-empty">No rounds yet. Finish today's five questions and your stats will show up here: days played, average score, and how your guesses break down.</p>${restoreHTML()}`;
     wireRestore();
     return;
   }
@@ -1540,7 +1572,7 @@ function renderStatsModal(){
       <div class="stat-cell"><div class="v">${liveStreak(s, TODAY)}</div><div class="k">Streak</div></div>
       <div class="stat-cell"><div class="v">${s.bestStreak}</div><div class="k">Best streak</div></div>
     </div>
-    <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN — BEST ROUND ${s.bestRound}</div>
+    <div class="dist-title instructions" style="margin-bottom:6px;">GUESS BREAKDOWN · BEST ROUND ${s.bestRound}</div>
     ${rows}
     ${restoreHTML()}
   `;
@@ -1554,7 +1586,7 @@ function restoreHTML(){
     <div class="restore">
       <div class="restore-head">Move your streak to another device</div>
       <p class="restore-note">Your streak is stored in this browser only. Clearing it, or
-        switching phones, loses it — this code is the way to carry it across.</p>
+        switching phones, loses it. This code carries it across.</p>
       <div class="next-row" style="justify-content:flex-start;">
         <button class="ghost" id="copyCodeBtn">Copy my code</button>
         <button class="ghost" id="pasteCodeBtn">Paste a code</button>
@@ -1573,7 +1605,7 @@ function wireRestore(){
 
   copyBtn.addEventListener('click', async ()=>{
     const s = loadStats();
-    if(!s.lastPlayed){ status.textContent = 'Nothing to save yet — play a round first.'; return; }
+    if(!s.lastPlayed){ status.textContent = 'Nothing to save yet. Play a round first.'; return; }
     const code = makeRestoreCode(s);
     track('restore_export', { streak: s.currentStreak });
     area.innerHTML = `<textarea class="restore-code" id="myCode" readonly rows="3">${escapeHtml(code)}</textarea>`;
@@ -1581,7 +1613,7 @@ function wireRestore(){
     ta.focus(); ta.select();
     try{
       await navigator.clipboard.writeText(code);
-      status.textContent = 'Copied. Paste it into Guesstimate on your other device.';
+      status.textContent = 'Copied. Paste it into StatMap on your other device.';
     }catch(e){
       status.textContent = 'Copy this code and paste it on your other device.';
     }
@@ -1590,7 +1622,7 @@ function wireRestore(){
   pasteBtn.addEventListener('click', ()=>{
     area.innerHTML = `
       <label class="restore-label" for="codeIn">Paste your code</label>
-      <textarea class="restore-code" id="codeIn" rows="3" placeholder="GT1-..."></textarea>
+      <textarea class="restore-code" id="codeIn" rows="3" placeholder="${CODE_PREFIX}-..."></textarea>
       <div class="next-row" style="justify-content:flex-start;">
         <button class="primary" id="applyCodeBtn">Restore</button>
       </div>`;
@@ -1618,7 +1650,7 @@ function wireRestore(){
       track('restore_import', { streak: merged.currentStreak });
       renderStatsModal();
       const st = document.getElementById('restoreStatus');
-      if(st) st.textContent = `Restored — ${liveStreak(merged, TODAY)}-day streak, best ${merged.bestStreak}.`;
+      if(st) st.textContent = `Restored. ${liveStreak(merged, TODAY)}-day streak, best ${merged.bestStreak}.`;
     });
   });
 }
@@ -1658,7 +1690,7 @@ async function init(){
 init();
 
 /* ============================= THEME (light/dark) ============================= */
-const THEME_KEY = 'guesstimate_theme';
+const THEME_KEY = 'statmap_theme';
 function loadThemePref(){ try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; } }
 function saveThemePref(t){ try{ localStorage.setItem(THEME_KEY, t); }catch(e){} }
 function effectiveTheme(){

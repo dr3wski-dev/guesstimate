@@ -38,9 +38,10 @@ Also worth doing alongside escaping, applied in the same fix:
 - **Cap string length** — a 30-character cap on a "name" field costs nothing and closes
   off a class of abuse (absurdly long strings breaking layout, or just being obnoxious).
 
-**Guesstimate-scatter.html does not have challenge links yet, so it does not have this
-specific bug yet — but the moment they're added, build them with this pattern from the
-start, not as a retrofit.**
+**Challenge links now exist in the game and were built with this pattern from the
+start**, not retrofitted: `?from=` goes through an allowlist sanitiser at the parsing
+boundary, the score is clamped, and `security.mjs` fires six injection payloads at it
+on every run.
 
 ## General security posture for this project specifically
 This is a static site with no accounts and no PII collected in v1 — the attack

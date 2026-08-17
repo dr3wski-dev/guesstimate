@@ -78,11 +78,11 @@ for(const p of ['data/questions.json','questions.json','data/schedule.json','han
   const pg=await b.newPage(); const errs=[];
   pg.on('pageerror',e=>errs.push(e.message));
   await pg.goto(BASE);
-  await pg.evaluate(()=>localStorage.setItem('guesstimate_stats_v2','{"streak":"<img src=x onerror=window.__pwn=1>","best":{},"days":[1,2]}'));
+  await pg.evaluate(()=>localStorage.setItem('statmap_stats_v1','{"streak":"<img src=x onerror=window.__pwn=1>","best":{},"days":[1,2]}'));
   await pg.reload(); await pg.waitForTimeout(400);
   ok('poisoned localStorage does not execute', !(await pg.evaluate(()=>window.__pwn||0)));
   ok('poisoned localStorage does not crash the page', errs.length===0, errs[0]||'');
-  await pg.evaluate(()=>localStorage.setItem('guesstimate_stats_v2','{{{not json'));
+  await pg.evaluate(()=>localStorage.setItem('statmap_stats_v1','{{{not json'));
   await pg.reload(); await pg.waitForTimeout(400);
   ok('malformed localStorage recovers', await pg.locator('#startBtn').isVisible().catch(()=>false));
   await pg.close();
@@ -95,9 +95,9 @@ for(const p of ['data/questions.json','questions.json','data/schedule.json','han
   await pg.click('#statsBtn'); await pg.waitForTimeout(200);
   await pg.click('#pasteCodeBtn'); await pg.waitForTimeout(150);
   for(const bad of [
-      'GT1-<img src=x onerror=window.__pwn=1>',
+      'SM1-<img src=x onerror=window.__pwn=1>',
       '<script>window.__pwn=1<\/script>',
-      'GT1-"><svg/onload=window.__pwn=1>',
+      'SM1-"><svg/onload=window.__pwn=1>',
   ]){
     await pg.fill('#codeIn', bad);
     await pg.click('#applyCodeBtn'); await pg.waitForTimeout(250);

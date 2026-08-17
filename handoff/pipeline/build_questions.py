@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Guesstimate content pipeline — candidate question generator.
+StatMap content pipeline — candidate question generator.
 
 WHY THIS EXISTS
 The pool was 10 questions, which is two days before every question repeats (see

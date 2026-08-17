@@ -39,7 +39,7 @@ import { fileURLToPath } from 'url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');
-const SRC_HTML = path.join(ROOT, 'reference', 'guesstimate-scatter.html');
+const SRC_HTML = path.join(ROOT, 'reference', 'statmap.html');
 const SRC_DATA = path.join(ROOT, 'data', 'questions.json');
 
 // Thresholds. Both were read off the pool's own distribution rather than picked as
@@ -194,8 +194,115 @@ function repair(q) {
   return { xDomain: best.x, yDomain: best.y, after: audit(trial) };
 }
 
+/* Tighten a chart until it is as full as fairness allows.
+ *
+ * WHY THIS IS A SEPARATE PASS FROM repair()
+ * repair() widens an axis to push the target away from the centre. Tighten pulls the
+ * other way, to fill the plot. They are opposing forces on the same knob, and the
+ * useful answer is the tightest window that still passes both gates — so this runs
+ * over the whole pool, not only over failures.
+ *
+ * THE METRIC WAS WRONG, WHICH IS WHY THIS IS NEEDED
+ * The original constraint was per-axis fill at 38%. But a reader perceives AREA, and
+ * 0.4 x 0.4 is 16% of the plot. Twenty questions came out under a quarter covered
+ * and read as mostly empty space, all of them passing a fill check that was measuring
+ * the wrong thing. Optimising area directly fixes the class, not the instances.
+ *
+ * Centre score is exact and cheap, so it filters candidates first; lift needs a
+ * simulation, so it only runs on the handful that survive, best-area first. */
+function tighten(q) {
+  const cand = {};
+  for (const [axis, vals, target] of
+       [['x', q.referencePlayers.map(p => p.x), q.targetX],
+        ['y', q.referencePlayers.map(p => p.y), q.targetY]]) {
+    const all = [...vals, target];
+    const lo0 = Math.min(...all), hi0 = Math.max(...all);
+    const spread = hi0 - lo0 || Math.abs(target) * 0.2 || 1;
+    const zeroOk = lo0 >= 0;
+    const whole = all.every(v => Number.isInteger(v));
+    const out = [];
+    for (const step of niceSteps(spread / 3)) {
+      if (whole && !Number.isInteger(step)) continue;
+      const range = step * 4;
+      if (range < spread * 1.02) continue;
+      for (let k = 0; k <= 4; k++) {
+        const lo = Math.round((hi0 - range + step * k) / step) * step;
+        const hi = lo + range;
+        if (lo > lo0 - spread * 0.03 || hi < hi0 + spread * 0.03) continue;
+        if (zeroOk && lo < 0) continue;
+        out.push({ lo, hi, fill: spread / range });
+      }
+    }
+    cand[axis] = out;
+  }
+  if (!cand.x.length || !cand.y.length) return null;
+
+  const combos = [];
+  for (const cx of cand.x) for (const cy of cand.y) {
+    const trial = { ...q, xDomain: [cx.lo, cx.hi], yDomain: [cy.lo, cy.hi] };
+    // Cheap exact filter before paying for the simulation.
+    const xs = q.referencePlayers.map(p => p.x), ys = q.referencePlayers.map(p => p.y);
+    const xR = cx.hi - cx.lo, yR = cy.hi - cy.lo;
+    const centre = score(Math.hypot(
+      ((cx.lo + cx.hi) / 2 - q.targetX) / xR, ((cy.lo + cy.hi) / 2 - q.targetY) / yR));
+    if (centre > MAX_CENTRE) continue;
+    void xs; void ys;
+    combos.push({ trial, area: cx.fill * cy.fill });
+  }
+  combos.sort((a, b) => b.area - a.area);
+  for (const c of combos.slice(0, 40)) {
+    const a = audit(c.trial);
+    if (a.centre <= MAX_CENTRE && a.lift >= MIN_LIFT) {
+      return { xDomain: c.trial.xDomain, yDomain: c.trial.yDomain, area: c.area, after: a };
+    }
+  }
+  return null;
+}
+
+function areaOf(q) {
+  const xs = q.referencePlayers.map(p => p.x).concat(q.targetX);
+  const ys = q.referencePlayers.map(p => p.y).concat(q.targetY);
+  const [x0, x1] = resolveDomain(q.xDomain, q.referencePlayers.map(p => p.x), q.targetX);
+  const [y0, y1] = resolveDomain(q.yDomain, q.referencePlayers.map(p => p.y), q.targetY);
+  return ((Math.max(...xs) - Math.min(...xs)) / (x1 - x0)) *
+         ((Math.max(...ys) - Math.min(...ys)) / (y1 - y0));
+}
+
+function runTighten(pool) {
+  const before = pool.map(areaOf);
+  let improved = 0;
+  for (const q of pool) {
+    const cur = areaOf(q);
+    const t = tighten(q);
+    // Only take a real improvement; churning a domain for two percent is noise in
+    // the diff and a re-verification for nothing.
+    if (t && t.area > cur + 0.04) {
+      q.xDomain = t.xDomain; q.yDomain = t.yDomain; improved++;
+    }
+  }
+  const after = pool.map(areaOf);
+  const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
+  const under = (a, v) => a.filter(x => x < v).length;
+  console.log(`tightened ${improved} of ${pool.length} charts`);
+  console.log(`  mean coverage   ${(mean(before) * 100).toFixed(0)}% -> ${(mean(after) * 100).toFixed(0)}%`);
+  console.log(`  under 25% cover ${under(before, .25)} -> ${under(after, .25)}`);
+  console.log(`  sparsest chart  ${(Math.min(...before) * 100).toFixed(0)}% -> ${(Math.min(...after) * 100).toFixed(0)}%`);
+  return improved;
+}
+
 function main() {
   const pool = JSON.parse(fs.readFileSync(SRC_DATA, 'utf8'));
+
+  if (process.argv.includes('--tighten')) {
+    const n = runTighten(pool);
+    if (process.argv.includes('--apply') && n) {
+      fs.writeFileSync(SRC_DATA, JSON.stringify(pool, null, 2) + '\n');
+      console.log(`wrote ${path.basename(SRC_DATA)}`);
+    } else if (!process.argv.includes('--apply')) {
+      console.log('(dry run — add --apply to write)');
+    }
+  }
+
   const rows = pool.map(audit);
   const fails = rows.filter(r => r.centre > MAX_CENTRE || r.lift < MIN_LIFT);
 

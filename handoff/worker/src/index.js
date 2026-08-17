@@ -1,4 +1,4 @@
-/* Guesstimate daily-questions API — one stateless Cloudflare Worker.
+/* StatMap daily-questions API — one stateless Cloudflare Worker.
    No database, no accounts, no auth, no stored state of any kind: every response
    is a pure function of (server clock, bundled question pool).
 
@@ -91,7 +91,7 @@ export default {
          midnight ET. Nothing ever has to purge this cache; yesterday's entry is
          simply never asked for again. */
       const cache = globalThis.caches?.default;
-      const cacheKey = new Request(`https://guesstimate.invalid/daily/${date}`, { method: 'GET' });
+      const cacheKey = new Request(`https://statmap.invalid/daily/${date}`, { method: 'GET' });
       if(cache){
         const hit = await cache.match(cacheKey);
         // Re-derive max-age on a hit: the stored copy was written with the TTL

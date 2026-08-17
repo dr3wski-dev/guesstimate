@@ -1,4 +1,4 @@
-# Guesstimate — Handoff Package
+# StatMap — Handoff Package
 Start here. This is the complete, current context for the project — everything else in
 this folder is referenced from this file in the order it should be read.
 
@@ -39,7 +39,7 @@ falls, scored by proximity.
    Every number re-derives from the raw datasets on a separate code path; see
    **pipeline/** below. `data/quarantine.json` holds questions withdrawn for being bad
    *questions* rather than wrong ones, each with the measurement that condemned it.
-8. **reference/guesstimate-scatter.html** — the working, tested reference
+8. **reference/statmap.html** — the working, tested reference
    implementation, and the single source of truth for the game. Click-to-plot 2D
    mechanic, heat-map proximity scoring, multi-round loop. The production build is
    generated from it; never hand-edit `site/`. Four browser suites sit beside it —
@@ -80,6 +80,6 @@ form, and it would be easy for old context to leak back in:
 
 ## The one instruction to give Claude Code before anything else
 *"Read README.md, then ACTION_PLAN.md in full, before writing any code. Treat
-guesstimate-scatter.html as the reference implementation to extend, not a prototype to
+statmap.html as the reference implementation to extend, not a prototype to
 throw away. Do not fabricate or estimate stats — if data is needed beyond what's in
 questions.json, flag it as a research task rather than filling it in."*

@@ -1,5 +1,5 @@
 /* ============================= DAILY SELECTION =============================
-   Moved here from guesstimate-scatter.html, which no longer contains a copy —
+   Moved here from the game (now reference/statmap.html), which no longer has a copy —
    there is exactly one implementation of this logic and it now runs on the
    server. The functions themselves are unchanged from the versions that were
    built and tested in guesstimate-slider-legacy.html and then ported into the
