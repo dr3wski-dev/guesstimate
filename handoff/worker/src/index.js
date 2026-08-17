@@ -63,6 +63,20 @@ function acceptPastDate(raw, today){
    24-hour lifetime applies where it's actually safe: the shared edge cache,
    via s-maxage. */
 const EDGE_TTL = 86400; // 24h, matching the daily rotation
+/* A fingerprint of everything this bundle would serve. Computed once per isolate
+   over the pool, the schedule and the epoch, so it changes when and only when the
+   answer could change — which is what makes it safe to put in a cache key.
+
+   Deliberately not a timestamp or a random value: those would change on every cold
+   start and throw away a cache that is supposed to last the day. */
+const BUILD = (() => {
+  const src = BAG_EPOCH + '|' + JSON.stringify(SCHEDULE) + '|' + JSON.stringify(POOL);
+  let h = 5381;
+  for (let i = 0; i < src.length; i++) h = ((h * 33) ^ src.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+})();
+
+
 function secondsUntilEtMidnight(now = new Date()){
   const et = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
   const next = new Date(et);
@@ -91,7 +105,13 @@ export default {
          midnight ET. Nothing ever has to purge this cache; yesterday's entry is
          simply never asked for again. */
       const cache = globalThis.caches?.default;
-      const cacheKey = new Request(`https://statmap.invalid/daily/${date}`, { method: 'GET' });
+      // The key carries BUILD as well as the date. Keyed on date alone, a deploy did
+      // not invalidate anything: the edge kept serving a body computed by the
+      // PREVIOUS bundle until the date rolled, so new questions, corrected facts and
+      // a changed epoch could all sit undelivered for up to 24 hours while the
+      // deployment log said success. That is the same silent-staleness failure the
+      // whole bundled-pool design was meant to avoid, reintroduced one layer down.
+      const cacheKey = new Request(`https://statmap.invalid/daily/${date}/${BUILD}`, { method: 'GET' });
       if(cache){
         const hit = await cache.match(cacheKey);
         // Re-derive max-age on a hit: the stored copy was written with the TTL

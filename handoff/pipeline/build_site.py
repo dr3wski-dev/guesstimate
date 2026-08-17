@@ -167,6 +167,24 @@ def build(site_url, check=False, provider=None, domain=None):
     if provider:
         tag = ANALYTICS[provider]['tag'].format(domain=domain)
         html = html.replace('</head>', tag + '\n</head>', 1)
+        # The meta CSP has to be widened too, not just the header. A browser enforces
+        # the INTERSECTION of every policy it is given, so a header that allows the
+        # analytics host and a meta tag that does not means the script is blocked —
+        # and blocked silently, from the page's point of view: the build succeeds, the
+        # tag is present in the HTML, the dashboard just never receives an event.
+        # SECURITY_NOTES.md says "change one, change both"; this is the build honouring
+        # that rather than trusting anyone to remember.
+        meta = re.search(r'<meta http-equiv="Content-Security-Policy" content="([^"]+)"', html)
+        assert meta, 'expected a meta CSP to widen for the analytics provider'
+        widened = []
+        extra = ANALYTICS[provider]['csp']
+        for directive in meta.group(1).split('; '):
+            name = directive.split(' ', 1)[0]
+            if name in extra:
+                directive = directive + ' ' + ' '.join(extra[name])
+            widened.append(directive)
+        html = html.replace(meta.group(0),
+                            f'<meta http-equiv="Content-Security-Policy" content="{"; ".join(widened)}"')
 
     leftovers = re.findall(r'(?:content|href|src)="(?!https?:|data:|#)[^"]*\.\./[^"]*"', html)
     assert not leftovers, f'unresolved relative paths: {leftovers}'

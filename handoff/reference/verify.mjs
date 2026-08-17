@@ -26,7 +26,19 @@ const c1 = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const d1 = await c1.newPage();
 const errs = [];
 d1.on('pageerror', e => errs.push(e.message));
-d1.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
+/* Console errors count, but only the game's own. Once an analytics provider is
+   installed the page loads a script from a vendor CDN, and any environment that
+   cannot reach it — a sandbox, an offline laptop, an ad blocker — produced a
+   "Failed to load resource" error that failed this suite for a reason that has
+   nothing to do with the game. Judged by origin: anything served from somewhere
+   other than the page's own host is somebody else's outage. */
+d1.on('console', m => {
+  if (m.type() !== 'error') return;
+  const from = (m.location() && m.location().url) || '';
+  const ownOrigin = new URL(BASE).origin;
+  if (from && !from.startsWith(ownOrigin)) return;
+  errs.push(m.text());
+});
 await d1.goto(BASE); await d1.waitForSelector('#startBtn');
 check('no Practice button on start screen', await d1.locator('#practiceBtn').count() === 0);
 check('no practice symbols in JS', await d1.evaluate(() => typeof startPractice === 'undefined'));
