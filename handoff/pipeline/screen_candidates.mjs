@@ -31,7 +31,15 @@ const POOL = path.join(HERE, '..', 'data', 'questions.json');
 const args = process.argv.slice(2);
 const oi = args.indexOf('-o');
 const out = oi >= 0 ? args[oi + 1] : null;
-const files = args.filter((a, i) => i !== oi && i !== oi + 1 && !a.startsWith('-'));
+// The `oi >= 0` guard matters: without it, a run with no -o flag has oi === -1, so
+// `i !== oi + 1` excludes index 0 and the FIRST candidate file is silently dropped.
+// That cost a whole league — 34 MLB candidates vanished from a batch and the tool
+// cheerfully reported the smaller number as the total.
+const files = args.filter((a, i) =>
+  !a.startsWith('-') && (oi < 0 || (i !== oi && i !== oi + 1)));
+if (files.length !== new Set(files).size) {
+  console.error('duplicate candidate file passed twice'); process.exit(2);
+}
 if (!files.length) {
   console.error('usage: screen_candidates.mjs <candidates.json...> [-o passing.json]');
   process.exit(2);

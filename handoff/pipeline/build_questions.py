@@ -47,7 +47,7 @@ USAGE
   python3 pipeline/build_questions.py --league nfl --top 12 --json out.json
 """
 
-import argparse, csv, json, math, os, re, sys, unicodedata, urllib.request
+import argparse, csv, json, math, os, random, re, sys, unicodedata, urllib.request, zlib
 from collections import defaultdict, Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -523,6 +523,36 @@ def score_candidate(tgt, refs, xk, yk):
     return inv + sp * 2 + mid * 0.8 + tier_bonus
 
 
+def ref_combos(n, seed):
+    """Index triples into the sorted eligible list, to use as reference players.
+
+    WHY THIS IS JITTERED AND NOT FIXED
+    This used to be four hardcoded quantile triples — (0, n//2, n-1) and friends —
+    tried in order until one scored. Almost every target took the first, so every
+    chart in an archetype ended up anchored at the same three quantiles. For career
+    stats, where the eligible set barely changes between targets, that meant the
+    literal same three players: one batch produced four "career strikeouts vs career
+    home runs" questions all anchored on Lofton, Aaron and Henderson. For season
+    stats it was subtler and just as repetitive — different names, but sitting at the
+    same three x-positions on every chart, because a quantile is a position.
+
+    The seed is derived from the archetype and the target, so a given question always
+    gets the same references and builds stay reproducible. It is deliberately NOT
+    global randomness: a generator whose output changes run to run makes the
+    verification step meaningless.
+    """
+    rnd = random.Random(seed)
+    lo_hi, mid_hi = max(1, n // 3), max(2, 2 * n // 3)
+    combos = [(0, n // 2, n - 1), (n // 4, n // 2, 3 * n // 4),
+              (0, n // 3, 2 * n // 3), (n // 3, 2 * n // 3, n - 1)]
+    for _ in range(10):
+        lo = rnd.randrange(0, lo_hi)
+        mid = rnd.randrange(lo_hi, mid_hi)
+        hi = rnd.randrange(mid_hi, n)
+        combos.append((lo, mid, hi))
+    return combos
+
+
 def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
     """entries: list of player/season dicts. Returns ranked candidate questions."""
     out = []
@@ -536,6 +566,11 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
         if len(elig) < 8:
             continue
         seen = set()
+        # How often each player has already been used as a reference in THIS
+        # archetype. Spreading references around is the difference between a pool
+        # that feels like many charts and one that feels like a single chart with the
+        # answer moved — a sameness players notice without being able to name it.
+        ref_use = Counter()
         for tgt in elig:
             # Three references that bracket the target on both axes. Exclude every
             # other season by the same player: "guess Marshawn Lynch 2012" with
@@ -544,8 +579,18 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
             others = [e for e in elig if e['who'] != tgt['who']]
             others.sort(key=lambda e: (e['stats'][xk], e['stats'][yk]))
             n = len(others)
-            for combo in ((0, n // 2, n - 1), (n // 4, n // 2, 3 * n // 4),
-                          (0, n // 3, 2 * n // 3), (n // 3, 2 * n // 3, n - 1)):
+            key = (arch['id'], label_fn(tgt))
+            if key in seen or n < 4:
+                continue
+            # Evaluate every combo and take the best, rather than the first that
+            # merely works. "First that works" is what collapsed all of these onto
+            # one set of anchors: the first combo tried almost always scored, so the
+            # remaining three were dead code in practice.
+            seed = zlib.crc32(f"{arch['id']}|{tgt['who']}".encode())
+            best = None
+            for combo in ref_combos(n, seed):
+                if len(set(combo)) < 3 or max(combo) >= n:
+                    continue
                 refs = [others[i] for i in combo]
                 # Three distinct players, not three seasons of the same one: a chart
                 # with Shawn Marion 2001-02 and Shawn Marion 2007-08 as two separate
@@ -555,45 +600,83 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
                 s = score_candidate(tgt, refs, xk, yk)
                 if s is None:
                     continue
-                key = (arch['id'], label_fn(tgt))
-                if key in seen:
-                    continue
-                seen.add(key)
-                xs = [p['stats'][xk] for p in refs + [tgt]]
-                ys = [p['stats'][yk] for p in refs + [tgt]]
-                out.append({
-                    'score': round(s, 3),
-                    'id': (f"{league.lower()}-{arch['id']}-{norm(tgt['name']).split()[-1]}"
-                           + (f"-{tgt['season']}" if 'season' in tgt else '')),
-                    'league': league,
-                    'xLabel': arch['xl'], 'xUnit': arch['xu'],
-                    'yLabel': arch['yl'], 'yUnit': arch['yu'],
-                    'xStep': arch['xstep'], 'yStep': arch['ystep'],
-                    'xDomain': nice_domain(xs, arch['xstep']),
-                    'yDomain': nice_domain(ys, arch['ystep']),
-                    'targetPlayer': label_fn(tgt),
-                    'target_who': tgt['who'],
-                    'targetX': tgt['stats'][xk], 'targetY': tgt['stats'][yk],
-                    'referencePlayers': [
-                        {'name': label_fn(r), 'x': r['stats'][xk], 'y': r['stats'][yk]}
-                        for r in refs],
-                    'fact': '', 'source': source,
-                })
-                break
+                # Penalise anchors this archetype has already leaned on. Weight is
+                # small on purpose: a genuinely better chart should still win over a
+                # fresher but weaker one.
+                s -= 0.18 * sum(ref_use[r['who']] for r in refs)
+                if best is None or s > best[0]:
+                    best = (s, refs)
+            if best is None:
+                continue
+            s, refs = best
+            seen.add(key)
+            for r in refs:
+                ref_use[r['who']] += 1
+            xs = [p['stats'][xk] for p in refs + [tgt]]
+            ys = [p['stats'][yk] for p in refs + [tgt]]
+            out.append({
+                'score': round(s, 3),
+                'id': (f"{league.lower()}-{arch['id']}-{norm(tgt['name']).split()[-1]}"
+                       + (f"-{tgt['season']}" if 'season' in tgt else '')),
+                'league': league,
+                'xLabel': arch['xl'], 'xUnit': arch['xu'],
+                'yLabel': arch['yl'], 'yUnit': arch['yu'],
+                'xStep': arch['xstep'], 'yStep': arch['ystep'],
+                'xDomain': nice_domain(xs, arch['xstep']),
+                'yDomain': nice_domain(ys, arch['ystep']),
+                'targetPlayer': label_fn(tgt),
+                'target_who': tgt['who'],
+                'targetX': tgt['stats'][xk], 'targetY': tgt['stats'][yk],
+                'referencePlayers': [
+                    {'name': label_fn(r), 'x': r['stats'][xk], 'y': r['stats'][yk]}
+                    for r in refs],
+                'fact': '', 'source': source,
+            })
     out.sort(key=lambda c: -c['score'])
-    # At most two per archetype so a batch isn't six versions of one idea, and
+    # At most `per_arch` per archetype so a batch isn't six versions of one idea, and
     # one question per player — Rod Carew is a great answer three different ways,
     # but a player who wants five distinct rounds shouldn't meet him in all of them.
+    #
+    # Players already used as the ANSWER to a shipped question. Without this the
+    # generator re-proposes the same top-ranked names on every run — a second batch
+    # came back with 6 new candidates out of 80, because 74 were questions the pool
+    # already had. The point of a batch is new content, so what already shipped has
+    # to be an input.
+    # Two different keys on purpose. Within a run the dataset's player id is the
+    # right identity — it is what disambiguated the two Ricky Williamses. Against the
+    # shipped pool only the display name is available, since questions.json stores no
+    # ids, so that comparison has to go through normalised names.
+    shipped = shipped_targets()
     per, used, final = Counter(), set(), []
     for c in out:
         a = c['id'].split('-')[1]
         who = c['target_who']
         if per[a] >= per_arch or who in used:
             continue
+        if norm(c['targetPlayer'].split(',')[0]) in shipped:
+            continue
         per[a] += 1
         used.add(who)
         final.append(c)
     return final[:top]
+
+
+def shipped_targets():
+    """Normalised identities of every player who is already the answer to a question.
+
+    Matched on the normalised name rather than the dataset's internal id, because the
+    pool stores display names ("Jermaine O'Neal, 2002-03") and the generator works in
+    player ids. A season suffix is stripped so a player cannot come back as the answer
+    to a different season of the same archetype — appearing as the answer twice is
+    the thing being prevented, and which season it was does not change that."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data',
+                        'questions.json')
+    if not os.path.exists(path):
+        return set()
+    out = set()
+    for q in json.load(open(path, encoding='utf-8')):
+        out.add(norm(q['targetPlayer'].split(',')[0]))
+    return out
 
 
 # ---------------------------------------------------------------- validation
