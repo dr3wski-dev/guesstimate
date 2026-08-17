@@ -72,7 +72,18 @@ def norm(s):
 
 
 def read(name):
-    with open(os.path.join(CACHE, name), newline='', encoding='utf-8', errors='replace') as fh:
+    path = os.path.join(CACHE, name)
+    if not os.path.exists(path):
+        # The raw datasets are ~43 MB and deliberately gitignored, so a fresh clone
+        # has none of them. Without this the first thing a new contributor sees is a
+        # FileNotFoundError traceback pointing at a path that was never supposed to
+        # be in the repo, which reads like a broken checkout rather than a missing
+        # download.
+        sys.exit(f'missing dataset: {name}\n'
+                 f'  The raw datasets are not committed (~43 MB). Download them with:\n'
+                 f'    python3 handoff/pipeline/build_questions.py --fetch\n'
+                 f'  then re-run this check.')
+    with open(path, newline='', encoding='utf-8', errors='replace') as fh:
         return list(csv.DictReader(fh))
 
 
