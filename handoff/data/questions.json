@@ -35,7 +35,7 @@
         "y": 4.5
       }
     ],
-    "fact": "Dirk Nowitzki stood 7'0\" (84 inches) - nearly as tall as Shaquille O'Neal (7'1\", 85 inches) - but shot 38.0% from three for his career, worlds ahead of Shaq's 4.5% (Shaq made exactly one three-pointer in 22 career attempts). Dirk even out-shot Muggsy Bogues, the shortest player in NBA history at 5'3\", who hit 27.8% from deep. Reggie Miller (6'7\", 39.5%) is the archetype pure sharpshooter - and Dirk, nearly half a foot taller, wasn't far behind him at all.",
+    "fact": "An inch shorter than Shaq, and eight times his three-point percentage. Seven-footers were not supposed to shoot at all.",
     "source": "StatMuse / Basketball-Reference height and career 3-point percentage."
   },
   {
@@ -73,7 +73,7 @@
         "y": 25
       }
     ],
-    "fact": "Lou Williams built a three-time Sixth Man of the Year career on 24.1 minutes a game — barely two-thirds of Kobe Bryant's 36.1-minute workload — while still averaging 13.9 points, close to a full starter's production squeezed into a bench role. Manu Ginobili (25.4 MPG, 13.3 PPG) landed in almost the exact same zone despite a Hall-of-Fame resume, deployed off the bench by design for most of his prime. DeMar DeRozan (34.5 MPG, 21.1 PPG) shows the traditional high-usage starter workload both bench legends were compared against, not with.",
+    "fact": "The fewest minutes on the chart, and he still outscored Ginobili. Williams scored in bursts off the bench rather than in stretches.",
     "source": "StatMuse career per-game averages (regular season)."
   },
   {
@@ -111,7 +111,7 @@
         "y": 18.6
       }
     ],
-    "fact": "Draymond Green scores less than half of what Klay Thompson does (8.7 PPG to 18.6) but combines for more rebounds and assists (12.4 to Klay's 5.6) — real proof a player can be a genuine star without scoring like one. Russell Westbrook (20.9 PPG, 14.9 combined) shows what happens when high scoring and stat-stuffing coexist, and Nikola Jokic (22.2 PPG, 18.6 combined) is the current extreme: elite at both at once, a center who also leads the league in rebounds and assists.",
+    "fact": "Less than half Klay Thompson's scoring, more than double his rebounds and assists. Green's value never showed up in the column people check first.",
     "source": "StatMuse career per-game averages (regular season)."
   },
   {
@@ -149,7 +149,7 @@
         "y": 6
       }
     ],
-    "fact": "Jameis Winston throws touchdowns at almost the same rate as Brett Favre (4.8% vs. 5.0%) — but his interception rate (3.5%) is even higher than Favre's, the quarterback whose whole reputation is built on high-risk gunslinging. Alex Smith (2.1% / 3.8%) is the pure game-manager opposite: low risk, low reward. Aaron Rodgers (1.4% / 6.0%) shows the tradeoff isn't actually mandatory — the best touchdown rate in this set paired with the best career interception percentage in NFL history.",
+    "fact": "The most interceptions here and nearly the fewest touchdowns. Winston threw into windows that were not open.",
     "source": "StatMuse career passing touchdown percentage and interception percentage."
   },
   {
@@ -188,7 +188,7 @@
         "y": 25
       }
     ],
-    "fact": "Zach Randolph made just 2 All-Star teams in his career — yet his 16.6 career points per game is basically identical to Joe Johnson's 16.0 (7 All-Star nods) and Vince Carter's 16.7 (8 nods). All-Star selections reward more than raw scoring average — team success, era, and position all factor in — and Randolph's Memphis grit-and-grind identity earned him far less recognition than his actual production. Karl Malone (14 AS, 25.0 PPG) anchors the other extreme: a player whose selections actually matched his all-time-great scoring.",
+    "fact": "Two All-Star nods. Joe Johnson got seven for the same scoring. Randolph spent his best years on teams nobody was watching.",
     "source": "StatMuse career per-game averages and career All-Star selection counts."
   },
   {
@@ -228,7 +228,7 @@
         "y": 22895
       }
     ],
-    "fact": "Anquan Boldin made only 3 Pro Bowls in his career, but his 13,779 receiving yards is within shouting distance of Randy Moss's 15,292 — a player who made twice as many Pro Bowls. Boldin's game was built on contested catches and physicality rather than the highlight-reel speed that tends to win Pro Bowl votes, and it cost him recognition his production arguably earned. Jerry Rice (13 PB, 22,895 yards) remains the standard nobody else in NFL history has matched.",
+    "fact": "Fewest Pro Bowls on the chart and it is not close. Boldin was never the receiver anyone voted for, just the one who kept getting open.",
     "source": "StatMuse / Pro Football Reference career Pro Bowl selections and receiving yards."
   },
   {
@@ -268,7 +268,7 @@
         "y": 696
       }
     ],
-    "fact": "Bobby Abreu and Adam Dunn each made exactly 2 All-Star teams — but Dunn hit 174 more career home runs (462 to Abreu's 288). Abreu's value came from on-base percentage, doubles, and stolen bases rather than pure power, a game sabermetricians rate highly but All-Star voters historically haven't rewarded the same way as a big home run total. Griffey (13 AS, 630 HR) and Rodriguez (14 AS, 696 HR) show what it looks like when a player's power and his recognition actually line up.",
+    "fact": "Same All-Star count as Adam Dunn, who hit 174 more homers. Abreu did everything well and nothing loudly.",
     "source": "StatMuse career All-Star selections and home run totals."
   },
   {
@@ -308,7 +308,7 @@
         "y": 317
       }
     ],
-    "fact": "Rod Carew was an All-Star in 18 different seasons — more than George Brett (13) or Gary Sheffield (9) — and hit 92 home runs in his entire career. Sheffield hit 509. Carew's case was built almost entirely on batting average and on-base skill: he won seven batting titles and reached base constantly, which is a kind of stardom the home-run column simply doesn't record.",
+    "fact": "Eighteen All-Star selections, the fewest home runs on the board by a distance. Carew got there entirely on hitting.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -348,7 +348,7 @@
         "y": 438
       }
     ],
-    "fact": "Ozzie Smith stole 580 bases and hit 28 home runs — for his whole career. Andre Dawson, the closest of these three in steals at 314, hit 438. Smith is the clearest case in baseball of a first-ballot Hall of Famer whose value lived almost entirely in places the box score barely tracks: defense at shortstop, and legs.",
+    "fact": "The most steals here and the fewest homers, both by a wide margin. Smith's bat was never the point.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -388,7 +388,7 @@
         "y": 504
       }
     ],
-    "fact": "Harmon Killebrew hit 573 home runs and only 290 doubles — nearly twice as many homers as doubles, which is close to backwards for a hitter. Eddie Murray, with a similar 504 home runs, hit 560 doubles. Killebrew simply didn't hit many balls that stayed in the park: he either cleared the fence or he didn't.",
+    "fact": "Fewest doubles, most home runs. Killebrew did not hit balls that stopped at second.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -428,7 +428,7 @@
         "y": 521
       }
     ],
-    "fact": "Ty Cobb's .366 career batting average is the highest in major-league history, and he hit 117 home runs doing it — fewer than a quarter of Ted Williams' 521, and Williams is the one player here who did both. Cobb played nearly his whole career in the dead-ball era, when the game was built on contact, speed and place-hitting rather than power.",
+    "fact": "The highest average anyone here posted, and the fewest home runs. Cobb played the whole career before the ball started carrying.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv). Career regular-season totals summed by playerID; batting average computed as H/AB."
   },
   {
@@ -468,7 +468,7 @@
         "y": 297
       }
     ],
-    "fact": "Tim Raines stole 808 bases — more than four times Mike Schmidt's and Mark McGwire's combined — while hitting 170 home runs. He is second on this chart in steals and still miles behind Rickey Henderson's 1,406, which is the single most untouchable counting record in baseball. Raines waited ten years on the Hall of Fame ballot largely because the skills he was best at don't photograph well.",
+    "fact": "Only Henderson stole more, and Raines is at the bottom for power. The fastest men on this chart were rarely the strongest.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -508,7 +508,7 @@
         "y": 563
       }
     ],
-    "fact": "Babe Ruth struck out 1,330 times, which was considered reckless in his era — and it is fewer strikeouts than Willie McCovey, Reggie Jackson, or plenty of ordinary modern hitters. He hit 714 home runs against them. Reggie Jackson, the all-time strikeout leader at 2,597, needed nearly twice as many strikeouts to hit 563.",
+    "fact": "More home runs than anyone here on fewer strikeouts than most. Ruth was a contact hitter with the power of a slugger, which is the combination that stopped existing.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -548,7 +548,7 @@
         "y": 28
       }
     ],
-    "fact": "Eli Manning threw 27 interceptions and 18 touchdowns in 2013 — one of the very few modern seasons where a full-time starter finished with more interceptions than touchdown passes. Ben Roethlisberger, playing the same season, threw 28 touchdowns against 14 picks. Manning won two Super Bowl MVPs and also produced this.",
+    "fact": "The most interceptions on the chart and the fewest touchdowns. This is what a quarterback's worst season looks like plotted.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
   },
   {
@@ -588,7 +588,7 @@
         "y": 1206
       }
     ],
-    "fact": "Devon Achane averaged 7.8 yards per carry as a rookie in 2023 — a figure that would be an all-time record over a full workload — and finished with 800 rushing yards, the fewest on this chart. He was that efficient precisely because he was used sparingly. Volume and efficiency in the running game usually pull against each other, and this is the cleanest example of it.",
+    "fact": "By far the best yards per carry here, and the fewest yards. Achane was a rookie splitting carries, not a workhorse.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
   },
   {
@@ -628,7 +628,7 @@
         "y": 408
       }
     ],
-    "fact": "Shaun Alexander's 2005 MVP season was 1,880 rushing yards and 78 receiving yards. Fred Taylor, with 566 fewer rushing yards, had five times the receiving production. Alexander was a pure between-the-tackles runner in an offense that never asked him to catch anything — a role that has essentially disappeared from the modern NFL.",
+    "fact": "The most rushing yards on the chart and the fewest through the air. Alexander's job description had one line in it.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
   },
   {
@@ -668,7 +668,7 @@
         "y": 1331
       }
     ],
-    "fact": "Wes Welker caught 112 passes in 2007 — the most on this chart by ten — for 1,175 yards, which is fewer than Terrell Owens gained on 35 fewer catches. That is 10.5 yards a reception against Owens' 15.6. Welker's whole game was volume underneath, and it made him one of the most productive receivers of his era without ever being a deep threat.",
+    "fact": "Most catches, fewest yards. Welker worked the space in front of the sticks and let everyone else run past him.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
   },
   {
@@ -708,7 +708,7 @@
         "y": 10
       }
     ],
-    "fact": "Corey Dillon rushed for 50.8 yards a game in 2006 — the least of these four — and scored 13 rushing touchdowns, the most. Adrian Peterson needed nearly twice the yardage per game to score ten. Dillon was splitting carries with Laurence Maroney by then but kept the goal-line work, which is the single most efficient way to look productive in the column fans actually remember.",
+    "fact": "Least ground gained per game, most touchdowns. Dillon was the guy they handed it to at the two.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
   },
   {
@@ -748,7 +748,7 @@
         "y": 39
       }
     ],
-    "fact": "Aaron Rodgers threw 45 touchdowns against 6 interceptions in 2011, a ratio of 7.5 to 1 in a season where he also posted the highest single-season passer rating in NFL history at the time. Peyton Manning's 2014 — 39 touchdowns, 15 picks — is an excellent season and is not close to this.",
+    "fact": "The fewest interceptions and the most touchdowns on the chart. There is no trade-off visible in this season at all.",
     "source": "nflverse-data player_stats release. Regular-season weekly rows aggregated by player_id and season."
   },
   {
@@ -788,7 +788,7 @@
         "y": 53.2
       }
     ],
-    "fact": "Baron Davis took 20.9 shots a game in 2003-04 — more than anyone else here — and converted at a 49.2 true shooting percentage, the worst of the four by eight points. Aaron Gordon's 2022-23 is the mirror image: barely half the shots, and the most efficient season on the chart. Volume scoring and efficient scoring are close to opposite skills, and the box score rewards the first one.",
+    "fact": "The most shots here at the worst efficiency. Somebody had to take them on that roster.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -828,7 +828,7 @@
         "y": 12.8
       }
     ],
-    "fact": "Kemba Walker scored 25.6 a game in 2018-19, the most here by two points over Karl Malone's 2000-01 — and contributed the fewest rebounds and assists of the four. Tim Duncan, ten points behind him in scoring, out-produced him everywhere else. Walker was an All-NBA guard that year on almost pure scoring volume.",
+    "fact": "Top of the chart in scoring, bottom in everything else. Walker was the entire offense and not much of the rest.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -868,7 +868,7 @@
         "y": 53.1
       }
     ],
-    "fact": "Jarrett Allen used 16.3% of his team's possessions in 2020-21 — the lowest share on this chart — and finished with a 66.1 true shooting percentage, the highest by ten points. That is the role-player bargain in one data point: he only ever shot when it was already a good shot. Zach Randolph used almost twice the possessions to score far less efficiently.",
+    "fact": "The lowest usage here and the highest efficiency. Allen only shot when he was already at the rim.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -908,7 +908,7 @@
         "y": 11.4
       }
     ],
-    "fact": "Zion Williamson averaged 27.0 points in 2020-21 — more than Ja Morant's best scoring season here — while his rebounds and assists combined stayed at 10.9, below Bam Adebayo's 13.5 on eight fewer points a game. Williamson's production is unusually concentrated: he is one of the most efficient interior scorers on record and does comparatively little of everything else.",
+    "fact": "The most points on the board and the fewest rebounds and assists, from a power forward. Williamson scored inside without doing the other work that usually comes with it.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -948,7 +948,7 @@
         "y": 21.6
       }
     ],
-    "fact": "Shawn Marion played 38.8 minutes a game in 2004-05, the most on this chart, and scored the fewest points of the four. Nikola Vučević scored more in seven fewer minutes. Marion was the defensive engine of a 62-win Suns team that ran its offense through Steve Nash and Amar'e Stoudemire — minutes measure trust, not usage.",
+    "fact": "The heaviest minutes here and the lightest scoring. Marion was on the floor for defense and rebounding, not shots.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -988,7 +988,7 @@
         "y": 0.5
       }
     ],
-    "fact": "In his 2005-06 MVP-calibre season Dirk Nowitzki blocked more shots (1.0 a game) than he took steals (0.7) — the only player here that's true of, and a genuinely unusual shape for a perimeter-oriented seven-footer. Kobe Bryant, playing guard, had twice the steals and half the blocks.",
+    "fact": "The fewest steals and the most blocks. Nowitzki defended standing still, which is what seven feet buys you.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1028,7 +1028,7 @@
         "y": 55.4
       }
     ],
-    "fact": "Chris Webber used 31.1% of Sacramento's possessions in 2000-01, the highest share here by five points, and turned them into a 51.6 true shooting percentage — the lowest. JJ Redick, at two-thirds the usage, was nine points more efficient. Usage measures how often an offense runs through you, not how well it works when it does.",
+    "fact": "Highest usage on the chart, lowest efficiency. Webber took every hard shot Sacramento had.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1068,7 +1068,7 @@
         "y": 64.9
       }
     ],
-    "fact": "LaMarcus Aldridge took 19.9 shots a game in 2014-15 and posted a 52.8 true shooting percentage. LeBron James, taking two fewer shots that same era, scored at 64.9 — twelve points better. Aldridge's signature shot was the long two, the least efficient in basketball, and it is the single clearest reason the league stopped taking it.",
+    "fact": "The most attempts here and near the worst efficiency. Aldridge lived in the mid-range in the season the league decided the mid-range was a bad idea.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1108,7 +1108,7 @@
         "y": 260
       }
     ],
-    "fact": "Jeff Bagwell hit 449 home runs and made four All-Star teams. Kirby Puckett, with 242 fewer homers, made ten. Bagwell won an MVP and an unanimous one at that, yet spent his career in Houston behind a wall of first basemen who were more famous than he was — All-Star voting measures how well known you are at least as much as how good.",
+    "fact": "The fewest All-Star selections and the most home runs. Bagwell played in Houston before anyone was paying attention to Houston.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -1148,7 +1148,7 @@
         "y": 260
       }
     ],
-    "fact": "Tony Gwynn hit .338 for his career, the highest of any player since Ted Williams retired, and hit 135 home runs doing it — fewer than a third of Andre Dawson's 438. Gwynn struck out 434 times in twenty seasons; plenty of modern hitters manage that in three. He was the last great practitioner of a style of hitting the sport has essentially stopped teaching.",
+    "fact": "Best average on the chart, fewest homers. Gwynn spent twenty years aiming at the gap rather than the seats.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv). Career regular-season totals summed by playerID; batting average computed as H/AB."
   },
   {
@@ -1188,7 +1188,7 @@
         "y": 438
       }
     ],
-    "fact": "Kenny Lofton stole 622 bases — more than Mike Schmidt, Fred McGriff and Andre Dawson combined, several times over — and hit 130 home runs. He fell off the Hall of Fame ballot after a single year, which is the sort of thing that happens to players whose value came from getting on base and then running, neither of which anybody built a highlight reel around.",
+    "fact": "The most steals here and the fewest home runs. Lofton's whole game was getting to first and then not staying there.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -1228,7 +1228,7 @@
         "y": 504
       }
     ],
-    "fact": "Mark McGwire hit 583 home runs and 252 doubles — more than twice as many homers as doubles, which is close to backwards for a hitter. Eddie Murray, with 79 fewer home runs, hit more than double the doubles. McGwire hit the ball over the fence or not at all: he also drew 1,317 walks because pitchers stopped giving him anything to hit.",
+    "fact": "Fewest doubles, most home runs, and the gap is enormous. McGwire either hit it out or did not hit it.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -1268,7 +1268,7 @@
         "y": 117
       }
     ],
-    "fact": "Johnny Bench hit .267 with 389 home runs — the lowest average here by a distance, and more homers than George Brett and Yogi Berra. Ty Cobb, a hundred points of average higher, hit 117. Bench was the best defensive catcher who ever lived and hit like a corner slugger, which is why the batting average almost nobody remembers is the one number that looks ordinary.",
+    "fact": "Lowest average on the chart, most home runs — as a catcher, squatting through 150 games a year.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv). Career regular-season totals summed by playerID; batting average computed as H/AB."
   },
   {
@@ -1308,7 +1308,7 @@
         "y": 1361
       }
     ],
-    "fact": "Lamar Jackson averaged 5.5 yards a carry in 2023 — well clear of Jamal Lewis and Adrian Peterson here — for 821 rushing yards, the fewest of the four. He is a quarterback: the efficiency comes from running only when the defense has already lost, and the volume stays low because running is the fallback, not the plan.",
+    "fact": "The best yards per carry here, the fewest rushing yards. Jackson is a quarterback; nobody was giving him twenty carries.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -1348,7 +1348,7 @@
         "y": 48.9
       }
     ],
-    "fact": "Rudy Gobert took 8.1 shots a game in 2023-24 and made them at a 67.5 true shooting percentage. Allen Iverson's 2001-02 is the exact inverse: 27.8 attempts at 48.9. Gobert essentially only shoots dunks and layups created by someone else, which is why he leads the league in efficiency and why nobody has ever built an offense around him.",
+    "fact": "The fewest shots on the chart and the best efficiency by a distance. Gobert's shots were all dunks somebody else set up.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1388,7 +1388,7 @@
         "y": 59.8
       }
     ],
-    "fact": "Antawn Jamison took 22.1 shots a game in 2000-01 and posted a 49.9 true shooting percentage — the most shots here and the worst efficiency, on a Golden State team that won 17 games. Shaquille O'Neal's 2008-09, at half the volume, was 12 points more efficient. Somebody has to shoot on a bad team, and the numbers it produces look like stardom without being it.",
+    "fact": "The most attempts here at nearly the worst efficiency. Golden State had nobody else to give the ball to.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1428,7 +1428,7 @@
         "y": 24.7
       }
     ],
-    "fact": "John Wall played 37.8 minutes a game as a rookie in 2010-11 — more than anyone else on this chart — and scored 16.4 points, the fewest. Lauri Markkanen scored more in six fewer minutes. Wall was the first pick on a 23-win team, which buys you every minute available and very little help scoring.",
+    "fact": "The most minutes on the chart and the fewest points. Wall was a rookie point guard being taught the job in real time.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1468,7 +1468,7 @@
         "y": 60.3
       }
     ],
-    "fact": "Nikola Vučević used 29.2% of Orlando's possessions in 2020-21 at a 56.0 true shooting percentage. DeMar DeRozan, at 26.2% usage, was four points more efficient, and Kyle Lowry more efficient still on far fewer. High usage on a team without a better option is a description of the roster, not a measure of the player.",
+    "fact": "Highest usage here, lowest efficiency. Vučević was the first option on a team that did not have a second.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1508,7 +1508,7 @@
         "y": 23.5
       }
     ],
-    "fact": "Elton Brand played 39.3 minutes a game in 2000-01 — the most on this chart — and scored 20.1 points, the fewest. He was 22, Rookie of the Year the season before, and playing for a Chicago team that won 15 games. Minutes at that age are usually a sign nobody else on the roster can be trusted with them.",
+    "fact": "The most minutes and the fewest points. Brand played nearly the whole game for a Chicago team that lost 67 of them.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -1548,7 +1548,7 @@
         "y": 1533
       }
     ],
-    "fact": "Christian McCaffrey caught 116 passes in 2019 — more than Terrell Owens, Antonio Gates or Justin Jefferson in any of these seasons — for 1,005 yards, the fewest of the four. He is a running back. Jefferson needed 13 fewer catches to gain 528 more yards, because his came 15 yards downfield and McCaffrey's came at the line of scrimmage.",
+    "fact": "The most catches on the chart and the fewest yards. McCaffrey was a running back catching passes at the line, not a receiver.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -1588,7 +1588,7 @@
         "y": 1023
       }
     ],
-    "fact": "Rob Gronkowski caught 69 passes in 2017 — the fewest here by nine — and gained 1,084 yards, the most. That is 15.7 yards a catch from a tight end, a position that exists to convert third and four. Chris Godwin needed 35 more receptions to gain 61 fewer yards.",
+    "fact": "Fewest catches, most yards. Gronkowski was not a possession target; he was a problem downfield.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -1628,7 +1628,7 @@
         "y": 15
       }
     ],
-    "fact": "Jamaal Charles gained 94.3 rushing yards a game in 2012, the most on this chart, and scored five touchdowns. Arian Foster, five yards a game behind him, scored fifteen. Kansas City used Peyton Hillis and Shaun Draughn at the goal line, so Charles did the work that moves the ball and someone else did the work that shows up in fantasy scoring.",
+    "fact": "Most ground gained per game here, fewest touchdowns. Kansas City kept handing it to somebody else once they got close.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -1668,7 +1668,7 @@
         "y": 1409
       }
     ],
-    "fact": "Amon-Ra St. Brown caught 106 passes in 2022 for 1,161 yards. A.J. Brown, that same season, caught 18 fewer for 335 more. Both are excellent receivers doing entirely different jobs: one lives in the slot and moves the chains, the other runs past people. The catch column flatters the first and the yardage column flatters the second.",
+    "fact": "The most catches on the chart and the fewest yards. St. Brown caught everything short and turned almost none of it into a long gain.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -1708,7 +1708,7 @@
         "y": 315
       }
     ],
-    "fact": "Rachaad White gained 613 rushing yards in 2024 — the fewest here by nearly 200 — and 393 through the air, more than LeSean McCoy or Josh Jacobs managed in seasons where they ran for twice as much. Nearly 40% of White's offense came as a receiver, a split that would have been unthinkable for a starting back a generation ago.",
+    "fact": "Fewest rushing yards here, second-most receiving. White was used as a receiver who occasionally ran.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -1748,7 +1748,7 @@
         "y": 135
       }
     ],
-    "fact": "The power/contact trade-off is real, and Ted Williams mostly ignored it. He hit .344 for his career — higher than Tony Gwynn's .338, and Gwynn built a Hall of Fame case almost entirely on batting titles, finishing with 135 home runs. Williams hit 521, within 42 of Reggie Jackson, who hit .262 and struck out more times (2,597) than any batter in history. Hank Aaron (.305, 755) marks the outer edge of sustained power. And Williams did it having lost nearly five full seasons in his prime to military service in two wars.",
+    "fact": "The best average on the board with power to match. Almost nobody occupies that corner; the trade usually goes one way or the other.",
     "source": "StatMuse career batting average and home run totals; career strikeout leaderboard."
   },
   {
@@ -1787,7 +1787,7 @@
         "y": 4.2
       }
     ],
-    "fact": "Jamaal Charles averaged 5.4 yards per carry — the highest of any running back in NFL history with at least 1,000 attempts, ahead of Barry Sanders' 5.0 and Jim Brown's 5.2. The only players above him on the overall list are quarterbacks (Lamar Jackson, Russell Wilson, Cam Newton), who pick their runs. Charles did it on 1,407 carries, under a third of Emmitt Smith's 4,409. Smith holds the career rushing yards record and Charles holds the rate, which is a fair summary of how football remembers running backs: volume gets the record, efficiency gets forgotten.",
+    "fact": "Barely a third of Emmitt Smith's carries at a better rate than any of them. Charles never got the volume, and his knees are the reason.",
     "source": "StatMuse career rushing attempts and yards per carry; yards-per-carry leaderboard with a 1,000-attempt minimum."
   },
   {
@@ -1825,7 +1825,7 @@
         "y": 37.1
       }
     ],
-    "fact": "Wilt Chamberlain and Michael Jordan have the same career scoring average — 30.1 points per game, the two highest in NBA history. Their peaks are not close. Jordan's best year was 37.1 in 1986-87. Wilt's was 50.4 in 1961-62: thirteen points per game higher than the best season Jordan ever played, and nearly double Tim Duncan's career average. Kobe's 35.4 in 2005-06 is the season with the 81-point game in it, and it still doesn't reach Jordan's peak. Wilt's career average and his best season are two entirely different players.",
+    "fact": "Same career average as Jordan, and a peak season thirteen points higher. Chamberlain's best year does not fit on a chart with anyone else's.",
     "source": "StatMuse career and single-season points per game; all-time career PPG leaderboard."
   },
   {
@@ -1865,7 +1865,7 @@
         "y": 12
       }
     ],
-    "fact": "Power and speed almost never share a career. Mark McGwire hit 583 home runs and stole 12 bases — total, across his entire career. Rickey Henderson stole 1,406, the all-time record and about 50% more than second place, and hit 297. Ichiro (117 HR, 509 SB) is the pure contact-and-speed pole. Willie Mays hit 660 home runs *and* stole 338 bases: more power than McGwire and more steals than most players who were known for stealing. That corner of this chart is essentially empty, and it's most of why Mays is in the greatest-player-ever argument at all.",
+    "fact": "The most home runs here and more steals than the two sluggers combined. Mays is the rare corner of this chart that is not a trade-off.",
     "source": "StatMuse career home run and stolen base totals; all-time career stolen base leaderboard."
   },
   {
@@ -1905,7 +1905,7 @@
         "y": 667
       }
     ],
-    "fact": "Dan Marino threw for 420 touchdowns and rushed for 87 yards. Not 87 per season — 87 total, across seventeen years. Peyton Manning managed 667 in the same number of seasons. Michael Vick rushed for 6,109, more than most of the running backs of his era and more than any quarterback in NFL history at the time he retired, while throwing 133 touchdown passes. The chart shows the trade the position used to demand: Marino and Manning bought passing volume by never leaving the pocket, and Vick bought a dimension nobody else had by never being a high-volume passer.",
+    "fact": "Fewest passing touchdowns, most rushing yards by a mile. Vick was a running back the defense had to respect as a passer.",
     "source": "StatMuse career passing touchdowns and career rushing yards."
   },
   {
@@ -1945,7 +1945,7 @@
         "y": 160
       }
     ],
-    "fact": "Ichiro Suzuki collected 3,089 hits in the majors and hit 117 home runs — and he didn't play his first MLB game until he was 27. He had already recorded 1,278 hits in Japan, which puts his professional total at 4,367, more than Pete Rose's all-time MLB record of 4,256 (the combined figure isn't an official mark, since the two leagues are counted separately). Babe Ruth is the shape-inversion on this chart: 714 home runs on fewer hits than Ichiro, because a startling share of his contact left the park.",
+    "fact": "Nearly 3,100 hits and the fewest home runs on the chart. Ichiro spent nine seasons in Japan first and still got there.",
     "source": "StatMuse career hits and home runs; NPB hit total via MLB.com and Baseball-Reference Bullpen."
   },
   {
@@ -1983,7 +1983,7 @@
         "y": 24.7
       }
     ],
-    "fact": "Almost nobody scores more in the playoffs than the regular season — the defenses tighten, the rotations shorten, and the games slow down. Larry Bird went 24.3 to 23.8. Karl Malone went 25.0 to 24.7. Allen Iverson went 26.7 to 29.7, a three-point jump, the largest of any high-volume scorer in league history. He is 6'0\" and 165 pounds and never won a title, and the thing people remember — carrying a team to the Finals and stealing Game 1 from a 56-win Lakers side — is exactly what this number describes.",
+    "fact": "Top of the chart in both, and he scored more in the playoffs than the regular season. Iverson got better when the games got harder.",
     "source": "StatMuse career regular season and playoff points per game."
   },
   {
@@ -2023,7 +2023,7 @@
         "y": 260
       }
     ],
-    "fact": "Larry Walker hit 383 home runs and made five All-Star teams. Kirby Puckett, with 176 fewer homers, made ten. Walker won an MVP and three batting titles in Colorado, where the thin air meant voters spent two decades discounting everything he did — he waited until his final year on the ballot to reach the Hall of Fame.",
+    "fact": "Fewest All-Star selections, most home runs. Walker played in Montreal and Colorado, which is two ways to be invisible.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -2063,7 +2063,7 @@
         "y": 431
       }
     ],
-    "fact": "Andruw Jones hit 434 home runs and made five All-Star teams — fewer than Kirby Puckett, who hit 227 fewer. Jones was also the best defensive center fielder of his generation by a wide margin, winning ten straight Gold Gloves. Neither the power nor the defense translated into the recognition either one alone usually buys.",
+    "fact": "Most home runs on the chart, second-fewest All-Star nods. Jones spent his career at a position stacked with names voters knew better.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -2103,7 +2103,7 @@
         "y": 468
       }
     ],
-    "fact": "Kirby Puckett hit .318 with 207 home runs across just twelve seasons — glaucoma ended his career at 35. Andruw Jones, sixty points of average lower, hit more than twice as many homers. Puckett is the rare modern hitter voted in almost entirely on contact and a decade of being the most beloved player in his city.",
+    "fact": "Best average here, fewest home runs. Puckett hit line drives for a decade and then glaucoma ended it in a single spring.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv). Career regular-season totals summed by playerID; batting average computed as H/AB."
   },
   {
@@ -2143,7 +2143,7 @@
         "y": 504
       }
     ],
-    "fact": "Mike Schmidt hit 548 home runs and 408 doubles. Eddie Murray, 44 homers behind him, hit 152 more doubles. Tim Raines hit more doubles than either while hitting 170 homers total. Schmidt is generally considered the best third baseman who ever played, and the shape of his hitting — walks and homers, comparatively little in between — is the modern profile arriving forty years early.",
+    "fact": "Fewest doubles, most home runs. Schmidt hit the ball too far for second base to be the outcome.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -2183,7 +2183,7 @@
         "y": 438
       }
     ],
-    "fact": "Craig Biggio stole 414 bases and hit 291 home runs — a combination Mike Schmidt and Fred McGriff never came close to from either direction. He also caught, played second base, and played center field, and was hit by 285 pitches, second most in history. Almost nothing about his career fits a single column.",
+    "fact": "The most steals on the chart and the fewest homers, from a catcher who moved to second base to keep his legs.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
   },
   {
@@ -2223,7 +2223,7 @@
         "y": 55
       }
     ],
-    "fact": "Deandre Ayton took 10.0 shots a game in 2020-21 at a 65.3 true shooting percentage — the fewest attempts here and by far the most efficient. DeMar DeRozan took nearly twice as many at ten points worse. Ayton was the fourth option on a Suns team that reached the Finals, and shooting less is a large part of why his numbers look like that.",
+    "fact": "The fewest shots here at the best efficiency. Ayton took what Chris Paul handed him and nothing else.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2263,7 +2263,7 @@
         "y": 63.6
       }
     ],
-    "fact": "Monta Ellis took 20.1 shots a game in 2010-11 and converted at 53.6 true shooting — the most volume and the worst efficiency of the four. Joel Embiid, at 17.6 attempts, was ten points better. Ellis scored 24.1 points a game that season on a 36-win team, which is the clearest illustration there is that points per game and good offense are not the same statistic.",
+    "fact": "The most attempts on the chart and the worst efficiency. Golden State had no other plan that year.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2303,7 +2303,7 @@
         "y": 36.5
       }
     ],
-    "fact": "Aaron Gordon shot 43.6% from three in 2024-25 on 3.4 attempts a game — the best percentage on this chart by five points, on the fewest attempts. Jerami Grant took nearly twice as many at seven points worse. A low-volume shooter only takes the open ones, which is exactly why the percentage looks like that and why it rarely survives more attempts.",
+    "fact": "Fewest threes attempted, best percentage by a distance. Gordon only shot the ones nobody was contesting.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2343,7 +2343,7 @@
         "y": 24.7
       }
     ],
-    "fact": "Pau Gasol played 37.0 minutes a game in 2008-09 and scored 18.9 points, the fewest here despite the second-most minutes. Anthony Davis scored seven more in three fewer. Gasol was the second option on a championship Lakers team whose first option took 20 shots a night — minutes measure how much a team needs you on the floor, not how often they throw you the ball.",
+    "fact": "Most minutes here, fewest points. Gasol was the second option on a title team and played like it.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2383,7 +2383,7 @@
         "y": 17
       }
     ],
-    "fact": "Le'Veon Bell gained 105.7 rushing yards a game in 2016 — the most on this chart by sixteen — and scored seven touchdowns. LaDainian Tomlinson's 2004 scored seventeen on less yardage per game. Pittsburgh used Bell to move the ball and had other answers at the goal line, so the column most people check understates the best season of his career.",
+    "fact": "The most yards per game on the chart, the fewest touchdowns. Pittsburgh had a goal-line back who was not Bell.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2423,7 +2423,7 @@
         "y": 992
       }
     ],
-    "fact": "Calvin Johnson caught 71 passes in 2014 for 1,077 yards — 15.2 a catch, on the fewest receptions here. Chris Godwin needed 33 more catches to gain less. Johnson played only 13 games that year with an ankle injury and still finished within 30 yards of receivers who played a full season.",
+    "fact": "Second-most catches, fewest yards. Johnson was 33 and running the short routes his knees still allowed.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2463,7 +2463,7 @@
         "y": 1268
       }
     ],
-    "fact": "Alvin Kamara averaged 5.0 yards a carry in 2020 for 932 rushing yards — the fewest here, on the second-best efficiency. Derrick Henry gained 606 more at 4.4. Kamara also caught 83 passes that season and scored 21 total touchdowns, including six in a single game; the rushing line alone describes almost none of it.",
+    "fact": "Best yards per carry here, fewest rushing yards. Kamara split the backfield and caught 83 passes on top of it.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2503,7 +2503,7 @@
         "y": 1023
       }
     ],
-    "fact": "Isaac Bruce caught 74 passes for 1,098 yards in 2006 — the fewest catches on this chart and the most yards. Chris Godwin needed 30 more receptions to gain 75 fewer. Bruce was 34, eight years past the Rams' Greatest Show on Turf, and still averaging almost fifteen yards a catch.",
+    "fact": "The fewest catches on the chart and the most yards. Bruce was in his thirteenth season and still only being thrown to deep.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2543,7 +2543,7 @@
         "y": 26
       }
     ],
-    "fact": "Jermaine O'Neal played 37.2 minutes a night in 2002-03 and scored 20.8 points — more floor time than any of the three plotted alongside him, and fewer points than all of them. Amar'e Stoudemire needed 36.1 minutes for 26.0 in 2004-05, and Donovan Mitchell got 24.0 out of just 31.4 in 2024-25. Heavy minutes are a workload, not a scoring rate.",
+    "fact": "The most minutes here and the fewest points. Indiana needed O'Neal on the floor for the defense, not the offense.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2583,7 +2583,7 @@
         "y": 7
       }
     ],
-    "fact": "Josh Jacobs averaged only 58.1 rushing yards a game in 2021 — the lowest of the four plotted — but still ran in 9 touchdowns. LeSean McCoy in 2015 gained more ground per game (74.6) and scored 3. Goal-line work and yardage are close to independent: touchdowns are about who gets the ball at the two, not who moves it between the twenties.",
+    "fact": "The fewest yards per game on the chart and the most touchdowns. Las Vegas used him almost exclusively inside the ten.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2623,7 +2623,7 @@
         "y": 39.8
       }
     ],
-    "fact": "James Harden took 7.2 threes a game in 2022-23, more than anyone plotted here, and hit 38.5% of them. Bojan Bogdanovic shot a better clip (42.5%) on 4.8 attempts, and Tyus Jones 41.4% on 3.9. Percentage tends to fall as volume climbs, which is what makes high-volume accuracy the rarer thing.",
+    "fact": "The most threes attempted here and the worst percentage. Volume and accuracy pull against each other and Harden chose volume.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2663,7 +2663,7 @@
         "y": 64.9
       }
     ],
-    "fact": "Stephon Marbury put up 19.1 shots a game in 2000-01 at 54.0% true shooting. LeBron James in 2013-14 took nearly as many (17.6) and converted at 64.9%, and Shaquille O'Neal managed 62.3% on 11.2 attempts in 2008-09. True shooting folds in threes and free throws, so the gap here is efficiency, not shot selection alone.",
+    "fact": "Most shots on the chart, worst efficiency. Marbury was the whole offense in New Jersey, for better and mostly worse.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2703,7 +2703,7 @@
         "y": 1015
       }
     ],
-    "fact": "A.J. Brown caught only 67 passes in 2024 and still gained 1,079 yards — more yardage than any of the three plotted, on the fewest catches. Jaylen Waddle needed 104 receptions in 2021 to reach 1,015, and Amon-Ra St. Brown's 90 grabs produced 912. Brown averaged over 16 yards a catch; volume receivers live closer to 10.",
+    "fact": "Fewest catches here and the most yards. Brown averaged over sixteen a reception; volume receivers live nearer ten.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2743,7 +2743,7 @@
         "y": 59.2
       }
     ],
-    "fact": "CJ McCollum took 19.4 shots a game in 2019-20 — the highest volume plotted — at 54.1% true shooting. Klay Thompson in 2016-17 shot 59.2% on 17.6 attempts, and Bam Adebayo hit 56.1% on 14.3 in 2024-25. Carrying a scoring load and staying efficient at it are different skills, and the chart separates them.",
+    "fact": "The most attempts on the chart at the lowest efficiency. Portland's second guard took a first option's shot count.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2783,7 +2783,7 @@
         "y": 1120
       }
     ],
-    "fact": "DeMarco Murray averaged 5.5 yards a carry in 2011, comfortably the best rate plotted, but finished with only 897 rushing yards — the fewest of the four. Shaun Alexander's 4.4 average in 2003 produced 1,435. Efficiency without volume is a small season; the total is mostly a story about how many carries arrived.",
+    "fact": "Best yards per carry here, fewest yards. Murray was a rookie who did not start until week seven.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2823,7 +2823,7 @@
         "y": 56
       }
     ],
-    "fact": "Tony Parker used 31.3% of San Antonio's possessions in 2008-09, far more than anyone plotted, and posted 55.6% true shooting. P.J. Tucker in 2022-23 used just 6.6% and shot 56.6% — better efficiency on a fraction of the load. Usage and efficiency pull against each other, which is why high-usage, high-efficiency seasons are the valuable ones.",
+    "fact": "The highest usage on the chart at nearly the lowest efficiency. Parker carried a San Antonio team with Duncan aging out.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2863,7 +2863,7 @@
         "y": 11.3
       }
     ],
-    "fact": "Jaylen Brown scored 26.6 a game in 2022-23 with 10.4 rebounds and assists combined — the most points and the fewest of everything else among the four plotted. Zach Randolph's 2012-13 inverts it: 15.4 points, 12.6 boards and dimes. The chart's diagonal is the trade between scoring volume and everything around it.",
+    "fact": "Most points here, fewest rebounds and assists. Brown scored and let Tatum and Smart handle the rest.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2903,7 +2903,7 @@
         "y": 15
       }
     ],
-    "fact": "Ezekiel Elliott led this group in rushing yards per game in 2017 at 98.3 and scored the fewest touchdowns, 7. Arian Foster in 2012 gained less ground per game (89.0) and reached the end zone 15 times. Per-game rate and touchdown count answer different questions, which is why they can disagree this sharply.",
+    "fact": "The most yards per game and the fewest touchdowns. Elliott played ten games that season; the rate held, the count could not.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -2943,7 +2943,7 @@
         "y": 26
       }
     ],
-    "fact": "Zach LaVine played 37.2 minutes a night in 2016-17 and scored 18.9 — the most minutes plotted and the fewest points. Nikola Vučević got 20.8 out of 31.4 minutes in 2018-19. Minutes measure trust and availability; points measure what happens inside them, and the two come apart more often than the eye expects.",
+    "fact": "Most minutes on the chart, fewest points. LaVine tore his ACL in February of this season and never played the back half.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -2983,7 +2983,7 @@
         "y": 36.5
       }
     ],
-    "fact": "Malcolm Brogdon attempted only 3.4 threes a game in 2017-18 but made 38.5% — the lowest volume plotted and the best accuracy. Brook Lopez fired 6.3 a night at 36.5% in 2018-19, and Dirk Nowitzki's 2018-19 line was 4.0 attempts at 31.2%. Low volume is where the high percentages tend to hide.",
+    "fact": "The fewest threes attempted here and the best percentage. Brogdon shot only when the shot came to him.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3023,7 +3023,7 @@
         "y": 10.2
       }
     ],
-    "fact": "Vince Carter scored 27.6 a game in 2000-01 with 9.4 rebounds and assists combined — top of the group in points, bottom in everything else. Shawn Marion's 2007-08 was 15.4 points and 12.4 boards-plus-dimes. Both are useful seasons; they just distribute the work differently.",
+    "fact": "Most points on the chart, fewest rebounds and assists. Carter was Toronto's whole offence and not much of its structure.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3063,7 +3063,7 @@
         "y": 721
       }
     ],
-    "fact": "Shaun Alexander ran for 1,688 yards in 2004 and caught passes for only 170 — the most rushing and the least receiving of the four plotted. Saquon Barkley's 2018 was 1,307 on the ground and 721 through the air. Alexander was a pure runner in an era that had not yet asked backs to be receivers.",
+    "fact": "The most rushing yards here and the fewest receiving. Seattle did not throw to Alexander and did not need to.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3103,7 +3103,7 @@
         "y": 54.2
       }
     ],
-    "fact": "Kyle Lowry used only 16.2% of possessions in 2022-23 and still posted the best true shooting of this group at 56.5%. DeMar DeRozan carried 27.7% usage in 2018-19 and shot 54.2%. Lowry's value that season was in the shots he did not take as much as the ones he did.",
+    "fact": "The lowest usage on the chart and the best efficiency. Lowry's value that year was in the shots he declined.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3143,7 +3143,7 @@
         "y": 367
       }
     ],
-    "fact": "Derrick Henry ran for 2,027 yards in 2020 — more than 700 clear of anyone plotted here — and caught passes for just 114. Marshawn Lynch's 2014 was 1,306 rushing and 367 receiving. A 2,000-yard rushing season is rare enough that the axis has to stretch to hold it, and Henry did it while barely being used as a receiver.",
+    "fact": "Over 700 more rushing yards than anyone plotted and almost nothing through the air. Only eight men have run for 2,000 in a season.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3183,7 +3183,7 @@
         "y": 54.2
       }
     ],
-    "fact": "Andre Iguodala used just 11.1% of Golden State's possessions in 2016-17 and shot 62.4% true shooting — the lowest usage and the highest efficiency plotted. DeMar DeRozan's 27.7% usage in 2018-19 came with 54.2%. A low-usage role player taking only good shots is the cleanest way to a high percentage.",
+    "fact": "The lowest usage here and the highest efficiency. Iguodala came off the bench for a team that already had four options.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3223,7 +3223,7 @@
         "y": 36.5
       }
     ],
-    "fact": "Josh Hart shot 39.6% from three as a rookie in 2017-18 on 3.1 attempts a game — the fewest attempts and the best percentage of the four. Jerami Grant took twice as many in 2024-25 (6.3) and hit 36.5%. LeBron James in 2006-07 attempted 4.0 and made 31.9%.",
+    "fact": "Fewest threes attempted, best percentage. Hart was a rookie taking only the ones he was told to take.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3263,7 +3263,7 @@
         "y": 721
       }
     ],
-    "fact": "Corey Dillon ran for 1,635 yards in 2004 with only 103 receiving — the widest split plotted here. Matt Forte's 2014 was almost balanced: 1,038 rushing, 808 receiving. Two backs can produce similar total yardage and be asked to do almost nothing alike.",
+    "fact": "Most rushing yards on the chart, fewest receiving. New England used Dillon to close games out, not to open them up.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3303,7 +3303,7 @@
         "y": 1434
       }
     ],
-    "fact": "Isiah Pacheco averaged 4.9 yards a carry as a rookie in 2022 — the best rate plotted — and finished with 830 rushing yards, the fewest. Ezekiel Elliott's 2018 turned 4.7 a carry into 1,434. Rate is about the runs; the total is about how many of them a rookie is trusted with.",
+    "fact": "Best yards per carry here and the fewest yards. Pacheco was a seventh-round rookie who did not get the job until midseason.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3343,7 +3343,7 @@
         "y": 27
       }
     ],
-    "fact": "Brett Favre threw 22 touchdowns and 22 interceptions in 2008 — the only even split among the four plotted. Aaron Rodgers threw 25 touchdowns against 2 picks in 2018. The vertical axis rewards production and the horizontal one punishes risk, and Favre's season sits exactly where those cancel.",
+    "fact": "Dead even, touchdowns to interceptions. Everyone else here is at least two to one. Favre was 39 and forcing it.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3383,7 +3383,7 @@
         "y": 0.3
       }
     ],
-    "fact": "Allen Iverson averaged 1.9 steals a game in 2006-07 and 0.2 blocks — the most steals and the fewest blocks plotted. Danny Green's 2016-17 was 1.0 and 0.8. Steals come from hands and anticipation on the perimeter; blocks come from height near the rim, and guards rarely appear in both columns.",
+    "fact": "Most steals on the chart, fewest blocks. Iverson was six feet tall and played the passing lanes because the rim was not an option.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3423,7 +3423,7 @@
         "y": 0.5
       }
     ],
-    "fact": "Tim Duncan blocked 1.5 shots a game in 2009-10 against 0.6 steals — the block leader and the steal laggard of this group. Kobe Bryant's 2006-07 was the mirror: 1.4 steals, 0.5 blocks. Where a player defends decides which of these two columns fills up.",
+    "fact": "Fewest steals, most blocks. Duncan defended by standing in the right place rather than reaching.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3463,7 +3463,7 @@
         "y": 0.4
       }
     ],
-    "fact": "Brook Lopez averaged 1.5 blocks and 0.6 steals in 2010-11. Russell Westbrook's 2020-21 was 1.4 steals and 0.4 blocks — almost exactly reversed. Zach Randolph, a big man who defended below the rim, managed only 0.5 blocks in 2003-04, which shows size alone does not put a player on the block axis.",
+    "fact": "Fewest steals here and the most blocks. Lopez never left the paint, which is where blocks come from and steals do not.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3503,7 +3503,7 @@
         "y": 38.7
       }
     ],
-    "fact": "Manu Ginobili shot 39.2% from three in 2016-17 at age 39, on 3.3 attempts a game — the lowest volume plotted and the best rate. Karl-Anthony Towns hit 38.7% on nearly twice the attempts (6.3) in 2020-21, which is the harder version of that accuracy.",
+    "fact": "The fewest threes attempted on the chart and the best percentage, at 39 years old. Ginobili had stopped taking anything difficult.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3543,7 +3543,7 @@
         "y": 38.7
       }
     ],
-    "fact": "Joe Johnson shot 41.1% from three in 2016-17 on 3.3 attempts — the best percentage plotted, on the fewest tries. Paolo Banchero's rookie year in 2022-23 was 4.0 attempts at 29.8%. A late-career specialist taking only open looks and a young high-usage forward taking whatever comes are different jobs.",
+    "fact": "Fewest attempts, best percentage by a distance. Johnson had spent fifteen years learning which shots not to take.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3583,7 +3583,7 @@
         "y": 11.3
       }
     ],
-    "fact": "Jalen Brunson scored 26.0 a game in 2024-25 with 10.2 rebounds and assists combined. Chris Paul's 2014-15 line was 19.1 points and 14.8 — seven fewer points, nearly five more of everything else. Both are lead-guard seasons; the split between scoring and creating is the choice.",
+    "fact": "Most points here, fewest rebounds and assists. Brunson scores like a wing from a point guard's position.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3623,7 +3623,7 @@
         "y": 20
       }
     ],
-    "fact": "Aaron Rodgers threw 38 touchdowns against 5 interceptions in 2014, the best ratio plotted by a distance. Brett Favre's 2005 was 20 touchdowns and 29 picks — more interceptions than scores. Peyton Manning's 2013 produced more touchdowns (55) but twice the interceptions.",
+    "fact": "Five interceptions all season against 38 touchdowns. Nobody else on this chart is close to that ratio.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3663,7 +3663,7 @@
         "y": 755
       }
     ],
-    "fact": "Ivan Rodriguez stole 127 bases and hit 311 home runs across his career — as a catcher, the position that squats through 150 games a year. Mark McGwire stole 12 bases in his entire career while hitting 583 homers. Hank Aaron sits above Rodriguez on both counts at 240 and 755.",
+    "fact": "More steals than Lou Gehrig and the fewest home runs here, as a catcher. Rodriguez squatted through 2,400 games and still ran.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
   },
   {
@@ -3703,7 +3703,7 @@
         "y": 0.5
       }
     ],
-    "fact": "Al Horford averaged 1.1 blocks and 0.7 steals in 2009-10. Kobe Bryant's 2006-07 was 1.4 steals and 0.5 blocks, and CJ McCollum's 2018-19 was 0.8 and 0.4. Horford is the only one plotted who lands meaningfully on the block axis, which is what a center does to this chart.",
+    "fact": "The fewest steals on the chart and the most blocks. Horford was the only centre plotted and it shows in exactly one column.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3743,7 +3743,7 @@
         "y": 297
       }
     ],
-    "fact": "Stan Musial struck out 696 times in his entire career and hit 475 home runs. Rickey Henderson struck out 1,694 times — nearly two and a half times as often — and hit 297. Kenny Lofton fanned 1,016 times for 130 homers. Power and swing-and-miss usually travel together; Musial's line is the exception the chart is built around.",
+    "fact": "Everyone else here traded contact for power. Musial did not — fewest strikeouts on the chart, second-most home runs.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
   },
   {
@@ -3783,7 +3783,7 @@
         "y": 248
       }
     ],
-    "fact": "Clinton Portis ran for 1,487 yards in 2008 and added 218 receiving. Jamal Lewis in 2007 was similar on the ground (1,303) with 248 through the air, while Rhamondre Stevenson's 2024 was 801 and 168. Portis leads this group in rushing without leading it in receiving, which is the profile of a workhorse back.",
+    "fact": "Most rushing yards here, near the bottom for receiving. Portis carried it 342 times that season and caught it 28.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3823,7 +3823,7 @@
         "y": 30
       }
     ],
-    "fact": "Ben Roethlisberger threw 21 touchdowns and 16 interceptions in 2015. Kurt Warner's 2008 produced more touchdowns (30) on fewer picks (14), and Aaron Rodgers threw 25 against 2 in 2018. Touchdown totals reward volume; the interception column is where the risk shows.",
+    "fact": "The most interceptions on the chart and the fewest touchdowns. Roethlisberger missed four games hurt and forced throws in the ones he played.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3863,7 +3863,7 @@
         "y": 15
       }
     ],
-    "fact": "Edgerrin James averaged 77.0 rushing yards a game in 2007 and scored 7 touchdowns. Nick Chubb gained less per game in 2018 (62.2) and scored more (8), and Arian Foster's 2012 was 89.0 and 15. Yardage and touchdowns are only loosely connected, because they are earned in different parts of the field.",
+    "fact": "Second-most yards per game, fewest touchdowns. Arizona had a goal-line back who was not James.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3903,7 +3903,7 @@
         "y": 11.4
       }
     ],
-    "fact": "Franz Wagner scored 24.2 a game in 2024-25 with 10.4 rebounds and assists combined. Ja Morant's same season was 23.2 and 11.4 — nearly identical. Chris Paul's 2014-15 sits well off to the side at 19.1 and 14.8, which is what a pass-first guard looks like on these axes.",
+    "fact": "Most points on the chart, fewest rebounds and assists. Wagner took over Orlando's scoring while Banchero was out.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -3943,7 +3943,7 @@
         "y": 932
       }
     ],
-    "fact": "Frank Gore averaged 3.7 yards a carry in 2015 — the worst rate plotted — and still finished with 967 rushing yards, more than Devon Achane's 907 at 4.5 a carry in 2024. Volume can outrun efficiency over a season, and this chart is where that shows up plainly.",
+    "fact": "The worst yards per carry here and still nearly the most yards. Gore was 32 and carried it 260 times anyway.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -3983,7 +3983,7 @@
         "y": 1225
       }
     ],
-    "fact": "Wes Welker caught 112 passes in 2008 for 1,165 yards — the most receptions plotted and not the most yards. Justin Jefferson's 2020 turned 88 catches into 1,400, and Terry McLaurin needed only 77 for 1,191 in 2022. Welker worked underneath; the yards-per-catch gap is the whole story of the position he played.",
+    "fact": "Most catches on the chart, fewest yards. Welker ran routes that stopped at the sticks by design.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -4023,7 +4023,7 @@
         "y": 521
       }
     ],
-    "fact": "Robin Yount struck out 1,350 times and hit 251 home runs. Willie McCovey struck out only 200 more times (1,550) and hit more than twice the homers (521). Yogi Berra sits far left with 414 career strikeouts and 358 home runs — more power than Yount on less than a third of the whiffs.",
+    "fact": "Nearly as many strikeouts as McCovey for half the home runs. Yount's value was in playing shortstop for a decade, not in the power.",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
   },
   {
@@ -4063,7 +4063,7 @@
         "y": 1
       }
     ],
-    "fact": "Jalen Williams averaged 1.6 steals and 0.7 blocks in 2024-25 — the most steals plotted. Shaquille O'Neal's 2006-07 is the opposite corner: 0.2 steals, 1.4 blocks. Steven Adams in 2017-18 managed 1.2 and 1.0, one of the rarer lines that reaches into both columns at once.",
+    "fact": "The most steals here and almost the fewest blocks. Williams defends on the perimeter, where hands matter and height does not.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
@@ -4103,7 +4103,7 @@
         "y": 20
       }
     ],
-    "fact": "Philip Rivers threw 28 touchdowns against 9 interceptions in 2009. Brett Favre's 2005 went the other way entirely — 20 touchdowns and 29 picks. Ben Roethlisberger's 2009, plotted here too, was 26 and 12. The bottom-right of this chart is where seasons go wrong.",
+    "fact": "Most touchdowns on the chart, second-fewest interceptions. This is the corner every quarterback is aiming at.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
@@ -4143,7 +4143,7 @@
         "y": 7
       }
     ],
-    "fact": "LeSean McCoy averaged 82.4 rushing yards a game in 2014 and scored 5 touchdowns. Alvin Kamara gained far less per game in 2020 (62.1) and scored 16 — more than three times as many on three-quarters the ground. Touchdowns follow opportunity near the goal line, not yardage between the twenties.",
+    "fact": "Second-most yards per game and the fewest touchdowns. Philadelphia gave the short-yardage carries to somebody else.",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   }
 ]
