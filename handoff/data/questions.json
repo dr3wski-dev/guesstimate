@@ -46,11 +46,11 @@
     "yLabel": "Career points per game",
     "yUnit": "PPG",
     "xDomain": [
-      16,
+      20,
       40
     ],
     "yDomain": [
-      8,
+      12,
       28
     ],
     "targetPlayer": "Lou Williams",
@@ -84,12 +84,12 @@
     "yLabel": "Career rebounds + assists per game",
     "yUnit": "REB+AST",
     "xDomain": [
-      4,
-      28
+      8,
+      24
     ],
     "yDomain": [
-      4,
-      20
+      5,
+      25
     ],
     "targetPlayer": "Draymond Green",
     "targetX": 8.7,
@@ -115,121 +115,6 @@
     "source": "StatMuse career per-game averages (regular season)."
   },
   {
-    "id": "nfl-ypg-tds-taylor",
-    "league": "NFL",
-    "xLabel": "Rushing yards per game (season)",
-    "xUnit": "YPG",
-    "yLabel": "Rushing touchdowns (season)",
-    "yUnit": "TDs",
-    "yStep": 1,
-    "xDomain": [
-      80,
-      140
-    ],
-    "yDomain": [
-      8,
-      24
-    ],
-    "targetPlayer": "Jonathan Taylor, 2021",
-    "targetX": 106.5,
-    "targetY": 18,
-    "referencePlayers": [
-      {
-        "name": "Christian McCaffrey, 2023",
-        "x": 91.2,
-        "y": 14
-      },
-      {
-        "name": "Derrick Henry, 2020",
-        "x": 126.7,
-        "y": 17
-      },
-      {
-        "name": "Adrian Peterson, 2012",
-        "x": 131.1,
-        "y": 12
-      }
-    ],
-    "fact": "Jonathan Taylor's 2021 season is the counterintuitive one here: his 106.5 rushing yards per game is actually the lowest of these four seasons, yet his 18 rushing touchdowns is the highest — the 17-game season gave him an extra game, and a huge share of his team's goal-line work. Adrian Peterson's 2012 MVP season (131.1 YPG) is the opposite profile: gaining more yards per game than anyone here, but with the fewest touchdowns.",
-    "source": "Pro Football Reference / StatMuse season totals. Yards-per-game computed from confirmed season yardage ÷ games played."
-  },
-  {
-    "id": "nba-stl-blk-pippen",
-    "league": "NBA",
-    "xLabel": "Career steals per game",
-    "xUnit": "SPG",
-    "yLabel": "Career blocks per game",
-    "yUnit": "BPG",
-    "xDomain": [
-      0,
-      2.8
-    ],
-    "yDomain": [
-      0,
-      3.6
-    ],
-    "targetPlayer": "Scottie Pippen",
-    "targetX": 2,
-    "targetY": 0.8,
-    "referencePlayers": [
-      {
-        "name": "Dikembe Mutombo",
-        "x": 0.4,
-        "y": 2.8
-      },
-      {
-        "name": "John Stockton",
-        "x": 2.2,
-        "y": 0.2
-      },
-      {
-        "name": "Hakeem Olajuwon",
-        "x": 1.7,
-        "y": 3.1
-      }
-    ],
-    "fact": "Scottie Pippen's 2.0 steals and 0.8 blocks a game is a genuinely rare wing profile — enough blocks to suggest a rim-protecting big, delivered by a 6'8\" forward who also picked pockets like a guard. Dikembe Mutombo (0.4 / 2.8) and John Stockton (2.2 / 0.2) are the two specialist extremes this pairing usually produces: a pure rim-protector and a pure ball-hawk. Hakeem Olajuwon (1.7 / 3.1) is the rare exception who tops both — a center with a guard's hands and a shot-blocker's timing.",
-    "source": "StatMuse career per-game averages (regular season)."
-  },
-  {
-    "id": "nba-fga-ts-jordan",
-    "league": "NBA",
-    "xLabel": "Career field goal attempts per game",
-    "xUnit": "FGA",
-    "yLabel": "Career true shooting percentage",
-    "yUnit": "TS%",
-    "xDomain": [
-      4,
-      28
-    ],
-    "yDomain": [
-      48,
-      68
-    ],
-    "targetPlayer": "Michael Jordan",
-    "targetX": 22.9,
-    "targetY": 56.9,
-    "referencePlayers": [
-      {
-        "name": "Allen Iverson",
-        "x": 21.8,
-        "y": 51.8
-      },
-      {
-        "name": "Stephen Curry",
-        "x": 17.9,
-        "y": 62.6
-      },
-      {
-        "name": "DeAndre Jordan",
-        "x": 5.1,
-        "y": 64.4
-      }
-    ],
-    "fact": "Michael Jordan took more shots per game (22.9) than anyone else here — even more than Allen Iverson (21.8), the standard reference for a pure volume scorer. But his efficiency (56.9 TS%) sits well below the elite tier: Stephen Curry (62.6) gets nearly as many shots up at a far higher efficiency, and DeAndre Jordan (64.4) shows the opposite extreme — a role player who barely shoots (5.1 attempts a game) but converts at an absurd rate, mostly dunks and putbacks. Jordan's greatness came from volume and shot difficulty, not from posting efficiency numbers like the specialists at either end of this chart.",
-    "source": "StatMuse career true shooting percentage and field goal attempts per game (regular season)."
-  },
-  {
     "id": "nfl-int-td-winston",
     "league": "NFL",
     "xLabel": "Career interception percentage",
@@ -237,8 +122,8 @@
     "yLabel": "Career touchdown percentage",
     "yUnit": "TD%",
     "xDomain": [
-      1,
-      4.2
+      0,
+      4
     ],
     "yDomain": [
       3,
@@ -1530,11 +1415,11 @@
       {
         "name": "Lauri Markkanen, 2024-25",
         "x": 31.4,
-        "y": 19.0
+        "y": 19
       },
       {
         "name": "Anthony Davis, 2022-23",
-        "x": 34.0,
+        "x": 34,
         "y": 25.9
       },
       {
@@ -1565,7 +1450,7 @@
     ],
     "targetPlayer": "Nikola Vučević, 2020-21",
     "targetX": 29.2,
-    "targetY": 56.0,
+    "targetY": 56,
     "referencePlayers": [
       {
         "name": "P.J. Tucker, 2022-23",
@@ -1614,7 +1499,7 @@
       },
       {
         "name": "CJ McCollum, 2020-21",
-        "x": 34.0,
+        "x": 34,
         "y": 23.1
       },
       {
@@ -1716,11 +1601,11 @@
     "xStep": 0.1,
     "yStep": 1,
     "xDomain": [
-      50,
-      130
+      60,
+      100
     ],
     "yDomain": [
-      0,
+      4,
       20
     ],
     "targetPlayer": "Jamaal Charles, 2012",
@@ -1739,7 +1624,7 @@
       },
       {
         "name": "Arian Foster, 2012",
-        "x": 89.0,
+        "x": 89,
         "y": 15
       }
     ],
@@ -1827,46 +1712,6 @@
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
-    "id": "mlb-k9-bb9-martinez",
-    "league": "MLB",
-    "xLabel": "Career strikeouts per 9 innings",
-    "xUnit": "K/9",
-    "yLabel": "Career walks per 9 innings",
-    "yUnit": "BB/9",
-    "xStep": 0.01,
-    "yStep": 0.01,
-    "xDomain": [
-      4,
-      12
-    ],
-    "yDomain": [
-      1,
-      5
-    ],
-    "targetPlayer": "Pedro Martinez",
-    "targetX": 10.04,
-    "targetY": 2.42,
-    "referencePlayers": [
-      {
-        "name": "Greg Maddux",
-        "x": 6.06,
-        "y": 1.8
-      },
-      {
-        "name": "Nolan Ryan",
-        "x": 9.55,
-        "y": 4.67
-      },
-      {
-        "name": "Randy Johnson",
-        "x": 10.61,
-        "y": 3.26
-      }
-    ],
-    "fact": "Pedro Martinez struck out 10.04 batters per nine innings — essentially Randy Johnson territory (10.61) and more than Nolan Ryan's 9.55 — while walking only 2.42, closer to Greg Maddux, the control archetype at 1.80, than to either power pitcher. That combination is the entire argument for Pedro. Ryan bought his strikeouts with 4.67 walks per nine, nearly double Pedro's rate; Maddux bought his control by striking out 6.06, barely half as many. Pedro refused the trade. In 1999 he struck out 313 batters and walked 37.",
-    "source": "StatMuse career K/9 and BB/9; 1999 season strikeout and walk totals."
-  },
-  {
     "id": "mlb-ba-hr-williams",
     "league": "MLB",
     "xLabel": "Career batting average",
@@ -1929,7 +1774,7 @@
       {
         "name": "Barry Sanders",
         "x": 3062,
-        "y": 5.0
+        "y": 5
       },
       {
         "name": "Adrian Peterson",
@@ -1944,45 +1789,6 @@
     ],
     "fact": "Jamaal Charles averaged 5.4 yards per carry — the highest of any running back in NFL history with at least 1,000 attempts, ahead of Barry Sanders' 5.0 and Jim Brown's 5.2. The only players above him on the overall list are quarterbacks (Lamar Jackson, Russell Wilson, Cam Newton), who pick their runs. Charles did it on 1,407 carries, under a third of Emmitt Smith's 4,409. Smith holds the career rushing yards record and Charles holds the rate, which is a fair summary of how football remembers running backs: volume gets the record, efficiency gets forgotten.",
     "source": "StatMuse career rushing attempts and yards per carry; yards-per-carry leaderboard with a 1,000-attempt minimum."
-  },
-  {
-    "id": "nfl-rec-ypr-moss",
-    "league": "NFL",
-    "xLabel": "Career receptions",
-    "xUnit": "rec",
-    "yLabel": "Career yards per reception",
-    "yUnit": "Y/R",
-    "xStep": 1,
-    "xDomain": [
-      0,
-      1600
-    ],
-    "yDomain": [
-      8,
-      20
-    ],
-    "targetPlayer": "Randy Moss",
-    "targetX": 982,
-    "targetY": 15.6,
-    "referencePlayers": [
-      {
-        "name": "DeSean Jackson",
-        "x": 641,
-        "y": 17.6
-      },
-      {
-        "name": "Wes Welker",
-        "x": 903,
-        "y": 11.0
-      },
-      {
-        "name": "Jerry Rice",
-        "x": 1549,
-        "y": 14.8
-      }
-    ],
-    "fact": "Randy Moss is the definitive deep threat of his era and he averaged 15.6 yards a catch — two full yards below DeSean Jackson's 17.6, and less than a yard above Jerry Rice's 14.8. The reputation didn't come from where the catches started, it came from where they ended: 156 receiving touchdowns, second-most all time. Wes Welker is the archetype's opposite pole — 903 catches, nearly Moss's total, at 11.0 yards each. \"Deep threat\" describes what a defense is afraid of, not what the average play actually gains.",
-    "source": "StatMuse career receptions, yards per reception, and receiving touchdowns."
   },
   {
     "id": "nba-career-peak-chamberlain",
@@ -2005,12 +1811,12 @@
     "referencePlayers": [
       {
         "name": "Tim Duncan",
-        "x": 19.0,
+        "x": 19,
         "y": 25.5
       },
       {
         "name": "Kobe Bryant",
-        "x": 25.0,
+        "x": 25,
         "y": 35.4
       },
       {
@@ -2150,12 +1956,12 @@
     "yLabel": "Career playoffs",
     "yUnit": "PPG",
     "xDomain": [
-      15,
-      35
+      17.5,
+      27.5
     ],
     "yDomain": [
-      15,
-      35
+      16,
+      32
     ],
     "targetPlayer": "Allen Iverson",
     "targetX": 26.7,
@@ -2163,7 +1969,7 @@
     "referencePlayers": [
       {
         "name": "Tim Duncan",
-        "x": 19.0,
+        "x": 19,
         "y": 20.6
       },
       {
@@ -2173,11 +1979,2171 @@
       },
       {
         "name": "Karl Malone",
-        "x": 25.0,
+        "x": 25,
         "y": 24.7
       }
     ],
     "fact": "Almost nobody scores more in the playoffs than the regular season — the defenses tighten, the rotations shorten, and the games slow down. Larry Bird went 24.3 to 23.8. Karl Malone went 25.0 to 24.7. Allen Iverson went 26.7 to 29.7, a three-point jump, the largest of any high-volume scorer in league history. He is 6'0\" and 165 pounds and never won a title, and the thing people remember — carrying a team to the Finals and stealing Game 1 from a 56-win Lakers side — is exactly what this number describes.",
     "source": "StatMuse career regular season and playoff points per game."
+  },
+  {
+    "id": "mlb-as-hr-walker",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      100,
+      500
+    ],
+    "targetPlayer": "Larry Walker",
+    "targetX": 5,
+    "targetY": 383,
+    "referencePlayers": [
+      {
+        "name": "Tim Raines",
+        "x": 7,
+        "y": 170
+      },
+      {
+        "name": "Kirby Puckett",
+        "x": 10,
+        "y": 207
+      },
+      {
+        "name": "Derek Jeter",
+        "x": 14,
+        "y": 260
+      }
+    ],
+    "fact": "Larry Walker hit 383 home runs and made five All-Star teams. Kirby Puckett, with 176 fewer homers, made ten. Walker won an MVP and three batting titles in Colorado, where the thin air meant voters spent two decades discounting everything he did — he waited until his final year on the ballot to reach the Hall of Fame.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-as-hr-jones",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      150,
+      550
+    ],
+    "targetPlayer": "Chipper Jones",
+    "targetX": 8,
+    "targetY": 468,
+    "referencePlayers": [
+      {
+        "name": "Robin Yount",
+        "x": 3,
+        "y": 251
+      },
+      {
+        "name": "Kirby Puckett",
+        "x": 10,
+        "y": 207
+      },
+      {
+        "name": "Cal Ripken",
+        "x": 19,
+        "y": 431
+      }
+    ],
+    "fact": "Andruw Jones hit 434 home runs and made five All-Star teams — fewer than Kirby Puckett, who hit 227 fewer. Jones was also the best defensive center fielder of his generation by a wide margin, winning ten straight Gold Gloves. Neither the power nor the defense translated into the recognition either one alone usually buys.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-avg-hr-puckett",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.2375,
+      0.3375
+    ],
+    "yDomain": [
+      150,
+      550
+    ],
+    "targetPlayer": "Kirby Puckett",
+    "targetX": 0.318,
+    "targetY": 207,
+    "referencePlayers": [
+      {
+        "name": "Andruw Jones",
+        "x": 0.254,
+        "y": 434
+      },
+      {
+        "name": "Robin Yount",
+        "x": 0.285,
+        "y": 251
+      },
+      {
+        "name": "Chipper Jones",
+        "x": 0.303,
+        "y": 468
+      }
+    ],
+    "fact": "Kirby Puckett hit .318 with 207 home runs across just twelve seasons — glaucoma ended his career at 35. Andruw Jones, sixty points of average lower, hit more than twice as many homers. Puckett is the rare modern hitter voted in almost entirely on contact and a decade of being the most beloved player in his city.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv). Career regular-season totals summed by playerID; batting average computed as H/AB."
+  },
+  {
+    "id": "mlb-2b-hr-schmidt",
+    "league": "MLB",
+    "xLabel": "Career doubles",
+    "xUnit": "2B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      350,
+      750
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Mike Schmidt",
+    "targetX": 408,
+    "targetY": 548,
+    "referencePlayers": [
+      {
+        "name": "Tim Raines",
+        "x": 430,
+        "y": 170
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 510,
+        "y": 297
+      },
+      {
+        "name": "Eddie Murray",
+        "x": 560,
+        "y": 504
+      }
+    ],
+    "fact": "Mike Schmidt hit 548 home runs and 408 doubles. Eddie Murray, 44 homers behind him, hit 152 more doubles. Tim Raines hit more doubles than either while hitting 170 homers total. Schmidt is generally considered the best third baseman who ever played, and the shape of his hitting — walks and homers, comparatively little in between — is the modern profile arriving forty years early.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "mlb-sb-hr-biggio",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      250,
+      650
+    ],
+    "targetPlayer": "Craig Biggio",
+    "targetX": 414,
+    "targetY": 291,
+    "referencePlayers": [
+      {
+        "name": "Fred McGriff",
+        "x": 72,
+        "y": 493
+      },
+      {
+        "name": "Mike Schmidt",
+        "x": 174,
+        "y": 548
+      },
+      {
+        "name": "Andre Dawson",
+        "x": 314,
+        "y": 438
+      }
+    ],
+    "fact": "Craig Biggio stole 414 bases and hit 291 home runs — a combination Mike Schmidt and Fred McGriff never came close to from either direction. He also caught, played second base, and played center field, and was hit by 285 pitches, second most in history. Almost nothing about his career fits a single column.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv). Career regular-season totals summed by playerID; All-Star selections counted as distinct years."
+  },
+  {
+    "id": "nba-fga-ts-ayton-2020",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      8.75,
+      18.75
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Deandre Ayton, 2020-21",
+    "targetX": 10,
+    "targetY": 65.3,
+    "referencePlayers": [
+      {
+        "name": "Jermaine O'Neal, 2008-09",
+        "x": 11.3,
+        "y": 52.2
+      },
+      {
+        "name": "Mikal Bridges, 2024-25",
+        "x": 14.4,
+        "y": 58.5
+      },
+      {
+        "name": "DeMar DeRozan, 2015-16",
+        "x": 17.7,
+        "y": 55
+      }
+    ],
+    "fact": "Deandre Ayton took 10.0 shots a game in 2020-21 at a 65.3 true shooting percentage — the fewest attempts here and by far the most efficient. DeMar DeRozan took nearly twice as many at ten points worse. Ayton was the fourth option on a Suns team that reached the Finals, and shooting less is a large part of why his numbers look like that.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-ellis-2010",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Monta Ellis, 2010-11",
+    "targetX": 20.1,
+    "targetY": 53.6,
+    "referencePlayers": [
+      {
+        "name": "Shaquille O'Neal, 2008-09",
+        "x": 11.2,
+        "y": 62.3
+      },
+      {
+        "name": "Bam Adebayo, 2023-24",
+        "x": 14.3,
+        "y": 57.6
+      },
+      {
+        "name": "Joel Embiid, 2020-21",
+        "x": 17.6,
+        "y": 63.6
+      }
+    ],
+    "fact": "Monta Ellis took 20.1 shots a game in 2010-11 and converted at 53.6 true shooting — the most volume and the worst efficiency of the four. Joel Embiid, at 17.6 attempts, was ten points better. Ellis scored 24.1 points a game that season on a 36-win team, which is the clearest illustration there is that points per game and good offense are not the same statistic.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-gordon-2024",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      30,
+      50
+    ],
+    "targetPlayer": "Aaron Gordon, 2024-25",
+    "targetX": 3.4,
+    "targetY": 43.6,
+    "referencePlayers": [
+      {
+        "name": "Kemba Walker, 2012-13",
+        "x": 4,
+        "y": 32.2
+      },
+      {
+        "name": "Scottie Barnes, 2023-24",
+        "x": 4.9,
+        "y": 34.1
+      },
+      {
+        "name": "Jerami Grant, 2024-25",
+        "x": 6.3,
+        "y": 36.5
+      }
+    ],
+    "fact": "Aaron Gordon shot 43.6% from three in 2024-25 on 3.4 attempts a game — the best percentage on this chart by five points, on the fewest attempts. Jerami Grant took nearly twice as many at seven points worse. A low-volume shooter only takes the open ones, which is exactly why the percentage looks like that and why it rarely survives more attempts.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-gasol-2008",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      17.5,
+      27.5
+    ],
+    "targetPlayer": "Pau Gasol, 2008-09",
+    "targetX": 37,
+    "targetY": 18.9,
+    "referencePlayers": [
+      {
+        "name": "Nikola Vučević, 2018-19",
+        "x": 31.4,
+        "y": 20.8
+      },
+      {
+        "name": "Anthony Davis, 2022-23",
+        "x": 34,
+        "y": 25.9
+      },
+      {
+        "name": "Kyrie Irving, 2024-25",
+        "x": 36.1,
+        "y": 24.7
+      }
+    ],
+    "fact": "Pau Gasol played 37.0 minutes a game in 2008-09 and scored 18.9 points, the fewest here despite the second-most minutes. Anthony Davis scored seven more in three fewer. Gasol was the second option on a championship Lakers team whose first option took 20 shots a night — minutes measure how much a team needs you on the floor, not how often they throw you the ball.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushypg-td-bell-2016",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      5,
+      25
+    ],
+    "targetPlayer": "Le'Veon Bell, 2016",
+    "targetX": 105.7,
+    "targetY": 7,
+    "referencePlayers": [
+      {
+        "name": "Emmitt Smith, 2004",
+        "x": 62.5,
+        "y": 9
+      },
+      {
+        "name": "Marshall Faulk, 2003",
+        "x": 74.4,
+        "y": 10
+      },
+      {
+        "name": "LaDainian Tomlinson, 2004",
+        "x": 89,
+        "y": 17
+      }
+    ],
+    "fact": "Le'Veon Bell gained 105.7 rushing yards a game in 2016 — the most on this chart by sixteen — and scored seven touchdowns. LaDainian Tomlinson's 2004 scored seventeen on less yardage per game. Pittsburgh used Bell to move the ball and had other answers at the goal line, so the column most people check understates the best season of his career.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-johnson-2014",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      900,
+      1100
+    ],
+    "targetPlayer": "Andre Johnson, 2014",
+    "targetX": 85,
+    "targetY": 936,
+    "referencePlayers": [
+      {
+        "name": "A.J. Brown, 2019",
+        "x": 52,
+        "y": 1051
+      },
+      {
+        "name": "Tyreek Hill, 2024",
+        "x": 81,
+        "y": 959
+      },
+      {
+        "name": "Keenan Allen, 2020",
+        "x": 100,
+        "y": 992
+      }
+    ],
+    "fact": "Calvin Johnson caught 71 passes in 2014 for 1,077 yards — 15.2 a catch, on the fewest receptions here. Chris Godwin needed 33 more catches to gain less. Johnson played only 13 games that year with an ankle injury and still finished within 30 yards of receivers who played a full season.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypc-rushyds-kamara-2020",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3.75,
+      5.75
+    ],
+    "yDomain": [
+      750,
+      1750
+    ],
+    "targetPlayer": "Alvin Kamara, 2020",
+    "targetX": 5,
+    "targetY": 932,
+    "referencePlayers": [
+      {
+        "name": "Steven Jackson, 2012",
+        "x": 4.1,
+        "y": 1045
+      },
+      {
+        "name": "Derrick Henry, 2022",
+        "x": 4.4,
+        "y": 1538
+      },
+      {
+        "name": "Le'Veon Bell, 2016",
+        "x": 4.9,
+        "y": 1268
+      }
+    ],
+    "fact": "Alvin Kamara averaged 5.0 yards a carry in 2020 for 932 rushing yards — the fewest here, on the second-best efficiency. Derrick Henry gained 606 more at 4.4. Kamara also caught 83 passes that season and scored 21 total touchdowns, including six in a single game; the rushing line alone describes almost none of it.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-bruce-2006",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      110
+    ],
+    "yDomain": [
+      925,
+      1125
+    ],
+    "targetPlayer": "Isaac Bruce, 2006",
+    "targetX": 74,
+    "targetY": 1098,
+    "referencePlayers": [
+      {
+        "name": "DeAndre Hopkins, 2016",
+        "x": 78,
+        "y": 954
+      },
+      {
+        "name": "DK Metcalf, 2022",
+        "x": 90,
+        "y": 1048
+      },
+      {
+        "name": "Chris Godwin, 2022",
+        "x": 104,
+        "y": 1023
+      }
+    ],
+    "fact": "Isaac Bruce caught 74 passes for 1,098 yards in 2006 — the fewest catches on this chart and the most yards. Chris Godwin needed 30 more receptions to gain 75 fewer. Bruce was 34, eight years past the Rams' Greatest Show on Turf, and still averaging almost fifteen yards a catch.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-mpg-ppg-oneal-2002",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      20,
+      28
+    ],
+    "targetPlayer": "Jermaine O'Neal, 2002-03",
+    "targetX": 37.2,
+    "targetY": 20.8,
+    "referencePlayers": [
+      {
+        "name": "Donovan Mitchell, 2024-25",
+        "x": 31.4,
+        "y": 24
+      },
+      {
+        "name": "Kawhi Leonard, 2018-19",
+        "x": 34,
+        "y": 26.6
+      },
+      {
+        "name": "Amar'e Stoudemire, 2004-05",
+        "x": 36.1,
+        "y": 26
+      }
+    ],
+    "fact": "Jermaine O'Neal played 37.2 minutes a night in 2002-03 and scored 20.8 points — more floor time than any of the three plotted alongside him, and fewer points than all of them. Amar'e Stoudemire needed 36.1 minutes for 26.0 in 2004-05, and Donovan Mitchell got 24.0 out of just 31.4 in 2024-25. Heavy minutes are a workload, not a scoring rate.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushypg-td-jacobs-2021",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      2,
+      10
+    ],
+    "targetPlayer": "Josh Jacobs, 2021",
+    "targetX": 58.1,
+    "targetY": 9,
+    "referencePlayers": [
+      {
+        "name": "Jamal Lewis, 2008",
+        "x": 62.6,
+        "y": 4
+      },
+      {
+        "name": "LeSean McCoy, 2015",
+        "x": 74.6,
+        "y": 3
+      },
+      {
+        "name": "Shaun Alexander, 2006",
+        "x": 89.6,
+        "y": 7
+      }
+    ],
+    "fact": "Josh Jacobs averaged only 58.1 rushing yards a game in 2021 — the lowest of the four plotted — but still ran in 9 touchdowns. LeSean McCoy in 2015 gained more ground per game (74.6) and scored 3. Goal-line work and yardage are close to independent: touchdowns are about who gets the ball at the two, not who moves it between the twenties.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-3pa-3pct-harden-2022",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      38,
+      46
+    ],
+    "targetPlayer": "James Harden, 2022-23",
+    "targetX": 7.2,
+    "targetY": 38.5,
+    "referencePlayers": [
+      {
+        "name": "Tyus Jones, 2023-24",
+        "x": 3.9,
+        "y": 41.4
+      },
+      {
+        "name": "Bojan Bogdanovic, 2018-19",
+        "x": 4.8,
+        "y": 42.5
+      },
+      {
+        "name": "Ray Allen, 2007-08",
+        "x": 6.2,
+        "y": 39.8
+      }
+    ],
+    "fact": "James Harden took 7.2 threes a game in 2022-23, more than anyone plotted here, and hit 38.5% of them. Bojan Bogdanovic shot a better clip (42.5%) on 4.8 attempts, and Tyus Jones 41.4% on 3.9. Percentage tends to fall as volume climbs, which is what makes high-volume accuracy the rarer thing.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-marbury-2000",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      52.5,
+      72.5
+    ],
+    "targetPlayer": "Stephon Marbury, 2000-01",
+    "targetX": 19.1,
+    "targetY": 54,
+    "referencePlayers": [
+      {
+        "name": "Shaquille O'Neal, 2008-09",
+        "x": 11.2,
+        "y": 62.3
+      },
+      {
+        "name": "Chris Paul, 2014-15",
+        "x": 14.3,
+        "y": 59.6
+      },
+      {
+        "name": "LeBron James, 2013-14",
+        "x": 17.6,
+        "y": 64.9
+      }
+    ],
+    "fact": "Stephon Marbury put up 19.1 shots a game in 2000-01 at 54.0% true shooting. LeBron James in 2013-14 took nearly as many (17.6) and converted at 64.9%, and Shaquille O'Neal managed 62.3% on 11.2 attempts in 2008-09. True shooting folds in threes and free throws, so the gap here is efficiency, not shot selection alone.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-recyds-brown-2024",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      60,
+      140
+    ],
+    "yDomain": [
+      850,
+      1250
+    ],
+    "targetPlayer": "A.J. Brown, 2024",
+    "targetX": 67,
+    "targetY": 1079,
+    "referencePlayers": [
+      {
+        "name": "DeAndre Hopkins, 2016",
+        "x": 78,
+        "y": 954
+      },
+      {
+        "name": "Amon-Ra St. Brown, 2021",
+        "x": 90,
+        "y": 912
+      },
+      {
+        "name": "Jaylen Waddle, 2021",
+        "x": 104,
+        "y": 1015
+      }
+    ],
+    "fact": "A.J. Brown caught only 67 passes in 2024 and still gained 1,079 yards — more yardage than any of the three plotted, on the fewest catches. Jaylen Waddle needed 104 receptions in 2021 to reach 1,015, and Amon-Ra St. Brown's 90 grabs produced 912. Brown averaged over 16 yards a catch; volume receivers live closer to 10.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-fga-ts-mccollum-2019",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      52.5,
+      72.5
+    ],
+    "targetPlayer": "CJ McCollum, 2019-20",
+    "targetX": 19.4,
+    "targetY": 54.1,
+    "referencePlayers": [
+      {
+        "name": "Shaquille O'Neal, 2008-09",
+        "x": 11.2,
+        "y": 62.3
+      },
+      {
+        "name": "Bam Adebayo, 2024-25",
+        "x": 14.3,
+        "y": 56.1
+      },
+      {
+        "name": "Klay Thompson, 2016-17",
+        "x": 17.6,
+        "y": 59.2
+      }
+    ],
+    "fact": "CJ McCollum took 19.4 shots a game in 2019-20 — the highest volume plotted — at 54.1% true shooting. Klay Thompson in 2016-17 shot 59.2% on 17.6 attempts, and Bam Adebayo hit 56.1% on 14.3 in 2024-25. Carrying a scoring load and staying efficient at it are different skills, and the chart separates them.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-ypc-rushyds-murray-2011",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3.75,
+      5.75
+    ],
+    "yDomain": [
+      800,
+      1600
+    ],
+    "targetPlayer": "DeMarco Murray, 2011",
+    "targetX": 5.5,
+    "targetY": 897,
+    "referencePlayers": [
+      {
+        "name": "Ezekiel Elliott, 2017",
+        "x": 4.1,
+        "y": 983
+      },
+      {
+        "name": "Shaun Alexander, 2003",
+        "x": 4.4,
+        "y": 1435
+      },
+      {
+        "name": "Frank Gore, 2009",
+        "x": 4.9,
+        "y": 1120
+      }
+    ],
+    "fact": "DeMarco Murray averaged 5.5 yards a carry in 2011, comfortably the best rate plotted, but finished with only 897 rushing yards — the fewest of the four. Shaun Alexander's 4.4 average in 2003 produced 1,435. Efficiency without volume is a small season; the total is mostly a story about how many carries arrived.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-usg-ts-parker-2008",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      55,
+      63
+    ],
+    "targetPlayer": "Tony Parker, 2008-09",
+    "targetX": 31.3,
+    "targetY": 55.6,
+    "referencePlayers": [
+      {
+        "name": "P.J. Tucker, 2022-23",
+        "x": 6.6,
+        "y": 56.6
+      },
+      {
+        "name": "Kyle Lowry, 2020-21",
+        "x": 20.9,
+        "y": 59.3
+      },
+      {
+        "name": "Damian Lillard, 2014-15",
+        "x": 26.2,
+        "y": 56
+      }
+    ],
+    "fact": "Tony Parker used 31.3% of San Antonio's possessions in 2008-09, far more than anyone plotted, and posted 55.6% true shooting. P.J. Tucker in 2022-23 used just 6.6% and shot 56.6% — better efficiency on a fraction of the load. Usage and efficiency pull against each other, which is why high-usage, high-efficiency seasons are the valuable ones.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-brown-2022",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      10,
+      14
+    ],
+    "targetPlayer": "Jaylen Brown, 2022-23",
+    "targetX": 26.6,
+    "targetY": 10.4,
+    "referencePlayers": [
+      {
+        "name": "Zach Randolph, 2012-13",
+        "x": 15.4,
+        "y": 12.6
+      },
+      {
+        "name": "Shawn Marion, 2001-02",
+        "x": 19.1,
+        "y": 11.9
+      },
+      {
+        "name": "Bradley Beal, 2021-22",
+        "x": 23.2,
+        "y": 11.3
+      }
+    ],
+    "fact": "Jaylen Brown scored 26.6 a game in 2022-23 with 10.4 rebounds and assists combined — the most points and the fewest of everything else among the four plotted. Zach Randolph's 2012-13 inverts it: 15.4 points, 12.6 boards and dimes. The chart's diagonal is the trade between scoring volume and everything around it.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushypg-td-elliott-2017",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      5,
+      25
+    ],
+    "targetPlayer": "Ezekiel Elliott, 2017",
+    "targetX": 98.3,
+    "targetY": 7,
+    "referencePlayers": [
+      {
+        "name": "Emmitt Smith, 2004",
+        "x": 62.5,
+        "y": 9
+      },
+      {
+        "name": "Marshall Faulk, 2003",
+        "x": 74.4,
+        "y": 10
+      },
+      {
+        "name": "Arian Foster, 2012",
+        "x": 89,
+        "y": 15
+      }
+    ],
+    "fact": "Ezekiel Elliott led this group in rushing yards per game in 2017 at 98.3 and scored the fewest touchdowns, 7. Arian Foster in 2012 gained less ground per game (89.0) and reached the end zone 15 times. Per-game rate and touchdown count answer different questions, which is why they can disagree this sharply.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-mpg-ppg-lavine-2016",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      17.5,
+      27.5
+    ],
+    "targetPlayer": "Zach LaVine, 2016-17",
+    "targetX": 37.2,
+    "targetY": 18.9,
+    "referencePlayers": [
+      {
+        "name": "Nikola Vučević, 2018-19",
+        "x": 31.4,
+        "y": 20.8
+      },
+      {
+        "name": "CJ McCollum, 2020-21",
+        "x": 34,
+        "y": 23.1
+      },
+      {
+        "name": "Amar'e Stoudemire, 2004-05",
+        "x": 36.1,
+        "y": 26
+      }
+    ],
+    "fact": "Zach LaVine played 37.2 minutes a night in 2016-17 and scored 18.9 — the most minutes plotted and the fewest points. Nikola Vučević got 20.8 out of 31.4 minutes in 2018-19. Minutes measure trust and availability; points measure what happens inside them, and the two come apart more often than the eye expects.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-brogdon-2017",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      30,
+      40
+    ],
+    "targetPlayer": "Malcolm Brogdon, 2017-18",
+    "targetX": 3.4,
+    "targetY": 38.5,
+    "referencePlayers": [
+      {
+        "name": "Dirk Nowitzki, 2018-19",
+        "x": 4,
+        "y": 31.2
+      },
+      {
+        "name": "Kyrie Irving, 2015-16",
+        "x": 4.9,
+        "y": 32.1
+      },
+      {
+        "name": "Brook Lopez, 2018-19",
+        "x": 6.3,
+        "y": 36.5
+      }
+    ],
+    "fact": "Malcolm Brogdon attempted only 3.4 threes a game in 2017-18 but made 38.5% — the lowest volume plotted and the best accuracy. Brook Lopez fired 6.3 a night at 36.5% in 2018-19, and Dirk Nowitzki's 2018-19 line was 4.0 attempts at 31.2%. Low volume is where the high percentages tend to hide.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-carter-2000",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      9,
+      13
+    ],
+    "targetPlayer": "Vince Carter, 2000-01",
+    "targetX": 27.6,
+    "targetY": 9.4,
+    "referencePlayers": [
+      {
+        "name": "Shawn Marion, 2007-08",
+        "x": 15.4,
+        "y": 12.4
+      },
+      {
+        "name": "Trae Young, 2018-19",
+        "x": 19.1,
+        "y": 11.8
+      },
+      {
+        "name": "Lauri Markkanen, 2023-24",
+        "x": 23.2,
+        "y": 10.2
+      }
+    ],
+    "fact": "Vince Carter scored 27.6 a game in 2000-01 with 9.4 rebounds and assists combined — top of the group in points, bottom in everything else. Shawn Marion's 2007-08 was 15.4 points and 12.4 boards-plus-dimes. Both are useful seasons; they just distribute the work differently.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushyds-recyds-alexander-2004",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Shaun Alexander, 2004",
+    "targetX": 1688,
+    "targetY": 170,
+    "referencePlayers": [
+      {
+        "name": "David Montgomery, 2022",
+        "x": 801,
+        "y": 316
+      },
+      {
+        "name": "Frank Gore, 2008",
+        "x": 1036,
+        "y": 373
+      },
+      {
+        "name": "Saquon Barkley, 2018",
+        "x": 1307,
+        "y": 721
+      }
+    ],
+    "fact": "Shaun Alexander ran for 1,688 yards in 2004 and caught passes for only 170 — the most rushing and the least receiving of the four plotted. Saquon Barkley's 2018 was 1,307 on the ground and 721 through the air. Alexander was a pure runner in an era that had not yet asked backs to be receivers.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-usg-ts-lowry-2022",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      53,
+      57
+    ],
+    "targetPlayer": "Kyle Lowry, 2022-23",
+    "targetX": 16.2,
+    "targetY": 56.5,
+    "referencePlayers": [
+      {
+        "name": "Karl Malone, 2003-04",
+        "x": 19.2,
+        "y": 55.5
+      },
+      {
+        "name": "Fred VanVleet, 2020-21",
+        "x": 23.7,
+        "y": 53.4
+      },
+      {
+        "name": "DeMar DeRozan, 2018-19",
+        "x": 27.7,
+        "y": 54.2
+      }
+    ],
+    "fact": "Kyle Lowry used only 16.2% of possessions in 2022-23 and still posted the best true shooting of this group at 56.5%. DeMar DeRozan carried 27.7% usage in 2018-19 and shot 54.2%. Lowry's value that season was in the shots he did not take as much as the ones he did.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushyds-recyds-henry-2020",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      50,
+      450
+    ],
+    "targetPlayer": "Derrick Henry, 2020",
+    "targetX": 2027,
+    "targetY": 114,
+    "referencePlayers": [
+      {
+        "name": "Rhamondre Stevenson, 2024",
+        "x": 801,
+        "y": 168
+      },
+      {
+        "name": "Jamaal Charles, 2014",
+        "x": 1033,
+        "y": 291
+      },
+      {
+        "name": "Marshawn Lynch, 2014",
+        "x": 1306,
+        "y": 367
+      }
+    ],
+    "fact": "Derrick Henry ran for 2,027 yards in 2020 — more than 700 clear of anyone plotted here — and caught passes for just 114. Marshawn Lynch's 2014 was 1,306 rushing and 367 receiving. A 2,000-yard rushing season is rare enough that the axis has to stretch to hold it, and Henry did it while barely being used as a receiver.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-usg-ts-iguodala-2016",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      45
+    ],
+    "yDomain": [
+      52.5,
+      72.5
+    ],
+    "targetPlayer": "Andre Iguodala, 2016-17",
+    "targetX": 11.1,
+    "targetY": 62.4,
+    "referencePlayers": [
+      {
+        "name": "Mikal Bridges, 2024-25",
+        "x": 19.2,
+        "y": 58.5
+      },
+      {
+        "name": "Derrick Favors, 2014-15",
+        "x": 23.7,
+        "y": 55.8
+      },
+      {
+        "name": "DeMar DeRozan, 2018-19",
+        "x": 27.7,
+        "y": 54.2
+      }
+    ],
+    "fact": "Andre Iguodala used just 11.1% of Golden State's possessions in 2016-17 and shot 62.4% true shooting — the lowest usage and the highest efficiency plotted. DeMar DeRozan's 27.7% usage in 2018-19 came with 54.2%. A low-usage role player taking only good shots is the cleanest way to a high percentage.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-hart-2017",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      30,
+      50
+    ],
+    "targetPlayer": "Josh Hart, 2017-18",
+    "targetX": 3.1,
+    "targetY": 39.6,
+    "referencePlayers": [
+      {
+        "name": "LeBron James, 2006-07",
+        "x": 4,
+        "y": 31.9
+      },
+      {
+        "name": "Scottie Barnes, 2023-24",
+        "x": 4.9,
+        "y": 34.1
+      },
+      {
+        "name": "Jerami Grant, 2024-25",
+        "x": 6.3,
+        "y": 36.5
+      }
+    ],
+    "fact": "Josh Hart shot 39.6% from three as a rookie in 2017-18 on 3.1 attempts a game — the fewest attempts and the best percentage of the four. Jerami Grant took twice as many in 2024-25 (6.3) and hit 36.5%. LeBron James in 2006-07 attempted 4.0 and made 31.9%.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushyds-recyds-dillon-2004",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      1000
+    ],
+    "targetPlayer": "Corey Dillon, 2004",
+    "targetX": 1635,
+    "targetY": 103,
+    "referencePlayers": [
+      {
+        "name": "Josh Jacobs, 2023",
+        "x": 805,
+        "y": 296
+      },
+      {
+        "name": "Matt Forte, 2014",
+        "x": 1038,
+        "y": 808
+      },
+      {
+        "name": "Saquon Barkley, 2018",
+        "x": 1307,
+        "y": 721
+      }
+    ],
+    "fact": "Corey Dillon ran for 1,635 yards in 2004 with only 103 receiving — the widest split plotted here. Matt Forte's 2014 was almost balanced: 1,038 rushing, 808 receiving. Two backs can produce similar total yardage and be asked to do almost nothing alike.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypc-rushyds-pacheco-2022",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      750,
+      1750
+    ],
+    "targetPlayer": "Isiah Pacheco, 2022",
+    "targetX": 4.9,
+    "targetY": 830,
+    "referencePlayers": [
+      {
+        "name": "Jamal Lewis, 2005",
+        "x": 3.4,
+        "y": 906
+      },
+      {
+        "name": "Curtis Martin, 2002",
+        "x": 4.2,
+        "y": 1094
+      },
+      {
+        "name": "Ezekiel Elliott, 2018",
+        "x": 4.7,
+        "y": 1434
+      }
+    ],
+    "fact": "Isiah Pacheco averaged 4.9 yards a carry as a rookie in 2022 — the best rate plotted — and finished with 830 rushing yards, the fewest. Ezekiel Elliott's 2018 turned 4.7 a carry into 1,434. Rate is about the runs; the total is about how many of them a rookie is trusted with.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-favre-2008",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      21,
+      29
+    ],
+    "targetPlayer": "Brett Favre, 2008",
+    "targetX": 22,
+    "targetY": 22,
+    "referencePlayers": [
+      {
+        "name": "Aaron Rodgers, 2018",
+        "x": 2,
+        "y": 25
+      },
+      {
+        "name": "Philip Rivers, 2017",
+        "x": 10,
+        "y": 28
+      },
+      {
+        "name": "Eli Manning, 2009",
+        "x": 14,
+        "y": 27
+      }
+    ],
+    "fact": "Brett Favre threw 22 touchdowns and 22 interceptions in 2008 — the only even split among the four plotted. Aaron Rodgers threw 25 touchdowns against 2 picks in 2018. The vertical axis rewards production and the horizontal one punishes risk, and Favre's season sits exactly where those cancel.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-stl-blk-iverson-2006",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      2.5
+    ],
+    "yDomain": [
+      0.1,
+      0.9
+    ],
+    "targetPlayer": "Allen Iverson, 2006-07",
+    "targetX": 1.9,
+    "targetY": 0.2,
+    "referencePlayers": [
+      {
+        "name": "Grant Hill, 2010-11",
+        "x": 0.8,
+        "y": 0.4
+      },
+      {
+        "name": "Danny Green, 2016-17",
+        "x": 1,
+        "y": 0.8
+      },
+      {
+        "name": "Jimmy Butler III, 2024-25",
+        "x": 1.4,
+        "y": 0.3
+      }
+    ],
+    "fact": "Allen Iverson averaged 1.9 steals a game in 2006-07 and 0.2 blocks — the most steals and the fewest blocks plotted. Danny Green's 2016-17 was 1.0 and 0.8. Steals come from hands and anticipation on the perimeter; blocks come from height near the rim, and guards rarely appear in both columns.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-duncan-2009",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0.25,
+      2.25
+    ],
+    "targetPlayer": "Tim Duncan, 2009-10",
+    "targetX": 0.6,
+    "targetY": 1.5,
+    "referencePlayers": [
+      {
+        "name": "CJ McCollum, 2024-25",
+        "x": 0.8,
+        "y": 0.4
+      },
+      {
+        "name": "Giannis Antetokounmpo, 2019-20",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "name": "Kobe Bryant, 2006-07",
+        "x": 1.4,
+        "y": 0.5
+      }
+    ],
+    "fact": "Tim Duncan blocked 1.5 shots a game in 2009-10 against 0.6 steals — the block leader and the steal laggard of this group. Kobe Bryant's 2006-07 was the mirror: 1.4 steals, 0.5 blocks. Where a player defends decides which of these two columns fills up.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-lopez-2010",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0.25,
+      2.25
+    ],
+    "targetPlayer": "Brook Lopez, 2010-11",
+    "targetX": 0.6,
+    "targetY": 1.5,
+    "referencePlayers": [
+      {
+        "name": "Zach Randolph, 2003-04",
+        "x": 0.8,
+        "y": 0.5
+      },
+      {
+        "name": "Nicolas Batum, 2011-12",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "name": "Russell Westbrook, 2020-21",
+        "x": 1.4,
+        "y": 0.4
+      }
+    ],
+    "fact": "Brook Lopez averaged 1.5 blocks and 0.6 steals in 2010-11. Russell Westbrook's 2020-21 was 1.4 steals and 0.4 blocks — almost exactly reversed. Zach Randolph, a big man who defended below the rim, managed only 0.5 blocks in 2003-04, which shows size alone does not put a player on the block axis.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-ginobili-2016",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      33,
+      41
+    ],
+    "targetPlayer": "Manu Ginobili, 2016-17",
+    "targetX": 3.3,
+    "targetY": 39.2,
+    "referencePlayers": [
+      {
+        "name": "Brook Lopez, 2020-21",
+        "x": 4,
+        "y": 33.8
+      },
+      {
+        "name": "Nicolas Batum, 2013-14",
+        "x": 4.9,
+        "y": 36.1
+      },
+      {
+        "name": "Karl-Anthony Towns, 2020-21",
+        "x": 6.3,
+        "y": 38.7
+      }
+    ],
+    "fact": "Manu Ginobili shot 39.2% from three in 2016-17 at age 39, on 3.3 attempts a game — the lowest volume plotted and the best rate. Karl-Anthony Towns hit 38.7% on nearly twice the attempts (6.3) in 2020-21, which is the harder version of that accuracy.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-johnson-2016",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      27.5,
+      47.5
+    ],
+    "targetPlayer": "Joe Johnson, 2016-17",
+    "targetX": 3.3,
+    "targetY": 41.1,
+    "referencePlayers": [
+      {
+        "name": "Paolo Banchero, 2022-23",
+        "x": 4,
+        "y": 29.8
+      },
+      {
+        "name": "Kyrie Irving, 2015-16",
+        "x": 4.9,
+        "y": 32.1
+      },
+      {
+        "name": "Karl-Anthony Towns, 2020-21",
+        "x": 6.3,
+        "y": 38.7
+      }
+    ],
+    "fact": "Joe Johnson shot 41.1% from three in 2016-17 on 3.3 attempts — the best percentage plotted, on the fewest tries. Paolo Banchero's rookie year in 2022-23 was 4.0 attempts at 29.8%. A late-career specialist taking only open looks and a young high-usage forward taking whatever comes are different jobs.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-brunson-2024",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      9,
+      17
+    ],
+    "targetPlayer": "Jalen Brunson, 2024-25",
+    "targetX": 26,
+    "targetY": 10.2,
+    "referencePlayers": [
+      {
+        "name": "Zach Randolph, 2012-13",
+        "x": 15.4,
+        "y": 12.6
+      },
+      {
+        "name": "Chris Paul, 2014-15",
+        "x": 19.1,
+        "y": 14.8
+      },
+      {
+        "name": "Bradley Beal, 2021-22",
+        "x": 23.2,
+        "y": 11.3
+      }
+    ],
+    "fact": "Jalen Brunson scored 26.0 a game in 2024-25 with 10.2 rebounds and assists combined. Chris Paul's 2014-15 line was 19.1 points and 14.8 — seven fewer points, nearly five more of everything else. Both are lead-guard seasons; the split between scoring and creating is the choice.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-passtd-int-rodgers-2014",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      10,
+      90
+    ],
+    "targetPlayer": "Aaron Rodgers, 2014",
+    "targetX": 5,
+    "targetY": 38,
+    "referencePlayers": [
+      {
+        "name": "Peyton Manning, 2013",
+        "x": 10,
+        "y": 55
+      },
+      {
+        "name": "Joe Burrow, 2021",
+        "x": 14,
+        "y": 34
+      },
+      {
+        "name": "Brett Favre, 2005",
+        "x": 29,
+        "y": 20
+      }
+    ],
+    "fact": "Aaron Rodgers threw 38 touchdowns against 5 interceptions in 2014, the best ratio plotted by a distance. Brett Favre's 2005 was 20 touchdowns and 29 picks — more interceptions than scores. Peyton Manning's 2013 produced more touchdowns (55) but twice the interceptions.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-sb-hr-rodriguez",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      200,
+      1000
+    ],
+    "targetPlayer": "Ivan Rodriguez",
+    "targetX": 127,
+    "targetY": 311,
+    "referencePlayers": [
+      {
+        "name": "Mark McGwire",
+        "x": 12,
+        "y": 583
+      },
+      {
+        "name": "Lou Gehrig",
+        "x": 102,
+        "y": 493
+      },
+      {
+        "name": "Hank Aaron",
+        "x": 240,
+        "y": 755
+      }
+    ],
+    "fact": "Ivan Rodriguez stole 127 bases and hit 311 home runs across his career — as a catcher, the position that squats through 150 games a year. Mark McGwire stole 12 bases in his entire career while hitting 583 homers. Hank Aaron sits above Rodriguez on both counts at 240 and 755.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-stl-blk-horford-2009",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0.25,
+      1.25
+    ],
+    "targetPlayer": "Al Horford, 2009-10",
+    "targetX": 0.7,
+    "targetY": 1.1,
+    "referencePlayers": [
+      {
+        "name": "CJ McCollum, 2018-19",
+        "x": 0.8,
+        "y": 0.4
+      },
+      {
+        "name": "Nicolas Batum, 2011-12",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "name": "Kobe Bryant, 2006-07",
+        "x": 1.4,
+        "y": 0.5
+      }
+    ],
+    "fact": "Al Horford averaged 1.1 blocks and 0.7 steals in 2009-10. Kobe Bryant's 2006-07 was 1.4 steals and 0.5 blocks, and CJ McCollum's 2018-19 was 0.8 and 0.4. Horford is the only one plotted who lands meaningfully on the block axis, which is what a center does to this chart.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "mlb-so-hr-musial",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      1000
+    ],
+    "targetPlayer": "Stan Musial",
+    "targetX": 696,
+    "targetY": 475,
+    "referencePlayers": [
+      {
+        "name": "Kenny Lofton",
+        "x": 1016,
+        "y": 130
+      },
+      {
+        "name": "Hank Aaron",
+        "x": 1383,
+        "y": 755
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 1694,
+        "y": 297
+      }
+    ],
+    "fact": "Stan Musial struck out 696 times in his entire career and hit 475 home runs. Rickey Henderson struck out 1,694 times — nearly two and a half times as often — and hit 297. Kenny Lofton fanned 1,016 times for 130 homers. Power and swing-and-miss usually travel together; Musial's line is the exception the chart is built around.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nfl-rushyds-recyds-portis-2008",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      625,
+      1625
+    ],
+    "yDomain": [
+      150,
+      350
+    ],
+    "targetPlayer": "Clinton Portis, 2008",
+    "targetX": 1487,
+    "targetY": 218,
+    "referencePlayers": [
+      {
+        "name": "Rhamondre Stevenson, 2024",
+        "x": 801,
+        "y": 168
+      },
+      {
+        "name": "Frank Gore, 2016",
+        "x": 1025,
+        "y": 277
+      },
+      {
+        "name": "Jamal Lewis, 2007",
+        "x": 1303,
+        "y": 248
+      }
+    ],
+    "fact": "Clinton Portis ran for 1,487 yards in 2008 and added 218 receiving. Jamal Lewis in 2007 was similar on the ground (1,303) with 248 through the air, while Rhamondre Stevenson's 2024 was 801 and 168. Portis leads this group in rushing without leading it in receiving, which is the profile of a workhorse back.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-roethlisberger-2015",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Ben Roethlisberger, 2015",
+    "targetX": 16,
+    "targetY": 21,
+    "referencePlayers": [
+      {
+        "name": "Aaron Rodgers, 2018",
+        "x": 2,
+        "y": 25
+      },
+      {
+        "name": "Peyton Manning, 2003",
+        "x": 10,
+        "y": 29
+      },
+      {
+        "name": "Kurt Warner, 2008",
+        "x": 14,
+        "y": 30
+      }
+    ],
+    "fact": "Ben Roethlisberger threw 21 touchdowns and 16 interceptions in 2015. Kurt Warner's 2008 produced more touchdowns (30) on fewer picks (14), and Aaron Rodgers threw 25 against 2 in 2018. Touchdown totals reward volume; the interception column is where the risk shows.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushypg-td-james-2007",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      55,
+      95
+    ],
+    "yDomain": [
+      5,
+      25
+    ],
+    "targetPlayer": "Edgerrin James, 2007",
+    "targetX": 77,
+    "targetY": 7,
+    "referencePlayers": [
+      {
+        "name": "Nick Chubb, 2018",
+        "x": 62.2,
+        "y": 8
+      },
+      {
+        "name": "Marshall Faulk, 2003",
+        "x": 74.4,
+        "y": 10
+      },
+      {
+        "name": "Arian Foster, 2012",
+        "x": 89,
+        "y": 15
+      }
+    ],
+    "fact": "Edgerrin James averaged 77.0 rushing yards a game in 2007 and scored 7 touchdowns. Nick Chubb gained less per game in 2018 (62.2) and scored more (8), and Arian Foster's 2012 was 89.0 and 15. Yardage and touchdowns are only loosely connected, because they are earned in different parts of the field.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-ppg-ra-wagner-2024",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      9,
+      17
+    ],
+    "targetPlayer": "Franz Wagner, 2024-25",
+    "targetX": 24.2,
+    "targetY": 10.4,
+    "referencePlayers": [
+      {
+        "name": "Zach Randolph, 2012-13",
+        "x": 15.4,
+        "y": 12.6
+      },
+      {
+        "name": "Chris Paul, 2014-15",
+        "x": 19.1,
+        "y": 14.8
+      },
+      {
+        "name": "Ja Morant, 2024-25",
+        "x": 23.2,
+        "y": 11.4
+      }
+    ],
+    "fact": "Franz Wagner scored 24.2 a game in 2024-25 with 10.4 rebounds and assists combined. Ja Morant's same season was 23.2 and 11.4 — nearly identical. Chris Paul's 2014-15 sits well off to the side at 19.1 and 14.8, which is what a pass-first guard looks like on these axes.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-ypc-rushyds-gore-2015",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3.5,
+      5.5
+    ],
+    "yDomain": [
+      875,
+      1075
+    ],
+    "targetPlayer": "Frank Gore, 2015",
+    "targetX": 3.7,
+    "targetY": 967,
+    "referencePlayers": [
+      {
+        "name": "Steven Jackson, 2008",
+        "x": 4.1,
+        "y": 1043
+      },
+      {
+        "name": "Devon Achane, 2024",
+        "x": 4.5,
+        "y": 907
+      },
+      {
+        "name": "Alvin Kamara, 2020",
+        "x": 5,
+        "y": 932
+      }
+    ],
+    "fact": "Frank Gore averaged 3.7 yards a carry in 2015 — the worst rate plotted — and still finished with 967 rushing yards, more than Devon Achane's 907 at 4.5 a carry in 2024. Volume can outrun efficiency over a season, and this chart is where that shows up plainly.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-welker-2008",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      150
+    ],
+    "yDomain": [
+      1100,
+      1500
+    ],
+    "targetPlayer": "Wes Welker, 2008",
+    "targetX": 112,
+    "targetY": 1165,
+    "referencePlayers": [
+      {
+        "name": "Terry McLaurin, 2022",
+        "x": 77,
+        "y": 1191
+      },
+      {
+        "name": "Justin Jefferson, 2020",
+        "x": 88,
+        "y": 1400
+      },
+      {
+        "name": "Stefon Diggs, 2021",
+        "x": 103,
+        "y": 1225
+      }
+    ],
+    "fact": "Wes Welker caught 112 passes in 2008 for 1,165 yards — the most receptions plotted and not the most yards. Justin Jefferson's 2020 turned 88 catches into 1,400, and Terry McLaurin needed only 77 for 1,191 in 2022. Welker worked underneath; the yards-per-catch gap is the whole story of the position he played.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-so-hr-yount",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Robin Yount",
+    "targetX": 1350,
+    "targetY": 251,
+    "referencePlayers": [
+      {
+        "name": "Yogi Berra",
+        "x": 414,
+        "y": 358
+      },
+      {
+        "name": "Bernie Williams",
+        "x": 1212,
+        "y": 287
+      },
+      {
+        "name": "Willie McCovey",
+        "x": 1550,
+        "y": 521
+      }
+    ],
+    "fact": "Robin Yount struck out 1,350 times and hit 251 home runs. Willie McCovey struck out only 200 more times (1,550) and hit more than twice the homers (521). Yogi Berra sits far left with 414 career strikeouts and 358 home runs — more power than Yount on less than a third of the whiffs.",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-stl-blk-williams-2024",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      2
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Jalen Williams, 2024-25",
+    "targetX": 1.6,
+    "targetY": 0.7,
+    "referencePlayers": [
+      {
+        "name": "Shaquille O'Neal, 2006-07",
+        "x": 0.2,
+        "y": 1.4
+      },
+      {
+        "name": "Jamal Crawford, 2011-12",
+        "x": 0.9,
+        "y": 0.2
+      },
+      {
+        "name": "Steven Adams, 2017-18",
+        "x": 1.2,
+        "y": 1
+      }
+    ],
+    "fact": "Jalen Williams averaged 1.6 steals and 0.7 blocks in 2024-25 — the most steals plotted. Shaquille O'Neal's 2006-07 is the opposite corner: 0.2 steals, 1.4 blocks. Steven Adams in 2017-18 managed 1.2 and 1.0, one of the rarer lines that reaches into both columns at once.",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-passtd-int-rivers-2009",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Philip Rivers, 2009",
+    "targetX": 9,
+    "targetY": 28,
+    "referencePlayers": [
+      {
+        "name": "Aaron Rodgers, 2018",
+        "x": 2,
+        "y": 25
+      },
+      {
+        "name": "Ben Roethlisberger, 2009",
+        "x": 12,
+        "y": 26
+      },
+      {
+        "name": "Brett Favre, 2005",
+        "x": 29,
+        "y": 20
+      }
+    ],
+    "fact": "Philip Rivers threw 28 touchdowns against 9 interceptions in 2009. Brett Favre's 2005 went the other way entirely — 20 touchdowns and 29 picks. Ben Roethlisberger's 2009, plotted here too, was 26 and 12. The bottom-right of this chart is where seasons go wrong.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushypg-td-mccoy-2014",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      55,
+      95
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "LeSean McCoy, 2014",
+    "targetX": 82.4,
+    "targetY": 5,
+    "referencePlayers": [
+      {
+        "name": "Alvin Kamara, 2020",
+        "x": 62.1,
+        "y": 16
+      },
+      {
+        "name": "Marshall Faulk, 2003",
+        "x": 74.4,
+        "y": 10
+      },
+      {
+        "name": "Shaun Alexander, 2006",
+        "x": 89.6,
+        "y": 7
+      }
+    ],
+    "fact": "LeSean McCoy averaged 82.4 rushing yards a game in 2014 and scored 5 touchdowns. Alvin Kamara gained far less per game in 2020 (62.1) and scored 16 — more than three times as many on three-quarters the ground. Touchdowns follow opportunity near the goal line, not yardage between the twenties.",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   }
 ]

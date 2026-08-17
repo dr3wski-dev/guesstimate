@@ -16,7 +16,11 @@ python3 pipeline/import_questions.py --import content/questions.xlsx
 #    not truth; this is the gate that catches a wrong stat.
 python3 pipeline/verify_questions.py
 
-# 5. build
+# 5. fairness — does each question actually reward knowing the answer?
+node pipeline/audit_fairness.mjs            # --suggest to see repaired axes
+                                            # --apply  to write them
+
+# 6. build (runs the fairness audit again and refuses to build if it fails)
 python3 pipeline/build_site.py --url https://your-domain.com
 ```
 
@@ -39,6 +43,51 @@ The two gates do different jobs and you need both:
   the source datasets on a separate code path from the generator. This is the gate that
   matters. A bulk import is the fastest way to ship a wrong number, and this is what
   stops it.
+- **`audit_fairness.mjs`** checks whether the question is *worth asking*. True and
+  well-formed is not the same as playable: score is distance normalised by the plotted
+  axis, so a domain drawn tightly around the four points makes the whole chart the
+  answer's neighbourhood and a blind middle click scores near-perfect. Five shipped
+  questions had drifted that way and one of them paid better for guessing than for
+  knowing. Neither gate above can see this — the stats are all correct.
+
+## What makes a good question
+
+The audit measures two things, and they are worth understanding before writing content
+rather than after failing on it:
+
+- **centre** — what a player scores clicking the middle of the chart knowing nothing.
+  This is the floor you are giving away. Gate: ≤ 35.
+- **lift** — how much an informed guess beats that. This is the question's entire
+  reason to exist. Gate: ≥ 30.
+
+The single strongest predictor of good lift is that **the target is an outlier
+relative to its three reference players.** A question where the answer sits comfortably
+between the anchors is one the anchors have already answered. Reach for players who
+break the pattern the anchors establish — the 7-footer who shot 38% from three, the
+6th man with starter scoring on bench minutes — and the fairness numbers take care of
+themselves.
+
+Stats with a narrow real-world spread (true shooting %, yards per reception, career
+BB/9) make weak axes for the same reason: if every player in the league falls within a
+few units, every guess is close once normalised, and the axis carries no signal. They
+work as the *second* stat against a wide-range first one, not as both.
+
+## Growing the pool
+
+The expensive step is writing fact copy against real sources, so don't spend it on
+candidates that will fail the gate anyway. Screen first:
+
+```bash
+python3 pipeline/build_questions.py --league nba --top 60 --json cand-nba.json
+python3 pipeline/build_questions.py --league nfl --top 60 --json cand-nfl.json
+node pipeline/screen_candidates.mjs cand-*.json -o passing.json
+```
+
+`screen_candidates.mjs` drops candidates that don't reward knowing the answer and
+ranks the survivors by lift, so the list is already in the order worth working
+through. What comes out is **not questions yet** — each still needs fact copy naming
+its source, and still has to clear `verify_questions.py`. Neither gate is bypassed by
+having been screened.
 
 ## Scheduling specific days
 

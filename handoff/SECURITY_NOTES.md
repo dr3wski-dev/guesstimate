@@ -95,6 +95,38 @@ real backend with real abuse surface — v2, not now.
   risk category than anything in v1, and deserve dedicated attention when that phase
   actually starts, not a checkbox in this document written before any of it exists.
 
+## This is now tested, not asserted
+
+Everything above describes intent. `reference/security.mjs` checks behaviour — 31
+assertions run against the real Worker under the real CSP:
+
+```sh
+cd handoff && npm run serve      # real Worker + site/_headers on :8903
+npm run test:security
+```
+
+It covers injection through the challenge link's `?from=` (the only stranger-controlled
+text another player ever sees), score and date tampering, the API refusing to be walked
+into the future, the pool being unreachable as a static file, poisoned and malformed
+`localStorage`, malicious restore codes, and API response headers and method handling.
+
+Two lessons from building it are worth keeping, because both produced *false
+confidence* rather than a visible failure:
+
+- **One check was worthless when written.** It called `importCode()` directly, got
+  "not defined" because the function isn't global, and counted the exception as a
+  successful rejection. A probe that cannot reach the code it probes reports safety it
+  never checked. It now drives the actual restore UI and asserts three things per
+  payload: rejected, not executed, and no live markup rendered.
+- **The dev server used to reimplement the API** rather than run the Worker, and
+  served pages with no CSP at all while production served a strict one. The suite
+  passed under a policy far looser than the deployed one, so a CSP violation could
+  only ever have been discovered after deploying. It now delegates to the Worker and
+  applies `site/_headers`.
+
+A harness that errs toward "unsafe" gets its failures investigated. One that errs
+toward "safe" gets believed.
+
 ## The one-line rule worth remembering
 **Anything that arrives via a URL parameter, localStorage, or any other
 player-controllable channel is untrusted the moment it's going to touch the DOM.**

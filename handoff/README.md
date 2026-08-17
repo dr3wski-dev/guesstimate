@@ -34,26 +34,37 @@ falls, scored by proximity.
 6. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-7. **data/questions.json** — 55 verified, sourced questions (21 NBA, 18 NFL, 16 MLB) in
-   the exact schema new content should follow. That is eleven days before a repeat; see
-   USER_EXPERIENCE_REVIEW.md §1.3 for why growing this is the top-line launch metric,
-   and **pipeline/** for the generator and the independent verifier that produce and
-   check new ones.
+7. **data/questions.json** — 104 verified, sourced questions (44 NBA, 37 NFL, 23 MLB)
+   in the exact schema new content should follow. That is twenty days before a repeat.
+   Every number re-derives from the raw datasets on a separate code path; see
+   **pipeline/** below. `data/quarantine.json` holds questions withdrawn for being bad
+   *questions* rather than wrong ones, each with the measurement that condemned it.
 8. **reference/guesstimate-scatter.html** — the working, tested reference
-   implementation. Click-to-plot 2D mechanic, heat-map proximity scoring, multi-round
-   loop. This is what the production build should extend, not replace. `verify.mjs`
-   beside it is a 24-check browser regression suite — run it after any change.
+   implementation, and the single source of truth for the game. Click-to-plot 2D
+   mechanic, heat-map proximity scoring, multi-round loop. The production build is
+   generated from it; never hand-edit `site/`. Four browser suites sit beside it —
+   `verify.mjs` (behaviour), `polish.mjs`, `restore.mjs` and `security.mjs` (31
+   checks). `cd handoff && npm run serve` then `npm test` runs all four against the
+   real Worker under the real CSP.
 9. **worker/** — the questions API, a single stateless Cloudflare Worker.
    `src/selection.js` holds the daily-rotation logic and `src/index.js` serves one
    day's questions and refuses any other. It exists because a client that holds the
    whole pool leaks every future day's answers to anyone who opens dev tools, and
    because "today" from the device clock is spoofable. It stores nothing and knows
    nothing about who is playing.
-10. **reference/guesstimate-slider-legacy.html** — an earlier, now-superseded 1D version
-   of the mechanic. Kept only because it contains two pieces of tested logic not yet
-   ported into the scatter version: the daily-selection pure function
-   (`selectDailyQuestions`) and the streak/localStorage system. Port these, don't
-   rebuild them — they're already correct.
+10. **pipeline/** — everything that turns raw open datasets into shipped questions.
+   `build_questions.py` generates candidates, `screen_candidates.mjs` drops the ones
+   that would not reward knowing the answer, `verify_questions.py` re-derives every
+   shipped number from the raw CSVs on a deliberately separate code path,
+   `audit_fairness.mjs` gates question quality, and `build_site.py` assembles `site/`
+   and refuses to build if the fairness gate fails. `devserver.mjs` serves the built
+   site plus the real Worker locally. See **content/README.md** for the workflow.
+11. **reference/guesstimate-slider-legacy.html** — an earlier, superseded 1D version of
+   the mechanic. Its two pieces of load-bearing logic — the daily-selection pure
+   function and the streak/localStorage system — **have since been ported**, into
+   `worker/src/selection.js` and the scatter file respectively. Kept only as
+   provenance for the reveal animation, which two comments in the scatter file still
+   credit to it. Nothing here needs porting; nothing here is live.
 
 ## What's explicitly NOT in scope
 Stated plainly because this project went through several pivots to reach its current

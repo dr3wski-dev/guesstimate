@@ -340,6 +340,16 @@
   .dist-row .db{ background:var(--ink); height:15px; min-width:3px; border-radius:2px; }
   .dist-row .dn{ color:var(--ink-faint); }
   .modal-empty{ font-size:13px; color:var(--ink-soft); line-height:1.55; }
+  .how-step{ display:flex; gap:10px; margin-bottom:11px; font-size:13.5px; line-height:1.55; color:var(--ink-soft); }
+  .how-step b{ color:var(--ink); }
+  .how-step .n{ flex:none; width:20px; height:20px; border-radius:50%; border:2px solid var(--ink); font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; color:var(--ink); }
+  .how-bands{ margin-top:14px; padding-top:12px; border-top:2px dashed var(--line); }
+  .how-band{ display:flex; align-items:baseline; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:3px 0; }
+  .how-band .bn{ flex:1; color:var(--ink); }
+  .how-band .bp{ color:var(--ink-faint); }
+  .how-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.55; margin:12px 0 0; }
+  .how-link{ background:none; border:0; padding:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); text-decoration:underline; cursor:pointer; margin-top:14px; }
+  .how-link:hover{ color:var(--ink); }
   .restore{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); }
   .restore-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
   .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
@@ -355,6 +365,7 @@
     <span class="topline-end">
       <span id="topRight">···</span>
       <span class="controls">
+        <button id="howBtn" class="icon-btn" aria-label="How to play" title="How to play">?</button>
         <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
         <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
       </span>
@@ -364,6 +375,14 @@
   <div class="panel" id="panel"></div>
   <p class="note">Every number here is a real, verified career or season stat, cited on each reveal. The hollow dots are reference players with their values listed — you're estimating where the named player falls against them.</p>
 </div>
+
+<dialog class="modal" id="howModal" aria-labelledby="howTitle">
+  <div class="modal-head">
+    <h2 id="howTitle">How to play</h2>
+    <button class="icon-btn" id="howClose" aria-label="Close">✕</button>
+  </div>
+  <div id="howBody"></div>
+</dialog>
 
 <dialog class="modal" id="statsModal" aria-labelledby="statsTitle">
   <div class="modal-head">
@@ -928,7 +947,11 @@ function startScreen(){
   // Offered before the player commits to five rounds of someone else's day, not
   // only after. Arriving on a challenge link is how most people will ever reach
   // this game, and today's puzzle is the thing that actually starts a streak.
-  const escapeHTML = MODE === 'challenge'
+  // Named for what it is, not what it looks like. This used to be `escapeHTML`,
+  // one character from the escaping helper `escapeHtml` — so `${escapeHTML(name)}`
+  // would have read as correctly escaped to every future reader while actually
+  // being a TypeError, and "fixing" the casing would have silently unescaped it.
+  const leaveChallengeBtn = MODE === 'challenge'
     ? `<button class="ghost" id="todayBtn">Play today's instead</button>` : '';
   // Going home mid-run must not discard scored rounds, and replaying a finished
   // puzzle shouldn't be dressed up as a fresh start.
@@ -948,8 +971,9 @@ function startScreen(){
     <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} — ${SERVED_DATE}` : `Today: ${TODAY} — same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row">${escapeHTML}<button class="primary" id="startBtn">${startLabel}</button></div>
+    <div class="next-row">${leaveChallengeBtn}<button class="primary" id="startBtn">${startLabel}</button></div>
     ${replayNote}
+    <div><button class="how-link" id="howLink">How does scoring work?</button></div>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     if(resuming){ idx = roundScores.length; showQuestion(); return; }
@@ -958,6 +982,8 @@ function startScreen(){
   });
   const tb = document.getElementById('todayBtn');
   if(tb) tb.addEventListener('click', leaveChallenge);
+  const hl = document.getElementById('howLink');
+  if(hl) hl.addEventListener('click', openHow);
 }
 
 /* Leaving a challenge had no working exit. `init()` sets DAILY_ROUNDS to the
@@ -1451,6 +1477,43 @@ function showResults(){
     }
   });
 }
+
+/* ============================= HOW TO PLAY =============================
+   Nothing in the game explained the scoring. A player saw "+14" with no scale, no
+   idea 100 was the per-question maximum, and no idea what "Close" was close to.
+   The heat map on the reveal shows the bands, but only after they have already
+   guessed — which is too late to make the first guess a considered one.
+
+   The band list is generated from TIERS, so it can't drift from the scoring. */
+const howModal = document.getElementById('howModal');
+function renderHow(){
+  const bands = TIERS.map((t,i)=>{
+    const next = i === 0 ? 100 : TIERS[i-1].min - 1;
+    return `<div class="how-band"><span>${t.emoji}</span><span class="bn" style="color:${t.color}">${t.label}</span><span class="bp">${t.min}${t.min===next?'':'–'+next} pts</span></div>`;
+  }).join('');
+  document.getElementById('howBody').innerHTML = `
+    <div class="how-step"><span class="n">1</span><div>Five questions a day, the <b>same five for everyone</b>, until midnight ET.</div></div>
+    <div class="how-step"><span class="n">2</span><div>Each chart plots real players on <b>two stats at once</b>. Their exact values are listed underneath.</div></div>
+    <div class="how-step"><span class="n">3</span><div>Tap, drag or arrow-key to place your guess for the named player, then submit.</div></div>
+    <div class="how-step"><span class="n">4</span><div><b>The closer you land, the more you score</b> — up to 100 a question, 500 a day. Distance counts on both stats together.</div></div>
+    <div class="how-bands">
+      <div class="fact-label" style="margin-bottom:7px;">Score bands</div>
+      ${bands}
+    </div>
+    <p class="how-note">On the reveal, those bands are drawn around the answer so you
+      can see how close you needed to be. Nothing is ever negative — every guess earns
+      what it earns.</p>
+    <p class="how-note">Every number is a real, verified career or season stat, with its
+      source shown on each reveal.</p>`;
+}
+function openHow(){
+  renderHow();
+  if(howModal.showModal) howModal.showModal(); else howModal.setAttribute('open','');
+}
+document.getElementById('howBtn').addEventListener('click', openHow);
+document.getElementById('howClose').addEventListener('click', ()=>{
+  if(howModal.close) howModal.close(); else howModal.removeAttribute('open');
+});
 
 /* ============================= STATS MODAL ============================= */
 const statsModal = document.getElementById('statsModal');

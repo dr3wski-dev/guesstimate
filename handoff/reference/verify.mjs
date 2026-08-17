@@ -14,7 +14,7 @@ import { chromium, devices } from 'playwright';
 // Point at the dev server (handoff/pipeline/devserver.mjs), which serves the built
 // site AND /api/daily from the same selection module the deployed Worker uses.
 //   node handoff/pipeline/devserver.mjs 8901
-const BASE = process.env.GT_BASE || 'http://localhost:8901/';
+const BASE = process.env.BASE || 'http://localhost:8903/';
 const log = (...a) => console.log(...a);
 const browser = await chromium.launch();
 let fails = 0;

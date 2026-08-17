@@ -80,8 +80,19 @@ to build custom hosting.
 
 ## Deploying the Worker
 
-The API has to be deployed separately, and it needs an interactive Cloudflare login,
-so this part cannot be done from a terminal-only session.
+The API deploys separately from the site. Two ways to do it, and **the choice matters
+for how content ships later**, so pick deliberately.
+
+**Recommended — connect the Worker to the repo (Workers Builds).** In the Cloudflare
+dashboard: Workers & Pages → Create → Import a repository → pick this repo, set the
+root directory to `handoff/worker`. From then on every push to the default branch
+redeploys the Worker automatically, which means a content change reaches players by
+pushing, with nothing to remember. That matters more than it sounds: the pool is
+bundled into the Worker, so a forgotten manual deploy is a silent failure — the site
+updates, the questions don't, and nothing anywhere says so.
+
+**Manual.** Needs an interactive Cloudflare login, so it can't be done from a
+terminal-only session:
 
 ```bash
 cd handoff/worker
@@ -89,15 +100,17 @@ wrangler login          # opens a browser
 wrangler deploy         # first deploy lands on *.workers.dev, which is fine for testing
 ```
 
-Then, once the Pages project has its custom domain:
+Either way, once the Pages project has its custom domain:
 
 1. Uncomment the `routes` block in `worker/wrangler.toml` and set the real domain.
-2. `wrangler deploy` again, so `/api/*` resolves on the site's own origin.
+2. Push (Workers Builds) or `wrangler deploy` again, so `/api/*` resolves on the
+   site's own origin.
 
 The question pool is **bundled into the Worker** at build time via a JSON import of
 `data/questions.json` — the same canonical file the content workflow edits. There is
 no second copy to keep in sync, which also means **shipping new content requires
-redeploying the Worker**, not just pushing the site. The same is true of
+redeploying the Worker**, not just pushing the site. On Workers Builds that happens on
+push; on the manual path it is a step you have to remember. The same is true of
 `data/schedule.json`.
 
 The Worker has no KV, no D1, no Durable Objects, no secrets, and no bindings. If that
@@ -117,6 +130,16 @@ shipping. Verify on the live site anyway after any restructure:
 
 ```sh
 curl -sI https://<site>/data/questions.json     # must be 404
+```
+
+**`pipeline/build_demo.py` is the deliberate exception, and must never be deployed.**
+It produces a single self-contained HTML file that carries the whole pool, because a
+demo has no Worker to ask. That re-opens exactly the leak described above, which is
+why it is a separate script from `build_site.py`, stamps a visible banner on the page
+saying the answers are readable, and is only ever handed to a few people directly:
+
+```bash
+python3 handoff/pipeline/build_demo.py -o demo.html   # sharing only, never hosting
 ```
 
 Worth being precise about what this does *not* fix: today's five questions still
@@ -196,11 +219,15 @@ python3 handoff/pipeline/build_questions.py --league mlb --top 20
 # pick candidates, write the fact copy, add to handoff/data/questions.json
 python3 handoff/pipeline/verify_questions.py                 # must report 0 mismatches
 python3 handoff/pipeline/build_site.py --url https://your-domain.com
-cd handoff/worker && wrangler deploy   # the pool is bundled INTO the Worker
+git commit -am 'content: …' && git push       # Workers Builds redeploys the API
+# ...or, on the manual path:
+cd handoff/worker && wrangler deploy           # the pool is bundled INTO the Worker
 ```
 
-Pushing the site alone is not enough — the Worker holds the questions, so a content
-change that isn't followed by `wrangler deploy` reaches nobody.
+Pushing the site alone is not enough on the manual path — the Worker holds the
+questions, so a content change that isn't followed by `wrangler deploy` reaches
+nobody. This is the single easiest thing to get wrong here, and it is the reason
+Workers Builds is the recommended setup: it removes the step entirely.
 
 `verify_questions.py` re-derives every number in `questions.json` straight from the
 raw datasets, on a separate code path from the generator. Treat a non-zero exit as
