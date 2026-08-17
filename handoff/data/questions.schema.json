@@ -115,9 +115,9 @@
         },
         "fact": {
           "type": "string",
-          "minLength": 80,
+          "minLength": 45,
           "maxLength": 700,
-          "description": "The reveal payload, and the actual product — it is the only thing in this genre that teaches you something. Should explain WHY the answer is counterintuitive, not restate the numbers. Existing content runs 280-610 characters; the 700 ceiling is a guard against a pasted wall of text, not a target."
+          "description": "The reveal payload. State the SHAPE of the chart, not the numbers on it — every plotted value is already on screen, and repeating it in prose is what made the reveal screen 744 characters. Almost every question is a rank inversion (the target tops one axis and bottoms the other), so name that, then say why in one clause, with no moral on the end. Current content runs 83-169 characters, median 115. The 45 floor blocks a placeholder; the 700 ceiling blocks a pasted wall of text. Neither is a target."
         },
         "source": {
           "type": "string",
