@@ -115,9 +115,8 @@
         },
         "fact": {
           "type": "string",
-          "minLength": 45,
           "maxLength": 700,
-          "description": "The reveal payload. State the SHAPE of the chart, not the numbers on it — every plotted value is already on screen, and repeating it in prose is what made the reveal screen 744 characters. Almost every question is a rank inversion (the target tops one axis and bottoms the other), so name that, then say why in one clause, with no moral on the end. Current content runs 83-169 characters, median 115. The 45 floor blocks a placeholder; the 700 ceiling blocks a pasted wall of text. Neither is a target."
+          "description": "NOT RENDERED. The game hides this behind SHOW_FACT, which is off: two attempts at the copy either restated the numbers already plotted or invented a reason for the shape, and the second failure is the sourcing rule broken in prose instead of in numbers. Empty string is the correct value for new questions — the minimum length was removed precisely so nobody fills 45 characters to satisfy a validator. If the copy is ever rewritten, state the SHAPE of the chart and not the numbers on it, in one sentence, with no moral on the end. The retained strings run 83-169 characters."
         },
         "source": {
           "type": "string",
