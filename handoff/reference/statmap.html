@@ -66,8 +66,7 @@
     --ink: #1b1810; --ink-rgb: 27,24,16; --ink-soft: #55503f; --ink-faint: #5f5946;
     --line: rgba(27,24,16,0.18);
     --accent: #f0b429; --accent-ink: #4d3a06;
-    --good: #1e6a41; --good-rgb: 30,106,65; --good-bg: #e4f3ea;
-    --mid: #c88a00; --bad: #b53a2e;
+    --good: #1e6a41; --good-rgb: 30,106,65; --bad: #b53a2e;
     --guess: #2f5fd6;
     --panel-pad: 26px;
     /* Heat ramp for the six score bands. Ordered best -> worst, and used in three
@@ -207,7 +206,7 @@
   .actionbar button.primary{ flex:none; }
   .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:left; min-height:18px; }
 
-  /* Reveal "juice", ported from guesstimate-slider-legacy.html: the target marker
+  /* Reveal "juice", ported from the original 1D slider prototype: the target marker
      bounce-drops in, and the verdict row pulses (great guess) or shakes (bad
      guess). Respects prefers-reduced-motion — see the override below. */
   @keyframes targetDrop{ 0%{ transform:scale(0.3); opacity:0; } 60%{ transform:scale(1.25); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
@@ -1305,7 +1304,7 @@ function showQuestion(){
     const { points } = scoreGuess2D(guess.x, guess.y, r.targetX, r.targetY, xRange, yRange);
     roundScores.push(points);
     const t = scoreTier(points);
-    // Reveal "juice", ported from guesstimate-slider-legacy.html: a great guess
+    // Reveal "juice", ported from the original 1D slider prototype: a great guess
     // pulses, a bad one shakes. Rebased onto the new bands (Great+ / Miss).
     const tierAnimClass = points>=80 ? 'tier-perfect' : points<10 ? 'tier-bad' : '';
 

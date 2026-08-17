@@ -8,65 +8,50 @@ defects) — this one lists *decisions and work remaining*.
 
 ## Where we are
 
-**The game is done, and so is everything around it except the hosting account.**
+**Live at https://statmap.app.** Cloudflare Pages serves the game, a Worker serves
+the questions, and both redeploy from `main` on push.
 
 | | |
 |---|---|
 | Questions | **104** (NBA 44 / NFL 37 / MLB 23) — 20 days before a repeat |
 | Every number re-derived from raw datasets | 744 values, **0 mismatches** |
-| Fairness gate | passing — every question rewards knowing the answer |
+| Fairness gate | passing, and enforced by the build |
 | Test suites | **4** — behaviour, polish, restore codes, security (31 checks) |
 | Third-party requests | **zero** |
-| Cold load | 56 ms to first paint, 93 KB, no long tasks |
-
-What remains is a domain and two Cloudflare projects. See **DEPLOY.md** for the
-reference, or the hosting runbook for click-by-click.
+| Cold load | 60 ms to first paint, 93 KB, no long tasks |
+| Puzzle numbering | starts at #1 on 2026-08-17, rolls at midnight ET |
 
 ---
 
-## Launch blockers
+## What is actually left
 
-### B1. It isn't deployed
-> **Status: everything on this side is done; needs an account.**
-> `pipeline/build_site.py` produces a deployable `site/`, committed to the repo, with
-> absolute OG URLs and CSP/caching headers. All four suites pass against it served
-> from a web root, under the real CSP, with the real Worker answering `/api/*`.
+### L1. Analytics — the game is live and unmeasured
+> **Status: instrumented, not installed.** Seven events exist and no-op until a
+> provider is set at build time.
 
-Remaining, all of it yours:
+Top item, because "live and measuring nothing" is the worst state to sit in. There is
+currently no way to answer the question that decides everything else early: do people
+finish all five?
 
-- Merge the working branch into `main` — **Cloudflare deploys from `main`**
-- Buy a domain (~$10-12/yr, the only unavoidable cost)
-- Cloudflare Pages, output directory `site`, no build command
-- Cloudflare Workers, root directory `handoff/worker`, **connected to the repo**
-  rather than deployed by hand — the questions are bundled *into* the Worker, so a
-  forgotten manual deploy ships a site whose questions never changed, silently
-- Rebuild with the real URL **and commit it** — Pages serves `site/` as committed,
-  so a local-only rebuild changes nothing anyone can see
+- **Cloudflare Web Analytics** — one dashboard toggle, free, but **pageviews only**
+- **Umami Cloud** — free to 100k events/mo, gives the funnel. Sign up, copy the
+  website ID, rebuild with `--analytics umami --analytics-domain <id>`, commit
 
-### B2. Content depth
-> **Status: cleared for launch, still growing.** 104 questions is 20 days. The bar
-> below was 50; the target was 100.
+### L2. Content runs out on day 21
+104 questions at five a day means the first repeat lands three weeks from launch.
+**118 screened candidates** are ready — they clear the fairness gate and introduce no
+duplicate charts — but each still needs fact copy written from its own plotted
+numbers, and each has to clear `verify_questions.py`.
 
-A further **118 screened candidates** are ready — they pass the fairness gate and
-introduce no duplicate charts. They are not questions yet: each needs fact copy
-written from its own plotted numbers, and each has to clear `verify_questions.py`.
-That is the long pole, and it is no longer blocking anything.
+Not urgent this week. Genuinely urgent inside three.
 
-### B3. No analytics — you'd launch blind
-> **Status: code done, needs an account.** Seven events are instrumented
-> (`round_start`, `question_submit`, `round_complete`, `share_click`,
-> `challenge_open`, `restore_export`, `restore_import`) and no-op until a provider is
-> installed. The provider is a build flag, so no vendor snippet is ever pasted into
-> the game, and the build extends the CSP for exactly that provider.
-
-Run two: Cloudflare Web Analytics (free, unlimited, dashboard toggle) for traffic,
-and Umami (free to 100k events/mo) for the funnel. Cloudflare's free tier is
-pageviews only — it cannot tell you whether people finish all five, which is the
-number that decides what to build next.
+### L3. MLB is thin at 23
+Against NBA 44 and NFL 37. The career-stat archetypes draw on a smaller eligible
+pool. Fine to leave, but it is why MLB questions will start feeling repetitive first.
 
 ---
 
-## Worth doing before launch
+## Shipped before launch
 
 | | item | status |
 |---|---|---|
@@ -74,7 +59,7 @@ number that decides what to build next.
 | ~~S2~~ | ~~How-it-works screen~~ | **Done.** A `?` in the topline and a link on the start screen open the same dialog. Its score bands are generated from `TIERS`, so the explanation cannot drift from the scoring. |
 | ~~S3~~ | ~~Keyboard nudge scaling~~ | **Done.** ~1/100 of the axis, Shift for a tenth. Worst case fell from 16,000 presses to 100. |
 | ~~S4~~ | ~~Content hygiene~~ | **Done, and then superseded.** Axis quality is now a build gate rather than a judgement call — see below. |
-| S5 | Content past 104 | Ongoing, not blocking. 118 candidates screened and waiting. |
+| S5 | Content past 104 | Ongoing — see L2 above. 118 candidates screened and waiting. |
 
 ---
 
@@ -149,10 +134,6 @@ eligible career pool is genuinely smaller.
 
 ## Suggested order
 
-1. **Merge to `main`** — nothing else works until this is done
-2. **Buy the domain**
-3. **Pages + Workers**, rebuild with the real URL, commit, verify the pool 404s
-4. **Analytics** — same session, while the dashboard is open
-5. *Launch*
-6. **Content past 104**, from the 118 screened candidates
-7. **Percentile backend**, once there is traffic to aggregate
+1. **Analytics** — live and unmeasured is the worst state to sit in
+2. **Content past 104**, from the 118 screened candidates, before day 21
+3. **Percentile backend**, once there is traffic to aggregate

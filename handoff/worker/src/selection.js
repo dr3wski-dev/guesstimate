@@ -2,7 +2,7 @@
    Moved here from the game (now reference/statmap.html), which no longer has a copy —
    there is exactly one implementation of this logic and it now runs on the
    server. The functions themselves are unchanged from the versions that were
-   built and tested in guesstimate-slider-legacy.html and then ported into the
+   built and tested in the original 1D slider prototype and then ported into the
    scatter build; the only edit is that `roundsForDate` takes the pool as an
    argument instead of reading a `QUESTION_POOL` global, because a Worker has no
    page-global to read. Behavior is identical: same date + same pool produce the

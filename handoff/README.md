@@ -59,12 +59,7 @@ falls, scored by proximity.
    `audit_fairness.mjs` gates question quality, and `build_site.py` assembles `site/`
    and refuses to build if the fairness gate fails. `devserver.mjs` serves the built
    site plus the real Worker locally. See **content/README.md** for the workflow.
-11. **reference/guesstimate-slider-legacy.html** — an earlier, superseded 1D version of
-   the mechanic. Its two pieces of load-bearing logic — the daily-selection pure
-   function and the streak/localStorage system — **have since been ported**, into
-   `worker/src/selection.js` and the scatter file respectively. Kept only as
-   provenance for the reveal animation, which two comments in the scatter file still
-   credit to it. Nothing here needs porting; nothing here is live.
+
 
 ## What's explicitly NOT in scope
 Stated plainly because this project went through several pivots to reach its current
