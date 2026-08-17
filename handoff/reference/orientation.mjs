@@ -92,14 +92,18 @@ for (const v of VIEWS) {
     return {
       right: Math.round(window.innerWidth - b.right),
       btnOn: b.bottom <= window.innerHeight + 1 && b.top >= 0,
-      factPresent: !!document.querySelector('.fact'),
+      // The written fact was cut from the product (see SHOW_FACT in the game).
+      // The citation stayed, because the numbers on screen need one.
+      sourcePresent: !!document.querySelector('.fact-source'),
+      factAbsent: !document.querySelector('.fact'),
     };
   });
   // A control that moves after you press it costs the player their aim every round.
   check('button does not move after submitting', Math.abs(r.right - beforeRight) <= 3,
     `${beforeRight}px -> ${r.right}px from right edge`);
   check('button still on screen after reveal', r.btnOn);
-  check('the fact rendered', r.factPresent);
+  check('the source line rendered', r.sourcePresent);
+  check('no written fact copy', r.factAbsent);
 
   // Scrolled to the bottom, the button must still be there — that is the whole point
   // of it being sticky, and it is where a player ends up after reading.

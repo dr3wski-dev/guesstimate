@@ -71,7 +71,7 @@ await p.waitForSelector('.reveal');
 await p.waitForTimeout(700);
 const g2 = await p.evaluate(() => {
   const r = s => { const e = document.querySelector(s); const b = e.getBoundingClientRect(); return { t: Math.round(b.top), b: Math.round(b.bottom) }; };
-  return { reveal: r('.reveal'), pts: r('.pts'), fact: r('.fact'), submit: r('#submitBtn'), heat: !!document.querySelector('.heat') };
+  return { reveal: r('.reveal'), pts: r('.pts'), source: r('.fact-source'), submit: r('#submitBtn'), heat: !!document.querySelector('.heat') };
 });
 check('score is on-screen after submit', g2.pts.t >= 0 && g2.pts.b <= vh, `pts at ${g2.pts.t}-${g2.pts.b}, viewport ${vh}`);
 check('next button still on-screen after submit', g2.submit.b <= vh + 1, `bottom ${g2.submit.b}`);

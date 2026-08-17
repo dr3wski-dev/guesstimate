@@ -51,7 +51,7 @@ ck('recap collapsed by default', await p.locator('.recap-row[open]').count()===0
 await p.locator('.recap-row').first().locator('summary').click();
 await p.waitForTimeout(150);
 const opened=await p.locator('.recap-row').first().innerText();
-ck('expanding shows guess, actual and the fact', /You said/.test(opened) && opened.length>200,
+ck('expanding shows guess and actual', /You said/.test(opened) && opened.length>120,
    opened.replace(/\n/g,' | ').slice(0,110)+'...');
 ck('no JS errors', errs.length===0, errs[0]||'');
 await p.screenshot({path:'v-recap.png', fullPage:true});
