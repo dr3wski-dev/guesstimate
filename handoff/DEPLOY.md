@@ -5,7 +5,7 @@ Two pieces, both on Cloudflare, both free at this scale:
 | piece | what it serves | where |
 |---|---|---|
 | the site | the game, fonts, OG image | Cloudflare Pages, publish dir `site/` |
-| `statmap-api` | one day's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
+| `statmap` | one day's questions | Cloudflare Workers, routed at `/api/*` on the same domain |
 
 **They must share a domain.** The page's CSP is `connect-src 'self'`, so the game can
 only call an API on its own origin. That's deliberate: no CORS, no third-party origin

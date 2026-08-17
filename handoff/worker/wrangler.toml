@@ -1,4 +1,8 @@
-name = "statmap-api"
+# Must match the Cloudflare Workers project this repo is connected to, which was
+# created as "statmap". A mismatch does not fail loudly — wrangler simply deploys
+# a SECOND Worker under the name in this file while the build project keeps its
+# own, leaving an orphan that serves nothing and a route bound to the wrong one.
+name = "statmap"
 main = "src/index.js"
 compatibility_date = "2026-08-10"
 
