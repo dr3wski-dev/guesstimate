@@ -358,7 +358,6 @@
   </div>
   <div class="progress" id="progress"></div>
   <div class="panel" id="panel"></div>
-  <p class="note">Every number here is a real, verified career or season stat, cited on each reveal. The hollow dots are reference players with their values listed. You're estimating where the named player falls against them.</p>
 </div>
 
 <dialog class="modal" id="howModal" aria-labelledby="howTitle">
@@ -1348,13 +1347,19 @@ function showQuestion(){
     targetLbl.textContent = targetText;
     svg.appendChild(targetLbl);
 
-    // The emoji already carries the colour and is what shows up in the share strip,
-    // so no separate swatch — that rendered every band as two identical squares.
-    const keyHTML = TIERS.map(tier =>
-      `<span${tier.label===t.label?' style="color:var(--ink);font-weight:700;"':''}>${tier.emoji} ${tier.label}</span>`
-    ).join('');
+    // Was the full six-band legend on every single reveal — two rows explaining five
+    // outcomes that did not happen. The bands are explained once in How to play; here
+    // the only one worth naming is the one you got, and the ring you landed in on the
+    // chart already shows where the neighbours sit.
+    const keyHTML = '';
 
     const revealArea = document.getElementById('revealArea');
+    // The miss line below restates this guess as a distance, which is strictly more
+    // useful, so the live readout retires once the answer is on screen.
+    if(readout) readout.style.display = 'none';
+    // Still telling the player how to place a guess they have already placed.
+    const howToPlot = panel.querySelector('.instructions');
+    if(howToPlot) howToPlot.style.display = 'none';
     revealArea.innerHTML = `
       <div class="reveal ${tierAnimClass}">
         <div class="verdict-row ${tierAnimClass}">
@@ -1511,7 +1516,7 @@ function renderHow(){
   }).join('');
   document.getElementById('howBody').innerHTML = `
     <div class="how-step"><span class="n">1</span><div>Five questions a day, the <b>same five for everyone</b>, until midnight ET.</div></div>
-    <div class="how-step"><span class="n">2</span><div>Each chart plots real players on <b>two stats at once</b>. Their exact values are listed underneath.</div></div>
+    <div class="how-step"><span class="n">2</span><div>Each chart plots real players on <b>two stats at once</b>. The <b>hollow dots</b> are your reference points, with their exact values listed under the chart.</div></div>
     <div class="how-step"><span class="n">3</span><div>Tap, drag or arrow-key to place your guess for the named player, then submit.</div></div>
     <div class="how-step"><span class="n">4</span><div><b>The closer you land, the more you score</b>: up to 100 a question, 500 a day. Distance counts on both stats together.</div></div>
     <div class="how-bands">
