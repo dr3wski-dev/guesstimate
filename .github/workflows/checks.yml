@@ -1,0 +1,76 @@
+# Runs the gates that already exist, on every push and pull request.
+#
+# WHY THIS IS WORTH HAVING
+# The repo has four browser suites, a fairness audit and a schema check, and until
+# now every one of them ran only when somebody remembered to run it. A pull request
+# that broke the game, corrupted a stat or re-introduced the free-points scoring bug
+# would have shown a clean green page, because nothing was looking.
+#
+# WHAT IS DELIBERATELY NOT HERE
+# verify_questions.py re-derives all 744 values from the raw datasets, which are
+# ~43 MB and gitignored. Downloading them on every push would make this slow and
+# would depend on third-party hosts staying up, so that check stays local and is run
+# when content changes. It is the most important gate in the project, so its absence
+# here is a real gap rather than an oversight — see the content workflow in
+# handoff/content/README.md.
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Question schema
+        run: python3 handoff/pipeline/import_questions.py --check
+
+      # Does every question still reward knowing the answer? This is the check that
+      # caught two shipped questions paying better for a blind guess than for
+      # knowledge, and neither looked wrong in review.
+      - name: Fairness gate
+        run: node handoff/pipeline/audit_fairness.mjs
+
+      # Also asserts the pool is never published as a static file and that the game
+      # and the Worker agree on BAG_EPOCH.
+      - name: Build the site
+        run: python3 handoff/pipeline/build_site.py --url https://statmap.app
+
+      # The committed site/ must match what the sources produce. Without this, a
+      # hand-edit to site/index.html survives — and site/ is what Pages actually
+      # serves, so the deployed game would differ from its own source.
+      - name: Committed build is up to date
+        run: |
+          if ! git diff --quiet -- site/; then
+            echo "::error::site/ does not match a fresh build. Run build_site.py and commit the result."
+            git diff --stat -- site/
+            exit 1
+          fi
+
+      - name: Install Playwright
+        working-directory: handoff
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Browser suites
+        working-directory: handoff
+        run: |
+          node pipeline/devserver.mjs 8903 &
+          for i in $(seq 1 30); do
+            curl -sf -o /dev/null http://localhost:8903/api/daily && break
+            sleep 1
+          done
+          BASE=http://localhost:8903/ npm test

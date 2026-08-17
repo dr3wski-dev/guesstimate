@@ -10,7 +10,8 @@
     "test:verify": "node reference/verify.mjs",
     "test:polish": "node reference/polish.mjs",
     "test:restore": "node reference/restore.mjs",
-    "test": "node reference/verify.mjs && node reference/polish.mjs && node reference/restore.mjs && node reference/security.mjs"
+    "test": "node reference/verify.mjs && node reference/polish.mjs && node reference/restore.mjs && node reference/security.mjs && node reference/orientation.mjs",
+    "test:orientation": "node reference/orientation.mjs"
   },
   "devDependencies": {
     "playwright": "1.56.1"
