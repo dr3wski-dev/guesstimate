@@ -13,7 +13,12 @@
    be unit-tested in plain Node with no Workers runtime involved. */
 
 // Fixed origin for the daily rotation so day numbering never shifts.
-export const BAG_EPOCH = '2026-01-01';
+// Launch day. Puzzle numbering counts from here, so day one is #1 rather than
+// implying hundreds of puzzles nobody ever played. It also anchors the shuffled
+// bag, so moving it reshuffles which questions land on which date — safe before
+// launch, disruptive after, because it would renumber every puzzle a player has
+// already shared.
+export const BAG_EPOCH = '2026-08-17';
 export const DAILY_COUNT = 5;
 
 export function hashString(str){

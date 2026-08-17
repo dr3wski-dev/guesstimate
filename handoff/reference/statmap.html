@@ -33,10 +33,8 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1810'/%3E%3Cpath d='M6 26 H27' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M6 26 V5' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='2.6' fill='%23f0b429'/%3E%3Ccircle cx='20' cy='12' r='3.4' fill='%232f5fd6' stroke='%23f2efe4' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="StatMap">
-<!-- Mobile browser chrome. Two values so the bar matches the page in both themes
-     rather than flashing the wrong ground behind a dark layout. -->
-<meta name="theme-color" content="#f2efe4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#12110f" media="(prefers-color-scheme: dark)">
+<!-- Mobile browser chrome, matched to the paper background. -->
+<meta name="theme-color" content="#f2efe4">
 <!-- The first screen renders in all three families at once: the title is Fraunces,
      the body copy Work Sans, and the topline and buttons IBM Plex Mono. Without
      these, the browser can't discover any of them until it has parsed the stylesheet,
@@ -46,16 +44,6 @@
 <link rel="preload" href="../assets/fonts/worksans-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ibmplexmono-400.woff2" as="font" type="font/woff2" crossorigin>
-<script>
-// Applied synchronously, before CSS paints, so a returning player with a saved
-// dark-mode preference doesn't see a flash of the light theme first.
-(function(){
-  try{
-    var t = localStorage.getItem('statmap_theme');
-    if(t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-  }catch(e){}
-})();
-</script>
 <style>
   /* Self-hosted fonts (latin subset only). Removes three render-blocking
      third-party requests, kills the font-swap flash, and lets the CSP above drop
@@ -97,33 +85,6 @@
   .app[data-league="NBA"]{ --accent:#ef8c3b; --accent-ink:#3a2405; }
   .app[data-league="NFL"]{ --accent:#57a877; --accent-ink:#0d2b1a; }
   .app[data-league="MLB"]{ --accent:#6d9ce0; --accent-ink:#0f2445; }
-  /* Dark palette applies automatically for players whose OS is set to dark mode
-     (unless they've explicitly picked light via the toggle), and always applies
-     once data-theme="dark" is set explicitly. Mostly a straight paper/ink swap
-     to keep the same retro-paper look; good/mid/bad/guess get brightened a touch
-     since the muted light-mode versions read as too dark against a dark page. */
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --paper: #17140f; --paper-2: #211d16;
-      --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
-      --line: rgba(242,237,224,0.18);
-      --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
-      --mid: #e0a83c; --bad: #ff6b57;
-      --guess: #6d93ff;
-      --t1: #3ddc84; --t2: #8fd94a; --t3: #e8c34a;
-      --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
-    }
-  }
-  :root[data-theme="dark"]{
-    --paper: #17140f; --paper-2: #211d16;
-    --ink: #f2ede0; --ink-rgb: 242,237,224; --ink-soft: #cfc8b8; --ink-faint: #a39c8a;
-    --line: rgba(242,237,224,0.18);
-    --good: #3ddc84; --good-rgb: 61,220,132; --good-bg: rgba(61,220,132,0.15);
-    --mid: #e0a83c; --bad: #ff6b57;
-    --guess: #6d93ff;
-    --t1: #3ddc84; --t2: #8fd94a; --t3: #e8c34a;
-    --t4: #f0913f; --t5: #f2685a; --t6: #9a8f80;
-  }
   *{box-sizing:border-box;}
   .byline{
     margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11px;
@@ -391,7 +352,6 @@
       <span class="controls">
         <button id="howBtn" class="icon-btn" aria-label="How to play" title="How to play">?</button>
         <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
-        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
       </span>
     </span>
   </div>
@@ -442,7 +402,7 @@ function clampScore(raw, max){
 // Fixed origin for the daily rotation so day numbering never shifts across
 // sessions. Declared up here rather than with the rotation code below because the
 // challenge-date sanitizer needs it, and this block deliberately runs first.
-const BAG_EPOCH = '2026-01-01';
+const BAG_EPOCH = '2026-08-17';   // must match worker/src/selection.js; build_site.py asserts it
 // A challenge link carries the date it was played on, so the recipient gets the
 // *same five questions* the sender did. Without it the banner claims "beat their
 // 350" while serving an entirely different puzzle. Bounded on both ends: nothing
@@ -1715,27 +1675,6 @@ async function init(){
   startScreen();
 }
 init();
-
-/* ============================= THEME (light/dark) ============================= */
-const THEME_KEY = 'statmap_theme';
-function loadThemePref(){ try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; } }
-function saveThemePref(t){ try{ localStorage.setItem(THEME_KEY, t); }catch(e){} }
-function effectiveTheme(){
-  const stored = loadThemePref();
-  if(stored === 'light' || stored === 'dark') return stored;
-  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-}
-function updateThemeToggleIcon(){
-  const btn = document.getElementById('themeToggle');
-  if(btn) btn.textContent = effectiveTheme() === 'dark' ? '☀' : '☾';
-}
-document.getElementById('themeToggle').addEventListener('click', ()=>{
-  const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  saveThemePref(next);
-  updateThemeToggleIcon();
-});
-updateThemeToggleIcon();
 
 // Safe mid-run because startScreen() offers Resume rather than restarting — see
 // runInProgress().
