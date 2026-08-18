@@ -9,7 +9,7 @@
      reflected-XSS bug documented there even before the code-level fix existed.
      Fonts are self-hosted now, so this no longer needs to allow googleapis/gstatic
      at all — the only non-'self' source left is data: for the inline SVG favicon. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloud.umami.is https://api-gateway.umami.dev; base-uri 'none'; object-src 'none'; form-action 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloud.umami.is https://gateway.umami.is; base-uri 'none'; object-src 'none'; form-action 'self';">
 <link rel="canonical" href="https://statmap.app/">
 <title>StatMap: Daily Sports Stat Guessing Game</title>
 <meta name="author" content="Drew Tanous">

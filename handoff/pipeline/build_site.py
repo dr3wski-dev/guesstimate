@@ -64,8 +64,22 @@ ANALYTICS = {
         # Web Analytics does not. --analytics-domain takes the website ID (a UUID).
         'tag': ('<script defer src="https://cloud.umami.is/script.js" '
                 'data-website-id="{domain}"></script>'),
+        # connect-src MUST list the host the script POSTs to, which is NOT the host
+        # it is served from. Umami Cloud serves script.js from cloud.umami.is and
+        # sends events to gateway.umami.is. Allowing only the script origin produces
+        # a site that loads the tag, reports no error anywhere on the server side,
+        # and collects nothing — which is what shipped, and it stayed invisible for a
+        # day because the only symptom is an empty dashboard that looks like "no
+        # traffic yet".
+        #
+        # This list was corrected from a real browser console, not from documentation:
+        # "Connecting to 'https://gateway.umami.is/api/send' violates ... connect-src".
+        # api-gateway.umami.dev was in here and is not a host the script ever contacts.
+        # After changing analytics providers, open the console on the deployed site
+        # and confirm there are no CSP errors — there is no way to catch this from the
+        # build, because the send host only appears at runtime.
         'csp': {'script-src': ['https://cloud.umami.is'],
-                'connect-src': ['https://cloud.umami.is', 'https://api-gateway.umami.dev']},
+                'connect-src': ['https://cloud.umami.is', 'https://gateway.umami.is']},
     },
     'cloudflare': {
         # Free, cookieless, no consent banner needed. Custom events are not supported
