@@ -55,6 +55,17 @@ jobs:
       - name: Question schema
         run: python3 handoff/pipeline/import_questions.py --check
 
+      # Every day is pinned to an explicit set, and a pinned day is immutable. This
+      # is not style: the shuffled bag is a pure function of (date, pool), so before
+      # the calendar existed, adding 100 questions re-dealt every day that had ever
+      # been played — day 1, day 2 and day 3 each changed by 5 questions out of 5.
+      # Today's puzzle moved under people mid-round and every challenge link ever
+      # shared started pointing at a different puzzle than the sender played.
+      # This step fails on a gap in the calendar or a pin that no longer resolves.
+      - name: Daily schedule
+        working-directory: handoff
+        run: node pipeline/schedule_days.mjs --check
+
       # Does every question still reward knowing the answer? This is the check that
       # caught two shipped questions paying better for a blind guess than for
       # knowledge, and neither looked wrong in review.
