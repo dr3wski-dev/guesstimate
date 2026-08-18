@@ -58,6 +58,11 @@ python3 handoff/pipeline/build_site.py --url https://your-domain.com
 python3 handoff/pipeline/build_site.py --url https://your-domain.com \
     --analytics plausible --analytics-domain your-domain.com
 
+# THE COMMAND THIS PROJECT ACTUALLY DEPLOYS WITH. CI runs exactly this and then
+# fails if committed site/ differs, so build with these flags or the check trips.
+python3 handoff/pipeline/build_site.py --url https://statmap.app \
+    --analytics umami --analytics-domain 3acb4aa9-ff47-4133-8bad-a14e592a0ebb
+
 # 2. Sanity-check it locally before pushing
 cd site && python3 -m http.server 8900     # then open http://localhost:8900/
 

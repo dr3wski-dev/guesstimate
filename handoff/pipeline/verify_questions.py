@@ -29,6 +29,12 @@ MLB_LABELS = {
     'Career batting average': 'AVG',
     'Career doubles': '2B',
     'Career strikeouts': 'SO',
+    'Career triples': '3B',
+    'Career walks': 'BB',
+    'Career runs batted in': 'RBI',
+    'Career runs scored': 'R',
+    'Career games played': 'G',
+    'Career hits': 'H',
 }
 NBA_LABELS = {
     'Points per game (season)': 'pts',
@@ -41,6 +47,9 @@ NBA_LABELS = {
     '3-point attempts per game (season)': 'fg3a',
     '3-point percentage (season)': 'fg3_pct',
     'Usage rate (season)': 'usg_pct',
+    'Rebounds per game (season)': 'reb',
+    'Assists per game (season)': 'ast',
+    'Turnovers per game (season)': 'tov',
 }
 NFL_LABELS = {
     'Rushing yards per game (season)': 'rush_ypg',
@@ -51,6 +60,11 @@ NFL_LABELS = {
     'Receptions (season)': 'rec',
     'Interceptions (season)': 'int',
     'Passing touchdowns (season)': 'pass_td',
+    'Carries (season)': 'carries',
+    'Receiving touchdowns (season)': 'rec_td',
+    'Yards per catch (season)': 'ypr',
+    'Targets (season)': 'tgt',
+    'Completions (season)': 'comp',
 }
 
 
@@ -95,7 +109,7 @@ def mlb_table():
                for p in people}
     tot = defaultdict(Counter)
     for r in bat:
-        for c in ('AB','H','HR','SB','2B','SO'):
+        for c in ('AB','H','HR','SB','2B','3B','SO','BB','RBI','R','G'):
             if r[c]:
                 tot[r['playerID']][c] += int(r[c])
     asy = defaultdict(set)
@@ -109,7 +123,9 @@ def mlb_table():
         claims[norm(name_of.get(pid, ''))].append((pid, c))
     def row(pid, c):
         return {'AS': len(asy[pid]), 'HR': c['HR'], 'SB': c['SB'],
-                '2B': c['2B'], 'SO': c['SO'], 'AVG': round(c['H'] / c['AB'], 3)}
+                '2B': c['2B'], '3B': c['3B'], 'SO': c['SO'], 'BB': c['BB'],
+                'RBI': c['RBI'], 'R': c['R'], 'G': c['G'], 'H': c['H'],
+                'AVG': round(c['H'] / c['AB'], 3)}
 
     out = {}
     for key, cl in claims.items():
@@ -152,7 +168,7 @@ def nba_table():
             continue
         st = {k: num(r.get(k)) for k in
               ('pts', 'reb', 'ast', 'stl', 'blk', 'fga', 'fg3a', 'fg3_pct', 'min',
-               'usg_pct', 'ts_pct')}
+               'tov', 'usg_pct', 'ts_pct')}
         if None not in (st['reb'], st['ast']):
             st['ra'] = round(st['reb'] + st['ast'], 1)
         for k in ('ts_pct', 'fg3_pct', 'usg_pct'):
@@ -170,8 +186,9 @@ def nfl_table():
         pid, yr = r['player_id'], int(r['season'])
         names[pid] = r['player_display_name']
         wk[(pid, yr)].add(r['week'])
-        for c in ('rushing_yards','rushing_tds','receiving_yards','receptions',
-                  'carries','passing_tds','interceptions'):
+        for c in ('rushing_yards','rushing_tds','receiving_yards','receiving_tds',
+                  'receptions','targets','completions','carries','passing_tds',
+                  'interceptions'):
             if r.get(c):
                 agg[(pid, yr)][c] += float(r[c])
         for c in ('rushing_yards','receiving_yards','passing_yards'):
@@ -196,9 +213,12 @@ def nfl_table():
         out[(norm(names[pid]), yr)] = {
             'rush_yds': int(c['rushing_yards']), 'rush_td': int(c['rushing_tds']),
             'rec_yds': int(c['receiving_yards']), 'rec': int(c['receptions']),
+            'rec_td': int(c['receiving_tds']), 'tgt': int(c['targets']),
+            'comp': int(c['completions']), 'carries': int(c['carries']),
             'pass_td': int(c['passing_tds']), 'int': int(c['interceptions']),
             'rush_ypg': round(c['rushing_yards'] / g, 1) if g else None,
             'ypc': round(c['rushing_yards'] / c['carries'], 1) if c['carries'] >= 100 else None,
+            'ypr': round(c['receiving_yards'] / c['receptions'], 1) if c['receptions'] >= 30 else None,
         }
     return out
 

@@ -150,15 +150,20 @@ def validate(questions):
     for q in questions:
         rid = q.get('id') or '<no id>'
         for field in required:
-            if field not in q or q[field] in ('', None, []):
+            # `fact` is required to be PRESENT but is allowed to be empty: the game
+            # stopped rendering it (see SHOW_FACT), and a required-and-non-empty rule
+            # is exactly what would push someone to type 45 characters of filler to
+            # get an import through.
+            empty_ok = field == 'fact'
+            if field not in q or (not empty_ok and q[field] in ('', None, [])):
                 errors.append(f'{rid}: missing required field {field}')
         if not id_pat.match(rid):
             errors.append(f'{rid}: id must be kebab-case (a-z, 0-9, hyphens)')
         if q.get('league') not in leagues:
             errors.append(f'{rid}: league must be one of {leagues}, got {q.get("league")!r}')
 
-        for txt, lo, hi in (('fact', props['fact']['minLength'], props['fact']['maxLength']),
-                            ('source', props['source']['minLength'], props['source']['maxLength'])):
+        for txt, lo, hi in ((t, props[t].get('minLength', 0), props[t]['maxLength'])
+                            for t in ('fact', 'source')):
             v = q.get(txt) or ''
             if v and not (lo <= len(v) <= hi):
                 errors.append(f'{rid}: {txt} is {len(v)} chars, must be {lo}-{hi}')

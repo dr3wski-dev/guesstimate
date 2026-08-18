@@ -811,6 +811,35 @@ function distForScore(points){
    Only the edges moved; the curve is untouched, so the scores themselves keep the
    property that matters — a player who isn't trying still lands near 120/500, so the
    /500 denominator isn't flattering anyone. */
+/* The fact copy is switched off in the product.
+ *
+ * Two attempts at it both failed the same way. The first restated the numbers already
+ * plotted on the chart, which made it verifiable and pointless to read. The second was
+ * shorter and worse: it named the shape correctly and then invented a reason —
+ * "Indiana needed O'Neal on the floor for the defense, not the offense" is a sentence
+ * that sounds like knowledge and is actually a guess dressed up as one. A game whose
+ * entire credibility is that every number is real should not ship prose that is
+ * confidently made up.
+ *
+ * The copy stays in questions.json rather than being deleted: the shape observations
+ * are sound, it is the manufactured second clause that is not, and rewriting is a
+ * content pass rather than a rebuild. Flip this to true when there is copy worth
+ * showing.
+ *
+ * The SOURCE line still renders. It is a citation for the numbers on screen, not
+ * written colour, and it is the one claim on this screen that has to stay. */
+const SHOW_FACT = false;
+function factBlockHTML(r){
+  if(!SHOW_FACT){
+    return `<div class="fact-block"><p class="fact-source">${escapeHtml(r.source)}</p></div>`;
+  }
+  return `<div class="fact-block">
+          <div class="fact-label">Why it's interesting</div>
+          <p class="fact">${escapeHtml(r.fact)}</p>
+          <p class="fact-source">${escapeHtml(r.source)}</p>
+        </div>`;
+}
+
 const TIERS = [
   { min:97, emoji:'🎯', label:'Bullseye', color:'var(--t1)' },
   { min:80, emoji:'🟩', label:'Great',    color:'var(--t2)' },
@@ -845,9 +874,29 @@ function prefersReducedMotion(){
 function shortLabel(name){
   // Handles both season formats the content uses: "Jonathan Taylor, 2021" (NFL/MLB
   // single seasons) and "Baron Davis, 2003-04" (NBA, which spans two calendar
-  // years). The prompt above the chart already states the season, so the dot only
-  // needs the person.
+  // years).
   return name.replace(/,?\s*\d{4}(-\d{2})?$/, '') || name;
+}
+
+function seasonTag(name){
+  // The apostrophe form of the season: "Jonathan Taylor, 2021" -> ’21, "Baron
+  // Davis, 2003-04" -> ’03. NBA seasons are keyed on the year they started, which
+  // is how the source data is keyed and how people say them out loud.
+  //
+  // Empty for career questions, which is most of the MLB pool. A career has no one
+  // year, and inventing one to make the labels look uniform would be inventing
+  // data — the one thing this project does not do.
+  const m = name.match(/,?\s*(\d{4})(-\d{2})?$/);
+  return m ? '’' + m[1].slice(2) : '';
+}
+
+function dotLabel(name){
+  // What a plotted dot is called. Without the year, three reference dots are three
+  // players and no context — the prompt states the season for the player being
+  // GUESSED, and says nothing about the ones you are comparing them to, so a
+  // Randy Moss dot could be his rookie year or his last.
+  const tag = seasonTag(name);
+  return tag ? shortLabel(name) + ' ' + tag : shortLabel(name);
 }
 
 // Guess-snapping precision. A fixed "round to nearest 0.1" (the old behavior)
@@ -1125,7 +1174,7 @@ function showQuestion(){
   const xTickD = tickDecimals(xTicks), yTickD = tickDecimals(yTicks);
 
   const legendHTML = r.referencePlayers.map(p =>
-    `<span><i></i><b>${escapeHtml(shortLabel(p.name))}</b> · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
+    `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b> · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
   ).join('');
 
   panel.innerHTML = `
@@ -1319,7 +1368,7 @@ function showQuestion(){
     r.referencePlayers.forEach(p=>{
       const cx = xPix(p.x), cy = yPix(p.y);
       svg.appendChild(el('circle',{cx,cy,r:7, fill:'var(--paper)', stroke:'var(--ink)','stroke-width':2, style:'pointer-events:none;'}));
-      const text = shortLabel(p.name);
+      const text = dotLabel(p.name);
       const pos = placer.place(text, cx, cy, 10.5);
       const t = el('text',{x:pos.x, y:pos.y, 'text-anchor':pos.anchor, 'font-size':10.5, 'font-weight':600, fill:'var(--ink)', class:'mono plabel', style:'pointer-events:none;'});
       t.textContent = text;
@@ -1412,7 +1461,9 @@ function showQuestion(){
     svg.appendChild(connector);
     svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
     // Same placer the reference labels used, so the answer label dodges them too.
-    const targetText = shortLabel(r.targetPlayer);
+    // The answer gets the same treatment as the dots it sits among. Labelling the
+    // references by year and the answer not would read as two kinds of thing.
+    const targetText = dotLabel(r.targetPlayer);
     placer.reserveDot(tx, ty, 11);
     const tpos = placer.place(targetText, tx, ty, 11);
     const targetLbl = el('text',{x:tpos.x, y:tpos.y, 'text-anchor':tpos.anchor, 'font-size':11, 'font-weight':700, fill:'var(--good)', class:'mono target-marker plabel'});
@@ -1445,11 +1496,7 @@ function showQuestion(){
           </div>
         </div>
         <div class="heat-key">${keyHTML}</div>
-        <div class="fact-block">
-          <div class="fact-label">Why it's interesting</div>
-          <p class="fact">${escapeHtml(r.fact)}</p>
-          <p class="fact-source">${escapeHtml(r.source)}</p>
-        </div>
+        ${factBlockHTML(r)}
       </div>
     `;
     countUp(document.getElementById('ptsNum'), points);
@@ -1499,7 +1546,7 @@ function showResults(){
         <details class="recap-row">
           <summary>
             <span class="rc-emoji">${d.tier.emoji}</span>
-            <span class="rc-who">${escapeHtml(shortLabel(d.player))}</span>
+            <span class="rc-who">${escapeHtml(dotLabel(d.player))}</span>
             <span class="rc-pts" style="color:${d.tier.color}">+${d.points}</span>
           </summary>
           <div class="rc-body">

@@ -115,9 +115,8 @@
         },
         "fact": {
           "type": "string",
-          "minLength": 80,
           "maxLength": 700,
-          "description": "The reveal payload, and the actual product — it is the only thing in this genre that teaches you something. Should explain WHY the answer is counterintuitive, not restate the numbers. Existing content runs 280-610 characters; the 700 ceiling is a guard against a pasted wall of text, not a target."
+          "description": "NOT RENDERED. The game hides this behind SHOW_FACT, which is off: two attempts at the copy either restated the numbers already plotted or invented a reason for the shape, and the second failure is the sourcing rule broken in prose instead of in numbers. Empty string is the correct value for new questions — the minimum length was removed precisely so nobody fills 45 characters to satisfy a validator. If the copy is ever rewritten, state the SHAPE of the chart and not the numbers on it, in one sentence, with no moral on the end. The retained strings run 83-169 characters."
         },
         "source": {
           "type": "string",
