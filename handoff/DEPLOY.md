@@ -88,13 +88,68 @@ to build custom hosting.
 The API deploys separately from the site. Two ways to do it, and **the choice matters
 for how content ships later**, so pick deliberately.
 
-**Recommended — connect the Worker to the repo (Workers Builds).** In the Cloudflare
-dashboard: Workers & Pages → Create → Import a repository → pick this repo, set the
-root directory to `handoff/worker`. From then on every push to the default branch
+**How it deploys now — from GitHub Actions, gated on the tests.** `.github/workflows/checks.yml`
+runs the gates and then, on a push to `main` only, deploys the Worker and verifies
+that the live API is serving this commit's pool. Two things follow from that:
+
+1. **Cloudflare's own Workers Builds should be disconnected** for this Worker
+   (Settings → Build → Disconnect). Two deployers pointed at one Worker race, and the
+   loser silently wins about half the time.
+2. **The repo needs a `CLOUDFLARE_API_TOKEN` secret.** Create it with Cloudflare's
+   "Edit Cloudflare Workers" template, then add it under Settings → Secrets and
+   variables → Actions. Add `CLOUDFLARE_ACCOUNT_ID` too if the token can see more
+   than one account.
+
+Why this rather than the dashboard builder: Cloudflare's builder triggers on push and
+never consults the test workflow, so every gate in this repo could fail and the API
+would deploy anyway. `needs: gates` makes them load-bearing. It also puts the deploy
+configuration under review in a pull request, instead of in a settings page nobody
+reads until something breaks.
+
+**Legacy — Workers Builds (the dashboard builder).** If you reconnect it: Workers &
+Pages → Create → Import a repository → pick this repo, then set the deploy and
+version commands to carry the config path (see the box below — the root directory
+field will not do this for you). From then on every push to the default branch
 redeploys the Worker automatically, which means a content change reaches players by
 pushing, with nothing to remember. That matters more than it sounds: the pool is
 bundled into the Worker, so a forgotten manual deploy is a silent failure — the site
 updates, the questions don't, and nothing anywhere says so.
+
+> **The "Root directory" setting does not move the deploy step.** This cost an
+> evening, so it is written down in full.
+>
+> With root directory set to `handoff/worker`, the build still failed with
+> `Missing entry-point to Worker script or to assets directory` — the identical
+> error, to the byte, that it produced with the setting unset. That error is what
+> wrangler says when it finds no config **at all**, not when it finds a broken one:
+> it ran in the repository root, where there is deliberately no `wrangler.toml`, and
+> reported the absence as a missing entry point. So the setting appears to govern
+> dependency caching and tool detection, and not the working directory the deploy
+> command runs in.
+>
+> **The fix is to put the path in the command, where it cannot be misread:**
+>
+> ```
+> Deploy command:   npx wrangler deploy -c handoff/worker/wrangler.toml
+> Version command:  npx wrangler versions upload -c handoff/worker/wrangler.toml
+> Root directory:   (empty)
+> ```
+>
+> `main = "src/index.js"` resolves relative to the config file rather than the
+> working directory, so this builds byte-identically to running wrangler from inside
+> `handoff/worker` — 183.58 KiB either way. Verify with
+> `npx wrangler deploy --dry-run -c handoff/worker/wrangler.toml` from the repo root.
+>
+> Do NOT fix this by adding a `wrangler.toml` at the repository root. Pages reads a
+> root-level `wrangler.toml` as *its* configuration, so that trades a broken API
+> build for a broken site build.
+>
+> Two commands appear in these logs and they do different things. `wrangler deploy`
+> releases to production; `wrangler versions upload` uploads a version without
+> releasing it, and is correct for non-production branches only. A production branch
+> configured with `versions upload` builds green forever and never changes what
+> players get — the same silent failure as a forgotten manual deploy, wearing a
+> passing check mark.
 
 **Manual.** Needs an interactive Cloudflare login, so it can't be done from a
 terminal-only session:

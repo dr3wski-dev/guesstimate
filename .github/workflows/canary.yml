@@ -1,0 +1,49 @@
+# Is the live game working? Asked hourly, whether or not anybody changed anything.
+#
+# WHY THIS IS SEPARATE FROM checks.yml
+# That workflow answers "is this change safe to ship", and it only runs when there is
+# a change. This one answers "is the thing players are using right now still working",
+# which is a different question with a different failure mode: nothing happened, and
+# it broke anyway. An expired route, an edge that froze on yesterday's questions, a
+# deploy that reported success and released nothing — none of those involve a commit,
+# so no amount of pre-merge testing would catch them.
+#
+# HOW YOU FIND OUT
+# GitHub emails the repository owner when a scheduled workflow fails. That is the
+# whole alerting system, and it is enough: this fires hourly, so a failure is at most
+# an hour old, and there is no pager to configure or third-party monitor to pay for.
+#
+# WHY NOT MORE OFTEN
+# Five minutes would mean 288 runs a day to catch a fault an hour sooner, on a game
+# with no revenue and no SLA. Hourly is the honest tradeoff. Raise it when there is
+# something to lose by being down for forty minutes.
+name: canary
+
+on:
+  schedule:
+    # :17 rather than :00. Everybody's cron fires on the hour, GitHub queues them,
+    # and a "hourly" check that actually runs at :09 past a busy hour is measuring
+    # GitHub's queue as much as our uptime.
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      # Explicitly main. The fingerprint check compares the live pool against the
+      # checked-out one, and only main's pool is supposed to be the live one.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Is statmap.app healthy
+        env:
+          # On main, a pool that does not match what is live is a real fault: it means
+          # a merge deployed nothing. Fail on it rather than warn.
+          CANARY_STRICT: '1'
+        run: node handoff/pipeline/canary.mjs

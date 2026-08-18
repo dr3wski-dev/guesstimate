@@ -7,18 +7,36 @@
 # would have shown a clean green page, because nothing was looking.
 #
 # WHAT IS DELIBERATELY NOT HERE
-# verify_questions.py re-derives all 744 values from the raw datasets, which are
+# verify_questions.py re-derives all 1,552 values from the raw datasets, which are
 # ~43 MB and gitignored. Downloading them on every push would make this slow and
 # would depend on third-party hosts staying up, so that check stays local and is run
 # when content changes. It is the most important gate in the project, so its absence
 # here is a real gap rather than an oversight — see the content workflow in
 # handoff/content/README.md.
+#
+# THIS FILE ALSO DEPLOYS THE WORKER, AND THAT IS THE POINT
+# Cloudflare's own Workers Builds triggers on push and never consults this workflow,
+# so every gate above could fail and the API would deploy anyway. Deploying from here
+# instead makes the gates load-bearing: `needs: gates` means a commit that breaks a
+# question, the fairness curve or the game cannot reach players.
+#
+# It also puts the deploy configuration in the repository, where it is reviewable in
+# a pull request. The failure that motivated this took an evening to find because the
+# real configuration lived in a dashboard: the "Root directory" field read
+# `handoff/worker`, which looks like the fix and does nothing for the deploy step —
+# wrangler ran in the repository root, found no wrangler.toml, and reported a missing
+# entry point. The `-c` flag below cannot be misread that way.
 name: checks
 
 on:
   push:
     branches: [main]
   pull_request:
+  # So a deploy can be re-run from the Actions tab without inventing a commit. A
+  # deploy that fails on something outside the code — an expired token, Cloudflare
+  # having a bad afternoon — otherwise needs an empty commit to retry, and empty
+  # commits in main's history are a lie about what changed.
+  workflow_dispatch:
 
 jobs:
   gates:
@@ -78,3 +96,50 @@ jobs:
             sleep 1
           done
           BASE=http://localhost:8903/ npm test
+
+  # The pool is bundled INTO the Worker, so questions reach players when this job
+  # runs and not when Pages rebuilds. A green site with a stale API is the failure
+  # this project is most exposed to, because nothing about it looks broken.
+  deploy-worker:
+    needs: gates
+    # Never from a pull request, and never from a branch: the pool that reaches
+    # players is the one on main, whichever way this workflow was started.
+    if: >
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # A missing token otherwise surfaces as a wrangler authentication error, which
+      # reads like the token is wrong rather than absent.
+      - name: Token is present
+        run: |
+          if [ -z "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not set on this repository. Create a Cloudflare API token with the 'Edit Cloudflare Workers' template, then add it under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
+      # -c is not optional and not a style choice. Without it wrangler resolves its
+      # config from the working directory, which here is the repository root, where
+      # there is deliberately no wrangler.toml. `main` inside the config resolves
+      # relative to the config file, so this builds byte-identically to running
+      # wrangler from inside handoff/worker.
+      - name: Deploy the Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4.124.0 deploy -c handoff/worker/wrangler.toml
+
+      # Deploying is not the same as serving. This compares the pool fingerprint the
+      # live API reports against the pool in this commit, and fails if they differ.
+      # Without it, a Worker that uploads a version without releasing it passes every
+      # check on this page: the deploy step succeeds, the API answers, the questions
+      # are well-formed, and they are the previous ones.
+      - name: The live API serves this commit's pool
+        working-directory: handoff
+        run: node pipeline/build_fingerprint.mjs --check
