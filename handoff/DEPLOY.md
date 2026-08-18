@@ -63,6 +63,15 @@ python3 handoff/pipeline/build_site.py --url https://your-domain.com \
 python3 handoff/pipeline/build_site.py --url https://statmap.app \
     --analytics umami --analytics-domain 3acb4aa9-ff47-4133-8bad-a14e592a0ebb
 
+# AFTER CHANGING ANALYTICS, OPEN THE DEPLOYED SITE AND CHECK THE BROWSER CONSOLE.
+# This cannot be automated from the build. An analytics script is served from one
+# host and sends to another, and only the first is knowable statically — so a CSP
+# that names the script host and not the send host produces a site that loads the
+# tag, logs nothing anywhere, and collects nothing. That shipped, and the only
+# symptom was an empty dashboard, which looks exactly like having no visitors.
+# You are looking for the absence of lines reading "violates the following Content
+# Security Policy directive".
+
 # 2. Sanity-check it locally before pushing
 cd site && python3 -m http.server 8900     # then open http://localhost:8900/
 
