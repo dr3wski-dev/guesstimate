@@ -127,9 +127,13 @@ password reset, no email deliverability, and no GDPR surface.
 
 ## Known and accepted
 
-**Today's five answers are readable in the network tab.** Scoring and the reveal
-happen client-side, so the day's questions travel with their answers attached. Nobody
-can read *tomorrow's*, and nobody can move their clock to farm a streak. Hiding
+**Every answer is public, and that is fine.** Scoring and the reveal happen
+client-side, so the day's questions travel with their answers attached. The repo is
+public, so questions.json and schedule.json together spell out which questions land
+on which date. An earlier version of this note claimed tomorrow's were safe. That was
+never true — the pool was public and the selection deterministic, so any day was
+always computable; the calendar only made it easier to read. Nobody can move their
+clock to farm a streak, which is the part that matters. Hiding
 today's too would mean posting every guess to the server for scoring — a real backend
 with real abuse surface, and a slower game. For a game with no prizes, cheating only
 costs the cheater.
