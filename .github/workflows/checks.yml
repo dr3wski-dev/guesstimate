@@ -32,6 +32,11 @@ on:
   push:
     branches: [main]
   pull_request:
+  # So a deploy can be re-run from the Actions tab without inventing a commit. A
+  # deploy that fails on something outside the code — an expired token, Cloudflare
+  # having a bad afternoon — otherwise needs an empty commit to retry, and empty
+  # commits in main's history are a lie about what changed.
+  workflow_dispatch:
 
 jobs:
   gates:
@@ -97,7 +102,11 @@ jobs:
   # this project is most exposed to, because nothing about it looks broken.
   deploy-worker:
     needs: gates
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Never from a pull request, and never from a branch: the pool that reaches
+    # players is the one on main, whichever way this workflow was started.
+    if: >
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
