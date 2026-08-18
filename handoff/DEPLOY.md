@@ -88,11 +88,28 @@ to build custom hosting.
 The API deploys separately from the site. Two ways to do it, and **the choice matters
 for how content ships later**, so pick deliberately.
 
-**Recommended — connect the Worker to the repo (Workers Builds).** In the Cloudflare
-dashboard: Workers & Pages → Create → Import a repository → pick this repo, then set
-the deploy and version commands to carry the config path (see the box below — the
-root directory field will not do this for you). From then on every push to the
-default branch
+**How it deploys now — from GitHub Actions, gated on the tests.** `.github/workflows/checks.yml`
+runs the gates and then, on a push to `main` only, deploys the Worker and verifies
+that the live API is serving this commit's pool. Two things follow from that:
+
+1. **Cloudflare's own Workers Builds should be disconnected** for this Worker
+   (Settings → Build → Disconnect). Two deployers pointed at one Worker race, and the
+   loser silently wins about half the time.
+2. **The repo needs a `CLOUDFLARE_API_TOKEN` secret.** Create it with Cloudflare's
+   "Edit Cloudflare Workers" template, then add it under Settings → Secrets and
+   variables → Actions. Add `CLOUDFLARE_ACCOUNT_ID` too if the token can see more
+   than one account.
+
+Why this rather than the dashboard builder: Cloudflare's builder triggers on push and
+never consults the test workflow, so every gate in this repo could fail and the API
+would deploy anyway. `needs: gates` makes them load-bearing. It also puts the deploy
+configuration under review in a pull request, instead of in a settings page nobody
+reads until something breaks.
+
+**Legacy — Workers Builds (the dashboard builder).** If you reconnect it: Workers &
+Pages → Create → Import a repository → pick this repo, then set the deploy and
+version commands to carry the config path (see the box below — the root directory
+field will not do this for you). From then on every push to the default branch
 redeploys the Worker automatically, which means a content change reaches players by
 pushing, with nothing to remember. That matters more than it sounds: the pool is
 bundled into the Worker, so a forgotten manual deploy is a silent failure — the site

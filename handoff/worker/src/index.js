@@ -31,6 +31,17 @@ const json = (body, cacheControl, extra = {}) => new Response(JSON.stringify(bod
   headers: {
     'content-type': 'application/json; charset=utf-8',
     'cache-control': cacheControl,
+    // Which pool this Worker is actually holding. It is the same fingerprint the
+    // cache key uses, so it changes when and only when the answers could have
+    // changed, and it is a hash — it discloses nothing about the content.
+    //
+    // It exists so "did the deploy land?" is a question with an answer. A Worker
+    // that uploads a version without releasing it, or an edge that keeps serving
+    // yesterday, both look completely healthy from outside: the API responds, the
+    // questions are well-formed, and they are the wrong ones. Comparing this header
+    // against the fingerprint of the checked-out pool turns that into a failure the
+    // deploy job can catch, which is how it is used in .github/workflows/checks.yml.
+    'x-build': BUILD,
     ...extra,
     // The site is served from the same origin as this Worker in the deployed
     // setup (a /api/* route), so CORS isn't needed there and the page's CSP can
