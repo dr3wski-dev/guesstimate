@@ -96,6 +96,24 @@ pushing, with nothing to remember. That matters more than it sounds: the pool is
 bundled into the Worker, so a forgotten manual deploy is a silent failure — the site
 updates, the questions don't, and nothing anywhere says so.
 
+> **If the build fails with `Missing entry-point to Worker script`, the root
+> directory is not set.** This is the one setting that is easy to miss and hard to
+> read back from the error, because the error is what wrangler says when it finds no
+> config at all rather than a bad one — it looked in the repository root, where there
+> is deliberately no `wrangler.toml`, and reported the absence as a missing entry
+> point.
+>
+> Do NOT fix this by adding a `wrangler.toml` at the repository root. Pages reads a
+> root-level `wrangler.toml` as *its* configuration, so a Worker-shaped one there
+> risks breaking the site build to fix the API build.
+>
+> Two commands appear in these logs and they do different things. `wrangler deploy`
+> releases to production; `wrangler versions upload` uploads a version without
+> releasing it, and is the correct default for non-production branches only. A
+> production branch configured with `versions upload` builds green forever and never
+> changes what players get — the same silent failure as a forgotten manual deploy,
+> wearing a passing check mark.
+
 **Manual.** Needs an interactive Cloudflare login, so it can't be done from a
 terminal-only session:
 
