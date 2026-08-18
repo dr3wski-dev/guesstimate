@@ -13,11 +13,13 @@ the questions, and both redeploy from `main` on push.
 
 | | |
 |---|---|
-| Questions | **104** (NBA 44 / NFL 37 / MLB 23) — 20 days before a repeat |
-| Every number re-derived from raw datasets | 744 values, **0 mismatches** |
+| Questions | **204** (NBA 84 / NFL 72 / MLB 48) — ~40 days before a repeat |
+| Chart types | **48**, up from 17 |
+| Every number re-derived from raw datasets | 1,552 values, **0 mismatches** |
 | Fairness gate | passing, and enforced by the build |
-| Test suites | **4** — behaviour, polish, restore codes, security (31 checks) |
-| Third-party requests | **zero** |
+| Test suites | **5** — behaviour, polish, restore codes, security (31 checks), orientation |
+| CI | green, and now builds with the same flags we deploy with |
+| Third-party requests | Umami only |
 | Cold load | 60 ms to first paint, 93 KB, no long tasks |
 | Puzzle numbering | starts at #1 on 2026-08-17, rolls at midnight ET |
 
@@ -25,29 +27,36 @@ the questions, and both redeploy from `main` on push.
 
 ## What is actually left
 
-### L1. Analytics — the game is live and unmeasured
-> **Status: instrumented, not installed.** Seven events exist and no-op until a
-> provider is set at build time.
+### L1. The Worker build is failing on Cloudflare
+> **Status: blocking. Nothing else on this list matters until it clears.**
 
-Top item, because "live and measuring nothing" is the worst state to sit in. There is
-currently no way to answer the question that decides everything else early: do people
-finish all five?
+Pages is green and the Worker is red, which is the worst possible split: the site
+looks updated while the API keeps serving the old pool. The Worker is what sends the
+questions, so until it deploys, none of the 100 new ones exist as far as a player is
+concerned.
 
-- **Cloudflare Web Analytics** — one dashboard toggle, free, but **pageviews only**
-- **Umami Cloud** — free to 100k events/mo, gives the funnel. Sign up, copy the
-  website ID, rebuild with `--analytics umami --analytics-domain <id>`, commit
+It is not the code. `wrangler deploy --dry-run` builds clean at 183 KiB (25 KiB
+gzipped, against a 1 MiB limit), and the build fails instantly on Cloudflare's side
+rather than after a compile — which points at build configuration, most likely the
+project's root directory, since `wrangler.toml` lives at `handoff/worker/` and not at
+the repository root. Read the build log before acting on that guess.
 
-### L2. Content runs out on day 21
-104 questions at five a day means the first repeat lands three weeks from launch.
-**118 screened candidates** are ready — they clear the fairness gate and introduce no
-duplicate charts — but each still needs fact copy written from its own plotted
-numbers, and each has to clear `verify_questions.py`.
+### L2. Analytics are installed and unread
+Umami has been collecting since 2026-08-17. The seven events are live. Nobody has
+looked at them yet, and they answer the question that decides most of what follows:
+**do people finish all five?**
 
-Not urgent this week. Genuinely urgent inside three.
+- Completion rate (start → round 5) is the number that matters
+- Round-by-round drop-off says whether five is the right number
+- Share-button rate says whether the game spreads on its own
 
-### L3. MLB is thin at 23
-Against NBA 44 and NFL 37. The career-stat archetypes draw on a smaller eligible
-pool. Fine to leave, but it is why MLB questions will start feeling repetitive first.
+### L3. The written fact is switched off
+Two attempts at the copy failed — the first restated the plotted numbers, the second
+invented reasons for them. `SHOW_FACT` is false and the strings are retained in
+`questions.json`. The reveal is 335 characters, of which 139 is the source citation.
+
+Reinstating it needs a register that survives being read twice. That is an editorial
+session, not a generation job.
 
 ---
 
@@ -125,15 +134,26 @@ today's too would mean posting every guess to the server for scoring — a real 
 with real abuse surface, and a slower game. For a game with no prizes, cheating only
 costs the cheater.
 
-**MLB is the thinnest league at 23.** The generator's career-stat archetypes reuse
-reference players more than the season-stat ones do. Reference selection is now
-jittered and penalises reuse, which fixed the duplicate-chart collapse, but MLB's
-eligible career pool is genuinely smaller.
+**MLB is still the thinnest league, at 48 against NBA 84 and NFL 72.** The eligible
+career pool is genuinely smaller, and career questions cannot carry a season label the
+way "Derrick Henry, 2020" can. Adding pitching archetypes — ERA, strikeouts, saves,
+complete games — is where the next MLB depth comes from, and it needs a Pitching.csv
+the pipeline does not currently download.
+
+**Career questions show no year on their dots.** Season questions do. That asymmetry
+is correct — a career has no one year — but it means MLB charts carry less context
+than NBA and NFL ones.
 
 ---
 
 ## Suggested order
 
-1. **Analytics** — live and unmeasured is the worst state to sit in
-2. **Content past 104**, from the 118 screened candidates, before day 21
-3. **Percentile backend**, once there is traffic to aggregate
+1. **Unblock the Worker build.** Everything below is invisible to players until the
+   API redeploys.
+2. **Read the analytics.** Completion rate decides whether the next work is content,
+   difficulty, or retention.
+3. **Percentile / rarity backend**, once there is traffic to aggregate. Still the one
+   feature with a genuine reason to add a server.
+4. **The fact copy**, as an editorial session rather than a generation job.
+5. **A fourth sport or a difficulty split** — both are content-pipeline projects, and
+   both should wait for the completion numbers before either gets built.
