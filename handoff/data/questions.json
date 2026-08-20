@@ -15425,5 +15425,7045 @@
     ],
     "fact": "",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "mlb-r-sb-oliva",
+    "league": "MLB",
+    "xLabel": "Career runs scored",
+    "xUnit": "R",
+    "yLabel": "Career stolen bases",
+    "yUnit": "SB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      750,
+      2750
+    ],
+    "yDomain": [
+      0,
+      100
+    ],
+    "targetPlayer": "Tony Oliva",
+    "targetX": 870,
+    "targetY": 86,
+    "referencePlayers": [
+      {
+        "name": "Ron Santo",
+        "x": 1138,
+        "y": 35
+      },
+      {
+        "name": "Edgar Martinez",
+        "x": 1219,
+        "y": 49
+      },
+      {
+        "name": "Ted Williams",
+        "x": 1798,
+        "y": 24
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-schoendienst",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      0.255,
+      0.295
+    ],
+    "targetPlayer": "Red Schoendienst",
+    "targetX": 346,
+    "targetY": 0.289,
+    "referencePlayers": [
+      {
+        "name": "Ozzie Smith",
+        "x": 589,
+        "y": 0.262
+      },
+      {
+        "name": "Joe Morgan",
+        "x": 1015,
+        "y": 0.271
+      },
+      {
+        "name": "Mike Schmidt",
+        "x": 1883,
+        "y": 0.267
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-morgan",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      1000,
+      3000
+    ],
+    "targetPlayer": "Joe Morgan",
+    "targetX": 689,
+    "targetY": 1133,
+    "referencePlayers": [
+      {
+        "name": "Brooks Robinson",
+        "x": 28,
+        "y": 1357
+      },
+      {
+        "name": "Eddie Murray",
+        "x": 110,
+        "y": 1917
+      },
+      {
+        "name": "Alex Rodriguez",
+        "x": 329,
+        "y": 2086
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-whip-so-reynolds",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.1,
+      1.5
+    ],
+    "yDomain": [
+      1000,
+      9000
+    ],
+    "targetPlayer": "Allie Reynolds",
+    "targetX": 1.39,
+    "targetY": 1423,
+    "referencePlayers": [
+      {
+        "name": "Randy Johnson",
+        "x": 1.17,
+        "y": 4875
+      },
+      {
+        "name": "Orel Hershiser",
+        "x": 1.26,
+        "y": 2014
+      },
+      {
+        "name": "Bartolo Colon",
+        "x": 1.31,
+        "y": 2535
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-so-era-mesa",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      2.75,
+      4.75
+    ],
+    "targetPlayer": "Jose Mesa",
+    "targetX": 1038,
+    "targetY": 4.36,
+    "referencePlayers": [
+      {
+        "name": "Rich Gossage",
+        "x": 1502,
+        "y": 3.01
+      },
+      {
+        "name": "Felix Hernandez",
+        "x": 2524,
+        "y": 3.42
+      },
+      {
+        "name": "Roger Clemens",
+        "x": 4672,
+        "y": 3.12
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-3b-hr-fox",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      25,
+      125
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Nellie Fox",
+    "targetX": 112,
+    "targetY": 35,
+    "referencePlayers": [
+      {
+        "name": "Andruw Jones",
+        "x": 36,
+        "y": 434
+      },
+      {
+        "name": "Frank Robinson",
+        "x": 72,
+        "y": 586
+      },
+      {
+        "name": "Bob Johnson",
+        "x": 95,
+        "y": 288
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-hr-brock",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Lou Brock",
+    "targetX": 938,
+    "targetY": 149,
+    "referencePlayers": [
+      {
+        "name": "Willie McCovey",
+        "x": 26,
+        "y": 521
+      },
+      {
+        "name": "Andruw Jones",
+        "x": 152,
+        "y": 434
+      },
+      {
+        "name": "Barry Larkin",
+        "x": 379,
+        "y": 198
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-dunn",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      500,
+      4500
+    ],
+    "yDomain": [
+      0.225,
+      0.425
+    ],
+    "targetPlayer": "Adam Dunn",
+    "targetX": 2379,
+    "targetY": 0.237,
+    "referencePlayers": [
+      {
+        "name": "Bill Freehan",
+        "x": 753,
+        "y": 0.262
+      },
+      {
+        "name": "Jimmie Foxx",
+        "x": 1311,
+        "y": 0.325
+      },
+      {
+        "name": "Adrian Beltre",
+        "x": 1732,
+        "y": 0.286
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-w-era-spahn",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      100,
+      500
+    ],
+    "yDomain": [
+      3,
+      3.8
+    ],
+    "targetPlayer": "Warren Spahn",
+    "targetX": 363,
+    "targetY": 3.09,
+    "referencePlayers": [
+      {
+        "name": "Felix Hernandez",
+        "x": 169,
+        "y": 3.42
+      },
+      {
+        "name": "Kevin Brown",
+        "x": 211,
+        "y": 3.28
+      },
+      {
+        "name": "Bob Feller",
+        "x": 266,
+        "y": 3.25
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-as-hr-rose",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Pete Rose",
+    "targetX": 17,
+    "targetY": 160,
+    "referencePlayers": [
+      {
+        "name": "Robin Yount",
+        "x": 3,
+        "y": 251
+      },
+      {
+        "name": "Eddie Murray",
+        "x": 8,
+        "y": 504
+      },
+      {
+        "name": "Johnny Bench",
+        "x": 14,
+        "y": 389
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-h-bb-canseco",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1750,
+      3750
+    ],
+    "yDomain": [
+      700,
+      1100
+    ],
+    "targetPlayer": "Jose Canseco",
+    "targetX": 1877,
+    "targetY": 906,
+    "referencePlayers": [
+      {
+        "name": "Bobby Doerr",
+        "x": 2042,
+        "y": 809
+      },
+      {
+        "name": "Ernie Banks",
+        "x": 2583,
+        "y": 763
+      },
+      {
+        "name": "Frankie Frisch",
+        "x": 2880,
+        "y": 728
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-era-ryan",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      3,
+      5
+    ],
+    "targetPlayer": "Nolan Ryan",
+    "targetX": 5714,
+    "targetY": 3.19,
+    "referencePlayers": [
+      {
+        "name": "Todd Jones",
+        "x": 868,
+        "y": 3.97
+      },
+      {
+        "name": "Early Wynn",
+        "x": 2334,
+        "y": 3.54
+      },
+      {
+        "name": "Phil Niekro",
+        "x": 3342,
+        "y": 3.35
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rushtd-rectd-barber-2002",
+    "league": "NFL",
+    "xLabel": "Rushing touchdowns (season)",
+    "xUnit": "TDs",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      4,
+      12
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Tiki Barber, 2002",
+    "targetX": 11,
+    "targetY": 0,
+    "referencePlayers": [
+      {
+        "name": "Fred Taylor, 2006",
+        "x": 5,
+        "y": 1
+      },
+      {
+        "name": "Matt Forte, 2010",
+        "x": 6,
+        "y": 3
+      },
+      {
+        "name": "Ezekiel Elliott, 2021",
+        "x": 10,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-sb-hr-stargell",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Willie Stargell",
+    "targetX": 17,
+    "targetY": 475,
+    "referencePlayers": [
+      {
+        "name": "Gary Carter",
+        "x": 39,
+        "y": 324
+      },
+      {
+        "name": "Roberto Clemente",
+        "x": 83,
+        "y": 240
+      },
+      {
+        "name": "Larry Walker",
+        "x": 230,
+        "y": 383
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-concepcion",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Dave Concepcion",
+    "targetX": 321,
+    "targetY": 950,
+    "referencePlayers": [
+      {
+        "name": "Edgar Martinez",
+        "x": 49,
+        "y": 1261
+      },
+      {
+        "name": "Jimmie Foxx",
+        "x": 87,
+        "y": 1922
+      },
+      {
+        "name": "Dave Winfield",
+        "x": 223,
+        "y": 1833
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-3b-hr-doerr",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      100
+    ],
+    "yDomain": [
+      150,
+      550
+    ],
+    "targetPlayer": "Bobby Doerr",
+    "targetX": 89,
+    "targetY": 223,
+    "referencePlayers": [
+      {
+        "name": "Gary Sheffield",
+        "x": 27,
+        "y": 509
+      },
+      {
+        "name": "Harold Baines",
+        "x": 49,
+        "y": 384
+      },
+      {
+        "name": "Carlos Beltran",
+        "x": 78,
+        "y": 435
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-so-ott",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career strikeouts",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Mel Ott",
+    "targetX": 1708,
+    "targetY": 896,
+    "referencePlayers": [
+      {
+        "name": "Joe Torre",
+        "x": 779,
+        "y": 1094
+      },
+      {
+        "name": "Brooks Robinson",
+        "x": 860,
+        "y": 990
+      },
+      {
+        "name": "David Ortiz",
+        "x": 1319,
+        "y": 1750
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-k9-bb9-lyons",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      1.5,
+      2.5
+    ],
+    "targetPlayer": "Ted Lyons",
+    "targetX": 2.3,
+    "targetY": 2.4,
+    "referencePlayers": [
+      {
+        "name": "Christy Mathewson",
+        "x": 4.7,
+        "y": 1.6
+      },
+      {
+        "name": "Greg Maddux",
+        "x": 6.1,
+        "y": 1.8
+      },
+      {
+        "name": "Mariano Rivera",
+        "x": 8.2,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-so-era-gibson",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      500,
+      4500
+    ],
+    "yDomain": [
+      2.75,
+      4.75
+    ],
+    "targetPlayer": "Bob Gibson",
+    "targetX": 3117,
+    "targetY": 2.91,
+    "referencePlayers": [
+      {
+        "name": "Ted Lyons",
+        "x": 1073,
+        "y": 3.67
+      },
+      {
+        "name": "Robin Roberts",
+        "x": 2357,
+        "y": 3.41
+      },
+      {
+        "name": "Chuck Finley",
+        "x": 2610,
+        "y": 3.85
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-wagner",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Billy Wagner",
+    "targetX": 422,
+    "targetY": 2.31,
+    "referencePlayers": [
+      {
+        "name": "Doug Jones",
+        "x": 303,
+        "y": 3.3
+      },
+      {
+        "name": "Rollie Fingers",
+        "x": 341,
+        "y": 2.9
+      },
+      {
+        "name": "Jeff Reardon",
+        "x": 367,
+        "y": 3.16
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-blackwell",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.05,
+      1.45
+    ],
+    "yDomain": [
+      500,
+      4500
+    ],
+    "targetPlayer": "Ewell Blackwell",
+    "targetX": 1.3,
+    "targetY": 839,
+    "referencePlayers": [
+      {
+        "name": "Sandy Koufax",
+        "x": 1.11,
+        "y": 2396
+      },
+      {
+        "name": "Jerry Koosman",
+        "x": 1.26,
+        "y": 2556
+      },
+      {
+        "name": "Tommy John",
+        "x": 1.28,
+        "y": 2245
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rushypg-td-barber-2003",
+    "league": "NFL",
+    "xLabel": "Rushing yards per game (season)",
+    "xUnit": "YPG",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Tiki Barber, 2003",
+    "targetX": 75.9,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Warrick Dunn, 2002",
+        "x": 61.8,
+        "y": 7
+      },
+      {
+        "name": "Marshall Faulk, 2002",
+        "x": 68.1,
+        "y": 8
+      },
+      {
+        "name": "Arian Foster, 2011",
+        "x": 94.2,
+        "y": 10
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-sb-hr-aparicio",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Luis Aparicio",
+    "targetX": 506,
+    "targetY": 83,
+    "referencePlayers": [
+      {
+        "name": "Vern Stephens",
+        "x": 25,
+        "y": 247
+      },
+      {
+        "name": "Bernie Williams",
+        "x": 147,
+        "y": 287
+      },
+      {
+        "name": "Alfonso Soriano",
+        "x": 289,
+        "y": 412
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-3b-hr-boudreau",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      200
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Lou Boudreau",
+    "targetX": 66,
+    "targetY": 68,
+    "referencePlayers": [
+      {
+        "name": "Alfonso Soriano",
+        "x": 31,
+        "y": 412
+      },
+      {
+        "name": "Joe Gordon",
+        "x": 52,
+        "y": 253
+      },
+      {
+        "name": "Ichiro Suzuki",
+        "x": 96,
+        "y": 117
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-vaughan",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      0.26,
+      0.34
+    ],
+    "targetPlayer": "Arky Vaughan",
+    "targetX": 276,
+    "targetY": 0.318,
+    "referencePlayers": [
+      {
+        "name": "Johnny Mize",
+        "x": 524,
+        "y": 0.312
+      },
+      {
+        "name": "Ernie Banks",
+        "x": 1236,
+        "y": 0.274
+      },
+      {
+        "name": "Willie Stargell",
+        "x": 1936,
+        "y": 0.282
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-kell",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0.27,
+      0.31
+    ],
+    "targetPlayer": "George Kell",
+    "targetX": 287,
+    "targetY": 0.306,
+    "referencePlayers": [
+      {
+        "name": "Bobby Doerr",
+        "x": 608,
+        "y": 0.288
+      },
+      {
+        "name": "Ron Santo",
+        "x": 1343,
+        "y": 0.277
+      },
+      {
+        "name": "Barry Bonds",
+        "x": 1539,
+        "y": 0.298
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-h-bb-giambi",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1750,
+      3750
+    ],
+    "yDomain": [
+      500,
+      1500
+    ],
+    "targetPlayer": "Jason Giambi",
+    "targetX": 2010,
+    "targetY": 1366,
+    "referencePlayers": [
+      {
+        "name": "Yogi Berra",
+        "x": 2150,
+        "y": 704
+      },
+      {
+        "name": "Paul Konerko",
+        "x": 2340,
+        "y": 921
+      },
+      {
+        "name": "George Brett",
+        "x": 3154,
+        "y": 1096
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-hr-sandberg",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Ryne Sandberg",
+    "targetX": 344,
+    "targetY": 282,
+    "referencePlayers": [
+      {
+        "name": "Carlos Delgado",
+        "x": 14,
+        "y": 473
+      },
+      {
+        "name": "Eddie Murray",
+        "x": 110,
+        "y": 504
+      },
+      {
+        "name": "Reggie Jackson",
+        "x": 228,
+        "y": 563
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-konerko",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      625,
+      1625
+    ],
+    "targetPlayer": "Paul Konerko",
+    "targetX": 9,
+    "targetY": 1412,
+    "referencePlayers": [
+      {
+        "name": "Rick Ferrell",
+        "x": 29,
+        "y": 734
+      },
+      {
+        "name": "Gil Hodges",
+        "x": 63,
+        "y": 1274
+      },
+      {
+        "name": "Alan Trammell",
+        "x": 236,
+        "y": 1003
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nfl-rushtd-rectd-lynch-2007",
+    "league": "NFL",
+    "xLabel": "Rushing touchdowns (season)",
+    "xUnit": "TDs",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Marshawn Lynch, 2007",
+    "targetX": 7,
+    "targetY": 0,
+    "referencePlayers": [
+      {
+        "name": "Frank Gore, 2016",
+        "x": 4,
+        "y": 4
+      },
+      {
+        "name": "James White, 2018",
+        "x": 5,
+        "y": 7
+      },
+      {
+        "name": "Ahman Green, 2003",
+        "x": 15,
+        "y": 5
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-3b-hr-slaughter",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      200
+    ],
+    "yDomain": [
+      100,
+      500
+    ],
+    "targetPlayer": "Enos Slaughter",
+    "targetX": 148,
+    "targetY": 169,
+    "referencePlayers": [
+      {
+        "name": "Gary Carter",
+        "x": 31,
+        "y": 324
+      },
+      {
+        "name": "Joe Gordon",
+        "x": 52,
+        "y": 253
+      },
+      {
+        "name": "Jim Rice",
+        "x": 79,
+        "y": 382
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-hr-gonzalez",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      150,
+      550
+    ],
+    "targetPlayer": "Juan Gonzalez",
+    "targetX": 457,
+    "targetY": 434,
+    "referencePlayers": [
+      {
+        "name": "Joe Torre",
+        "x": 779,
+        "y": 252
+      },
+      {
+        "name": "Gil Hodges",
+        "x": 943,
+        "y": 370
+      },
+      {
+        "name": "Charlie Gehringer",
+        "x": 1186,
+        "y": 184
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-as-hr-beltre",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      150,
+      550
+    ],
+    "targetPlayer": "Adrian Beltre",
+    "targetX": 4,
+    "targetY": 477,
+    "referencePlayers": [
+      {
+        "name": "Harold Baines",
+        "x": 6,
+        "y": 384
+      },
+      {
+        "name": "Kirby Puckett",
+        "x": 10,
+        "y": 207
+      },
+      {
+        "name": "Cal Ripken",
+        "x": 19,
+        "y": 431
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-hr-torre",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Joe Torre",
+    "targetX": 23,
+    "targetY": 252,
+    "referencePlayers": [
+      {
+        "name": "George Kell",
+        "x": 51,
+        "y": 78
+      },
+      {
+        "name": "Darrell Evans",
+        "x": 98,
+        "y": 414
+      },
+      {
+        "name": "Alan Trammell",
+        "x": 236,
+        "y": 185
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-hr-howard",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      0,
+      400
+    ],
+    "targetPlayer": "Elston Howard",
+    "targetX": 373,
+    "targetY": 167,
+    "referencePlayers": [
+      {
+        "name": "Bill Dickey",
+        "x": 678,
+        "y": 202
+      },
+      {
+        "name": "Rick Ferrell",
+        "x": 931,
+        "y": 28
+      },
+      {
+        "name": "Ty Cobb",
+        "x": 1249,
+        "y": 117
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-whip-so-newhouser",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.15,
+      1.35
+    ],
+    "yDomain": [
+      1000,
+      9000
+    ],
+    "targetPlayer": "Hal Newhouser",
+    "targetX": 1.31,
+    "targetY": 1796,
+    "referencePlayers": [
+      {
+        "name": "Roger Clemens",
+        "x": 1.17,
+        "y": 4672
+      },
+      {
+        "name": "Warren Spahn",
+        "x": 1.19,
+        "y": 2583
+      },
+      {
+        "name": "Lefty Grove",
+        "x": 1.28,
+        "y": 2266
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-bridges",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.1,
+      1.5
+    ],
+    "yDomain": [
+      1000,
+      9000
+    ],
+    "targetPlayer": "Tommy Bridges",
+    "targetX": 1.37,
+    "targetY": 1674,
+    "referencePlayers": [
+      {
+        "name": "Randy Johnson",
+        "x": 1.17,
+        "y": 4875
+      },
+      {
+        "name": "Kevin Brown",
+        "x": 1.22,
+        "y": 2397
+      },
+      {
+        "name": "Fernando Valenzuela",
+        "x": 1.32,
+        "y": 2074
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-ypc-rushyds-wilson-2014",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      825,
+      1025
+    ],
+    "targetPlayer": "Russell Wilson, 2014",
+    "targetX": 7.2,
+    "targetY": 849,
+    "referencePlayers": [
+      {
+        "name": "Warrick Dunn, 2002",
+        "x": 4,
+        "y": 927
+      },
+      {
+        "name": "Marshall Faulk, 2002",
+        "x": 4.5,
+        "y": 953
+      },
+      {
+        "name": "DeMarco Murray, 2011",
+        "x": 5.5,
+        "y": 897
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-so-avg-lombardi",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      0.28,
+      0.32
+    ],
+    "targetPlayer": "Ernie Lombardi",
+    "targetX": 262,
+    "targetY": 0.306,
+    "referencePlayers": [
+      {
+        "name": "Vern Stephens",
+        "x": 685,
+        "y": 0.286
+      },
+      {
+        "name": "Pete Rose",
+        "x": 1143,
+        "y": 0.303
+      },
+      {
+        "name": "Fred McGriff",
+        "x": 1882,
+        "y": 0.284
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-h-bb-hodges",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1750,
+      3750
+    ],
+    "yDomain": [
+      500,
+      1300
+    ],
+    "targetPlayer": "Gil Hodges",
+    "targetX": 1921,
+    "targetY": 943,
+    "referencePlayers": [
+      {
+        "name": "Gary Carter",
+        "x": 2092,
+        "y": 848
+      },
+      {
+        "name": "Ryne Sandberg",
+        "x": 2386,
+        "y": 761
+      },
+      {
+        "name": "Al Simmons",
+        "x": 2927,
+        "y": 615
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-avg-hr-mize",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.27,
+      0.35
+    ],
+    "yDomain": [
+      300,
+      1100
+    ],
+    "targetPlayer": "Johnny Mize",
+    "targetX": 0.312,
+    "targetY": 359,
+    "referencePlayers": [
+      {
+        "name": "Jim Thome",
+        "x": 0.276,
+        "y": 612
+      },
+      {
+        "name": "Dave Winfield",
+        "x": 0.283,
+        "y": 465
+      },
+      {
+        "name": "Hank Aaron",
+        "x": 0.305,
+        "y": 755
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-k9-bb9-ruffing",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      2.375,
+      3.375
+    ],
+    "targetPlayer": "Red Ruffing",
+    "targetX": 4.1,
+    "targetY": 3.2,
+    "referencePlayers": [
+      {
+        "name": "Catfish Hunter",
+        "x": 5.2,
+        "y": 2.5
+      },
+      {
+        "name": "Tom Seaver",
+        "x": 6.8,
+        "y": 2.6
+      },
+      {
+        "name": "Bob Gibson",
+        "x": 7.2,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-ypr-recyds-smith-2002",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "YPC",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      10,
+      18
+    ],
+    "yDomain": [
+      800,
+      1600
+    ],
+    "targetPlayer": "Steve Smith, 2002",
+    "targetX": 16.1,
+    "targetY": 872,
+    "referencePlayers": [
+      {
+        "name": "Chris Godwin, 2021",
+        "x": 11.3,
+        "y": 1103
+      },
+      {
+        "name": "Hines Ward, 2008",
+        "x": 12.8,
+        "y": 1047
+      },
+      {
+        "name": "Chad Johnson, 2005",
+        "x": 14.8,
+        "y": 1432
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-cg-so-hubbell",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1500,
+      3500
+    ],
+    "targetPlayer": "Carl Hubbell",
+    "targetX": 260,
+    "targetY": 1677,
+    "referencePlayers": [
+      {
+        "name": "Andy Pettitte",
+        "x": 26,
+        "y": 2448
+      },
+      {
+        "name": "Vida Blue",
+        "x": 143,
+        "y": 2175
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 195,
+        "y": 2832
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-so-era-bunning",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1500,
+      3500
+    ],
+    "yDomain": [
+      3.2,
+      4
+    ],
+    "targetPlayer": "Jim Bunning",
+    "targetX": 2855,
+    "targetY": 3.27,
+    "referencePlayers": [
+      {
+        "name": "Tommy Bridges",
+        "x": 1674,
+        "y": 3.57
+      },
+      {
+        "name": "Tommy John",
+        "x": 2245,
+        "y": 3.34
+      },
+      {
+        "name": "Tom Glavine",
+        "x": 2607,
+        "y": 3.54
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-ip-so-kaat",
+    "league": "MLB",
+    "xLabel": "Career innings pitched",
+    "xUnit": "IP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      2500,
+      6500
+    ],
+    "yDomain": [
+      2400,
+      3200
+    ],
+    "targetPlayer": "Jim Kaat",
+    "targetX": 4530.3,
+    "targetY": 2461,
+    "referencePlayers": [
+      {
+        "name": "A. J. Burnett",
+        "x": 2731.3,
+        "y": 2513
+      },
+      {
+        "name": "Don Drysdale",
+        "x": 3432,
+        "y": 2486
+      },
+      {
+        "name": "Frank Tanana",
+        "x": 4188.3,
+        "y": 2773
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-smith",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      250,
+      650
+    ],
+    "yDomain": [
+      2.75,
+      4.75
+    ],
+    "targetPlayer": "Lee Smith",
+    "targetX": 478,
+    "targetY": 3.03,
+    "referencePlayers": [
+      {
+        "name": "Doug Jones",
+        "x": 303,
+        "y": 3.3
+      },
+      {
+        "name": "Fernando Rodney",
+        "x": 327,
+        "y": 3.8
+      },
+      {
+        "name": "Troy Percival",
+        "x": 358,
+        "y": 3.17
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-cg-so-moyer",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      500,
+      4500
+    ],
+    "targetPlayer": "Jamie Moyer",
+    "targetX": 33,
+    "targetY": 2441,
+    "referencePlayers": [
+      {
+        "name": "Jose Mesa",
+        "x": 6,
+        "y": 1038
+      },
+      {
+        "name": "Ewell Blackwell",
+        "x": 69,
+        "y": 839
+      },
+      {
+        "name": "Paul Derringer",
+        "x": 251,
+        "y": 1507
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-h-bb-ferrell",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1500,
+      3500
+    ],
+    "yDomain": [
+      500,
+      1300
+    ],
+    "targetPlayer": "Rick Ferrell",
+    "targetX": 1692,
+    "targetY": 931,
+    "referencePlayers": [
+      {
+        "name": "Mike Piazza",
+        "x": 2127,
+        "y": 759
+      },
+      {
+        "name": "Ted Simmons",
+        "x": 2472,
+        "y": 855
+      },
+      {
+        "name": "Andre Dawson",
+        "x": 2774,
+        "y": 589
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-3b-hr-johnson",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      200
+    ],
+    "yDomain": [
+      200,
+      1000
+    ],
+    "targetPlayer": "Bob Johnson",
+    "targetX": 95,
+    "targetY": 288,
+    "referencePlayers": [
+      {
+        "name": "Jim Thome",
+        "x": 26,
+        "y": 612
+      },
+      {
+        "name": "Mel Ott",
+        "x": 72,
+        "y": 511
+      },
+      {
+        "name": "Johnny Mize",
+        "x": 83,
+        "y": 359
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sv-era-rodriguez",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      2.5,
+      4.5
+    ],
+    "targetPlayer": "Francisco Rodriguez",
+    "targetX": 437,
+    "targetY": 2.86,
+    "referencePlayers": [
+      {
+        "name": "Rich Gossage",
+        "x": 310,
+        "y": 3.01
+      },
+      {
+        "name": "Fernando Rodney",
+        "x": 327,
+        "y": 3.8
+      },
+      {
+        "name": "Dennis Eckersley",
+        "x": 390,
+        "y": 3.5
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-3b-hr-waner",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Paul Waner",
+    "targetX": 191,
+    "targetY": 113,
+    "referencePlayers": [
+      {
+        "name": "Mike Piazza",
+        "x": 8,
+        "y": 427
+      },
+      {
+        "name": "Yogi Berra",
+        "x": 49,
+        "y": 358
+      },
+      {
+        "name": "Paul Molitor",
+        "x": 114,
+        "y": 234
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sv-era-montgomery",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      2.8,
+      3.6
+    ],
+    "targetPlayer": "Jeff Montgomery",
+    "targetX": 304,
+    "targetY": 3.27,
+    "referencePlayers": [
+      {
+        "name": "Rich Gossage",
+        "x": 310,
+        "y": 3.01
+      },
+      {
+        "name": "Huston Street",
+        "x": 324,
+        "y": 2.95
+      },
+      {
+        "name": "Joe Nathan",
+        "x": 377,
+        "y": 2.87
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-rivera",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      200,
+      1000
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Mariano Rivera",
+    "targetX": 652,
+    "targetY": 2.21,
+    "referencePlayers": [
+      {
+        "name": "Rick Aguilera",
+        "x": 318,
+        "y": 3.57
+      },
+      {
+        "name": "Troy Percival",
+        "x": 358,
+        "y": 3.17
+      },
+      {
+        "name": "Trevor Hoffman",
+        "x": 601,
+        "y": 2.87
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-w-era-aguilera",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      50,
+      450
+    ],
+    "yDomain": [
+      2.5,
+      4.5
+    ],
+    "targetPlayer": "Rick Aguilera",
+    "targetX": 86,
+    "targetY": 3.57,
+    "referencePlayers": [
+      {
+        "name": "Rollie Fingers",
+        "x": 114,
+        "y": 2.9
+      },
+      {
+        "name": "Whitey Ford",
+        "x": 236,
+        "y": 2.75
+      },
+      {
+        "name": "Robin Roberts",
+        "x": 286,
+        "y": 3.41
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-so-avg-gehringer",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0.2375,
+      0.3375
+    ],
+    "targetPlayer": "Charlie Gehringer",
+    "targetX": 372,
+    "targetY": 0.32,
+    "referencePlayers": [
+      {
+        "name": "Ted Simmons",
+        "x": 694,
+        "y": 0.285
+      },
+      {
+        "name": "Dave Concepcion",
+        "x": 1186,
+        "y": 0.267
+      },
+      {
+        "name": "Andruw Jones",
+        "x": 1748,
+        "y": 0.254
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-hr-vizquel",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Omar Vizquel",
+    "targetX": 404,
+    "targetY": 80,
+    "referencePlayers": [
+      {
+        "name": "Jim Thome",
+        "x": 19,
+        "y": 612
+      },
+      {
+        "name": "Al Simmons",
+        "x": 88,
+        "y": 307
+      },
+      {
+        "name": "Charlie Gehringer",
+        "x": 181,
+        "y": 184
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-simmons",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Ted Simmons",
+    "targetX": 21,
+    "targetY": 1389,
+    "referencePlayers": [
+      {
+        "name": "Bobby Doerr",
+        "x": 54,
+        "y": 1247
+      },
+      {
+        "name": "Al Simmons",
+        "x": 88,
+        "y": 1827
+      },
+      {
+        "name": "Rod Carew",
+        "x": 353,
+        "y": 1015
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-cg-so-derringer",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1250,
+      3250
+    ],
+    "targetPlayer": "Paul Derringer",
+    "targetX": 251,
+    "targetY": 1507,
+    "referencePlayers": [
+      {
+        "name": "Felix Hernandez",
+        "x": 25,
+        "y": 2524
+      },
+      {
+        "name": "Kevin Brown",
+        "x": 72,
+        "y": 2397
+      },
+      {
+        "name": "Jim Palmer",
+        "x": 211,
+        "y": 2212
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-so-era-sutton",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1000,
+      5000
+    ],
+    "yDomain": [
+      3.125,
+      4.125
+    ],
+    "targetPlayer": "Don Sutton",
+    "targetX": 3574,
+    "targetY": 3.26,
+    "referencePlayers": [
+      {
+        "name": "Dave Stieb",
+        "x": 1669,
+        "y": 3.44
+      },
+      {
+        "name": "Andy Pettitte",
+        "x": 2448,
+        "y": 3.85
+      },
+      {
+        "name": "Tom Glavine",
+        "x": 2607,
+        "y": 3.54
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-airyds-yac-marshall-2007",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Brandon Marshall, 2007",
+    "targetX": 766,
+    "targetY": 562,
+    "referencePlayers": [
+      {
+        "name": "Tony Gonzalez, 2007",
+        "x": 876,
+        "y": 296
+      },
+      {
+        "name": "Ja'Marr Chase, 2022",
+        "x": 1220,
+        "y": 421
+      },
+      {
+        "name": "DK Metcalf, 2022",
+        "x": 1581,
+        "y": 216
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushyds-recyds-lynch-2012",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Marshawn Lynch, 2012",
+    "targetX": 1590,
+    "targetY": 196,
+    "referencePlayers": [
+      {
+        "name": "Matt Forte, 2016",
+        "x": 813,
+        "y": 263
+      },
+      {
+        "name": "Rhamondre Stevenson, 2022",
+        "x": 1040,
+        "y": 421
+      },
+      {
+        "name": "Arian Foster, 2011",
+        "x": 1224,
+        "y": 617
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-g-hr-evans",
+    "league": "MLB",
+    "xLabel": "Career games played",
+    "xUnit": "G",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1875,
+      2875
+    ],
+    "yDomain": [
+      350,
+      750
+    ],
+    "targetPlayer": "Darrell Evans",
+    "targetX": 2687,
+    "targetY": 414,
+    "referencePlayers": [
+      {
+        "name": "Adam Dunn",
+        "x": 2001,
+        "y": 462
+      },
+      {
+        "name": "Fred McGriff",
+        "x": 2460,
+        "y": 493
+      },
+      {
+        "name": "Jim Thome",
+        "x": 2543,
+        "y": 612
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-g-hr-crandall",
+    "league": "MLB",
+    "xLabel": "Career games played",
+    "xUnit": "G",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1250,
+      3250
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Del Crandall",
+    "targetX": 1573,
+    "targetY": 179,
+    "referencePlayers": [
+      {
+        "name": "George Kell",
+        "x": 1795,
+        "y": 78
+      },
+      {
+        "name": "Johnny Bench",
+        "x": 2158,
+        "y": 389
+      },
+      {
+        "name": "Ozzie Smith",
+        "x": 2573,
+        "y": 28
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-beltran",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0.26,
+      0.34
+    ],
+    "targetPlayer": "Carlos Beltran",
+    "targetX": 1795,
+    "targetY": 0.279,
+    "referencePlayers": [
+      {
+        "name": "George Kell",
+        "x": 287,
+        "y": 0.306
+      },
+      {
+        "name": "Roberto Alomar",
+        "x": 1140,
+        "y": 0.3
+      },
+      {
+        "name": "Willie McCovey",
+        "x": 1550,
+        "y": 0.27
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-era-perry",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      500,
+      4500
+    ],
+    "yDomain": [
+      3,
+      4
+    ],
+    "targetPlayer": "Gaylord Perry",
+    "targetX": 3534,
+    "targetY": 3.11,
+    "referencePlayers": [
+      {
+        "name": "Ewell Blackwell",
+        "x": 839,
+        "y": 3.3
+      },
+      {
+        "name": "Red Ruffing",
+        "x": 1987,
+        "y": 3.8
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 2832,
+        "y": 3.44
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-w-era-isringhausen",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      2.875,
+      3.875
+    ],
+    "targetPlayer": "Jason Isringhausen",
+    "targetX": 51,
+    "targetY": 3.64,
+    "referencePlayers": [
+      {
+        "name": "Rich Gossage",
+        "x": 124,
+        "y": 3.01
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 217,
+        "y": 3.44
+      },
+      {
+        "name": "Don Sutton",
+        "x": 324,
+        "y": 3.26
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-marichal",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.05,
+      1.45
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Juan Marichal",
+    "targetX": 1.1,
+    "targetY": 2303,
+    "referencePlayers": [
+      {
+        "name": "Roy Halladay",
+        "x": 1.18,
+        "y": 2117
+      },
+      {
+        "name": "Orel Hershiser",
+        "x": 1.26,
+        "y": 2014
+      },
+      {
+        "name": "Ted Lyons",
+        "x": 1.35,
+        "y": 1073
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-comp-passtd-mcnabb-2004",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      20,
+      40
+    ],
+    "targetPlayer": "Donovan McNabb, 2004",
+    "targetX": 300,
+    "targetY": 31,
+    "referencePlayers": [
+      {
+        "name": "Joe Flacco, 2012",
+        "x": 317,
+        "y": 22
+      },
+      {
+        "name": "Brett Favre, 2007",
+        "x": 356,
+        "y": 28
+      },
+      {
+        "name": "Matthew Stafford, 2016",
+        "x": 388,
+        "y": 24
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-cutler-2008",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      20,
+      40
+    ],
+    "targetPlayer": "Jay Cutler, 2008",
+    "targetX": 18,
+    "targetY": 25,
+    "referencePlayers": [
+      {
+        "name": "Tom Brady, 2010",
+        "x": 4,
+        "y": 36
+      },
+      {
+        "name": "Drew Brees, 2006",
+        "x": 11,
+        "y": 26
+      },
+      {
+        "name": "Matt Ryan, 2014",
+        "x": 14,
+        "y": 28
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-comp-passtd-wilson-2015",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      300,
+      500
+    ],
+    "yDomain": [
+      25,
+      45
+    ],
+    "targetPlayer": "Russell Wilson, 2015",
+    "targetX": 329,
+    "targetY": 34,
+    "referencePlayers": [
+      {
+        "name": "Patrick Mahomes, 2019",
+        "x": 319,
+        "y": 26
+      },
+      {
+        "name": "Brett Favre, 2004",
+        "x": 346,
+        "y": 30
+      },
+      {
+        "name": "Peyton Manning, 2002",
+        "x": 392,
+        "y": 27
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-so-avg-dickey",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0.25,
+      0.33
+    ],
+    "targetPlayer": "Bill Dickey",
+    "targetX": 289,
+    "targetY": 0.313,
+    "referencePlayers": [
+      {
+        "name": "Ozzie Smith",
+        "x": 589,
+        "y": 0.262
+      },
+      {
+        "name": "Tim Raines",
+        "x": 966,
+        "y": 0.294
+      },
+      {
+        "name": "Carlos Delgado",
+        "x": 1745,
+        "y": 0.28
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-delgado",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      0.27,
+      0.35
+    ],
+    "targetPlayer": "Carlos Delgado",
+    "targetX": 1745,
+    "targetY": 0.28,
+    "referencePlayers": [
+      {
+        "name": "Billy Herman",
+        "x": 428,
+        "y": 0.304
+      },
+      {
+        "name": "Roberto Clemente",
+        "x": 1230,
+        "y": 0.317
+      },
+      {
+        "name": "Jeff Kent",
+        "x": 1522,
+        "y": 0.29
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-avg-mccormick",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0.25,
+      0.33
+    ],
+    "targetPlayer": "Frank McCormick",
+    "targetX": 189,
+    "targetY": 0.299,
+    "referencePlayers": [
+      {
+        "name": "Bill Freehan",
+        "x": 753,
+        "y": 0.262
+      },
+      {
+        "name": "Tim Raines",
+        "x": 966,
+        "y": 0.294
+      },
+      {
+        "name": "Craig Biggio",
+        "x": 1753,
+        "y": 0.281
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-avg-hr-kuenn",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.275,
+      0.315
+    ],
+    "yDomain": [
+      0,
+      1000
+    ],
+    "targetPlayer": "Harvey Kuenn",
+    "targetX": 0.303,
+    "targetY": 87,
+    "referencePlayers": [
+      {
+        "name": "Rickey Henderson",
+        "x": 0.279,
+        "y": 297
+      },
+      {
+        "name": "Bobby Doerr",
+        "x": 0.288,
+        "y": 223
+      },
+      {
+        "name": "Barry Bonds",
+        "x": 0.298,
+        "y": 762
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nfl-airyds-yac-smith-2006",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      380,
+      460
+    ],
+    "targetPlayer": "Steve Smith, 2006",
+    "targetX": 726,
+    "targetY": 440,
+    "referencePlayers": [
+      {
+        "name": "Jason Witten, 2010",
+        "x": 905,
+        "y": 393
+      },
+      {
+        "name": "A.J. Brown, 2020",
+        "x": 1150,
+        "y": 432
+      },
+      {
+        "name": "Randy Moss, 2009",
+        "x": 1934,
+        "y": 413
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-comp-passtd-goff-2019",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      300,
+      500
+    ],
+    "yDomain": [
+      20,
+      40
+    ],
+    "targetPlayer": "Jared Goff, 2019",
+    "targetX": 394,
+    "targetY": 22,
+    "referencePlayers": [
+      {
+        "name": "Matt Hasselbeck, 2003",
+        "x": 313,
+        "y": 26
+      },
+      {
+        "name": "Jalen Hurts, 2023",
+        "x": 352,
+        "y": 23
+      },
+      {
+        "name": "Tom Brady, 2017",
+        "x": 385,
+        "y": 32
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-avg-hr-frisch",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.27,
+      0.35
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Frankie Frisch",
+    "targetX": 0.316,
+    "targetY": 105,
+    "referencePlayers": [
+      {
+        "name": "Jason Giambi",
+        "x": 0.277,
+        "y": 440
+      },
+      {
+        "name": "Bernie Williams",
+        "x": 0.297,
+        "y": 287
+      },
+      {
+        "name": "Ernie Lombardi",
+        "x": 0.306,
+        "y": 190
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-hr-santo",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      300,
+      700
+    ],
+    "targetPlayer": "Ron Santo",
+    "targetX": 1108,
+    "targetY": 342,
+    "referencePlayers": [
+      {
+        "name": "Alfonso Soriano",
+        "x": 496,
+        "y": 412
+      },
+      {
+        "name": "Adrian Beltre",
+        "x": 848,
+        "y": 477
+      },
+      {
+        "name": "Mark McGwire",
+        "x": 1317,
+        "y": 583
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-2b-hr-piazza",
+    "league": "MLB",
+    "xLabel": "Career doubles",
+    "xUnit": "2B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      300,
+      700
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Mike Piazza",
+    "targetX": 344,
+    "targetY": 427,
+    "referencePlayers": [
+      {
+        "name": "Jim Rice",
+        "x": 373,
+        "y": 382
+      },
+      {
+        "name": "Roberto Clemente",
+        "x": 440,
+        "y": 240
+      },
+      {
+        "name": "Derek Jeter",
+        "x": 544,
+        "y": 260
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-so-soriano",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career strikeouts",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Alfonso Soriano",
+    "targetX": 496,
+    "targetY": 1803,
+    "referencePlayers": [
+      {
+        "name": "Lance Parrish",
+        "x": 612,
+        "y": 1527
+      },
+      {
+        "name": "Alan Trammell",
+        "x": 850,
+        "y": 874
+      },
+      {
+        "name": "Tim Raines",
+        "x": 1330,
+        "y": 966
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-r-sb-lynn",
+    "league": "MLB",
+    "xLabel": "Career runs scored",
+    "xUnit": "R",
+    "yLabel": "Career stolen bases",
+    "yUnit": "SB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1000,
+      1800
+    ],
+    "yDomain": [
+      0,
+      200
+    ],
+    "targetPlayer": "Fred Lynn",
+    "targetX": 1063,
+    "targetY": 72,
+    "referencePlayers": [
+      {
+        "name": "Gil Hodges",
+        "x": 1105,
+        "y": 63
+      },
+      {
+        "name": "Carlton Fisk",
+        "x": 1276,
+        "y": 128
+      },
+      {
+        "name": "Wade Boggs",
+        "x": 1513,
+        "y": 24
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-w-era-mcdowell",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      100,
+      500
+    ],
+    "yDomain": [
+      2.875,
+      3.875
+    ],
+    "targetPlayer": "Sam McDowell",
+    "targetX": 141,
+    "targetY": 3.17,
+    "referencePlayers": [
+      {
+        "name": "Tommy Bridges",
+        "x": 194,
+        "y": 3.57
+      },
+      {
+        "name": "Don Drysdale",
+        "x": 209,
+        "y": 2.95
+      },
+      {
+        "name": "Gaylord Perry",
+        "x": 314,
+        "y": 3.11
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-cg-so-mussina",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      0,
+      4000
+    ],
+    "targetPlayer": "Mike Mussina",
+    "targetX": 57,
+    "targetY": 2813,
+    "referencePlayers": [
+      {
+        "name": "Rollie Fingers",
+        "x": 4,
+        "y": 1299
+      },
+      {
+        "name": "Babe Ruth",
+        "x": 107,
+        "y": 488
+      },
+      {
+        "name": "Billy Pierce",
+        "x": 193,
+        "y": 1999
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-carries-rushtd-green-2004",
+    "league": "NFL",
+    "xLabel": "Carries (season)",
+    "xUnit": "carries",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      175,
+      375
+    ],
+    "yDomain": [
+      5,
+      25
+    ],
+    "targetPlayer": "Ahman Green, 2004",
+    "targetX": 259,
+    "targetY": 7,
+    "referencePlayers": [
+      {
+        "name": "Priest Holmes, 2004",
+        "x": 196,
+        "y": 14
+      },
+      {
+        "name": "Christian McCaffrey, 2022",
+        "x": 244,
+        "y": 8
+      },
+      {
+        "name": "Jamal Lewis, 2007",
+        "x": 299,
+        "y": 9
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-hasselbeck-2009",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      5,
+      45
+    ],
+    "yDomain": [
+      16,
+      24
+    ],
+    "targetPlayer": "Matt Hasselbeck, 2009",
+    "targetX": 17,
+    "targetY": 17,
+    "referencePlayers": [
+      {
+        "name": "Donovan McNabb, 2009",
+        "x": 10,
+        "y": 22
+      },
+      {
+        "name": "Joe Flacco, 2009",
+        "x": 12,
+        "y": 21
+      },
+      {
+        "name": "Eli Manning, 2013",
+        "x": 27,
+        "y": 18
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-comp-passtd-ryan-2010",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      200,
+      600
+    ],
+    "yDomain": [
+      25,
+      45
+    ],
+    "targetPlayer": "Matt Ryan, 2010",
+    "targetX": 357,
+    "targetY": 28,
+    "referencePlayers": [
+      {
+        "name": "Lamar Jackson, 2019",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "name": "Russell Wilson, 2017",
+        "x": 339,
+        "y": 34
+      },
+      {
+        "name": "Drew Brees, 2015",
+        "x": 428,
+        "y": 32
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-avg-hr-mathews",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.26,
+      0.34
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Eddie Mathews",
+    "targetX": 0.271,
+    "targetY": 512,
+    "referencePlayers": [
+      {
+        "name": "Elston Howard",
+        "x": 0.274,
+        "y": 167
+      },
+      {
+        "name": "Jeff Kent",
+        "x": 0.29,
+        "y": 377
+      },
+      {
+        "name": "George Brett",
+        "x": 0.305,
+        "y": 317
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-g-hr-stephens",
+    "league": "MLB",
+    "xLabel": "Career games played",
+    "xUnit": "G",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1625,
+      2625
+    ],
+    "yDomain": [
+      100,
+      500
+    ],
+    "targetPlayer": "Vern Stephens",
+    "targetX": 1720,
+    "targetY": 247,
+    "referencePlayers": [
+      {
+        "name": "Kenny Lofton",
+        "x": 2103,
+        "y": 130
+      },
+      {
+        "name": "Ron Santo",
+        "x": 2243,
+        "y": 342
+      },
+      {
+        "name": "Tim Raines",
+        "x": 2502,
+        "y": 170
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-era-lemon",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1000,
+      3000
+    ],
+    "yDomain": [
+      2.5,
+      3.5
+    ],
+    "targetPlayer": "Bob Lemon",
+    "targetX": 1277,
+    "targetY": 3.23,
+    "referencePlayers": [
+      {
+        "name": "Hal Newhouser",
+        "x": 1796,
+        "y": 3.06
+      },
+      {
+        "name": "Juan Marichal",
+        "x": 2303,
+        "y": 2.89
+      },
+      {
+        "name": "Cy Young",
+        "x": 2803,
+        "y": 2.63
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-w-era-carlton",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      50,
+      450
+    ],
+    "yDomain": [
+      3.1,
+      3.9
+    ],
+    "targetPlayer": "Steve Carlton",
+    "targetX": 329,
+    "targetY": 3.22,
+    "referencePlayers": [
+      {
+        "name": "Rick Aguilera",
+        "x": 86,
+        "y": 3.57
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 217,
+        "y": 3.44
+      },
+      {
+        "name": "Fergie Jenkins",
+        "x": 284,
+        "y": 3.34
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-w-era-burnett",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      100,
+      500
+    ],
+    "yDomain": [
+      3,
+      5
+    ],
+    "targetPlayer": "A. J. Burnett",
+    "targetX": 164,
+    "targetY": 3.99,
+    "referencePlayers": [
+      {
+        "name": "Lefty Gomez",
+        "x": 189,
+        "y": 3.34
+      },
+      {
+        "name": "Vida Blue",
+        "x": 209,
+        "y": 3.27
+      },
+      {
+        "name": "Roger Clemens",
+        "x": 354,
+        "y": 3.12
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-cg-so-pettitte",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1000,
+      3000
+    ],
+    "targetPlayer": "Andy Pettitte",
+    "targetX": 26,
+    "targetY": 2448,
+    "referencePlayers": [
+      {
+        "name": "Mariano Rivera",
+        "x": 0,
+        "y": 1173
+      },
+      {
+        "name": "Whitey Ford",
+        "x": 156,
+        "y": 1956
+      },
+      {
+        "name": "Lefty Grove",
+        "x": 298,
+        "y": 2266
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-airyds-yac-mason-2009",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      750,
+      2750
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Derrick Mason, 2009",
+    "targetX": 1860,
+    "targetY": 260,
+    "referencePlayers": [
+      {
+        "name": "Travis Kelce, 2024",
+        "x": 883,
+        "y": 341
+      },
+      {
+        "name": "CeeDee Lamb, 2021",
+        "x": 1233,
+        "y": 441
+      },
+      {
+        "name": "DeSean Jackson, 2009",
+        "x": 1599,
+        "y": 404
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-airyds-rectd-ward-2006",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      2,
+      10
+    ],
+    "targetPlayer": "Hines Ward, 2006",
+    "targetX": 629,
+    "targetY": 6,
+    "referencePlayers": [
+      {
+        "name": "DeAndre Hopkins, 2024",
+        "x": 896,
+        "y": 5
+      },
+      {
+        "name": "Travis Kelce, 2017",
+        "x": 1186,
+        "y": 8
+      },
+      {
+        "name": "DeSean Jackson, 2017",
+        "x": 1444,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-rectd-sharpe-2003",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Shannon Sharpe, 2003",
+    "targetX": 62,
+    "targetY": 8,
+    "referencePlayers": [
+      {
+        "name": "DeSean Jackson, 2014",
+        "x": 56,
+        "y": 6
+      },
+      {
+        "name": "Wes Welker, 2006",
+        "x": 67,
+        "y": 1
+      },
+      {
+        "name": "George Kittle, 2018",
+        "x": 88,
+        "y": 5
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-fd-jefferson-2023",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      35,
+      55
+    ],
+    "targetPlayer": "Justin Jefferson, 2023",
+    "targetX": 68,
+    "targetY": 51,
+    "referencePlayers": [
+      {
+        "name": "Marvin Harrison, 2008",
+        "x": 60,
+        "y": 41
+      },
+      {
+        "name": "Odell Beckham, 2019",
+        "x": 75,
+        "y": 45
+      },
+      {
+        "name": "Julian Edelman, 2014",
+        "x": 92,
+        "y": 49
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-k9-bb9-wynn",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      4,
+      8
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Early Wynn",
+    "targetX": 4.6,
+    "targetY": 3.5,
+    "referencePlayers": [
+      {
+        "name": "Phil Niekro",
+        "x": 5.6,
+        "y": 3
+      },
+      {
+        "name": "Jim Bunning",
+        "x": 6.8,
+        "y": 2.4
+      },
+      {
+        "name": "Bruce Sutter",
+        "x": 7.4,
+        "y": 2.7
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-cg-so-walters",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      0,
+      8000
+    ],
+    "targetPlayer": "Bucky Walters",
+    "targetX": 242,
+    "targetY": 1107,
+    "referencePlayers": [
+      {
+        "name": "John Smoltz",
+        "x": 53,
+        "y": 3084
+      },
+      {
+        "name": "Randy Johnson",
+        "x": 100,
+        "y": 4875
+      },
+      {
+        "name": "Jim Palmer",
+        "x": 211,
+        "y": 2212
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-drysdale",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.1,
+      1.5
+    ],
+    "yDomain": [
+      1750,
+      3750
+    ],
+    "targetPlayer": "Don Drysdale",
+    "targetX": 1.15,
+    "targetY": 2486,
+    "referencePlayers": [
+      {
+        "name": "Jim Palmer",
+        "x": 1.18,
+        "y": 2212
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 1.23,
+        "y": 2832
+      },
+      {
+        "name": "Red Ruffing",
+        "x": 1.34,
+        "y": 1987
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-carries-rushtd-jones-2007",
+    "league": "NFL",
+    "xLabel": "Carries (season)",
+    "xUnit": "carries",
+    "yLabel": "Rushing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      450
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Thomas Jones, 2007",
+    "targetX": 310,
+    "targetY": 1,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch, 2009",
+        "x": 120,
+        "y": 2
+      },
+      {
+        "name": "Bijan Robinson, 2023",
+        "x": 214,
+        "y": 4
+      },
+      {
+        "name": "Chris Johnson, 2013",
+        "x": 279,
+        "y": 6
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-so-avg-kingman",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0.2,
+      0.4
+    ],
+    "targetPlayer": "Dave Kingman",
+    "targetX": 1816,
+    "targetY": 0.236,
+    "referencePlayers": [
+      {
+        "name": "Lou Gehrig",
+        "x": 790,
+        "y": 0.34
+      },
+      {
+        "name": "Billy Williams",
+        "x": 1046,
+        "y": 0.29
+      },
+      {
+        "name": "Andre Dawson",
+        "x": 1509,
+        "y": 0.279
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-avg-hr-herman",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.25,
+      0.33
+    ],
+    "yDomain": [
+      0,
+      400
+    ],
+    "targetPlayer": "Billy Herman",
+    "targetX": 0.304,
+    "targetY": 47,
+    "referencePlayers": [
+      {
+        "name": "Luis Aparicio",
+        "x": 0.262,
+        "y": 83
+      },
+      {
+        "name": "Ryne Sandberg",
+        "x": 0.285,
+        "y": 282
+      },
+      {
+        "name": "Enos Slaughter",
+        "x": 0.3,
+        "y": 169
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-2b-hr-medwick",
+    "league": "MLB",
+    "xLabel": "Career doubles",
+    "xUnit": "2B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      650
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Joe Medwick",
+    "targetX": 540,
+    "targetY": 205,
+    "referencePlayers": [
+      {
+        "name": "Yogi Berra",
+        "x": 321,
+        "y": 358
+      },
+      {
+        "name": "Bob Johnson",
+        "x": 396,
+        "y": 288
+      },
+      {
+        "name": "Babe Ruth",
+        "x": 506,
+        "y": 714
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-k9-bb9-colon",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      9
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Bartolo Colon",
+    "targetX": 6.6,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Lefty Gomez",
+        "x": 5.3,
+        "y": 3.9
+      },
+      {
+        "name": "Jack Morris",
+        "x": 5.8,
+        "y": 3.3
+      },
+      {
+        "name": "Todd Jones",
+        "x": 7.3,
+        "y": 3.7
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-papelbon",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Jonathan Papelbon",
+    "targetX": 368,
+    "targetY": 2.44,
+    "referencePlayers": [
+      {
+        "name": "Bruce Sutter",
+        "x": 300,
+        "y": 2.83
+      },
+      {
+        "name": "Randy Myers",
+        "x": 347,
+        "y": 3.19
+      },
+      {
+        "name": "John Franco",
+        "x": 424,
+        "y": 2.89
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-comp-passtd-carr-2019",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      15,
+      55
+    ],
+    "targetPlayer": "Derek Carr, 2019",
+    "targetX": 361,
+    "targetY": 21,
+    "referencePlayers": [
+      {
+        "name": "Jared Goff, 2017",
+        "x": 296,
+        "y": 28
+      },
+      {
+        "name": "Carson Palmer, 2015",
+        "x": 342,
+        "y": 35
+      },
+      {
+        "name": "Dak Prescott, 2019",
+        "x": 388,
+        "y": 30
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-so-avg-snider",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0.2945,
+      0.2985
+    ],
+    "targetPlayer": "Duke Snider",
+    "targetX": 1237,
+    "targetY": 0.295,
+    "referencePlayers": [
+      {
+        "name": "Bob Johnson",
+        "x": 851,
+        "y": 0.296
+      },
+      {
+        "name": "Al Kaline",
+        "x": 1020,
+        "y": 0.297
+      },
+      {
+        "name": "Mickey Mantle",
+        "x": 1710,
+        "y": 0.298
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-era-jenkins",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      500,
+      4500
+    ],
+    "yDomain": [
+      3,
+      5
+    ],
+    "targetPlayer": "Fergie Jenkins",
+    "targetX": 3192,
+    "targetY": 3.34,
+    "referencePlayers": [
+      {
+        "name": "Ted Lyons",
+        "x": 1073,
+        "y": 3.67
+      },
+      {
+        "name": "Jamie Moyer",
+        "x": 2441,
+        "y": 4.25
+      },
+      {
+        "name": "David Cone",
+        "x": 2668,
+        "y": 3.46
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-rodney",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      250,
+      650
+    ],
+    "yDomain": [
+      2.5,
+      4.5
+    ],
+    "targetPlayer": "Fernando Rodney",
+    "targetX": 327,
+    "targetY": 3.8,
+    "referencePlayers": [
+      {
+        "name": "Bruce Sutter",
+        "x": 300,
+        "y": 2.83
+      },
+      {
+        "name": "Troy Percival",
+        "x": 358,
+        "y": 3.17
+      },
+      {
+        "name": "Lee Smith",
+        "x": 478,
+        "y": 3.03
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-airyds-yac-holt-2009",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Torry Holt, 2009",
+    "targetX": 1275,
+    "targetY": 141,
+    "referencePlayers": [
+      {
+        "name": "Wes Welker, 2013",
+        "x": 829,
+        "y": 322
+      },
+      {
+        "name": "Andre Johnson, 2008",
+        "x": 1078,
+        "y": 497
+      },
+      {
+        "name": "Tyler Lockett, 2021",
+        "x": 1562,
+        "y": 277
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-airyds-rectd-marshall-2010",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      2,
+      10
+    ],
+    "targetPlayer": "Brandon Marshall, 2010",
+    "targetX": 1553,
+    "targetY": 3,
+    "referencePlayers": [
+      {
+        "name": "Julian Edelman, 2018",
+        "x": 831,
+        "y": 6
+      },
+      {
+        "name": "Stefon Diggs, 2017",
+        "x": 1075,
+        "y": 8
+      },
+      {
+        "name": "Chad Johnson, 2010",
+        "x": 1472,
+        "y": 4
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-rectd-adams-2016",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      250
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Davante Adams, 2016",
+    "targetX": 75,
+    "targetY": 12,
+    "referencePlayers": [
+      {
+        "name": "Derrick Mason, 2010",
+        "x": 61,
+        "y": 7
+      },
+      {
+        "name": "Chris Godwin, 2023",
+        "x": 83,
+        "y": 2
+      },
+      {
+        "name": "Marvin Harrison, 2002",
+        "x": 143,
+        "y": 11
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-g-hr-robinson",
+    "league": "MLB",
+    "xLabel": "Career games played",
+    "xUnit": "G",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1750,
+      3750
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Brooks Robinson",
+    "targetX": 2896,
+    "targetY": 268,
+    "referencePlayers": [
+      {
+        "name": "Gil Hodges",
+        "x": 2071,
+        "y": 370
+      },
+      {
+        "name": "Paul Konerko",
+        "x": 2349,
+        "y": 439
+      },
+      {
+        "name": "Willie McCovey",
+        "x": 2588,
+        "y": 521
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-alomar",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      1000,
+      1800
+    ],
+    "targetPlayer": "Roberto Alomar",
+    "targetX": 474,
+    "targetY": 1134,
+    "referencePlayers": [
+      {
+        "name": "Ernie Banks",
+        "x": 50,
+        "y": 1636
+      },
+      {
+        "name": "Bernie Williams",
+        "x": 147,
+        "y": 1257
+      },
+      {
+        "name": "Jeff Bagwell",
+        "x": 202,
+        "y": 1529
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-w-era-jones",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1.5,
+      5.5
+    ],
+    "targetPlayer": "Todd Jones",
+    "targetX": 58,
+    "targetY": 3.97,
+    "referencePlayers": [
+      {
+        "name": "Mariano Rivera",
+        "x": 82,
+        "y": 2.21
+      },
+      {
+        "name": "CC Sabathia",
+        "x": 251,
+        "y": 3.74
+      },
+      {
+        "name": "Jim Palmer",
+        "x": 268,
+        "y": 2.86
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-ypr-recyds-chase-2023",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "YPC",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      11,
+      19
+    ],
+    "yDomain": [
+      700,
+      1500
+    ],
+    "targetPlayer": "Ja'Marr Chase, 2023",
+    "targetX": 12.2,
+    "targetY": 1216,
+    "referencePlayers": [
+      {
+        "name": "Tony Gonzalez, 2007",
+        "x": 11.8,
+        "y": 1172
+      },
+      {
+        "name": "Derrick Mason, 2010",
+        "x": 13.1,
+        "y": 802
+      },
+      {
+        "name": "Calvin Johnson, 2009",
+        "x": 14.7,
+        "y": 984
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-w-era-ford",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      150,
+      350
+    ],
+    "yDomain": [
+      2.5,
+      4.5
+    ],
+    "targetPlayer": "Whitey Ford",
+    "targetX": 236,
+    "targetY": 2.75,
+    "referencePlayers": [
+      {
+        "name": "Fernando Valenzuela",
+        "x": 173,
+        "y": 3.54
+      },
+      {
+        "name": "Pedro Martinez",
+        "x": 219,
+        "y": 2.93
+      },
+      {
+        "name": "Fergie Jenkins",
+        "x": 284,
+        "y": 3.34
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-nathan",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      250,
+      650
+    ],
+    "yDomain": [
+      2.75,
+      3.75
+    ],
+    "targetPlayer": "Joe Nathan",
+    "targetX": 377,
+    "targetY": 2.87,
+    "referencePlayers": [
+      {
+        "name": "Jason Isringhausen",
+        "x": 300,
+        "y": 3.64
+      },
+      {
+        "name": "Huston Street",
+        "x": 324,
+        "y": 2.95
+      },
+      {
+        "name": "Lee Smith",
+        "x": 478,
+        "y": 3.03
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rec-recyds-wayne-2004",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      110
+    ],
+    "yDomain": [
+      900,
+      1300
+    ],
+    "targetPlayer": "Reggie Wayne, 2004",
+    "targetX": 77,
+    "targetY": 1210,
+    "referencePlayers": [
+      {
+        "name": "Hines Ward, 2004",
+        "x": 80,
+        "y": 1004
+      },
+      {
+        "name": "Andre Johnson, 2014",
+        "x": 85,
+        "y": 936
+      },
+      {
+        "name": "Tony Gonzalez, 2007",
+        "x": 99,
+        "y": 1172
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushyds-recyds-jones-2003",
+    "league": "NFL",
+    "xLabel": "Rushing yards (season)",
+    "xUnit": "yards",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      1500
+    ],
+    "yDomain": [
+      50,
+      450
+    ],
+    "targetPlayer": "Thomas Jones, 2003",
+    "targetX": 627,
+    "targetY": 180,
+    "referencePlayers": [
+      {
+        "name": "Isiah Pacheco, 2022",
+        "x": 830,
+        "y": 130
+      },
+      {
+        "name": "Emmitt Smith, 2002",
+        "x": 975,
+        "y": 89
+      },
+      {
+        "name": "Corey Dillon, 2002",
+        "x": 1311,
+        "y": 298
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypr-recyds-smith-2021",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "YPC",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      10,
+      18
+    ],
+    "yDomain": [
+      910,
+      990
+    ],
+    "targetPlayer": "DeVonta Smith, 2021",
+    "targetX": 14.3,
+    "targetY": 916,
+    "referencePlayers": [
+      {
+        "name": "Tim Brown, 2002",
+        "x": 11.5,
+        "y": 930
+      },
+      {
+        "name": "Reggie Wayne, 2011",
+        "x": 12.8,
+        "y": 960
+      },
+      {
+        "name": "Tyler Lockett, 2018",
+        "x": 16.9,
+        "y": 965
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-comp-passtd-flacco-2010",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Joe Flacco, 2010",
+    "targetX": 306,
+    "targetY": 25,
+    "referencePlayers": [
+      {
+        "name": "Andy Dalton, 2019",
+        "x": 314,
+        "y": 16
+      },
+      {
+        "name": "Dak Prescott, 2018",
+        "x": 356,
+        "y": 22
+      },
+      {
+        "name": "Eli Manning, 2015",
+        "x": 387,
+        "y": 35
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-sb-hr-reese",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Pee Wee Reese",
+    "targetX": 232,
+    "targetY": 126,
+    "referencePlayers": [
+      {
+        "name": "Del Crandall",
+        "x": 26,
+        "y": 179
+      },
+      {
+        "name": "Fred Lynn",
+        "x": 72,
+        "y": 306
+      },
+      {
+        "name": "Jeff Bagwell",
+        "x": 202,
+        "y": 449
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-so-foxx",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career strikeouts",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      1000,
+      3000
+    ],
+    "targetPlayer": "Jimmie Foxx",
+    "targetX": 1452,
+    "targetY": 1311,
+    "referencePlayers": [
+      {
+        "name": "Ivan Rodriguez",
+        "x": 513,
+        "y": 1474
+      },
+      {
+        "name": "Carlos Delgado",
+        "x": 1109,
+        "y": 1745
+      },
+      {
+        "name": "Adam Dunn",
+        "x": 1317,
+        "y": 2379
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-w-era-grove",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      2.875,
+      3.875
+    ],
+    "targetPlayer": "Lefty Grove",
+    "targetX": 300,
+    "targetY": 3.06,
+    "referencePlayers": [
+      {
+        "name": "Jeff Reardon",
+        "x": 73,
+        "y": 3.16
+      },
+      {
+        "name": "Roy Halladay",
+        "x": 203,
+        "y": 3.38
+      },
+      {
+        "name": "Mike Mussina",
+        "x": 270,
+        "y": 3.68
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-franco",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      2.75,
+      3.75
+    ],
+    "targetPlayer": "John Franco",
+    "targetX": 424,
+    "targetY": 2.89,
+    "referencePlayers": [
+      {
+        "name": "Lefty Grove",
+        "x": 55,
+        "y": 3.06
+      },
+      {
+        "name": "Rick Aguilera",
+        "x": 318,
+        "y": 3.57
+      },
+      {
+        "name": "Troy Percival",
+        "x": 358,
+        "y": 3.17
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-k9-bb9-blyleven",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      4.5,
+      8.5
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Bert Blyleven",
+    "targetX": 6.7,
+    "targetY": 2.4,
+    "referencePlayers": [
+      {
+        "name": "Jim Palmer",
+        "x": 5,
+        "y": 3
+      },
+      {
+        "name": "Jack Morris",
+        "x": 5.8,
+        "y": 3.3
+      },
+      {
+        "name": "John Smoltz",
+        "x": 8,
+        "y": 2.6
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-k9-bb9-sabathia",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      2.5,
+      4.5
+    ],
+    "targetPlayer": "CC Sabathia",
+    "targetX": 7.8,
+    "targetY": 2.8,
+    "referencePlayers": [
+      {
+        "name": "Babe Ruth",
+        "x": 3.6,
+        "y": 3.2
+      },
+      {
+        "name": "Bob Feller",
+        "x": 6.1,
+        "y": 4.1
+      },
+      {
+        "name": "Lee Smith",
+        "x": 8.7,
+        "y": 3.4
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-stieb",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.15,
+      1.35
+    ],
+    "yDomain": [
+      1000,
+      9000
+    ],
+    "targetPlayer": "Dave Stieb",
+    "targetX": 1.25,
+    "targetY": 1669,
+    "referencePlayers": [
+      {
+        "name": "Roger Clemens",
+        "x": 1.17,
+        "y": 4672
+      },
+      {
+        "name": "Bert Blyleven",
+        "x": 1.2,
+        "y": 3701
+      },
+      {
+        "name": "Jamie Moyer",
+        "x": 1.32,
+        "y": 2441
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rec-rectd-johnson-2013",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      25,
+      125
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Chris Johnson, 2013",
+    "targetX": 42,
+    "targetY": 4,
+    "referencePlayers": [
+      {
+        "name": "Tim Brown, 2003",
+        "x": 51,
+        "y": 2
+      },
+      {
+        "name": "Tiki Barber, 2002",
+        "x": 69,
+        "y": 0
+      },
+      {
+        "name": "Amon-Ra St. Brown, 2024",
+        "x": 115,
+        "y": 12
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-bb-so-parrish",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career strikeouts",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      0,
+      2000
+    ],
+    "targetPlayer": "Lance Parrish",
+    "targetX": 612,
+    "targetY": 1527,
+    "referencePlayers": [
+      {
+        "name": "Joe DiMaggio",
+        "x": 790,
+        "y": 369
+      },
+      {
+        "name": "Ozzie Smith",
+        "x": 1072,
+        "y": 589
+      },
+      {
+        "name": "Babe Ruth",
+        "x": 2062,
+        "y": 1330
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-fisk",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1200,
+      2000
+    ],
+    "targetPlayer": "Carlton Fisk",
+    "targetX": 128,
+    "targetY": 1330,
+    "referencePlayers": [
+      {
+        "name": "Joe DiMaggio",
+        "x": 30,
+        "y": 1537
+      },
+      {
+        "name": "Johnny Bench",
+        "x": 68,
+        "y": 1376
+      },
+      {
+        "name": "Frank Robinson",
+        "x": 204,
+        "y": 1812
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-h-bb-rice",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      2000,
+      2800
+    ],
+    "yDomain": [
+      500,
+      2500
+    ],
+    "targetPlayer": "Jim Rice",
+    "targetX": 2452,
+    "targetY": 670,
+    "referencePlayers": [
+      {
+        "name": "Arky Vaughan",
+        "x": 2103,
+        "y": 937
+      },
+      {
+        "name": "Eddie Mathews",
+        "x": 2315,
+        "y": 1444
+      },
+      {
+        "name": "Roberto Alomar",
+        "x": 2724,
+        "y": 1032
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-era-gomez",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      3.15,
+      3.55
+    ],
+    "targetPlayer": "Lefty Gomez",
+    "targetX": 1468,
+    "targetY": 3.34,
+    "referencePlayers": [
+      {
+        "name": "Billy Pierce",
+        "x": 1999,
+        "y": 3.27
+      },
+      {
+        "name": "Bob Feller",
+        "x": 2581,
+        "y": 3.25
+      },
+      {
+        "name": "Nolan Ryan",
+        "x": 5714,
+        "y": 3.19
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-john",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.1,
+      1.5
+    ],
+    "yDomain": [
+      2125,
+      3125
+    ],
+    "targetPlayer": "Tommy John",
+    "targetX": 1.28,
+    "targetY": 2245,
+    "referencePlayers": [
+      {
+        "name": "Robin Roberts",
+        "x": 1.17,
+        "y": 2357
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 1.23,
+        "y": 2832
+      },
+      {
+        "name": "Chuck Finley",
+        "x": 1.38,
+        "y": 2610
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-so-era-valenzuela",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      2.75,
+      3.75
+    ],
+    "targetPlayer": "Fernando Valenzuela",
+    "targetX": 2074,
+    "targetY": 3.54,
+    "referencePlayers": [
+      {
+        "name": "Trevor Hoffman",
+        "x": 1133,
+        "y": 2.87
+      },
+      {
+        "name": "Jerry Koosman",
+        "x": 2556,
+        "y": 3.36
+      },
+      {
+        "name": "Roger Clemens",
+        "x": 4672,
+        "y": 3.12
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-whip-so-pierce",
+    "league": "MLB",
+    "xLabel": "Career WHIP",
+    "xUnit": "WHIP",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 0.01,
+    "yStep": 1,
+    "xDomain": [
+      1.15,
+      1.35
+    ],
+    "yDomain": [
+      1500,
+      5500
+    ],
+    "targetPlayer": "Billy Pierce",
+    "targetX": 1.26,
+    "targetY": 1999,
+    "referencePlayers": [
+      {
+        "name": "Jim Bunning",
+        "x": 1.18,
+        "y": 2855
+      },
+      {
+        "name": "Bert Blyleven",
+        "x": 1.2,
+        "y": 3701
+      },
+      {
+        "name": "Tom Glavine",
+        "x": 1.31,
+        "y": 2607
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-sv-era-sutter",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      2.125,
+      3.125
+    ],
+    "targetPlayer": "Bruce Sutter",
+    "targetX": 300,
+    "targetY": 2.83,
+    "referencePlayers": [
+      {
+        "name": "Tom Henke",
+        "x": 311,
+        "y": 2.67
+      },
+      {
+        "name": "Huston Street",
+        "x": 324,
+        "y": 2.95
+      },
+      {
+        "name": "Billy Wagner",
+        "x": 422,
+        "y": 2.31
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-passtd-int-mcnabb-2003",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Donovan McNabb, 2003",
+    "targetX": 11,
+    "targetY": 16,
+    "referencePlayers": [
+      {
+        "name": "Aaron Rodgers, 2018",
+        "x": 2,
+        "y": 25
+      },
+      {
+        "name": "Matthew Stafford, 2017",
+        "x": 10,
+        "y": 29
+      },
+      {
+        "name": "Derek Carr, 2021",
+        "x": 14,
+        "y": 23
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-so-avg-dimaggio",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "SO",
+    "yLabel": "Career batting average",
+    "yUnit": "AVG",
+    "xStep": 1,
+    "yStep": 0.001,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0.28,
+      0.36
+    ],
+    "targetPlayer": "Joe DiMaggio",
+    "targetX": 369,
+    "targetY": 0.325,
+    "referencePlayers": [
+      {
+        "name": "Vern Stephens",
+        "x": 685,
+        "y": 0.286
+      },
+      {
+        "name": "Mike Piazza",
+        "x": 1113,
+        "y": 0.308
+      },
+      {
+        "name": "Barry Bonds",
+        "x": 1539,
+        "y": 0.298
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-cg-so-roberts",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      2000,
+      4000
+    ],
+    "targetPlayer": "Robin Roberts",
+    "targetX": 305,
+    "targetY": 2357,
+    "referencePlayers": [
+      {
+        "name": "Felix Hernandez",
+        "x": 25,
+        "y": 2524
+      },
+      {
+        "name": "Don Sutton",
+        "x": 178,
+        "y": 3574
+      },
+      {
+        "name": "Bert Blyleven",
+        "x": 242,
+        "y": 3701
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-comp-passtd-flacco-2013",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      300,
+      500
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Joe Flacco, 2013",
+    "targetX": 362,
+    "targetY": 19,
+    "referencePlayers": [
+      {
+        "name": "Patrick Mahomes, 2019",
+        "x": 319,
+        "y": 26
+      },
+      {
+        "name": "Aaron Rodgers, 2015",
+        "x": 347,
+        "y": 31
+      },
+      {
+        "name": "Philip Rivers, 2015",
+        "x": 437,
+        "y": 29
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-r-sb-strawberry",
+    "league": "MLB",
+    "xLabel": "Career runs scored",
+    "xUnit": "R",
+    "yLabel": "Career stolen bases",
+    "yUnit": "SB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      750,
+      2750
+    ],
+    "yDomain": [
+      0,
+      400
+    ],
+    "targetPlayer": "Darryl Strawberry",
+    "targetX": 898,
+    "targetY": 221,
+    "referencePlayers": [
+      {
+        "name": "Ted Simmons",
+        "x": 1074,
+        "y": 21
+      },
+      {
+        "name": "Fred McGriff",
+        "x": 1349,
+        "y": 72
+      },
+      {
+        "name": "Alex Rodriguez",
+        "x": 2021,
+        "y": 329
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-hr-freehan",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      1500
+    ],
+    "yDomain": [
+      50,
+      450
+    ],
+    "targetPlayer": "Bill Freehan",
+    "targetX": 626,
+    "targetY": 200,
+    "referencePlayers": [
+      {
+        "name": "Luis Aparicio",
+        "x": 736,
+        "y": 83
+      },
+      {
+        "name": "Fred Lynn",
+        "x": 857,
+        "y": 306
+      },
+      {
+        "name": "Tim Raines",
+        "x": 1330,
+        "y": 170
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-cg-so-hunter",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1500,
+      5500
+    ],
+    "targetPlayer": "Catfish Hunter",
+    "targetX": 181,
+    "targetY": 2012,
+    "referencePlayers": [
+      {
+        "name": "Chuck Finley",
+        "x": 63,
+        "y": 2610
+      },
+      {
+        "name": "Roger Clemens",
+        "x": 118,
+        "y": 4672
+      },
+      {
+        "name": "Fergie Jenkins",
+        "x": 267,
+        "y": 3192
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rec-fd-johnson-2009",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      40,
+      60
+    ],
+    "targetPlayer": "Chad Johnson, 2009",
+    "targetX": 72,
+    "targetY": 55,
+    "referencePlayers": [
+      {
+        "name": "Brandon Aiyuk, 2020",
+        "x": 60,
+        "y": 42
+      },
+      {
+        "name": "DeAndre Hopkins, 2023",
+        "x": 75,
+        "y": 48
+      },
+      {
+        "name": "Travis Kelce, 2023",
+        "x": 93,
+        "y": 50
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-smith-2017",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Alex Smith, 2017",
+    "targetX": 5,
+    "targetY": 26,
+    "referencePlayers": [
+      {
+        "name": "Donovan McNabb, 2009",
+        "x": 10,
+        "y": 22
+      },
+      {
+        "name": "Matt Hasselbeck, 2011",
+        "x": 14,
+        "y": 18
+      },
+      {
+        "name": "Brett Favre, 2003",
+        "x": 21,
+        "y": 32
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-h-bb-simmons",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1750,
+      3750
+    ],
+    "yDomain": [
+      250,
+      2250
+    ],
+    "targetPlayer": "Al Simmons",
+    "targetX": 2927,
+    "targetY": 615,
+    "referencePlayers": [
+      {
+        "name": "Andruw Jones",
+        "x": 1933,
+        "y": 891
+      },
+      {
+        "name": "Jim Thome",
+        "x": 2328,
+        "y": 1747
+      },
+      {
+        "name": "Billy Williams",
+        "x": 2711,
+        "y": 1045
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-sb-rbi-williams",
+    "league": "MLB",
+    "xLabel": "Career stolen bases",
+    "xUnit": "SB",
+    "yLabel": "Career runs batted in",
+    "yUnit": "RBI",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1125,
+      2125
+    ],
+    "targetPlayer": "Bernie Williams",
+    "targetX": 147,
+    "targetY": 1257,
+    "referencePlayers": [
+      {
+        "name": "Manny Ramirez",
+        "x": 38,
+        "y": 1831
+      },
+      {
+        "name": "Jimmie Foxx",
+        "x": 87,
+        "y": 1922
+      },
+      {
+        "name": "Robin Yount",
+        "x": 271,
+        "y": 1406
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-so-era-martinez",
+    "league": "MLB",
+    "xLabel": "Career strikeouts",
+    "xUnit": "K",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1000,
+      5000
+    ],
+    "yDomain": [
+      2.8,
+      3.6
+    ],
+    "targetPlayer": "Pedro Martinez",
+    "targetX": 3154,
+    "targetY": 2.93,
+    "referencePlayers": [
+      {
+        "name": "Carl Hubbell",
+        "x": 1677,
+        "y": 2.98
+      },
+      {
+        "name": "Vida Blue",
+        "x": 2175,
+        "y": 3.27
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 2832,
+        "y": 3.44
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-cg-so-brown",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career strikeouts",
+    "yUnit": "K",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      400
+    ],
+    "yDomain": [
+      1000,
+      3000
+    ],
+    "targetPlayer": "Kevin Brown",
+    "targetX": 72,
+    "targetY": 2397,
+    "referencePlayers": [
+      {
+        "name": "Mariano Rivera",
+        "x": 0,
+        "y": 1173
+      },
+      {
+        "name": "Whitey Ford",
+        "x": 156,
+        "y": 1956
+      },
+      {
+        "name": "Carl Hubbell",
+        "x": 260,
+        "y": 1677
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rec-recyds-johnson-2002",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      60,
+      140
+    ],
+    "yDomain": [
+      800,
+      1600
+    ],
+    "targetPlayer": "Chad Johnson, 2002",
+    "targetX": 69,
+    "targetY": 1166,
+    "referencePlayers": [
+      {
+        "name": "Tony Gonzalez, 2006",
+        "x": 73,
+        "y": 900
+      },
+      {
+        "name": "DeAndre Hopkins, 2017",
+        "x": 96,
+        "y": 1378
+      },
+      {
+        "name": "Christian McCaffrey, 2019",
+        "x": 116,
+        "y": 1005
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-rectd-jackson-2010",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      25,
+      125
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "DeSean Jackson, 2010",
+    "targetX": 47,
+    "targetY": 6,
+    "referencePlayers": [
+      {
+        "name": "Frank Gore, 2006",
+        "x": 61,
+        "y": 1
+      },
+      {
+        "name": "Marshall Faulk, 2002",
+        "x": 80,
+        "y": 2
+      },
+      {
+        "name": "CeeDee Lamb, 2022",
+        "x": 107,
+        "y": 9
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-fd-jones-2011",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      10,
+      90
+    ],
+    "targetPlayer": "Julio Jones, 2011",
+    "targetX": 54,
+    "targetY": 34,
+    "referencePlayers": [
+      {
+        "name": "Bijan Robinson, 2023",
+        "x": 58,
+        "y": 24
+      },
+      {
+        "name": "Devon Achane, 2024",
+        "x": 78,
+        "y": 30
+      },
+      {
+        "name": "Brandon Marshall, 2008",
+        "x": 104,
+        "y": 64
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-jackson-2009",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      900,
+      1700
+    ],
+    "targetPlayer": "DeSean Jackson, 2009",
+    "targetX": 63,
+    "targetY": 1167,
+    "referencePlayers": [
+      {
+        "name": "Mike Evans, 2022",
+        "x": 77,
+        "y": 1124
+      },
+      {
+        "name": "Jason Witten, 2004",
+        "x": 87,
+        "y": 980
+      },
+      {
+        "name": "Puka Nacua, 2023",
+        "x": 105,
+        "y": 1486
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-comp-passtd-dalton-2015",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      225,
+      425
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Andy Dalton, 2015",
+    "targetX": 255,
+    "targetY": 25,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith, 2016",
+        "x": 328,
+        "y": 15
+      },
+      {
+        "name": "Donovan McNabb, 2008",
+        "x": 345,
+        "y": 23
+      },
+      {
+        "name": "Tom Brady, 2020",
+        "x": 401,
+        "y": 40
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-cutler-2007",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      5,
+      25
+    ],
+    "yDomain": [
+      15,
+      55
+    ],
+    "targetPlayer": "Jay Cutler, 2007",
+    "targetX": 14,
+    "targetY": 20,
+    "referencePlayers": [
+      {
+        "name": "Ben Roethlisberger, 2014",
+        "x": 9,
+        "y": 32
+      },
+      {
+        "name": "Patrick Mahomes, 2022",
+        "x": 12,
+        "y": 41
+      },
+      {
+        "name": "Carson Palmer, 2013",
+        "x": 22,
+        "y": 24
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-sv-era-reardon",
+    "league": "MLB",
+    "xLabel": "Career saves",
+    "xUnit": "SV",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      275,
+      475
+    ],
+    "yDomain": [
+      3,
+      4
+    ],
+    "targetPlayer": "Jeff Reardon",
+    "targetX": 367,
+    "targetY": 3.16,
+    "referencePlayers": [
+      {
+        "name": "Jeff Montgomery",
+        "x": 304,
+        "y": 3.27
+      },
+      {
+        "name": "Fernando Rodney",
+        "x": 327,
+        "y": 3.8
+      },
+      {
+        "name": "Dennis Eckersley",
+        "x": 390,
+        "y": 3.5
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-k9-bb9-vazquez",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Javier Vazquez",
+    "targetX": 8,
+    "targetY": 2.4,
+    "referencePlayers": [
+      {
+        "name": "Red Ruffing",
+        "x": 4.1,
+        "y": 3.2
+      },
+      {
+        "name": "Andy Pettitte",
+        "x": 6.6,
+        "y": 2.8
+      },
+      {
+        "name": "Todd Jones",
+        "x": 7.3,
+        "y": 3.7
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-w-era-koosman",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      150,
+      350
+    ],
+    "yDomain": [
+      3.3,
+      3.7
+    ],
+    "targetPlayer": "Jerry Koosman",
+    "targetX": 222,
+    "targetY": 3.36,
+    "referencePlayers": [
+      {
+        "name": "Felix Hernandez",
+        "x": 169,
+        "y": 3.42
+      },
+      {
+        "name": "Roy Halladay",
+        "x": 203,
+        "y": 3.38
+      },
+      {
+        "name": "Early Wynn",
+        "x": 300,
+        "y": 3.54
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-r-sb-miller",
+    "league": "MLB",
+    "xLabel": "Career runs scored",
+    "xUnit": "R",
+    "yLabel": "Career stolen bases",
+    "yUnit": "SB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      0,
+      100
+    ],
+    "targetPlayer": "Eddie Miller",
+    "targetX": 539,
+    "targetY": 64,
+    "referencePlayers": [
+      {
+        "name": "Paul Konerko",
+        "x": 1162,
+        "y": 9
+      },
+      {
+        "name": "Ernie Banks",
+        "x": 1305,
+        "y": 50
+      },
+      {
+        "name": "Jimmie Foxx",
+        "x": 1751,
+        "y": 87
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-k9-bb9-jones",
+    "league": "MLB",
+    "xLabel": "Career strikeouts per nine innings",
+    "xUnit": "K/9",
+    "yLabel": "Career walks per nine innings",
+    "yUnit": "BB/9",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      9
+    ],
+    "yDomain": [
+      1.75,
+      3.75
+    ],
+    "targetPlayer": "Doug Jones",
+    "targetX": 7.3,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Billy Pierce",
+        "x": 5.4,
+        "y": 3.2
+      },
+      {
+        "name": "Mickey Lolich",
+        "x": 7,
+        "y": 2.7
+      },
+      {
+        "name": "David Cone",
+        "x": 8.3,
+        "y": 3.5
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-ypr-recyds-wayne-2002",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "YPC",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      9,
+      17
+    ],
+    "yDomain": [
+      600,
+      1400
+    ],
+    "targetPlayer": "Reggie Wayne, 2002",
+    "targetX": 14.6,
+    "targetY": 716,
+    "referencePlayers": [
+      {
+        "name": "Wes Welker, 2010",
+        "x": 9.9,
+        "y": 848
+      },
+      {
+        "name": "Terrell Owens, 2002",
+        "x": 13,
+        "y": 1300
+      },
+      {
+        "name": "George Kittle, 2023",
+        "x": 15.7,
+        "y": 1020
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-palmer-2007",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      5,
+      25
+    ],
+    "yDomain": [
+      20,
+      40
+    ],
+    "targetPlayer": "Carson Palmer, 2007",
+    "targetX": 20,
+    "targetY": 26,
+    "referencePlayers": [
+      {
+        "name": "Dak Prescott, 2023",
+        "x": 9,
+        "y": 36
+      },
+      {
+        "name": "Philip Rivers, 2010",
+        "x": 13,
+        "y": 30
+      },
+      {
+        "name": "Kurt Warner, 2007",
+        "x": 17,
+        "y": 27
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-hasselbeck-2004",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      5,
+      25
+    ],
+    "yDomain": [
+      15,
+      55
+    ],
+    "targetPlayer": "Matt Hasselbeck, 2004",
+    "targetX": 15,
+    "targetY": 22,
+    "referencePlayers": [
+      {
+        "name": "Joe Burrow, 2024",
+        "x": 9,
+        "y": 43
+      },
+      {
+        "name": "Peyton Manning, 2008",
+        "x": 12,
+        "y": 27
+      },
+      {
+        "name": "Eli Manning, 2006",
+        "x": 18,
+        "y": 25
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-comp-passtd-carr-2018",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      300,
+      500
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Derek Carr, 2018",
+    "targetX": 381,
+    "targetY": 19,
+    "referencePlayers": [
+      {
+        "name": "Patrick Mahomes, 2019",
+        "x": 319,
+        "y": 26
+      },
+      {
+        "name": "Drew Brees, 2018",
+        "x": 364,
+        "y": 32
+      },
+      {
+        "name": "Kirk Cousins, 2022",
+        "x": 424,
+        "y": 29
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-h-bb-gordon",
+    "league": "MLB",
+    "xLabel": "Career hits",
+    "xUnit": "H",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      1250,
+      3250
+    ],
+    "yDomain": [
+      300,
+      1100
+    ],
+    "targetPlayer": "Joe Gordon",
+    "targetX": 1530,
+    "targetY": 759,
+    "referencePlayers": [
+      {
+        "name": "Yogi Berra",
+        "x": 2150,
+        "y": 704
+      },
+      {
+        "name": "Joe Medwick",
+        "x": 2471,
+        "y": 437
+      },
+      {
+        "name": "Omar Vizquel",
+        "x": 2877,
+        "y": 1028
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-bb-so-teixeira",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career strikeouts",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      625,
+      1625
+    ],
+    "yDomain": [
+      625,
+      1625
+    ],
+    "targetPlayer": "Mark Teixeira",
+    "targetX": 918,
+    "targetY": 1441,
+    "referencePlayers": [
+      {
+        "name": "Luis Aparicio",
+        "x": 736,
+        "y": 742
+      },
+      {
+        "name": "George Brett",
+        "x": 1096,
+        "y": 908
+      },
+      {
+        "name": "Rafael Palmeiro",
+        "x": 1353,
+        "y": 1348
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-w-era-niekro",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      150,
+      350
+    ],
+    "yDomain": [
+      2.75,
+      3.75
+    ],
+    "targetPlayer": "Phil Niekro",
+    "targetX": 318,
+    "targetY": 3.35,
+    "referencePlayers": [
+      {
+        "name": "Fernando Valenzuela",
+        "x": 173,
+        "y": 3.54
+      },
+      {
+        "name": "Pedro Martinez",
+        "x": 219,
+        "y": 2.93
+      },
+      {
+        "name": "Jim Kaat",
+        "x": 283,
+        "y": 3.45
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-comp-passtd-ryan-2012",
+    "league": "NFL",
+    "xLabel": "Completions (season)",
+    "xUnit": "comp",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      450
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Matt Ryan, 2012",
+    "targetX": 422,
+    "targetY": 32,
+    "referencePlayers": [
+      {
+        "name": "Donovan McNabb, 2003",
+        "x": 276,
+        "y": 16
+      },
+      {
+        "name": "Joe Burrow, 2021",
+        "x": 366,
+        "y": 34
+      },
+      {
+        "name": "Aaron Rodgers, 2016",
+        "x": 401,
+        "y": 40
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-as-hr-garvey",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Steve Garvey",
+    "targetX": 10,
+    "targetY": 272,
+    "referencePlayers": [
+      {
+        "name": "Juan Gonzalez",
+        "x": 3,
+        "y": 434
+      },
+      {
+        "name": "Gary Sheffield",
+        "x": 9,
+        "y": 509
+      },
+      {
+        "name": "George Brett",
+        "x": 13,
+        "y": 317
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-avg-hr-carter",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.25,
+      0.33
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Gary Carter",
+    "targetX": 0.262,
+    "targetY": 324,
+    "referencePlayers": [
+      {
+        "name": "Mike Schmidt",
+        "x": 0.267,
+        "y": 548
+      },
+      {
+        "name": "Bob Johnson",
+        "x": 0.296,
+        "y": 288
+      },
+      {
+        "name": "Roberto Clemente",
+        "x": 0.317,
+        "y": 240
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-w-era-gossage",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career earned run average",
+    "yUnit": "ERA",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      50,
+      450
+    ],
+    "yDomain": [
+      1.75,
+      3.75
+    ],
+    "targetPlayer": "Rich Gossage",
+    "targetX": 124,
+    "targetY": 3.01,
+    "referencePlayers": [
+      {
+        "name": "Sandy Koufax",
+        "x": 165,
+        "y": 2.76
+      },
+      {
+        "name": "Roy Halladay",
+        "x": 203,
+        "y": 3.38
+      },
+      {
+        "name": "Christy Mathewson",
+        "x": 373,
+        "y": 2.13
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-bb-hr-baines",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      370,
+      450
+    ],
+    "targetPlayer": "Harold Baines",
+    "targetX": 1062,
+    "targetY": 384,
+    "referencePlayers": [
+      {
+        "name": "Juan Gonzalez",
+        "x": 457,
+        "y": 434
+      },
+      {
+        "name": "Johnny Bench",
+        "x": 891,
+        "y": 389
+      },
+      {
+        "name": "Darrell Evans",
+        "x": 1605,
+        "y": 414
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nfl-rec-rectd-juszczyk-2015",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      25,
+      125
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Kyle Juszczyk, 2015",
+    "targetX": 41,
+    "targetY": 4,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch, 2008",
+        "x": 47,
+        "y": 1
+      },
+      {
+        "name": "Marshall Faulk, 2002",
+        "x": 80,
+        "y": 2
+      },
+      {
+        "name": "Puka Nacua, 2023",
+        "x": 105,
+        "y": 6
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   }
 ]

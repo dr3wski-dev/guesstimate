@@ -70,6 +70,28 @@ function frozenThrough() {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
 }
 
+/* The three-day league rotation.
+ *
+ * 2/2/1, 1/2/2, 2/1/2 — which sums to five per league per cycle, dead even, without
+ * any single day reading as a themed day.
+ *
+ * It exists because the plain deal clumps. Puzzle #4 shipped as five NBA questions,
+ * and a football fan got nothing that day; five of the first 77 days were
+ * single-league. Shuffling a pool that is 38% basketball produces all-basketball days
+ * at exactly the rate chance says it should, and no amount of re-shuffling fixes a
+ * distribution — only constraining the deal does.
+ *
+ * A balanced rotation is only as long as the smallest league times three, which is
+ * why this could not be switched on earlier: at 63 MLB questions it would have
+ * SHORTENED the calendar from 41 days to 38. It is on now because every league
+ * clears 150.
+ */
+const ROTATION = [
+  { NBA: 2, NFL: 2, MLB: 1 },
+  { NBA: 1, NFL: 2, MLB: 2 },
+  { NBA: 2, NFL: 1, MLB: 2 },
+];
+
 function extend(pool, schedule, days, themed = {}) {
   const today = frozenThrough();
   const played = Object.fromEntries(
@@ -85,23 +107,31 @@ function extend(pool, schedule, days, themed = {}) {
   for (let day = 0; day < days; day++) {
     const date = dateFor(day);
     if (out[date]) continue;                       // played, or a themed day
-    while (queue.length < DAILY_COUNT) {
+    // The rotation slot is keyed on the day index, not on how many days this run
+    // happens to fill, so a day's league mix does not depend on when it was dealt.
+    const want = { ...ROTATION[day % ROTATION.length] };
+    queue = [];
+    const onDeck = new Set();
+    for (let guard = 0; queue.length < DAILY_COUNT && guard < 8; guard++) {
       // A cycle is one pass through everything not yet scheduled. When it empties,
       // the next cycle re-deals the whole pool, which is where repeats begin — the
       // same anti-repeat guarantee the bag gave, made explicit and permanent.
       const available = pool.filter(q => !used.has(q.id));
       if (available.length === 0) { used.clear(); cycle++; continue; }
-      // Never the same person twice on one day. A player can now answer more than
-      // one question — different seasons — so the deal can otherwise put Kobe
-      // Bryant in rounds two and four of the same puzzle, which reads as a bug
-      // rather than as variety.
-      const onDeck = new Set(queue.map(id => personOf(pool, id)));
-      const next = dealOrder(available, cycle)
-        .filter(q => { const p = personOf(pool, q.id);
-                       if (onDeck.has(p)) return false; onDeck.add(p); return true; })
-        .slice(0, DAILY_COUNT - queue.length);
-      if (next.length === 0) { used.clear(); cycle++; continue; }
-      next.forEach(q => { queue.push(q.id); used.add(q.id); });
+      let took = 0;
+      for (const q of dealOrder(available, cycle)) {
+        if (queue.length >= DAILY_COUNT) break;
+        if (!want[q.league]) continue;             // this league is filled for today
+        // Never the same person twice on one day. A player can answer more than one
+        // question now — different seasons — so the deal could otherwise put Kobe
+        // Bryant in rounds two and four of one puzzle, which reads as a bug.
+        const p = personOf(pool, q.id);
+        if (onDeck.has(p)) continue;
+        onDeck.add(p); want[q.league]--; queue.push(q.id); used.add(q.id); took++;
+      }
+      // Nothing taken with stock still on the shelf means the remaining questions
+      // cannot satisfy the quota — start the next cycle rather than spin.
+      if (took === 0) { used.clear(); cycle++; }
     }
     out[date] = queue.splice(0, DAILY_COUNT);
     added++;
