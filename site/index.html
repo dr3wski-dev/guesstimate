@@ -995,6 +995,22 @@ function prefersReducedMotion(){
 // Still strip a trailing season year from target players written like "Jonathan
 // Taylor, 2021" — that's identifying a season, not a person, and the prompt text
 // above the chart already states it.
+/* "Tap" or "Click", decided by what the person is actually holding.
+ *
+ * The readout said "Tap the chart" on every device while the instruction line two
+ * elements above it said "Click or drag" — so a laptop player was told to do two
+ * different things at once, and neither line was wrong enough to notice quickly.
+ *
+ * Queried rather than assumed from screen width: a touchscreen laptop is wide and
+ * still wants "Tap", and pointer:fine is the property that actually decides it. The
+ * fallback is "Tap" because a browser that cannot answer is more likely to be an old
+ * mobile one. */
+const POINTER_VERB = (() => {
+  try{
+    return window.matchMedia('(pointer: fine)').matches ? 'Click' : 'Tap';
+  }catch(e){ return 'Tap'; }
+})();
+
 function shortLabel(name){
   // Handles both season formats the content uses: "Jonathan Taylor, 2021" (NFL/MLB
   // single seasons) and "Baron Davis, 2003-04" (NBA, which spans two calendar
@@ -1311,7 +1327,7 @@ function showQuestion(){
     <div class="legend">${legendHTML}</div>
     <div id="revealArea" aria-live="polite"></div>
     <div class="actionbar">
-      <div class="readout" id="readout" aria-live="polite">Tap the chart to place your guess</div>
+      <div class="readout" id="readout" aria-live="polite">${POINTER_VERB} the chart to place your guess</div>
       <button class="primary" id="submitBtn" disabled>Submit guess</button>
     </div>
   `;
