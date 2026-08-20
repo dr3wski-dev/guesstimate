@@ -269,6 +269,28 @@ try{
   .fact-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px; }
   .fact{ color:var(--ink); line-height:1.6; font-size:14.5px; margin:0; }
   .fact-source{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:8px 0 0; }
+  /* One row per puzzle. A whole row is the target rather than a link inside it —
+     44px is the size a thumb actually hits, and a list you scroll with your thumb is
+     a list you will also mis-tap. */
+  .arch-list{ display:flex; flex-direction:column; gap:2px; margin-top:4px; }
+  .arch-row{
+    display:flex; align-items:center; gap:12px; width:100%;
+    min-height:46px; padding:8px 10px; text-align:left; cursor:pointer;
+    background:none; border:1.5px solid transparent; border-radius:4px;
+    font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--ink);
+  }
+  .arch-row:hover{ border-color:var(--ink); background:var(--paper-2, transparent); }
+  .arch-row .no{ font-weight:700; min-width:44px; }
+  .arch-row .when{ color:var(--ink-faint); }
+  /* The score is the reason to come back to this list, so it gets the right edge
+     where the eye lands, and tabular figures so the column reads as a column. */
+  .arch-row .sc{ margin-left:auto; font-variant-numeric:tabular-nums; font-weight:700; }
+  .arch-row .sc.unplayed{ font-weight:400; color:var(--ink-faint); }
+  .arch-row .tag{
+    font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    border:1px solid var(--accent); color:var(--accent); border-radius:2px; padding:0 5px;
+  }
+  .arch-note{ font-size:12.5px; color:var(--ink-faint); margin:0 0 10px; line-height:1.5; }
   .src-details > summary{
     font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint);
     cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:5px;
@@ -415,7 +437,13 @@ try{
     .app:not(:has(.panel.has-chart)){ max-width:660px; }
     .panel.has-chart{
       display:grid;
-      grid-template-columns:minmax(0,auto) minmax(420px,1fr);
+      /* Column one asks for the chart's ideal width and will give it up: the min is
+         0, so when the card cannot spare it — a 2560px monitor still caps the card at
+         1280 — the grid shrinks the chart rather than letting it push the text column
+         off the edge. Column two never drops below 420, which is what the prompt and
+         the reference values need to stay readable. */
+      grid-template-columns:minmax(0, min(52vw, calc((100dvh - 240px) * 4 / 3)))
+                            minmax(420px, 1fr);
       column-gap:34px;
       /* Explicit rows so the second column can be COMPOSED rather than just stacked.
          Everything sizes to its content except one flexible row, which absorbs the
@@ -425,16 +453,28 @@ try{
       grid-template-rows:min-content min-content min-content min-content 1fr min-content;
     }
     /* span, not `1 / -1` — see the note in the phone-landscape block. */
-    .has-chart .chart-frame{ grid-column:1; grid-row:1 / -1; margin:0; align-self:start; }
+    /* fit-content, because the SVG is sized by HEIGHT here and derives its width
+       from aspect-ratio. The frame does not learn that width on its own, so it kept
+       its column width while the chart grew past it — and a frame narrower than its
+       contents draws its own right border straight across the chart, clipping the
+       last x-axis tick. Measured: 919px of chart inside an 881px frame. */
+    /* The frame's width is stated, and the chart fills it. Deriving it the other
+       way round — sizing the SVG by height and letting aspect-ratio produce a width —
+       leaves the frame not knowing how wide its contents are: as a grid item it kept
+       its column width and drew its own border across the chart (919px of chart in an
+       881px frame), and fit-content then fixed that by overflowing into the text
+       column instead. Both are the same mistake, that two boxes each waited for the
+       other to decide.
+       So: width is min(what the column can spare, what the viewport height allows at
+       4:3). Whichever binds, the SVG fills exactly that and nothing overflows. */
+    .has-chart .chart-frame{
+      grid-column:1; grid-row:1 / -1; margin:0; align-self:start;
+      width:100%;
+    }
     /* Height-driven, with aspect-ratio deriving the width: a viewBox SVG given only
        a max-height has nothing to resolve against and collapses to 0x0. The cap
        stops a tall monitor from producing a chart bigger than it is useful to aim at. */
-    .has-chart .chart-frame svg{
-      height:min(calc(100dvh - 226px), 600px);
-      min-height:320px;
-      width:auto;
-      aspect-ratio:560 / 420;
-    }
+    .has-chart .chart-frame svg{ width:100%; height:auto; }
     .has-chart .league-tag{ grid-column:2; grid-row:1; }
     .has-chart .prompt{ grid-column:2; grid-row:2; }
     .has-chart .instructions{ grid-column:2; grid-row:3; }
@@ -496,7 +536,7 @@ try{
        explicit row line, so -1 resolves back to line 1 and the chart occupies a
        single row — which puts every right-hand item BELOW it instead of beside it.
        The span count just needs to exceed the number of items in column two. */
-    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; }
+    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; width:fit-content; }
     /* An inline SVG with a viewBox and only a max-height has nothing to resolve its
        size from and collapses to 0x0. Give it a real height and let aspect-ratio
        derive the width — the viewBox is 560x420, so the two must agree. */
@@ -566,6 +606,14 @@ try{
 <!-- Written as plain sentences rather than a policy. The whole point is that there
      is almost nothing to disclose, and burying that in legal register would make it
      read like there is. -->
+<dialog class="modal" id="archiveModal" aria-labelledby="archiveTitle">
+  <div class="modal-head">
+    <h2 id="archiveTitle">Archive</h2>
+    <button class="icon-btn" id="archiveClose" aria-label="Close">✕</button>
+  </div>
+  <div id="archiveBody"></div>
+</dialog>
+
 <dialog class="modal" id="privacyModal" aria-labelledby="privacyTitle">
   <div class="modal-head">
     <h2 id="privacyTitle">Privacy</h2>
@@ -794,7 +842,12 @@ const STATS_KEY = 'statmap_stats_v1';
 // ever needed, it should migrate FROM statmap_stats_v1, not from this.
 const LEGACY_STATS_KEY = 'guesstimate_stats_v1';
 const INTRO_KEY = 'statmap_seen_intro';
-const DEFAULT_STATS = { lastPlayed:null, currentStreak:0, bestStreak:0, daysPlayed:0, totalPoints:0, bestRound:0, tiers:{} };
+/* `days` maps a puzzle date to what you scored on it: { '2026-08-17': 412 }.
+   Aggregate totals cannot answer "which ones have I played and how did I do",
+   which is the only question an archive list exists to answer. It is written from
+   now on, so days played before this shipped show as unplayed — an honest gap
+   rather than an invented score. */
+const DEFAULT_STATS = { lastPlayed:null, currentStreak:0, bestStreak:0, daysPlayed:0, totalPoints:0, bestRound:0, tiers:{}, days:{} };
 // Calendar-date arithmetic on the ET date string. Parsing the date-only string as
 // UTC and stepping a whole day is safe here precisely because there's no time
 // component — it's a calendar decrement, so DST transitions can't shift it.
@@ -822,12 +875,12 @@ function loadStats(){
     const raw = localStorage.getItem(STATS_KEY);
     if(raw){
       const s = JSON.parse(raw) || {};
-      return Object.assign({}, DEFAULT_STATS, s, { tiers: Object.assign({}, s.tiers) });
+      return Object.assign({}, DEFAULT_STATS, s, { tiers: Object.assign({}, s.tiers), days: Object.assign({}, s.days) });
     }
     const migrated = migrateLegacyStats();
     if(migrated) return migrated;
   }catch(e){}
-  return Object.assign({}, DEFAULT_STATS, { tiers:{} });
+  return Object.assign({}, DEFAULT_STATS, { tiers:{}, days:{} });
 }
 function saveStats(s){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }catch(e){} }
 
@@ -921,6 +974,8 @@ function registerCompletion(scores, dateStr){
   const total = scores.reduce((a,b)=>a+b,0);
   s.totalPoints = (s.totalPoints||0) + total;
   s.bestRound = Math.max(s.bestRound||0, total);
+  s.days = s.days || {};
+  s.days[today] = total;
   scores.forEach(p=>{ const k = scoreTier(p).label; s.tiers[k] = (s.tiers[k]||0) + 1; });
   saveStats(s); return s;
 }
@@ -1275,7 +1330,9 @@ function startScreen(){
   let challengeHTML = '';
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
-    challengeHTML = MODE === 'challenge'
+    challengeHTML = CHALLENGE.archive
+      ? `<div class="challenge-banner">📁 Puzzle <b>#${puzzleNumber(SERVED_DATE)}</b> from ${SERVED_DATE}, replayed from the archive. It won't affect your streak or stats.</div>`
+      : MODE === 'challenge'
       ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}). You're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b>. Think you can beat them?</div>`;
   }
@@ -1309,7 +1366,7 @@ function startScreen(){
     ${streakHTML}
     <div class="next-row">${leaveChallengeBtn}<button class="primary" id="startBtn">${startLabel}</button></div>
     ${replayNote}
-    <div><button class="how-link" id="howLink">How does scoring work?</button></div>
+    <div><button class="how-link" id="howLink">How does scoring work?</button>${MODE === 'daily' ? ' · <button class="how-link" id="archiveLink">Archive</button>' : ''}</div>
     <p class="byline">Built by Drew Tanous · <button class="how-link" id="privacyLink">Privacy</button></p>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
@@ -1319,6 +1376,8 @@ function startScreen(){
   });
   const tb = document.getElementById('todayBtn');
   if(tb) tb.addEventListener('click', leaveChallenge);
+  const al = document.getElementById('archiveLink');
+  if(al) al.addEventListener('click', openArchive);
   const pl = document.getElementById('privacyLink');
   if(pl) pl.addEventListener('click', openPrivacy);
   const hl = document.getElementById('howLink');
@@ -1679,6 +1738,14 @@ function showQuestion(){
     });
     svg.insertBefore(heat, svg.firstChild);
     svg.insertBefore(defs, svg.firstChild);
+    /* The crosshairs come down at the reveal. They exist to answer "what value am I
+       actually choosing" while you aim, and the moment the answer appears that
+       question is over — the readout underneath states both values in words. What
+       replaces them is one line from the guess to the truth, and two dashed lines
+       running off to the axes compete with it for the same glance. */
+    if(guideXEl) guideXEl.remove();
+    if(guideYEl) guideYEl.remove();
+    guideXEl = guideYEl = null;
     const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
     svg.appendChild(connector);
     svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
@@ -1882,6 +1949,88 @@ document.getElementById('howBtn').addEventListener('click', openHow);
 document.getElementById('howClose').addEventListener('click', ()=>{
   if(howModal.close) howModal.close(); else howModal.removeAttribute('open');
 });
+
+/* ============================= ARCHIVE =============================
+   Every past puzzle, replayable, with what you scored on it.
+
+   All of the hard parts were already built and none of them were built for this,
+   which is how you can tell the shape was right: the Worker already serves any
+   date, acceptPastDate already refuses future ones, days are pinned so an old date
+   still returns exactly what it returned then, a question that has ever been served
+   can never be deleted, and challenge mode already plays a foreign day without
+   touching your streak. This is a list and a fetch on top of that. */
+const archiveModal = document.getElementById('archiveModal');
+
+function archiveDates(){
+  // Newest first: the interesting end of a list of days is the recent end.
+  const out = [];
+  const last = daysSince(TODAY || todayDateString(), BAG_EPOCH);
+  for(let d = last; d >= 0; d--){
+    out.push(new Date(Date.parse(BAG_EPOCH + 'T00:00:00Z') + d * 86400000)
+      .toISOString().slice(0, 10));
+  }
+  return out;
+}
+
+function renderArchive(){
+  const s = loadStats();
+  const body = document.getElementById('archiveBody');
+  const rows = archiveDates().map(date => {
+    const n = puzzleNumber(date);
+    const score = s.days ? s.days[date] : undefined;
+    const isToday = date === TODAY;
+    const when = new Date(Date.parse(date + 'T00:00:00Z'))
+      .toLocaleDateString('en-US', { month:'short', day:'numeric', timeZone:'UTC' });
+    const right = score !== undefined
+      ? `<span class="sc">${score}</span>`
+      : `<span class="sc unplayed">—</span>`;
+    return `<button class="arch-row" data-date="${date}">
+        <span class="no">#${n}</span>
+        <span class="when">${when}</span>
+        ${isToday ? '<span class="tag">today</span>' : ''}
+        ${right}
+      </button>`;
+  }).join('');
+  body.innerHTML = `
+    <p class="arch-note">Replay any past puzzle. Old days do not affect your streak or
+    stats — the score you already have for a day is kept.</p>
+    <div class="arch-list">${rows}</div>`;
+  body.querySelectorAll('.arch-row').forEach(b =>
+    b.addEventListener('click', () => playArchiveDay(b.dataset.date)));
+}
+
+function openArchive(){
+  renderArchive();
+  if(archiveModal.showModal) archiveModal.showModal(); else archiveModal.setAttribute('open','');
+}
+function closeArchive(){
+  if(archiveModal.close) archiveModal.close(); else archiveModal.removeAttribute('open');
+}
+document.getElementById('archiveClose').addEventListener('click', closeArchive);
+
+async function playArchiveDay(date){
+  closeArchive();
+  if(date === TODAY) return leaveChallenge();     // "today" from the archive is just today
+  track('archive_open', { puzzle: puzzleNumber(date) });
+  panel.classList.remove('has-chart');
+  panel.innerHTML = `<p class="sub">Loading puzzle #${puzzleNumber(date)}…</p>`;
+  let data;
+  try{ data = await fetchDaily(date); }
+  catch(err){
+    panel.classList.remove('has-chart');
+    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
+    return;
+  }
+  // Reuses challenge mode rather than inventing a third mode: it already means
+  // "a specific past day, scored normally, recorded nowhere". `archive` only
+  // changes which sentence the banner shows, since nobody sent this one.
+  CHALLENGE = { active:true, from:'', score:null, date, archive:true };
+  MODE = 'challenge';
+  SERVED_DATE = data.date; PUZZLE_NO = data.puzzleNumber;
+  ROUNDS = data.questions;
+  idx = 0; roundScores = []; roundDetails = [];
+  startScreen();
+}
 
 /* ============================= PRIVACY MODAL ============================= */
 const privacyModal = document.getElementById('privacyModal');
