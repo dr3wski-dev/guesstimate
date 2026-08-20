@@ -435,7 +435,13 @@ try{
     .app:not(:has(.panel.has-chart)){ max-width:660px; }
     .panel.has-chart{
       display:grid;
-      grid-template-columns:minmax(0,auto) minmax(420px,1fr);
+      /* Column one asks for the chart's ideal width and will give it up: the min is
+         0, so when the card cannot spare it — a 2560px monitor still caps the card at
+         1280 — the grid shrinks the chart rather than letting it push the text column
+         off the edge. Column two never drops below 420, which is what the prompt and
+         the reference values need to stay readable. */
+      grid-template-columns:minmax(0, min(52vw, calc((100dvh - 240px) * 4 / 3)))
+                            minmax(420px, 1fr);
       column-gap:34px;
       /* Explicit rows so the second column can be COMPOSED rather than just stacked.
          Everything sizes to its content except one flexible row, which absorbs the
@@ -445,16 +451,28 @@ try{
       grid-template-rows:min-content min-content min-content min-content 1fr min-content;
     }
     /* span, not `1 / -1` — see the note in the phone-landscape block. */
-    .has-chart .chart-frame{ grid-column:1; grid-row:1 / -1; margin:0; align-self:start; }
+    /* fit-content, because the SVG is sized by HEIGHT here and derives its width
+       from aspect-ratio. The frame does not learn that width on its own, so it kept
+       its column width while the chart grew past it — and a frame narrower than its
+       contents draws its own right border straight across the chart, clipping the
+       last x-axis tick. Measured: 919px of chart inside an 881px frame. */
+    /* The frame's width is stated, and the chart fills it. Deriving it the other
+       way round — sizing the SVG by height and letting aspect-ratio produce a width —
+       leaves the frame not knowing how wide its contents are: as a grid item it kept
+       its column width and drew its own border across the chart (919px of chart in an
+       881px frame), and fit-content then fixed that by overflowing into the text
+       column instead. Both are the same mistake, that two boxes each waited for the
+       other to decide.
+       So: width is min(what the column can spare, what the viewport height allows at
+       4:3). Whichever binds, the SVG fills exactly that and nothing overflows. */
+    .has-chart .chart-frame{
+      grid-column:1; grid-row:1 / -1; margin:0; align-self:start;
+      width:100%;
+    }
     /* Height-driven, with aspect-ratio deriving the width: a viewBox SVG given only
        a max-height has nothing to resolve against and collapses to 0x0. The cap
        stops a tall monitor from producing a chart bigger than it is useful to aim at. */
-    .has-chart .chart-frame svg{
-      height:min(calc(100dvh - 226px), 600px);
-      min-height:320px;
-      width:auto;
-      aspect-ratio:560 / 420;
-    }
+    .has-chart .chart-frame svg{ width:100%; height:auto; }
     .has-chart .league-tag{ grid-column:2; grid-row:1; }
     .has-chart .prompt{ grid-column:2; grid-row:2; }
     .has-chart .instructions{ grid-column:2; grid-row:3; }
@@ -516,7 +534,7 @@ try{
        explicit row line, so -1 resolves back to line 1 and the chart occupies a
        single row — which puts every right-hand item BELOW it instead of beside it.
        The span count just needs to exceed the number of items in column two. */
-    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; }
+    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; width:fit-content; }
     /* An inline SVG with a viewBox and only a max-height has nothing to resolve its
        size from and collapses to 0x0. Give it a real height and let aspect-ratio
        derive the width — the viewBox is 560x420, so the two must agree. */
@@ -1717,6 +1735,14 @@ function showQuestion(){
     });
     svg.insertBefore(heat, svg.firstChild);
     svg.insertBefore(defs, svg.firstChild);
+    /* The crosshairs come down at the reveal. They exist to answer "what value am I
+       actually choosing" while you aim, and the moment the answer appears that
+       question is over — the readout underneath states both values in words. What
+       replaces them is one line from the guess to the truth, and two dashed lines
+       running off to the axes compete with it for the same glance. */
+    if(guideXEl) guideXEl.remove();
+    if(guideYEl) guideYEl.remove();
+    guideXEl = guideYEl = null;
     const connector = el('line',{x1:xPix(guess.x),y1:yPix(guess.y),x2:tx,y2:ty, stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'4 4'});
     svg.appendChild(connector);
     svg.appendChild(el('circle',{cx:tx,cy:ty,r:9, fill:'var(--good)', stroke:'var(--ink)','stroke-width':2.5, class:'target-marker'}));
