@@ -601,6 +601,11 @@ NFL_ARCHETYPES = [
 ]
 
 
+# No usage-rate archetype. Usage is an analytics stat: it is a share of a team's
+# possessions ended by a player, which you cannot feel from having watched the games,
+# and a chart is only worth guessing at if the player has some intuition about where
+# the dot belongs. True shooting stays — it is a percentage, and a fan reads it the
+# way they read a shooting percentage.
 NBA_ARCHETYPES = [
     dict(id='ppg-ra', x='pts', y='ra', xl='Points per game (season)', xu='PPG',
          yl='Rebounds + assists per game (season)', yu='REB+AST',
@@ -617,9 +622,6 @@ NBA_ARCHETYPES = [
     dict(id='3pa-3pct', x='fg3a', y='fg3_pct', xl='3-point attempts per game (season)',
          xu='3PA', yl='3-point percentage (season)', yu='3P%', xstep=0.1, ystep=0.1,
          need=('fg3a', 3)),
-    dict(id='usg-ts', x='usg_pct', y='ts_pct', xl='Usage rate (season)', xu='USG%',
-         yl='True shooting percentage (season)', yu='TS%', xstep=0.1, ystep=0.1,
-         need=('min', 24)),
     dict(id='ast-tov', x='ast', y='tov', xl='Assists per game (season)', xu='APG',
          yl='Turnovers per game (season)', yu='TOV', xstep=0.1, ystep=0.1,
          need=('min', 24)),

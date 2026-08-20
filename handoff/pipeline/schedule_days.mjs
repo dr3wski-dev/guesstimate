@@ -151,8 +151,22 @@ function check(pool, schedule) {
     }
     // A pinned id that no longer exists in the pool serves a SHORT round rather
     // than failing, so it has to be caught here or not at all.
+    //
+    // On a day that has been PLAYED this is the more serious version of the same
+    // thing: a challenge link to that day has to keep reproducing what the sender
+    // saw, so a question that has ever been served can never be deleted, even when
+    // its whole archetype is retired. Retiring the usage-rate charts hit exactly
+    // this — one of them had gone out that morning — and the message says so,
+    // because "not in the pool" alone reads like a typo rather than like history
+    // being rewritten.
+    const played = date <= new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
     for (const id of pins || []) {
-      if (!ids.has(id)) problems.push(`${date}: pinned id '${id}' is not in the pool`);
+      if (!ids.has(id)) {
+        problems.push(played
+          ? `${date}: '${id}' was SERVED on this day and is no longer in the pool. `
+            + `A question that has been played cannot be removed — restore it.`
+          : `${date}: pinned id '${id}' is not in the pool`);
+      }
     }
     if (new Set(pins || []).size !== (pins || []).length) {
       problems.push(`${date}: the same question appears twice on one day`);
