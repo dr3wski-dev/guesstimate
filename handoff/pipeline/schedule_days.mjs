@@ -49,14 +49,36 @@ function dealOrder(available, cycle) {
   return seededShuffle(sorted, hashString(`schedule-cycle-${cycle}`));
 }
 
-function extend(pool, schedule, days) {
-  const used = new Set(Object.values(schedule).flat());
-  const out = { ...schedule };
+/* Which days can never be rewritten.
+ *
+ * The rule that matters is narrower than "every day already in the file". A day
+ * somebody has PLAYED is history: its questions are in their stats, and a challenge
+ * link to it has to keep reproducing what the sender saw. A day next week is not
+ * history, it is a plan, and plans are supposed to be editable — otherwise the first
+ * batch of content ever generated would own the calendar forever and a themed day
+ * could never be added.
+ *
+ * So: today and everything before it is frozen. Everything after is re-dealt on each
+ * run, deterministically, so the same inputs keep producing the same calendar. */
+function frozenThrough() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+}
+
+function extend(pool, schedule, days, themed = {}) {
+  const today = frozenThrough();
+  const played = Object.fromEntries(
+    Object.entries(schedule).filter(([date]) => date <= today));
+
+  // Themed days are authored by hand and win over anything generated. Their questions
+  // are also withheld from the deal, so a Kobe Bryant day cannot be spoiled by one of
+  // its own questions turning up the Tuesday before.
+  const out = { ...played, ...themed };
+  const used = new Set(Object.values(out).flat());
   let queue = [], cycle = 0, added = 0;
 
   for (let day = 0; day < days; day++) {
     const date = dateFor(day);
-    if (out[date]) continue;                       // already played or already pinned
+    if (out[date]) continue;                       // played, or a themed day
     while (queue.length < DAILY_COUNT) {
       // A cycle is one pass through everything not yet scheduled. When it empties,
       // the next cycle re-deals the whole pool, which is where repeats begin — the
@@ -109,6 +131,12 @@ function check(pool, schedule) {
 const args = process.argv.slice(2);
 const pool = read(POOL_PATH);
 const schedule = fs.existsSync(SCHEDULE_PATH) ? read(SCHEDULE_PATH) : {};
+// Hand-authored days, kept in their own file so an editorial decision is never
+// mistaken for generator output — a themed day in schedule.json would be
+// indistinguishable from the 59 days a script dealt, and the next run would quietly
+// deal over it.
+const THEMED_PATH = path.join(DATA, 'themed_days.json');
+const themed = fs.existsSync(THEMED_PATH) ? read(THEMED_PATH) : {};
 
 if (args.includes('--check')) {
   const { problems, dates, covered, today } = check(pool, schedule);
@@ -128,16 +156,27 @@ if (args.includes('--check')) {
 const di = args.indexOf('--days');
 const days = di >= 0 ? parseInt(args[di + 1], 10) : 60;
 const before = Object.keys(schedule).length;
-const { schedule: next, added } = extend(pool, schedule, days);
+const { schedule: next, added } = extend(pool, schedule, days, themed);
 
-// Sorted on write so a diff shows the days that were appended rather than a
-// reshuffled object.
+// Sorted on write so a diff shows what moved rather than a reshuffled object.
 const sorted = Object.fromEntries(Object.keys(next).sort().map(k => [k, next[k]]));
+
+// The guarantee, enforced at the last possible moment: a day that has been played
+// cannot be rewritten by anything above — not a themed day authored over the top of
+// it, not a re-deal, not a bug in this file.
+const today = frozenThrough();
 for (const date of Object.keys(schedule)) {
+  if (date > today) continue;
   if (JSON.stringify(schedule[date]) !== JSON.stringify(sorted[date])) {
-    console.error(`REFUSING TO WRITE: ${date} would change. Existing days are immutable.`);
+    console.error(`REFUSING TO WRITE: ${date} has been played and would change.`);
     process.exit(1);
   }
 }
+const moved = Object.keys(sorted).filter(d => d > today && schedule[d]
+  && JSON.stringify(schedule[d]) !== JSON.stringify(sorted[d])).length;
 fs.writeFileSync(SCHEDULE_PATH, JSON.stringify(sorted, null, 2) + '\n');
+if (Object.keys(themed).length) {
+  console.log(`themed days honoured: ${Object.keys(themed).sort().join(', ')}`);
+}
+if (moved) console.log(`${moved} future day(s) re-dealt; every played day unchanged`);
 console.log(`schedule: ${before} days -> ${Object.keys(sorted).length} (${added} appended, 0 changed)`);

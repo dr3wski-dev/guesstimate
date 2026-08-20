@@ -607,8 +607,20 @@ def ref_combos(n, seed):
     return combos
 
 
-def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
-    """entries: list of player/season dicts. Returns ranked candidate questions."""
+def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=None):
+    """entries: list of player/season dicts. Returns ranked candidate questions.
+
+    `only` is a normalised player key. Passing one builds a THEMED DAY: every
+    candidate has that player as the answer, and the two rules that normally stop a
+    player recurring — one question per person, and never re-use someone who is
+    already an answer in the pool — are lifted, because for a themed day recurrence
+    is the entire point. Those rules exist to stop a player meeting Rod Carew in
+    three rounds by accident; a Kobe Bryant day is not an accident.
+
+    They are lifted for the TARGET only. References are still three distinct people
+    and still exclude every other season of the target, so a chart never shows the
+    answer sitting next to himself.
+    """
     out = []
     for arch in archetypes:
         xk, yk = arch['x'], arch['y']
@@ -625,7 +637,10 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
         # that feels like many charts and one that feels like a single chart with the
         # answer moved — a sameness players notice without being able to name it.
         ref_use = Counter()
-        for tgt in elig:
+        # A themed day narrows who can be the ANSWER; `elig` stays whole, so the
+        # references still come from the full field.
+        targets = [e for e in elig if e['who'] == only] if only else elig
+        for tgt in targets:
             # Three references that bracket the target on both axes. Exclude every
             # other season by the same player: "guess Marshawn Lynch 2012" with
             # Marshawn Lynch 2008 sitting on the chart as a reference is a muddle,
@@ -700,12 +715,16 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
     # right identity — it is what disambiguated the two Ricky Williamses. Against the
     # shipped pool only the display name is available, since questions.json stores no
     # ids, so that comparison has to go through normalised names.
-    shipped = shipped_targets()
+    shipped = shipped_targets() if not only else set()
     per, used, final = Counter(), set(), []
     for c in out:
         a = c['id'].split('-')[1]
         who = c['target_who']
-        if per[a] >= per_arch or who in used:
+        # On a themed day the same person is the answer every round by design, so the
+        # one-per-player rule is skipped — but one question per ARCHETYPE still holds,
+        # or five Kobe questions could all be usage-vs-true-shooting with the season
+        # swapped, which is one question shown five times.
+        if per[a] >= per_arch or (not only and who in used):
             continue
         if norm(c['targetPlayer'].split(',')[0]) in shipped:
             continue
@@ -833,8 +852,14 @@ def main():
     ap.add_argument('--league', choices=['mlb', 'nfl', 'nba'])
     ap.add_argument('--top', type=int, default=10)
     ap.add_argument('--per-archetype', type=int, default=2)
+    ap.add_argument('--only', metavar='PLAYER',
+                    help='themed day: build candidates whose ANSWER is always this '
+                         'player, one per archetype (e.g. --only "Kobe Bryant")')
     ap.add_argument('--json')
     a = ap.parse_args()
+    # Resolved once, and loudly: a typo'd name would otherwise produce an empty batch
+    # that looks like "no good candidates" rather than "no such player".
+    only = norm(a.only) if a.only else None
 
     if a.fetch:
         print('fetching:'); fetch(); return 0
@@ -849,19 +874,19 @@ def main():
         elig = list(entries.values())
         cands = build(elig, NBA_ARCHETYPES, 'NBA',
                       lambda e: f"{e['name']}, {e['season']}-{str(e['season']+1)[2:]}",
-                      NBA_SOURCE, a.top, a.per_archetype)
+                      NBA_SOURCE, a.top, a.per_archetype, only=only)
     elif a.league == 'mlb':
         entries, dmax = mlb_careers(pool)
         # career questions only for players whose career finished inside the data
         elig = [e for e in entries.values()
                 if e['career_complete'] and e['pool']['Status'] == 'Retired']
-        cands = build(elig, MLB_ARCHETYPES, 'MLB', lambda e: e['name'], MLB_SOURCE, a.top, a.per_archetype)
+        cands = build(elig, MLB_ARCHETYPES, 'MLB', lambda e: e['name'], MLB_SOURCE, a.top, a.per_archetype, only=only)
     else:
         entries, dmax = nfl_seasons(pool)
         # season questions are frozen history — no staleness risk at all
         elig = [e for e in entries.values() if e['season'] >= NFL_MIN_SEASON]
         cands = build(elig, NFL_ARCHETYPES, 'NFL',
-                      lambda e: f"{e['name']}, {e['season']}", NFL_SOURCE, a.top, a.per_archetype)
+                      lambda e: f"{e['name']}, {e['season']}", NFL_SOURCE, a.top, a.per_archetype, only=only)
 
     print(f'# {a.league.upper()}: {len(elig)} eligible, {len(cands)} candidates '
           f'(data through {dmax})\n')
