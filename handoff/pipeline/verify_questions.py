@@ -36,6 +36,20 @@ MLB_LABELS = {
     'Career games played': 'G',
     'Career hits': 'H',
 }
+# Pitchers are a separate table, keyed the same way. Kept apart from MLB_LABELS
+# because 'H' means hits-by-a-batter in one and hits-allowed in the other — one
+# shared table would silently check a pitcher's hits allowed against a hitter's hits.
+MLB_PITCH_LABELS = {
+    'Career strikeouts': 'SO',
+    'Career earned run average': 'ERA',
+    'Career wins': 'W',
+    'Career saves': 'SV',
+    'Career complete games': 'CG',
+    'Career innings pitched': 'IP',
+    'Career WHIP': 'WHIP',
+    'Career strikeouts per nine innings': 'K9',
+    'Career walks per nine innings': 'BB9',
+}
 NBA_LABELS = {
     'Points per game (season)': 'pts',
     'Rebounds + assists per game (season)': 'ra',
@@ -65,6 +79,27 @@ NFL_LABELS = {
     'Yards per catch (season)': 'ypr',
     'Targets (season)': 'tgt',
     'Completions (season)': 'comp',
+    'Receiving air yards (season)': 'air_yds',
+    'Yards after catch (season)': 'yac',
+    'Receiving first downs (season)': 'rec_fd',
+    'Yards per target (season)': 'ypt',
+    'Catch rate (season)': 'catch_pct',
+}
+# Seasons where a column exists but is not a measurement. Targets echo receptions in
+# 2003-2008, and air yards are flat zero before 2006. Four values shipped from the
+# first window before anyone checked, and THIS FILE PASSED THEM — it re-derived from
+# the same broken column and agreed with the generator. Two readings of one bad
+# source agreeing is not verification, so the windows are named here as well: a
+# question that plots one now fails rather than reproduces.
+NFL_TARGETS_BROKEN = range(2003, 2009)
+NFL_AIRYARDS_FROM = 2006
+NFL_SEASON_GATED = {
+    'tgt': lambda yr: yr not in NFL_TARGETS_BROKEN,
+    'ypt': lambda yr: yr not in NFL_TARGETS_BROKEN,
+    'catch_pct': lambda yr: yr not in NFL_TARGETS_BROKEN,
+    'air_yds': lambda yr: yr >= NFL_AIRYARDS_FROM,
+    'yac': lambda yr: yr >= NFL_AIRYARDS_FROM,
+    'rec_fd': lambda yr: yr >= NFL_AIRYARDS_FROM,
 }
 
 
@@ -139,6 +174,47 @@ def mlb_table():
     return out
 
 
+def mlb_pitch_table():
+    """{normalized name: {stat: value}} for pitchers, re-derived independently.
+
+    Rates are recomputed from career totals rather than averaged over seasons, for the
+    same reason the generator does it: averaging season ERAs weights a two-inning
+    September the same as a 250-inning year and produces a number in no record book.
+    Being a separate code path is the point — if both sides made the same mistake here
+    they would agree with each other and both be wrong."""
+    pitch, people = read('Pitching.csv'), read('People.csv')
+    name_of = {p['playerID']: f"{p.get('nameFirst','')} {p.get('nameLast','')}".strip()
+               for p in people}
+    tot = defaultdict(Counter)
+    for r in pitch:
+        for c in ('W','L','G','GS','CG','SHO','SV','IPouts','H','ER','HR','BB','SO'):
+            if r[c]:
+                tot[r['playerID']][c] += int(r[c])
+
+    claims = defaultdict(list)
+    for pid, c in tot.items():
+        if c['IPouts'] < 900:
+            continue
+        claims[norm(name_of.get(pid, ''))].append((pid, c))
+
+    def row(c):
+        outs = c['IPouts']
+        return {'SO': c['SO'], 'W': c['W'], 'SV': c['SV'], 'CG': c['CG'],
+                'IP': round(outs / 3, 1),
+                'ERA': round(c['ER'] * 27 / outs, 2),
+                'K9': round(c['SO'] * 27 / outs, 1),
+                'BB9': round(c['BB'] * 27 / outs, 1),
+                'WHIP': round((c['H'] + c['BB']) * 3 / outs, 2)}
+
+    out = {}
+    for key, cl in claims.items():
+        cl.sort(key=lambda t: -t[1]['IPouts'])
+        if len(cl) > 1 and cl[1][1]['IPouts'] / cl[0][1]['IPouts'] >= 0.5:
+            continue                                  # ambiguous name, refuse to guess
+        out[key] = row(cl[0][1])
+    return out
+
+
 def nba_table():
     """{(normalized name, season): {stat: value}} from the compact NBA cache."""
     rows = read('nba_player_seasons.csv')
@@ -188,7 +264,8 @@ def nfl_table():
         wk[(pid, yr)].add(r['week'])
         for c in ('rushing_yards','rushing_tds','receiving_yards','receiving_tds',
                   'receptions','targets','completions','carries','passing_tds',
-                  'interceptions'):
+                  'interceptions','receiving_air_yards',
+                  'receiving_yards_after_catch','receiving_first_downs'):
             if r.get(c):
                 agg[(pid, yr)][c] += float(r[c])
         for c in ('rushing_yards','receiving_yards','passing_yards'):
@@ -219,6 +296,13 @@ def nfl_table():
             'rush_ypg': round(c['rushing_yards'] / g, 1) if g else None,
             'ypc': round(c['rushing_yards'] / c['carries'], 1) if c['carries'] >= 100 else None,
             'ypr': round(c['receiving_yards'] / c['receptions'], 1) if c['receptions'] >= 30 else None,
+            'air_yds': int(c['receiving_air_yards']),
+            'yac': int(c['receiving_yards_after_catch']),
+            'rec_fd': int(c['receiving_first_downs']),
+            'ypt': (round(c['receiving_yards'] / c['targets'], 1)
+                    if c['targets'] >= 50 else None),
+            'catch_pct': (round(c['receptions'] / c['targets'] * 100, 1)
+                          if c['targets'] >= 50 else None),
         }
     return out
 
@@ -233,6 +317,7 @@ def split_season(label):
 def main():
     questions = json.load(open(QJSON))
     mlb, nfl, nba = mlb_table(), nfl_table(), nba_table()
+    mlbp = mlb_pitch_table()
     checked = mismatched = unverified = 0
     problems, skipped = [], []
 
@@ -240,6 +325,16 @@ def main():
         labels = ({'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
                   .get(q['league'], {}))
         xk, yk = labels.get(q['xLabel']), labels.get(q['yLabel'])
+        # A pitching question is an MLB question whose labels are not in the hitters'
+        # table. Resolve against the pitchers' table instead, and only if BOTH axes
+        # are pitching stats — a chart mixing the two would be a bug worth catching,
+        # not something to paper over by looking in two tables.
+        pitching = (q['league'] == 'MLB' and not (xk and yk)
+                    and MLB_PITCH_LABELS.get(q['xLabel'])
+                    and MLB_PITCH_LABELS.get(q['yLabel']))
+        if pitching:
+            xk = MLB_PITCH_LABELS[q['xLabel']]
+            yk = MLB_PITCH_LABELS[q['yLabel']]
         if not xk or not yk:
             unverified += 1
             skipped.append(f"{q['id']} ({q['league']}: {q['xLabel']} / {q['yLabel']})")
@@ -249,7 +344,8 @@ def main():
         for who, gx, gy, kind in points:
             nm, season = split_season(who)
             if q['league'] == 'MLB':
-                rec = mlb.get('@' + who) or mlb.get(norm(nm))
+                rec = (mlbp.get(norm(nm)) if pitching
+                       else (mlb.get('@' + who) or mlb.get(norm(nm))))
             elif q['league'] == 'NBA':
                 rec = nba.get((norm(nm), season))
             else:
@@ -259,6 +355,15 @@ def main():
                 mismatched += 1
                 continue
             for key, shipped, axis in ((xk, gx, 'x'), (yk, gy, 'y')):
+                # A value from a season where this column is not a measurement is a
+                # failure however well the two sides agree about it.
+                gate = NFL_SEASON_GATED.get(key) if q['league'] == 'NFL' else None
+                if gate and season is not None and not gate(season):
+                    mismatched += 1
+                    problems.append(
+                        f"{q['id']}: {kind} '{who}' {axis} ({key}) comes from a season "
+                        f"where that column carries no measurement")
+                    continue
                 actual = rec.get(key)
                 checked += 1
                 if actual is None or abs(float(actual) - float(shipped)) > 1e-6:

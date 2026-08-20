@@ -269,6 +269,17 @@ try{
   .fact-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px; }
   .fact{ color:var(--ink); line-height:1.6; font-size:14.5px; margin:0; }
   .fact-source{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:8px 0 0; }
+  .src-details > summary{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint);
+    cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:5px;
+    /* 24px of height on a 11px label: the row is a tap target, not just text. */
+    min-height:24px;
+  }
+  .src-details > summary::-webkit-details-marker{ display:none; }
+  .src-details > summary::after{ content:'▾'; font-size:9px; transition:transform .15s ease; }
+  .src-details[open] > summary::after{ transform:rotate(180deg); }
+  .src-details > summary:hover{ color:var(--ink); }
+  @media (prefers-reduced-motion:reduce){ .src-details > summary::after{ transition:none; } }
 
   .next-row{ display:flex; justify-content:flex-end; gap:10px; align-items:center; flex-wrap:wrap; }
   .note{ font-size:12px; color:var(--ink-faint); margin-top:22px; line-height:1.6; }
@@ -393,38 +404,72 @@ try{
      instruction line stays, the type stays at reading size. There is room; the
      layout just was not asking for it. */
   @media (min-width:1080px) and (min-height:620px){
-    .app{ max-width:min(1280px, 95vw); }
-    .panel{
+    /* Scoped to .has-chart, and that scoping is the whole point. The two-column
+       layout exists to put a chart beside its text; applied to a screen with no
+       chart it just chops whatever is there into two arbitrary columns — which is
+       exactly what it did to the start screen, stranding the title and streak in a
+       left column with 400px of nothing under them.
+       Screens without a chart are prose. They get a column width you can read
+       across instead of the full 1280. */
+    .app:has(.panel.has-chart){ max-width:min(1280px, 95vw); }
+    .app:not(:has(.panel.has-chart)){ max-width:660px; }
+    .panel.has-chart{
       display:grid;
-      grid-template-columns:minmax(0,auto) minmax(380px,1fr);
-      column-gap:28px;
-      align-items:start;
+      grid-template-columns:minmax(0,auto) minmax(420px,1fr);
+      column-gap:34px;
+      /* Explicit rows so the second column can be COMPOSED rather than just stacked.
+         Everything sizes to its content except one flexible row, which absorbs the
+         difference between the chart's height and the text's — that gap was 307px of
+         nothing, and it was showing. The action bar then sits on the baseline of the
+         chart instead of floating in the middle of an empty column. */
+      grid-template-rows:min-content min-content min-content min-content 1fr min-content;
     }
     /* span, not `1 / -1` — see the note in the phone-landscape block. */
-    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; }
+    .has-chart .chart-frame{ grid-column:1; grid-row:1 / -1; margin:0; align-self:start; }
     /* Height-driven, with aspect-ratio deriving the width: a viewBox SVG given only
        a max-height has nothing to resolve against and collapses to 0x0. The cap
        stops a tall monitor from producing a chart bigger than it is useful to aim at. */
-    .chart-frame svg{
+    .has-chart .chart-frame svg{
       height:min(calc(100dvh - 226px), 600px);
       min-height:320px;
       width:auto;
       aspect-ratio:560 / 420;
     }
-    .league-tag,.prompt,.instructions,.legend,#revealArea,.actionbar{ grid-column:2; }
+    .has-chart .league-tag{ grid-column:2; grid-row:1; }
+    .has-chart .prompt{ grid-column:2; grid-row:2; }
+    .has-chart .instructions{ grid-column:2; grid-row:3; }
+    .has-chart .legend{ grid-column:2; grid-row:4; }
+    .has-chart #revealArea{ grid-column:2; grid-row:5; align-self:start; }
+    /* The bar bleeds to the card edge with negative margins so its rule spans the
+       full width — right in one column, wrong in two, where the left bleed reaches
+       under the chart and its divider crosses the x-axis labels. Only the right
+       bleed survives here. */
+    .has-chart .actionbar{ grid-column:2; grid-row:6; align-self:end; margin-left:0; }
+
+    /* 11.5px monospace was being asked to carry the instruction and every reference
+       value on a 1440px screen. At normal reading distance that is under the size
+       where sustained reading stops being work, and the column has the room — the
+       whole reason the gap above existed. Body copy comes up to 14, the reference
+       values to 13.5, and the prompt gets the line-height that a two-line heading
+       needs to read as one thing. */
+    .has-chart .instructions{ font-size:14px; line-height:1.55; margin-bottom:18px; }
+    .has-chart .legend{ font-size:13.5px; gap:7px 16px; }
+    .has-chart .prompt{ font-size:26px; line-height:1.22; }
+    .has-chart .readout{ font-size:14px; }
     /* The readout is ellipsised everywhere else so it can never grow and push the
        button onto a second line — on a phone that costs the player their aim. Here
        there is room, and truncating "Tap the chart to place your guess" to "Tap the
        chart to p…" is just losing the sentence for no reason.
        The reserved height is what keeps the guarantee: two lines' worth is held
        whether the text needs one or two, so the bar is the same height before and
-       after a guess and the button still does not move. */
+       after a guess and the button still does not move.
+
        NOT display:flex here. The readout's contents are inline spans separated by
        ordinary whitespace, and making it a flex container turns each span into a
        flex item — which drops the whitespace between them and renders
        "Your guess:21.6 PPG,38.7 PPG". The actionbar is already a flex row with
        align-items:center, so the readout is centred as an item of that. */
-    .actionbar .readout{
+    .has-chart .actionbar .readout{
       white-space:normal; overflow:visible; text-overflow:clip;
       min-height:36px;
     }
@@ -955,7 +1000,21 @@ function distForScore(points){
 const SHOW_FACT = false;
 function factBlockHTML(r){
   if(!SHOW_FACT){
-    return `<div class="fact-block"><p class="fact-source">${escapeHtml(r.source)}</p></div>`;
+    /* Collapsed, and this is a balance rather than a demotion.
+     *
+     * Provenance is the thing this project is actually built on — every number
+     * traceable to a named dataset — so it has to be on the reveal and not buried in
+     * an about page. But with the written fact switched off it became the ONLY prose
+     * there, and three lines of "via the sportsdataverse/hoopR release" was the
+     * largest block under the chart at the exact moment a player wants to know how
+     * close they got. It was carrying weight it was never designed to carry.
+     *
+     * A <details> keeps the promise intact — one tap, no navigation, no request —
+     * while giving the screen back to the answer. */
+    return `<div class="fact-block"><details class="src-details">
+        <summary>Source</summary>
+        <p class="fact-source">${escapeHtml(r.source)}</p>
+      </details></div>`;
   }
   return `<div class="fact-block">
           <div class="fact-label">Why it's interesting</div>
@@ -1241,6 +1300,7 @@ function startScreen(){
   const replayNote = playedToday
     ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
     : '';
+  panel.classList.remove('has-chart');
   panel.innerHTML = `
     <h1 class="title">StatMap</h1>
     <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
@@ -1279,13 +1339,15 @@ function startScreen(){
 async function leaveChallenge(){
   CHALLENGE = { active:false, from:'', score:null, date:null };
   try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  panel.classList.remove('has-chart');
   panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
   // Today's questions come from the server like every other day's — the client
   // can't compute them any more, which is the point.
   let data;
   try{ data = await fetchDaily(null); }
   catch(err){
-    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
+    panel.classList.remove('has-chart');
+  panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
     return;
   }
   MODE = 'daily';
@@ -1305,7 +1367,19 @@ function showQuestion(){
   const xStep = r.xStep || DEFAULT_STEP, yStep = r.yStep || DEFAULT_STEP;
   const [xMin, xMax] = resolveDomain(r.xDomain, r.referencePlayers.map(p=>p.x), r.targetX);
   const [yMin, yMax] = resolveDomain(r.yDomain, r.referencePlayers.map(p=>p.y), r.targetY);
-  const W = 560, H = 420, padL = 54, padR = 20, padT = 20, padB = 44;
+  /* The chart is the whole game, and on a phone it was using 28% of the screen
+     while 172px sat empty below the card. It could not simply be made bigger: the
+     SVG is width:100%, so at a 560x420 viewBox its height is decided by the card's
+     width and nothing else. Spending vertical space means changing the RATIO.
+
+     Which is free. Distance is normalized per axis in chart space (0-1 on each),
+     so the pixel aspect ratio has no effect on scoring, difficulty or the fairness
+     gates — only on how much room the player has to aim in. Measured after: 233px
+     to 345px of chart, 28% to 41% of the screen. */
+  const W = 560;
+  const H = window.matchMedia('(max-width:560px) and (orientation:portrait)').matches
+    ? 600 : 420;
+  const padL = 54, padR = 20, padT = 20, padB = 44;
   const plotW = W-padL-padR, plotH = H-padT-padB;
   const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
   const yPix = (v)=> padT + plotH - ((v-yMin)/(yMax-yMin))*plotH;
@@ -1319,10 +1393,16 @@ function showQuestion(){
     `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b> · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
   ).join('');
 
+  panel.classList.add('has-chart');
   panel.innerHTML = `
     <div class="league-tag">${escapeHtml(r.league)}</div>
     <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br><span class="player">${escapeHtml(r.targetPlayer)}</span></div>
-    <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once. Or tab in and use the arrow keys</div>
+    <!-- The player's name is in the prompt directly above, and the readout below the
+         chart already says what to do. Repeating the full name here made three
+         overlapping instructions on a screen whose interaction is obvious after one
+         round — and it cost 42px of the dimension the chart most needed. What is left
+         is the only part not stated anywhere else: that the keyboard works. -->
+    <div class="instructions">${POINTER_VERB === 'Click' ? 'Click or drag' : 'Tap or drag'} on the chart, or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
     <div class="legend">${legendHTML}</div>
     <div id="revealArea" aria-live="polite"></div>
@@ -1702,6 +1782,7 @@ function showResults(){
     ? `<div class="streak-line">🔥 <b>${liveStreak(stats, TODAY)}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
     : `<div class="streak-line">Challenge round. Doesn't affect your streak</div>`;
 
+  panel.classList.remove('has-chart');
   panel.innerHTML = `
     <div style="text-align:center;">
       <div class="topline" style="justify-content:center;">ROUND COMPLETE</div>
@@ -1932,12 +2013,14 @@ document.getElementById('statsClose').addEventListener('click', ()=>{
 // One round-trip to the questions API before anything can render. Fails visibly
 // rather than leaving the page stuck on nothing.
 async function init(){
+  panel.classList.remove('has-chart');
   panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
   let data;
   try{
     data = await fetchDaily(CHALLENGE.date || null);
   }catch(err){
-    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
+    panel.classList.remove('has-chart');
+  panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
     return;
   }
   // Every one of these is the server's answer, not this device's opinion.

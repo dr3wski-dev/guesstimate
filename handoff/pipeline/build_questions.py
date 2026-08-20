@@ -56,7 +56,7 @@ POOL_CSV = os.path.join(HERE, '..', 'data', 'athlete_pool.csv')
 
 # Pinned sources. Bump these deliberately; every shipped number traces to one.
 MLB_BASE = 'https://raw.githubusercontent.com/cbwinslow/baseballdatabank/master/core'
-MLB_FILES = ['Batting', 'People', 'AllstarFull']
+MLB_FILES = ['Batting', 'Pitching', 'People', 'AllstarFull']
 NFL_URL = 'https://github.com/nflverse/nflverse-data/releases/download/player_stats/player_stats.csv'
 # hoopR / sportsdataverse republishes stats.nba.com's leaguedashplayerstats per season.
 # One file per season, so fetch() collapses the ones we need into a single compact CSV.
@@ -67,6 +67,11 @@ NBA_COMPACT = 'nba_player_seasons.csv'
 
 MLB_SOURCE = ('Lahman / Chadwick Bureau baseball databank (core/Batting.csv, '
               'core/AllstarFull.csv), regular season.')
+MLB_PITCH_SOURCE = ('Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), '
+                    'regular season. Career rates are recomputed from season totals '
+                    '— ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather '
+                    'than averaged across seasons, which would weight a September '
+                    'call-up the same as a 250-inning year.')
 # Aggregated from play-by-play, which is stated plainly because it is not identical
 # to the official gamebook. Spot-checked against 18 well-known season figures: every
 # discrete count (touchdowns, receptions, interceptions, completions) matched exactly,
@@ -78,6 +83,22 @@ NFL_SOURCE = ('nflverse-data player_stats release, regular-season weekly rows '
               'or two.')
 # 1999-2001 play-by-play is materially less complete than 2002 onward.
 NFL_MIN_SEASON = 2002
+# Targets are UNUSABLE for 2003-2008. In that window the column simply echoes
+# receptions: measured across the cache, targets == receptions in 99-100% of rows
+# with a catch, against roughly 30-40% in every other season. Marvin Harrison's 2003
+# comes out as 94 targets and 94 catches — a hundred per cent catch rate, when he was
+# actually thrown at about 141 times.
+#
+# This shipped before it was noticed, in four plotted values, and the verifier passed
+# them: it re-derives targets from the same column, so both sides agreed and both were
+# wrong. Agreement between two readings of one broken source is not verification.
+# Anything derived from targets is withheld for these seasons instead.
+NFL_TARGETS_BROKEN = range(2003, 2009)
+# Air yards and yards-after-catch simply do not exist before 2006 — every row with
+# catches reports zero, which is a missing measurement wearing a real number's
+# clothes. Left as 0 it would plot Jerry Rice as having caught every ball at the line
+# of scrimmage. Withheld, so no archetype can reach for it.
+NFL_AIRYARDS_FROM = 2006
 NBA_SOURCE = ('stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR '
               'nba_stats_player_season_stats release. Regular-season per-game averages.')
 
@@ -249,6 +270,72 @@ def mlb_careers(pool_all, gate=True):
     return out, data_max
 
 
+# ---------------------------------------------------------------- MLB pitchers
+def mlb_pitchers(pool_all, gate=True):
+    """Career pitching lines.
+
+    WHY THIS EXISTS SEPARATELY FROM mlb_careers
+    42 of the 158 curated MLB names are pitchers, and every one of them was
+    unreachable — the loader read Batting.csv, where a pitcher's line is a handful of
+    at-bats or nothing at all. That is most of the reason MLB was the thinnest league
+    at 48 questions against the NBA's 84, and why it capped the league rotation.
+
+    RATES ARE RECOMPUTED, NOT AVERAGED
+    ERA, K/9 and BB/9 are all "per 9 innings", and innings are counted here in OUTS
+    (IPouts), which is how the databank stores them. A career ERA is earned runs
+    across the whole career per 27 outs across the whole career. Averaging the season
+    ERAs instead would weight a September call-up the same as a 250-inning season and
+    quietly produce a number that appears nowhere in any record book.
+    """
+    pool = pool_all['MLB']
+    pitch, people = _read('Pitching.csv'), _read('People.csv')
+    ppl = {p['playerID']: p for p in people}
+    tot, years = defaultdict(Counter), defaultdict(set)
+    for r in pitch:
+        pid = r['playerID']
+        years[pid].add(int(r['yearID']))
+        for c in ('W','L','G','GS','CG','SHO','SV','IPouts','H','ER','HR','BB','SO'):
+            if r[c]:
+                tot[pid][c] += int(r[c])
+    data_max = max(int(r['yearID']) for r in pitch)
+
+    by_name = defaultdict(list)
+    for pid, c in tot.items():
+        p = ppl.get(pid)
+        # 900 outs is 300 innings — enough that a rate stat means something, low
+        # enough to keep a short peak career like Koufax's, which is exactly the kind
+        # of career worth asking about.
+        if not p or c['IPouts'] < 900:
+            continue
+        nm = f"{p.get('nameFirst','')} {p.get('nameLast','')}".strip()
+        by_name[norm(nm)].append((pid, nm, c))
+    chosen = disambiguate(by_name, lambda t: t[2]['IPouts'])
+
+    out = {}
+    for key, (pid, nm, c) in chosen.items():
+        if gate and key not in pool:
+            continue
+        outs = c['IPouts']
+        last = max(years[pid])
+        out[key] = {
+            'name': nm, 'last_season': last, 'first_season': min(years[pid]),
+            'who': key, 'player_id': pid,
+            'career_complete': last <= data_max - 2,
+            'pool': pool.get(key, {'Tier': '', 'Status': ''}),
+            'stats': {
+                'W': c['W'], 'L': c['L'], 'G': c['G'], 'GS': c['GS'],
+                'CG': c['CG'], 'SHO': c['SHO'], 'SV': c['SV'], 'SO': c['SO'],
+                'BB': c['BB'], 'H': c['H'], 'ER': c['ER'], 'HR': c['HR'],
+                'IP': round(outs / 3, 1),
+                'ERA': round(c['ER'] * 27 / outs, 2),
+                'K9': round(c['SO'] * 27 / outs, 1),
+                'BB9': round(c['BB'] * 27 / outs, 1),
+                'WHIP': round((c['H'] + c['BB']) * 3 / outs, 2),
+            },
+        }
+    return out, data_max
+
+
 # ---------------------------------------------------------------- NFL
 def nfl_seasons(pool_all, gate=True):
     pool = pool_all['NFL']
@@ -266,9 +353,16 @@ def nfl_seasons(pool_all, gate=True):
         seasons[yr] = True
         names[pid] = r['player_display_name']
         wk[key].add(r['week'])
+        # Counting stats only, summed. NOT target_share / racr / wopr: those are
+        # weekly RATIOS, so summing them is meaningless and averaging them is an
+        # approximation of a season share rather than the season share — the true
+        # figure needs team totals this file does not carry. A number that is nearly
+        # right is the one thing this pipeline will not ship.
         for c in ('rushing_yards','rushing_tds','receiving_yards','receiving_tds',
                   'passing_yards','passing_tds','interceptions','attempts',
-                  'completions','receptions','carries','targets'):
+                  'completions','receptions','carries','targets',
+                  'receiving_air_yards','receiving_yards_after_catch',
+                  'receiving_first_downs'):
             v = r.get(c)
             if v:
                 try:
@@ -307,7 +401,19 @@ def nfl_seasons(pool_all, gate=True):
                 'rush_yds': int(c['rushing_yards']), 'rush_td': int(c['rushing_tds']),
                 'rec_yds': int(c['receiving_yards']), 'rec_td': int(c['receiving_tds']),
                 'rec': int(c['receptions']), 'carries': int(c['carries']),
-                'tgt': int(c['targets']), 'comp': int(c['completions']),
+                'tgt': None if yr in NFL_TARGETS_BROKEN else int(c['targets']),
+                'comp': int(c['completions']),
+                'air_yds': (int(c['receiving_air_yards'])
+                            if yr >= NFL_AIRYARDS_FROM else None),
+                'yac': (int(c['receiving_yards_after_catch'])
+                        if yr >= NFL_AIRYARDS_FROM else None),
+                'rec_fd': (int(c['receiving_first_downs'])
+                           if yr >= NFL_AIRYARDS_FROM else None),
+                # Both exact: a ratio of two summed counts, not an average of ratios.
+                'ypt': (round(c['receiving_yards'] / c['targets'], 1)
+                        if c['targets'] >= 50 and yr not in NFL_TARGETS_BROKEN else None),
+                'catch_pct': (round(c['receptions'] / c['targets'] * 100, 1)
+                              if c['targets'] >= 50 and yr not in NFL_TARGETS_BROKEN else None),
                 'pass_yds': int(c['passing_yards']), 'pass_td': int(c['passing_tds']),
                 'int': int(c['interceptions']), 'att': int(c['attempts']),
                 'rush_ypg': round(c['rushing_yards'] / g, 1),
@@ -413,6 +519,35 @@ MLB_ARCHETYPES = [
          yl='Career stolen bases', yu='SB', xstep=1, ystep=1, minab=5000),
 ]
 
+MLB_PITCH_ARCHETYPES = [
+    # Every one of these pairs something you rarely see plotted against something a
+    # baseball fan reads instantly, which is the shape the game is built on.
+    dict(id='so-era',  x='SO',  y='ERA', xl='Career strikeouts', xu='K',
+         yl='Career earned run average', yu='ERA', xstep=1, ystep=0.01,
+         need=('IP', 1000)),
+    # The chart the entire "wins are a bad statistic" argument has always wanted.
+    dict(id='w-era',   x='W',   y='ERA', xl='Career wins', xu='W',
+         yl='Career earned run average', yu='ERA', xstep=1, ystep=0.01,
+         need=('IP', 1000)),
+    dict(id='k9-bb9',  x='K9',  y='BB9', xl='Career strikeouts per nine innings',
+         xu='K/9', yl='Career walks per nine innings', yu='BB/9',
+         xstep=0.1, ystep=0.1, need=('IP', 1000)),
+    # An era question wearing a player question's clothes: a 1970s workhorse and a
+    # modern strikeout arm sit in opposite corners and never meet.
+    dict(id='cg-so',   x='CG',  y='SO',  xl='Career complete games', xu='CG',
+         yl='Career strikeouts', yu='K', xstep=1, ystep=1, need=('IP', 1000)),
+    # Closers, where the counting stat and the quality stat come apart hard. The
+    # innings gate has to drop or every reliever is filtered out before we start.
+    dict(id='sv-era',  x='SV',  y='ERA', xl='Career saves', xu='SV',
+         yl='Career earned run average', yu='ERA', xstep=1, ystep=0.01,
+         need=('SV', 50)),
+    dict(id='ip-so',   x='IP',  y='SO',  xl='Career innings pitched', xu='IP',
+         yl='Career strikeouts', yu='K', xstep=0.1, ystep=1, need=('IP', 1000)),
+    dict(id='whip-so', x='WHIP', y='SO', xl='Career WHIP', xu='WHIP',
+         yl='Career strikeouts', yu='K', xstep=0.01, ystep=1, need=('IP', 1000)),
+]
+
+
 NFL_ARCHETYPES = [
     dict(id='rushypg-td', x='rush_ypg', y='rush_td', xl='Rushing yards per game (season)',
          xu='YPG', yl='Rushing touchdowns (season)', yu='TDs', xstep=0.1, ystep=1,
@@ -438,18 +573,39 @@ NFL_ARCHETYPES = [
     dict(id='ypr-recyds', x='ypr', y='rec_yds', xl='Yards per catch (season)', xu='YPC',
          yl='Receiving yards (season)', yu='yards', xstep=0.1, ystep=1,
          need=('rec_yds', 700)),
-    dict(id='tgt-recyds', x='tgt', y='rec_yds', xl='Targets (season)', xu='targets',
-         yl='Receiving yards (season)', yu='yards', xstep=1, ystep=1,
-         need=('rec_yds', 700)),
     dict(id='comp-passtd', x='comp', y='pass_td', xl='Completions (season)', xu='comp',
          yl='Passing touchdowns (season)', yu='TDs', xstep=1, ystep=1,
          need=('pass_yds', 3000)),
+    # Receivers. The pool leaned on running backs because rushing archetypes were
+    # written first; every column these need was already in the cache, unused.
+    #
+    # Deliberately NO target-derived archetypes. Targets echo receptions for six
+    # seasons, which shipped four wrong values before it was noticed, and a column
+    # that needs an era-specific asterisk to be trusted is one that will be trusted
+    # wrongly again. Receptions carries the same meaning with none of that: it is
+    # counted the same way in every season and it is the number a fan already knows.
+    # The withholding logic and the verifier gate stay in place regardless, so
+    # re-adding a target archetype fails loudly rather than quietly.
+    dict(id='airyds-yac', x='air_yds', y='yac', xl='Receiving air yards (season)',
+         xu='air yds', yl='Yards after catch (season)', yu='YAC', xstep=1, ystep=1,
+         need=('rec_yds', 700)),
+    dict(id='rec-fd', x='rec', y='rec_fd', xl='Receptions (season)', xu='rec',
+         yl='Receiving first downs (season)', yu='1st downs', xstep=1, ystep=1,
+         need=('rec', 45)),
+    dict(id='airyds-rectd', x='air_yds', y='rec_td', xl='Receiving air yards (season)',
+         xu='air yds', yl='Receiving touchdowns (season)', yu='TDs', xstep=1, ystep=1,
+         need=('rec_yds', 600)),
     dict(id='rushtd-rectd', x='rush_td', y='rec_td', xl='Rushing touchdowns (season)',
          xu='TDs', yl='Receiving touchdowns (season)', yu='TDs', xstep=1, ystep=1,
          need=('rush_yds', 400)),
 ]
 
 
+# No usage-rate archetype. Usage is an analytics stat: it is a share of a team's
+# possessions ended by a player, which you cannot feel from having watched the games,
+# and a chart is only worth guessing at if the player has some intuition about where
+# the dot belongs. True shooting stays — it is a percentage, and a fan reads it the
+# way they read a shooting percentage.
 NBA_ARCHETYPES = [
     dict(id='ppg-ra', x='pts', y='ra', xl='Points per game (season)', xu='PPG',
          yl='Rebounds + assists per game (season)', yu='REB+AST',
@@ -466,9 +622,6 @@ NBA_ARCHETYPES = [
     dict(id='3pa-3pct', x='fg3a', y='fg3_pct', xl='3-point attempts per game (season)',
          xu='3PA', yl='3-point percentage (season)', yu='3P%', xstep=0.1, ystep=0.1,
          need=('fg3a', 3)),
-    dict(id='usg-ts', x='usg_pct', y='ts_pct', xl='Usage rate (season)', xu='USG%',
-         yl='True shooting percentage (season)', yu='TS%', xstep=0.1, ystep=0.1,
-         need=('min', 24)),
     dict(id='ast-tov', x='ast', y='tov', xl='Assists per game (season)', xu='APG',
          yl='Turnovers per game (season)', yu='TOV', xstep=0.1, ystep=0.1,
          need=('min', 24)),
@@ -607,8 +760,21 @@ def ref_combos(n, seed):
     return combos
 
 
-def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
-    """entries: list of player/season dicts. Returns ranked candidate questions."""
+def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=None,
+          per_player=1):
+    """entries: list of player/season dicts. Returns ranked candidate questions.
+
+    `only` is a normalised player key. Passing one builds a THEMED DAY: every
+    candidate has that player as the answer, and the two rules that normally stop a
+    player recurring — one question per person, and never re-use someone who is
+    already an answer in the pool — are lifted, because for a themed day recurrence
+    is the entire point. Those rules exist to stop a player meeting Rod Carew in
+    three rounds by accident; a Kobe Bryant day is not an accident.
+
+    They are lifted for the TARGET only. References are still three distinct people
+    and still exclude every other season of the target, so a chart never shows the
+    answer sitting next to himself.
+    """
     out = []
     for arch in archetypes:
         xk, yk = arch['x'], arch['y']
@@ -625,7 +791,10 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
         # that feels like many charts and one that feels like a single chart with the
         # answer moved — a sameness players notice without being able to name it.
         ref_use = Counter()
-        for tgt in elig:
+        # A themed day narrows who can be the ANSWER; `elig` stays whole, so the
+        # references still come from the full field.
+        targets = [e for e in elig if e['who'] == only] if only else elig
+        for tgt in targets:
             # Three references that bracket the target on both axes. Exclude every
             # other season by the same player: "guess Marshawn Lynch 2012" with
             # Marshawn Lynch 2008 sitting on the chart as a reference is a muddle,
@@ -700,17 +869,40 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2):
     # right identity — it is what disambiguated the two Ricky Williamses. Against the
     # shipped pool only the display name is available, since questions.json stores no
     # ids, so that comparison has to go through normalised names.
-    shipped = shipped_targets()
-    per, used, final = Counter(), set(), []
+    shipped = shipped_targets() if not only else set()
+    # per_player > 1 lets one player answer more than one question, and it is what
+    # makes a long calendar possible at all: an NBA player has sixteen distinct
+    # seasons and the pool was using one of them. The rule it relaxes exists to stop
+    # somebody meeting Rod Carew in three rounds out of five — across seventy days
+    # that costs far more than it protects.
+    #
+    # Only ever with a DIFFERENT season and a different archetype, so the second
+    # question is a different question and not the same chart re-dealt. For a career
+    # league there is only one career, so callers leave this at 1 there.
+    per, used, final = Counter(), Counter(), []
+    seasons_used = defaultdict(set)
     for c in out:
         a = c['id'].split('-')[1]
         who = c['target_who']
-        if per[a] >= per_arch or who in used:
+        season = c['targetPlayer'].split(',')[-1].strip() if ',' in c['targetPlayer'] else None
+        # On a themed day the same person is the answer every round by design, so the
+        # one-per-player rule is skipped — but one question per ARCHETYPE still holds,
+        # or five Kobe questions could all be usage-vs-true-shooting with the season
+        # swapped, which is one question shown five times.
+        if per[a] >= per_arch:
             continue
-        if norm(c['targetPlayer'].split(',')[0]) in shipped:
-            continue
+        if not only:
+            if used[who] >= per_player:
+                continue
+            # A second question about the same player has to be a second SEASON.
+            if season is not None and season in seasons_used[who]:
+                continue
+            if norm(c['targetPlayer'].split(',')[0]) in shipped:
+                continue
         per[a] += 1
-        used.add(who)
+        used[who] += 1
+        if season is not None:
+            seasons_used[who].add(season)
         final.append(c)
     return final[:top]
 
@@ -830,11 +1022,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--fetch', action='store_true')
     ap.add_argument('--validate', action='store_true')
-    ap.add_argument('--league', choices=['mlb', 'nfl', 'nba'])
+    ap.add_argument('--league', choices=['mlb', 'mlbp', 'nfl', 'nba'],
+                    help="mlbp is MLB pitchers, which are a separate dataset "
+                         "(Pitching.csv) and separate archetypes from the hitters")
     ap.add_argument('--top', type=int, default=10)
     ap.add_argument('--per-archetype', type=int, default=2)
+    ap.add_argument('--per-player', type=int, default=1,
+                    help='how many questions one player may answer, each from a '
+                         'different season (season leagues only)')
+    ap.add_argument('--only', metavar='PLAYER',
+                    help='themed day: build candidates whose ANSWER is always this '
+                         'player, one per archetype (e.g. --only "Kobe Bryant")')
     ap.add_argument('--json')
     a = ap.parse_args()
+    # Resolved once, and loudly: a typo'd name would otherwise produce an empty batch
+    # that looks like "no good candidates" rather than "no such player".
+    only = norm(a.only) if a.only else None
 
     if a.fetch:
         print('fetching:'); fetch(); return 0
@@ -849,19 +1052,29 @@ def main():
         elig = list(entries.values())
         cands = build(elig, NBA_ARCHETYPES, 'NBA',
                       lambda e: f"{e['name']}, {e['season']}-{str(e['season']+1)[2:]}",
-                      NBA_SOURCE, a.top, a.per_archetype)
+                      NBA_SOURCE, a.top, a.per_archetype, only=only,
+                      per_player=a.per_player)
     elif a.league == 'mlb':
         entries, dmax = mlb_careers(pool)
         # career questions only for players whose career finished inside the data
         elig = [e for e in entries.values()
                 if e['career_complete'] and e['pool']['Status'] == 'Retired']
-        cands = build(elig, MLB_ARCHETYPES, 'MLB', lambda e: e['name'], MLB_SOURCE, a.top, a.per_archetype)
+        cands = build(elig, MLB_ARCHETYPES, 'MLB', lambda e: e['name'], MLB_SOURCE, a.top, a.per_archetype, only=only)
+    elif a.league == 'mlbp':
+        entries, dmax = mlb_pitchers(pool)
+        # Same staleness rule as the hitters: a career line for someone still playing
+        # is a snapshot being presented as a finished career.
+        elig = [e for e in entries.values()
+                if e['career_complete'] and e['pool']['Status'] == 'Retired']
+        cands = build(elig, MLB_PITCH_ARCHETYPES, 'MLB', lambda e: e['name'],
+                      MLB_PITCH_SOURCE, a.top, a.per_archetype, only=only)
     else:
         entries, dmax = nfl_seasons(pool)
         # season questions are frozen history — no staleness risk at all
         elig = [e for e in entries.values() if e['season'] >= NFL_MIN_SEASON]
         cands = build(elig, NFL_ARCHETYPES, 'NFL',
-                      lambda e: f"{e['name']}, {e['season']}", NFL_SOURCE, a.top, a.per_archetype)
+                      lambda e: f"{e['name']}, {e['season']}", NFL_SOURCE, a.top, a.per_archetype, only=only,
+                      per_player=a.per_player)
 
     print(f'# {a.league.upper()}: {len(elig)} eligible, {len(cands)} candidates '
           f'(data through {dmax})\n')

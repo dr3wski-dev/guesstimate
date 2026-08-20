@@ -49,22 +49,89 @@ function dealOrder(available, cycle) {
   return seededShuffle(sorted, hashString(`schedule-cycle-${cycle}`));
 }
 
-function extend(pool, schedule, days) {
-  const used = new Set(Object.values(schedule).flat());
-  const out = { ...schedule };
+/* Which days can never be rewritten.
+ *
+ * The rule that matters is narrower than "every day already in the file". A day
+ * somebody has PLAYED is history: its questions are in their stats, and a challenge
+ * link to it has to keep reproducing what the sender saw. A day next week is not
+ * history, it is a plan, and plans are supposed to be editable — otherwise the first
+ * batch of content ever generated would own the calendar forever and a themed day
+ * could never be added.
+ *
+ * So: today and everything before it is frozen. Everything after is re-dealt on each
+ * run, deterministically, so the same inputs keep producing the same calendar. */
+// The person behind a question, ignoring which season it is about.
+function personOf(pool, id) {
+  const q = pool.find(x => x.id === id);
+  return q ? q.targetPlayer.split(',')[0].trim() : id;
+}
+
+function frozenThrough() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+}
+
+/* The three-day league rotation.
+ *
+ * 2/2/1, 1/2/2, 2/1/2 — which sums to five per league per cycle, dead even, without
+ * any single day reading as a themed day.
+ *
+ * It exists because the plain deal clumps. Puzzle #4 shipped as five NBA questions,
+ * and a football fan got nothing that day; five of the first 77 days were
+ * single-league. Shuffling a pool that is 38% basketball produces all-basketball days
+ * at exactly the rate chance says it should, and no amount of re-shuffling fixes a
+ * distribution — only constraining the deal does.
+ *
+ * A balanced rotation is only as long as the smallest league times three, which is
+ * why this could not be switched on earlier: at 63 MLB questions it would have
+ * SHORTENED the calendar from 41 days to 38. It is on now because every league
+ * clears 150.
+ */
+const ROTATION = [
+  { NBA: 2, NFL: 2, MLB: 1 },
+  { NBA: 1, NFL: 2, MLB: 2 },
+  { NBA: 2, NFL: 1, MLB: 2 },
+];
+
+function extend(pool, schedule, days, themed = {}) {
+  const today = frozenThrough();
+  const played = Object.fromEntries(
+    Object.entries(schedule).filter(([date]) => date <= today));
+
+  // Themed days are authored by hand and win over anything generated. Their questions
+  // are also withheld from the deal, so a Kobe Bryant day cannot be spoiled by one of
+  // its own questions turning up the Tuesday before.
+  const out = { ...played, ...themed };
+  const used = new Set(Object.values(out).flat());
   let queue = [], cycle = 0, added = 0;
 
   for (let day = 0; day < days; day++) {
     const date = dateFor(day);
-    if (out[date]) continue;                       // already played or already pinned
-    while (queue.length < DAILY_COUNT) {
+    if (out[date]) continue;                       // played, or a themed day
+    // The rotation slot is keyed on the day index, not on how many days this run
+    // happens to fill, so a day's league mix does not depend on when it was dealt.
+    const want = { ...ROTATION[day % ROTATION.length] };
+    queue = [];
+    const onDeck = new Set();
+    for (let guard = 0; queue.length < DAILY_COUNT && guard < 8; guard++) {
       // A cycle is one pass through everything not yet scheduled. When it empties,
       // the next cycle re-deals the whole pool, which is where repeats begin — the
       // same anti-repeat guarantee the bag gave, made explicit and permanent.
       const available = pool.filter(q => !used.has(q.id));
       if (available.length === 0) { used.clear(); cycle++; continue; }
-      const next = dealOrder(available, cycle).slice(0, DAILY_COUNT - queue.length);
-      next.forEach(q => { queue.push(q.id); used.add(q.id); });
+      let took = 0;
+      for (const q of dealOrder(available, cycle)) {
+        if (queue.length >= DAILY_COUNT) break;
+        if (!want[q.league]) continue;             // this league is filled for today
+        // Never the same person twice on one day. A player can answer more than one
+        // question now — different seasons — so the deal could otherwise put Kobe
+        // Bryant in rounds two and four of one puzzle, which reads as a bug.
+        const p = personOf(pool, q.id);
+        if (onDeck.has(p)) continue;
+        onDeck.add(p); want[q.league]--; queue.push(q.id); used.add(q.id); took++;
+      }
+      // Nothing taken with stock still on the shelf means the remaining questions
+      // cannot satisfy the quota — start the next cycle rather than spin.
+      if (took === 0) { used.clear(); cycle++; }
     }
     out[date] = queue.splice(0, DAILY_COUNT);
     added++;
@@ -84,8 +151,22 @@ function check(pool, schedule) {
     }
     // A pinned id that no longer exists in the pool serves a SHORT round rather
     // than failing, so it has to be caught here or not at all.
+    //
+    // On a day that has been PLAYED this is the more serious version of the same
+    // thing: a challenge link to that day has to keep reproducing what the sender
+    // saw, so a question that has ever been served can never be deleted, even when
+    // its whole archetype is retired. Retiring the usage-rate charts hit exactly
+    // this — one of them had gone out that morning — and the message says so,
+    // because "not in the pool" alone reads like a typo rather than like history
+    // being rewritten.
+    const played = date <= new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
     for (const id of pins || []) {
-      if (!ids.has(id)) problems.push(`${date}: pinned id '${id}' is not in the pool`);
+      if (!ids.has(id)) {
+        problems.push(played
+          ? `${date}: '${id}' was SERVED on this day and is no longer in the pool. `
+            + `A question that has been played cannot be removed — restore it.`
+          : `${date}: pinned id '${id}' is not in the pool`);
+      }
     }
     if (new Set(pins || []).size !== (pins || []).length) {
       problems.push(`${date}: the same question appears twice on one day`);
@@ -109,6 +190,12 @@ function check(pool, schedule) {
 const args = process.argv.slice(2);
 const pool = read(POOL_PATH);
 const schedule = fs.existsSync(SCHEDULE_PATH) ? read(SCHEDULE_PATH) : {};
+// Hand-authored days, kept in their own file so an editorial decision is never
+// mistaken for generator output — a themed day in schedule.json would be
+// indistinguishable from the 59 days a script dealt, and the next run would quietly
+// deal over it.
+const THEMED_PATH = path.join(DATA, 'themed_days.json');
+const themed = fs.existsSync(THEMED_PATH) ? read(THEMED_PATH) : {};
 
 if (args.includes('--check')) {
   const { problems, dates, covered, today } = check(pool, schedule);
@@ -128,16 +215,27 @@ if (args.includes('--check')) {
 const di = args.indexOf('--days');
 const days = di >= 0 ? parseInt(args[di + 1], 10) : 60;
 const before = Object.keys(schedule).length;
-const { schedule: next, added } = extend(pool, schedule, days);
+const { schedule: next, added } = extend(pool, schedule, days, themed);
 
-// Sorted on write so a diff shows the days that were appended rather than a
-// reshuffled object.
+// Sorted on write so a diff shows what moved rather than a reshuffled object.
 const sorted = Object.fromEntries(Object.keys(next).sort().map(k => [k, next[k]]));
+
+// The guarantee, enforced at the last possible moment: a day that has been played
+// cannot be rewritten by anything above — not a themed day authored over the top of
+// it, not a re-deal, not a bug in this file.
+const today = frozenThrough();
 for (const date of Object.keys(schedule)) {
+  if (date > today) continue;
   if (JSON.stringify(schedule[date]) !== JSON.stringify(sorted[date])) {
-    console.error(`REFUSING TO WRITE: ${date} would change. Existing days are immutable.`);
+    console.error(`REFUSING TO WRITE: ${date} has been played and would change.`);
     process.exit(1);
   }
 }
+const moved = Object.keys(sorted).filter(d => d > today && schedule[d]
+  && JSON.stringify(schedule[d]) !== JSON.stringify(sorted[d])).length;
 fs.writeFileSync(SCHEDULE_PATH, JSON.stringify(sorted, null, 2) + '\n');
+if (Object.keys(themed).length) {
+  console.log(`themed days honoured: ${Object.keys(themed).sort().join(', ')}`);
+}
+if (moved) console.log(`${moved} future day(s) re-dealt; every played day unchanged`);
 console.log(`schedule: ${before} days -> ${Object.keys(sorted).length} (${added} appended, 0 changed)`);
