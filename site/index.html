@@ -13,6 +13,29 @@
 <link rel="canonical" href="https://statmap.app/">
 <title>StatMap: Daily Sports Stat Guessing Game</title>
 <meta name="author" content="Drew Tanous">
+<script>
+/* Read the challenge parameters and take them out of the URL, before anything else
+   on this page runs.
+ *
+ * WHY THIS IS IN THE HEAD AND NOT WHERE IT LOGICALLY BELONGS
+ * A challenge link carries a name its sender typed: ?challenge=1&from=Drew&score=350.
+ * Analytics scripts record the page URL they see, and the analytics tag is deferred,
+ * which means it runs after this inline script. So scrubbing here is the difference
+ * between a first name somebody typed staying on their friend's device and that name
+ * being posted to a third party we do not control. It also keeps it out of browser
+ * history and out of any Referer header this page later sends.
+ *
+ * The parameters are captured first and read from here rather than from
+ * location.search, so the feature is unchanged — the banner still names the sender.
+ *
+ * What this CANNOT fix: the request already reached the server with the full URL, so
+ * it may sit in the host's access logs. That is disclosed in the privacy note rather
+ * than pretended away. */
+window.__SM_PARAMS = new URLSearchParams(location.search);
+try{
+  if(location.search) history.replaceState(null, '', location.pathname + location.hash);
+}catch(e){ /* a blocked history API must never stop the game loading */ }
+</script>
 <meta name="description" content="Five sports stat questions a day. Real players are plotted on a chart. You guess where another one falls. Same questions for everyone, every day.">
 <!-- Open Graph / Twitter. This game's distribution model is people pasting a link
      into a group chat, which means this card IS the landing page for most players.
@@ -351,6 +374,62 @@
 
      Bounded by max-height rather than orientation alone, so a landscape iPad — which
      has plenty of height — keeps the portrait layout it already reads well in. */
+  /* Laptops. The same constraint as phone-landscape — wide and short — arrived at
+     from the other direction, and it was going unaddressed because 620px is the only
+     width this layout ever had.
+
+     Measured at 1440x812 before this block existed: the card was 620px wide on a
+     1440px screen, the chart 548x411, and the page STILL scrolled (889px of content
+     in 812px of viewport). Roughly 800px of horizontal space sat empty while the
+     submit button hung off the bottom edge — narrow and cramped simultaneously,
+     which is the specific thing that feels wrong about it.
+
+     Stacking cannot be rescued by tuning. At 812px tall the non-chart chrome is
+     ~478px, so a chart that fits under it is SMALLER than the 620px column already
+     gave. The width has to be used, or the chart has to shrink. So the chart moves
+     beside the text and is sized by height.
+
+     Unlike the phone-landscape block below, nothing here is compressed away: the
+     instruction line stays, the type stays at reading size. There is room; the
+     layout just was not asking for it. */
+  @media (min-width:1080px) and (min-height:620px){
+    .app{ max-width:min(1280px, 95vw); }
+    .panel{
+      display:grid;
+      grid-template-columns:minmax(0,auto) minmax(380px,1fr);
+      column-gap:28px;
+      align-items:start;
+    }
+    /* span, not `1 / -1` — see the note in the phone-landscape block. */
+    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; }
+    /* Height-driven, with aspect-ratio deriving the width: a viewBox SVG given only
+       a max-height has nothing to resolve against and collapses to 0x0. The cap
+       stops a tall monitor from producing a chart bigger than it is useful to aim at. */
+    .chart-frame svg{
+      height:min(calc(100dvh - 226px), 600px);
+      min-height:320px;
+      width:auto;
+      aspect-ratio:560 / 420;
+    }
+    .league-tag,.prompt,.instructions,.legend,#revealArea,.actionbar{ grid-column:2; }
+    /* The readout is ellipsised everywhere else so it can never grow and push the
+       button onto a second line — on a phone that costs the player their aim. Here
+       there is room, and truncating "Tap the chart to place your guess" to "Tap the
+       chart to p…" is just losing the sentence for no reason.
+       The reserved height is what keeps the guarantee: two lines' worth is held
+       whether the text needs one or two, so the bar is the same height before and
+       after a guess and the button still does not move. */
+       NOT display:flex here. The readout's contents are inline spans separated by
+       ordinary whitespace, and making it a flex container turns each span into a
+       flex item — which drops the whitespace between them and renders
+       "Your guess:21.6 PPG,38.7 PPG". The actionbar is already a flex row with
+       align-items:center, so the readout is centred as an item of that. */
+    .actionbar .readout{
+      white-space:normal; overflow:visible; text-overflow:clip;
+      min-height:36px;
+    }
+  }
+
   @media (orientation:landscape) and (max-height:560px){
     body{ padding:6px 10px; align-items:flex-start; }
     .app{ max-width:none; }
@@ -439,6 +518,48 @@
   <div id="howBody"></div>
 </dialog>
 
+<!-- Written as plain sentences rather than a policy. The whole point is that there
+     is almost nothing to disclose, and burying that in legal register would make it
+     read like there is. -->
+<dialog class="modal" id="privacyModal" aria-labelledby="privacyTitle">
+  <div class="modal-head">
+    <h2 id="privacyTitle">Privacy</h2>
+    <button class="icon-btn" id="privacyClose" aria-label="Close">✕</button>
+  </div>
+  <div id="privacyBody">
+    <p><b>No account, no sign-up, no cookies.</b> You never tell this site who you are,
+    and it never asks.</p>
+
+    <p><b>Your streak and scores stay on this device.</b> They live in your browser's
+    own storage and are never sent anywhere. Clear your browser data and they are gone
+    — which is why the stats screen offers a restore code you can copy somewhere safe.
+    That code is yours; nothing about it is stored here.</p>
+
+    <p><b>Anonymous usage counts.</b> This site uses
+    <a href="https://umami.is/privacy" target="_blank" rel="noopener noreferrer">Umami</a>,
+    a cookieless analytics tool, to count things like how many people start a round,
+    which question they were on when they stopped, and what score bands come up. It
+    records no cookies and no IP addresses, and there is no identifier that links one
+    visit to another. Nobody can be picked out of it, including by me.</p>
+
+    <p><b>What is never collected.</b> Your name, your email, your location beyond the
+    country a request arrives from, or anything you type. When you add a name to a
+    challenge link, that name is put in the link <em>you</em> send and is removed from
+    the address bar the moment the page opens — it is not sent to the analytics tool.
+    It does travel to the web host as part of the link, where it may appear briefly in
+    routine server logs, the same as any web address.</p>
+
+    <p><b>Where it is hosted.</b> Cloudflare serves the site and the questions, and
+    keeps standard access logs. Umami Cloud holds the anonymous counts above.</p>
+
+    <p><b>Children.</b> This is a sports trivia game, not aimed at children, and it
+    collects nothing that would identify anyone of any age.</p>
+
+    <p class="sub" style="margin-top:14px;">Questions: the whole site is open source —
+    you can read exactly what it collects rather than take my word for it.</p>
+  </div>
+</dialog>
+
 <dialog class="modal" id="statsModal" aria-labelledby="statsTitle">
   <div class="modal-head">
     <h2 id="statsTitle">Your stats</h2>
@@ -491,7 +612,10 @@ function sanitizeDate(raw){
 // possible score (the day they played) may not match the recipient's (today), since
 // the pool keeps growing.
 const CHALLENGE_MAX_SCORE = 5000;
-const challengeParams = new URLSearchParams(location.search);
+// Captured by the inline script in <head> before the URL was scrubbed. Reading
+// location.search here instead would find nothing, which is the point — see the
+// comment on that script.
+const challengeParams = window.__SM_PARAMS || new URLSearchParams(location.search);
 // Mutable: leaveChallenge() clears this so a player who arrived on a friend's link
 // can get out of it and reach today's puzzle. See the note there.
 let CHALLENGE = challengeParams.get('challenge') === '1' ? {
@@ -871,6 +995,22 @@ function prefersReducedMotion(){
 // Still strip a trailing season year from target players written like "Jonathan
 // Taylor, 2021" — that's identifying a season, not a person, and the prompt text
 // above the chart already states it.
+/* "Tap" or "Click", decided by what the person is actually holding.
+ *
+ * The readout said "Tap the chart" on every device while the instruction line two
+ * elements above it said "Click or drag" — so a laptop player was told to do two
+ * different things at once, and neither line was wrong enough to notice quickly.
+ *
+ * Queried rather than assumed from screen width: a touchscreen laptop is wide and
+ * still wants "Tap", and pointer:fine is the property that actually decides it. The
+ * fallback is "Tap" because a browser that cannot answer is more likely to be an old
+ * mobile one. */
+const POINTER_VERB = (() => {
+  try{
+    return window.matchMedia('(pointer: fine)').matches ? 'Click' : 'Tap';
+  }catch(e){ return 'Tap'; }
+})();
+
 function shortLabel(name){
   // Handles both season formats the content uses: "Jonathan Taylor, 2021" (NFL/MLB
   // single seasons) and "Baron Davis, 2003-04" (NBA, which spans two calendar
@@ -1110,7 +1250,7 @@ function startScreen(){
     <div class="next-row">${leaveChallengeBtn}<button class="primary" id="startBtn">${startLabel}</button></div>
     ${replayNote}
     <div><button class="how-link" id="howLink">How does scoring work?</button></div>
-    <p class="byline">Built by Drew Tanous</p>
+    <p class="byline">Built by Drew Tanous · <button class="how-link" id="privacyLink">Privacy</button></p>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     if(resuming){ idx = roundScores.length; showQuestion(); return; }
@@ -1119,6 +1259,8 @@ function startScreen(){
   });
   const tb = document.getElementById('todayBtn');
   if(tb) tb.addEventListener('click', leaveChallenge);
+  const pl = document.getElementById('privacyLink');
+  if(pl) pl.addEventListener('click', openPrivacy);
   const hl = document.getElementById('howLink');
   if(hl) hl.addEventListener('click', openHow);
 }
@@ -1185,7 +1327,7 @@ function showQuestion(){
     <div class="legend">${legendHTML}</div>
     <div id="revealArea" aria-live="polite"></div>
     <div class="actionbar">
-      <div class="readout" id="readout" aria-live="polite">Tap the chart to place your guess</div>
+      <div class="readout" id="readout" aria-live="polite">${POINTER_VERB} the chart to place your guess</div>
       <button class="primary" id="submitBtn" disabled>Submit guess</button>
     </div>
   `;
@@ -1658,6 +1800,15 @@ function openHow(){
 document.getElementById('howBtn').addEventListener('click', openHow);
 document.getElementById('howClose').addEventListener('click', ()=>{
   if(howModal.close) howModal.close(); else howModal.removeAttribute('open');
+});
+
+/* ============================= PRIVACY MODAL ============================= */
+const privacyModal = document.getElementById('privacyModal');
+function openPrivacy(){
+  if(privacyModal.showModal) privacyModal.showModal(); else privacyModal.setAttribute('open','');
+}
+document.getElementById('privacyClose').addEventListener('click', ()=>{
+  if(privacyModal.close) privacyModal.close(); else privacyModal.removeAttribute('open');
 });
 
 /* ============================= STATS MODAL ============================= */
