@@ -404,38 +404,72 @@ try{
      instruction line stays, the type stays at reading size. There is room; the
      layout just was not asking for it. */
   @media (min-width:1080px) and (min-height:620px){
-    .app{ max-width:min(1280px, 95vw); }
-    .panel{
+    /* Scoped to .has-chart, and that scoping is the whole point. The two-column
+       layout exists to put a chart beside its text; applied to a screen with no
+       chart it just chops whatever is there into two arbitrary columns — which is
+       exactly what it did to the start screen, stranding the title and streak in a
+       left column with 400px of nothing under them.
+       Screens without a chart are prose. They get a column width you can read
+       across instead of the full 1280. */
+    .app:has(.panel.has-chart){ max-width:min(1280px, 95vw); }
+    .app:not(:has(.panel.has-chart)){ max-width:660px; }
+    .panel.has-chart{
       display:grid;
-      grid-template-columns:minmax(0,auto) minmax(380px,1fr);
-      column-gap:28px;
-      align-items:start;
+      grid-template-columns:minmax(0,auto) minmax(420px,1fr);
+      column-gap:34px;
+      /* Explicit rows so the second column can be COMPOSED rather than just stacked.
+         Everything sizes to its content except one flexible row, which absorbs the
+         difference between the chart's height and the text's — that gap was 307px of
+         nothing, and it was showing. The action bar then sits on the baseline of the
+         chart instead of floating in the middle of an empty column. */
+      grid-template-rows:min-content min-content min-content min-content 1fr min-content;
     }
     /* span, not `1 / -1` — see the note in the phone-landscape block. */
-    .chart-frame{ grid-column:1; grid-row:1 / span 10; margin:0; align-self:start; }
+    .has-chart .chart-frame{ grid-column:1; grid-row:1 / -1; margin:0; align-self:start; }
     /* Height-driven, with aspect-ratio deriving the width: a viewBox SVG given only
        a max-height has nothing to resolve against and collapses to 0x0. The cap
        stops a tall monitor from producing a chart bigger than it is useful to aim at. */
-    .chart-frame svg{
+    .has-chart .chart-frame svg{
       height:min(calc(100dvh - 226px), 600px);
       min-height:320px;
       width:auto;
       aspect-ratio:560 / 420;
     }
-    .league-tag,.prompt,.instructions,.legend,#revealArea,.actionbar{ grid-column:2; }
+    .has-chart .league-tag{ grid-column:2; grid-row:1; }
+    .has-chart .prompt{ grid-column:2; grid-row:2; }
+    .has-chart .instructions{ grid-column:2; grid-row:3; }
+    .has-chart .legend{ grid-column:2; grid-row:4; }
+    .has-chart #revealArea{ grid-column:2; grid-row:5; align-self:start; }
+    /* The bar bleeds to the card edge with negative margins so its rule spans the
+       full width — right in one column, wrong in two, where the left bleed reaches
+       under the chart and its divider crosses the x-axis labels. Only the right
+       bleed survives here. */
+    .has-chart .actionbar{ grid-column:2; grid-row:6; align-self:end; margin-left:0; }
+
+    /* 11.5px monospace was being asked to carry the instruction and every reference
+       value on a 1440px screen. At normal reading distance that is under the size
+       where sustained reading stops being work, and the column has the room — the
+       whole reason the gap above existed. Body copy comes up to 14, the reference
+       values to 13.5, and the prompt gets the line-height that a two-line heading
+       needs to read as one thing. */
+    .has-chart .instructions{ font-size:14px; line-height:1.55; margin-bottom:18px; }
+    .has-chart .legend{ font-size:13.5px; gap:7px 16px; }
+    .has-chart .prompt{ font-size:26px; line-height:1.22; }
+    .has-chart .readout{ font-size:14px; }
     /* The readout is ellipsised everywhere else so it can never grow and push the
        button onto a second line — on a phone that costs the player their aim. Here
        there is room, and truncating "Tap the chart to place your guess" to "Tap the
        chart to p…" is just losing the sentence for no reason.
        The reserved height is what keeps the guarantee: two lines' worth is held
        whether the text needs one or two, so the bar is the same height before and
-       after a guess and the button still does not move. */
+       after a guess and the button still does not move.
+
        NOT display:flex here. The readout's contents are inline spans separated by
        ordinary whitespace, and making it a flex container turns each span into a
        flex item — which drops the whitespace between them and renders
        "Your guess:21.6 PPG,38.7 PPG". The actionbar is already a flex row with
        align-items:center, so the readout is centred as an item of that. */
-    .actionbar .readout{
+    .has-chart .actionbar .readout{
       white-space:normal; overflow:visible; text-overflow:clip;
       min-height:36px;
     }
@@ -1266,6 +1300,7 @@ function startScreen(){
   const replayNote = playedToday
     ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
     : '';
+  panel.classList.remove('has-chart');
   panel.innerHTML = `
     <h1 class="title">StatMap</h1>
     <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
@@ -1304,13 +1339,15 @@ function startScreen(){
 async function leaveChallenge(){
   CHALLENGE = { active:false, from:'', score:null, date:null };
   try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  panel.classList.remove('has-chart');
   panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
   // Today's questions come from the server like every other day's — the client
   // can't compute them any more, which is the point.
   let data;
   try{ data = await fetchDaily(null); }
   catch(err){
-    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
+    panel.classList.remove('has-chart');
+  panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
     return;
   }
   MODE = 'daily';
@@ -1356,6 +1393,7 @@ function showQuestion(){
     `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b> · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
   ).join('');
 
+  panel.classList.add('has-chart');
   panel.innerHTML = `
     <div class="league-tag">${escapeHtml(r.league)}</div>
     <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br><span class="player">${escapeHtml(r.targetPlayer)}</span></div>
@@ -1744,6 +1782,7 @@ function showResults(){
     ? `<div class="streak-line">🔥 <b>${liveStreak(stats, TODAY)}</b>-day streak · best: <b>${stats.bestStreak}</b></div>`
     : `<div class="streak-line">Challenge round. Doesn't affect your streak</div>`;
 
+  panel.classList.remove('has-chart');
   panel.innerHTML = `
     <div style="text-align:center;">
       <div class="topline" style="justify-content:center;">ROUND COMPLETE</div>
@@ -1974,12 +2013,14 @@ document.getElementById('statsClose').addEventListener('click', ()=>{
 // One round-trip to the questions API before anything can render. Fails visibly
 // rather than leaving the page stuck on nothing.
 async function init(){
+  panel.classList.remove('has-chart');
   panel.innerHTML = `<p class="sub">Loading today's puzzle…</p>`;
   let data;
   try{
     data = await fetchDaily(CHALLENGE.date || null);
   }catch(err){
-    panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
+    panel.classList.remove('has-chart');
+  panel.innerHTML = `<p class="sub error-text">${escapeHtml(err.message)}</p>`;
     return;
   }
   // Every one of these is the server's answer, not this device's opinion.
