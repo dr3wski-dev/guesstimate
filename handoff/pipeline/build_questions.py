@@ -573,22 +573,21 @@ NFL_ARCHETYPES = [
     dict(id='ypr-recyds', x='ypr', y='rec_yds', xl='Yards per catch (season)', xu='YPC',
          yl='Receiving yards (season)', yu='yards', xstep=0.1, ystep=1,
          need=('rec_yds', 700)),
-    dict(id='tgt-recyds', x='tgt', y='rec_yds', xl='Targets (season)', xu='targets',
-         yl='Receiving yards (season)', yu='yards', xstep=1, ystep=1,
-         need=('rec_yds', 700)),
     dict(id='comp-passtd', x='comp', y='pass_td', xl='Completions (season)', xu='comp',
          yl='Passing touchdowns (season)', yu='TDs', xstep=1, ystep=1,
          need=('pass_yds', 3000)),
     # Receivers. The pool leaned on running backs because rushing archetypes were
     # written first; every column these need was already in the cache, unused.
+    #
+    # Deliberately NO target-derived archetypes. Targets echo receptions for six
+    # seasons, which shipped four wrong values before it was noticed, and a column
+    # that needs an era-specific asterisk to be trusted is one that will be trusted
+    # wrongly again. Receptions carries the same meaning with none of that: it is
+    # counted the same way in every season and it is the number a fan already knows.
+    # The withholding logic and the verifier gate stay in place regardless, so
+    # re-adding a target archetype fails loudly rather than quietly.
     dict(id='airyds-yac', x='air_yds', y='yac', xl='Receiving air yards (season)',
          xu='air yds', yl='Yards after catch (season)', yu='YAC', xstep=1, ystep=1,
-         need=('rec_yds', 700)),
-    dict(id='tgt-catchpct', x='tgt', y='catch_pct', xl='Targets (season)', xu='targets',
-         yl='Catch rate (season)', yu='catch%', xstep=1, ystep=0.1,
-         need=('rec_yds', 600)),
-    dict(id='ypt-recyds', x='ypt', y='rec_yds', xl='Yards per target (season)',
-         xu='Y/T', yl='Receiving yards (season)', yu='yards', xstep=0.1, ystep=1,
          need=('rec_yds', 700)),
     dict(id='rec-fd', x='rec', y='rec_fd', xl='Receptions (season)', xu='rec',
          yl='Receiving first downs (season)', yu='1st downs', xstep=1, ystep=1,
