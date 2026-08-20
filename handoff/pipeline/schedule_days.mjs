@@ -60,6 +60,12 @@ function dealOrder(available, cycle) {
  *
  * So: today and everything before it is frozen. Everything after is re-dealt on each
  * run, deterministically, so the same inputs keep producing the same calendar. */
+// The person behind a question, ignoring which season it is about.
+function personOf(pool, id) {
+  const q = pool.find(x => x.id === id);
+  return q ? q.targetPlayer.split(',')[0].trim() : id;
+}
+
 function frozenThrough() {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
 }
@@ -85,7 +91,16 @@ function extend(pool, schedule, days, themed = {}) {
       // same anti-repeat guarantee the bag gave, made explicit and permanent.
       const available = pool.filter(q => !used.has(q.id));
       if (available.length === 0) { used.clear(); cycle++; continue; }
-      const next = dealOrder(available, cycle).slice(0, DAILY_COUNT - queue.length);
+      // Never the same person twice on one day. A player can now answer more than
+      // one question — different seasons — so the deal can otherwise put Kobe
+      // Bryant in rounds two and four of the same puzzle, which reads as a bug
+      // rather than as variety.
+      const onDeck = new Set(queue.map(id => personOf(pool, id)));
+      const next = dealOrder(available, cycle)
+        .filter(q => { const p = personOf(pool, q.id);
+                       if (onDeck.has(p)) return false; onDeck.add(p); return true; })
+        .slice(0, DAILY_COUNT - queue.length);
+      if (next.length === 0) { used.clear(); cycle++; continue; }
       next.forEach(q => { queue.push(q.id); used.add(q.id); });
     }
     out[date] = queue.splice(0, DAILY_COUNT);

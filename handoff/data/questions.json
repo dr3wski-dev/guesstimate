@@ -9865,5 +9865,5565 @@
     ],
     "fact": "",
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-mpg-ppg-butler-2013",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      40
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Jimmy Butler III, 2013-14",
+    "targetX": 38.7,
+    "targetY": 13.1,
+    "referencePlayers": [
+      {
+        "name": "Kemba Walker, 2019-20",
+        "x": 31.1,
+        "y": 20.4
+      },
+      {
+        "name": "Nicolas Batum, 2015-16",
+        "x": 35,
+        "y": 14.9
+      },
+      {
+        "name": "Bradley Beal, 2020-21",
+        "x": 35.8,
+        "y": 31.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-kessler-2024",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      50
+    ],
+    "yDomain": [
+      40,
+      80
+    ],
+    "targetPlayer": "Walker Kessler, 2024-25",
+    "targetX": 13.3,
+    "targetY": 66,
+    "referencePlayers": [
+      {
+        "name": "Elton Brand, 2010-11",
+        "x": 19.6,
+        "y": 55.3
+      },
+      {
+        "name": "Deandre Ayton, 2023-24",
+        "x": 21.1,
+        "y": 58.7
+      },
+      {
+        "name": "Chris Webber, 2004-05",
+        "x": 29.2,
+        "y": 47.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "mlb-avg-hr-bonds",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.275,
+      0.475
+    ],
+    "yDomain": [
+      0,
+      1000
+    ],
+    "targetPlayer": "Barry Bonds",
+    "targetX": 0.298,
+    "targetY": 762,
+    "referencePlayers": [
+      {
+        "name": "Robin Yount",
+        "x": 0.285,
+        "y": 251
+      },
+      {
+        "name": "George Brett",
+        "x": 0.305,
+        "y": 317
+      },
+      {
+        "name": "Ty Cobb",
+        "x": 0.366,
+        "y": 117
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-fg3a-ts-leonard-2012",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2.5,
+      6.5
+    ],
+    "yDomain": [
+      52,
+      60
+    ],
+    "targetPlayer": "Kawhi Leonard, 2012-13",
+    "targetX": 3,
+    "targetY": 59.2,
+    "referencePlayers": [
+      {
+        "name": "Myles Turner, 2019-20",
+        "x": 4,
+        "y": 56.6
+      },
+      {
+        "name": "Kyrie Irving, 2013-14",
+        "x": 4.8,
+        "y": 53.3
+      },
+      {
+        "name": "CJ McCollum, 2015-16",
+        "x": 5.9,
+        "y": 54.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-ast-valanciunas-2013",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Assists per game (season)",
+    "yUnit": "APG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0.5,
+      2.5
+    ],
+    "targetPlayer": "Jonas Valanciunas, 2013-14",
+    "targetX": 8.8,
+    "targetY": 0.7,
+    "referencePlayers": [
+      {
+        "name": "Bruce Bowen, 2004-05",
+        "x": 3.5,
+        "y": 1.5
+      },
+      {
+        "name": "Naz Reid, 2023-24",
+        "x": 5.2,
+        "y": 1.3
+      },
+      {
+        "name": "Anthony Davis, 2012-13",
+        "x": 8.2,
+        "y": 1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-recyds-hill-2017",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      250
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Tyreek Hill, 2017",
+    "targetX": 75,
+    "targetY": 1183,
+    "referencePlayers": [
+      {
+        "name": "Antonio Gates, 2004",
+        "x": 81,
+        "y": 964
+      },
+      {
+        "name": "Julian Edelman, 2019",
+        "x": 100,
+        "y": 1117
+      },
+      {
+        "name": "Marvin Harrison, 2002",
+        "x": 143,
+        "y": 1722
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-ast-tov-jones-2023",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      0.5,
+      4.5
+    ],
+    "targetPlayer": "Tyus Jones, 2023-24",
+    "targetX": 7.3,
+    "targetY": 1,
+    "referencePlayers": [
+      {
+        "name": "Kyle Korver, 2004-05",
+        "x": 2.2,
+        "y": 1.3
+      },
+      {
+        "name": "Tracy McGrady, 2000-01",
+        "x": 4.6,
+        "y": 2.6
+      },
+      {
+        "name": "Mike Conley, 2021-22",
+        "x": 5.3,
+        "y": 1.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-duren-2022",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      50
+    ],
+    "yDomain": [
+      55,
+      75
+    ],
+    "targetPlayer": "Jalen Duren, 2022-23",
+    "targetX": 13.9,
+    "targetY": 65.5,
+    "referencePlayers": [
+      {
+        "name": "Paul Pierce, 2014-15",
+        "x": 19.5,
+        "y": 58
+      },
+      {
+        "name": "Scottie Barnes, 2023-24",
+        "x": 24,
+        "y": 56.6
+      },
+      {
+        "name": "Devin Booker, 2019-20",
+        "x": 29.4,
+        "y": 61.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-doncic-2019",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Luka Dončić, 2019-20",
+    "targetX": 9.4,
+    "targetY": 0.2,
+    "referencePlayers": [
+      {
+        "name": "Jimmy Butler III, 2012-13",
+        "x": 4,
+        "y": 0.4
+      },
+      {
+        "name": "Robert Horry, 2001-02",
+        "x": 5.9,
+        "y": 1.1
+      },
+      {
+        "name": "Aaron Gordon, 2017-18",
+        "x": 7.9,
+        "y": 0.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-markkanen-2018",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Lauri Markkanen, 2018-19",
+    "targetX": 9,
+    "targetY": 0.6,
+    "referencePlayers": [
+      {
+        "name": "Monta Ellis, 2013-14",
+        "x": 3.6,
+        "y": 0.3
+      },
+      {
+        "name": "Derrick White, 2024-25",
+        "x": 4.5,
+        "y": 1.1
+      },
+      {
+        "name": "Myles Turner, 2016-17",
+        "x": 7.3,
+        "y": 2.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-olynyk-2015",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      49,
+      57
+    ],
+    "targetPlayer": "Kelly Olynyk, 2015-16",
+    "targetX": 3,
+    "targetY": 56.1,
+    "referencePlayers": [
+      {
+        "name": "Stephon Marbury, 2003-04",
+        "x": 3.4,
+        "y": 51.9
+      },
+      {
+        "name": "Cade Cunningham, 2021-22",
+        "x": 5.7,
+        "y": 50.4
+      },
+      {
+        "name": "Trevor Ariza, 2016-17",
+        "x": 6.9,
+        "y": 54.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-butler-2014",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      3.25
+    ],
+    "yDomain": [
+      15,
+      23
+    ],
+    "targetPlayer": "Jimmy Butler III, 2014-15",
+    "targetX": 1.4,
+    "targetY": 20,
+    "referencePlayers": [
+      {
+        "name": "LaMarcus Aldridge, 2008-09",
+        "x": 1.5,
+        "y": 18.1
+      },
+      {
+        "name": "Andre Drummond, 2015-16",
+        "x": 1.9,
+        "y": 16.2
+      },
+      {
+        "name": "Tony Parker, 2010-11",
+        "x": 2.6,
+        "y": 17.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-turner-2017",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.25,
+      2.25
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Myles Turner, 2017-18",
+    "targetX": 0.6,
+    "targetY": 1.8,
+    "referencePlayers": [
+      {
+        "name": "Clint Capela, 2022-23",
+        "x": 0.7,
+        "y": 1.2
+      },
+      {
+        "name": "Malcolm Brogdon, 2020-21",
+        "x": 0.9,
+        "y": 0.3
+      },
+      {
+        "name": "Jalen Williams, 2024-25",
+        "x": 1.6,
+        "y": 0.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-siakam-2024",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      5
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Pascal Siakam, 2024-25",
+    "targetX": 1.4,
+    "targetY": 20.2,
+    "referencePlayers": [
+      {
+        "name": "Steven Adams, 2017-18",
+        "x": 1.7,
+        "y": 13.9
+      },
+      {
+        "name": "RJ Barrett, 2020-21",
+        "x": 1.9,
+        "y": 17.6
+      },
+      {
+        "name": "Giannis Antetokounmpo, 2024-25",
+        "x": 3.1,
+        "y": 30.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "mlb-3b-hr-rodriguez",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      200
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Alex Rodriguez",
+    "targetX": 31,
+    "targetY": 696,
+    "referencePlayers": [
+      {
+        "name": "Rafael Palmeiro",
+        "x": 38,
+        "y": 569
+      },
+      {
+        "name": "Wade Boggs",
+        "x": 61,
+        "y": 118
+      },
+      {
+        "name": "Andre Dawson",
+        "x": 98,
+        "y": 438
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-stl-blk-paul-2005",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      2.5
+    ],
+    "yDomain": [
+      0,
+      0.8
+    ],
+    "targetPlayer": "Chris Paul, 2005-06",
+    "targetX": 2.2,
+    "targetY": 0.1,
+    "referencePlayers": [
+      {
+        "name": "Jordan Clarkson, 2021-22",
+        "x": 0.8,
+        "y": 0.2
+      },
+      {
+        "name": "Jayson Tatum, 2018-19",
+        "x": 1.1,
+        "y": 0.7
+      },
+      {
+        "name": "De'Aaron Fox, 2020-21",
+        "x": 1.5,
+        "y": 0.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-portis-2022",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Bobby Portis Jr., 2022-23",
+    "targetX": 9.6,
+    "targetY": 0.2,
+    "referencePlayers": [
+      {
+        "name": "DeMar DeRozan, 2013-14",
+        "x": 4.3,
+        "y": 0.4
+      },
+      {
+        "name": "Dwight Powell, 2019-20",
+        "x": 5.7,
+        "y": 0.6
+      },
+      {
+        "name": "Pau Gasol, 2012-13",
+        "x": 8.6,
+        "y": 1.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-pts-ast-barnes-2021",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Assists per game (season)",
+    "yUnit": "APG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      2,
+      10
+    ],
+    "targetPlayer": "Scottie Barnes, 2021-22",
+    "targetX": 15.3,
+    "targetY": 3.5,
+    "referencePlayers": [
+      {
+        "name": "Vince Carter, 2009-10",
+        "x": 16.6,
+        "y": 3.1
+      },
+      {
+        "name": "Blake Griffin, 2017-18",
+        "x": 21.4,
+        "y": 5.8
+      },
+      {
+        "name": "Elton Brand, 2005-06",
+        "x": 24.7,
+        "y": 2.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-ast-zubac-2022",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Assists per game (season)",
+    "yUnit": "APG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2.5,
+      12.5
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Ivica Zubac, 2022-23",
+    "targetX": 9.9,
+    "targetY": 1,
+    "referencePlayers": [
+      {
+        "name": "Trae Young, 2018-19",
+        "x": 3.7,
+        "y": 8.1
+      },
+      {
+        "name": "Danilo Gallinari, 2018-19",
+        "x": 6.1,
+        "y": 2.6
+      },
+      {
+        "name": "Luka Dončić, 2023-24",
+        "x": 9.2,
+        "y": 9.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-oneal-2000",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Shaquille O'Neal, 2000-01",
+    "targetX": 0.6,
+    "targetY": 2.8,
+    "referencePlayers": [
+      {
+        "name": "LaMarcus Aldridge, 2014-15",
+        "x": 0.7,
+        "y": 1
+      },
+      {
+        "name": "Jaylen Brown, 2020-21",
+        "x": 1.2,
+        "y": 0.6
+      },
+      {
+        "name": "Stephon Marbury, 2002-03",
+        "x": 1.3,
+        "y": 0.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-ratliff-2000",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Theo Ratliff, 2000-01",
+    "targetX": 0.6,
+    "targetY": 3.7,
+    "referencePlayers": [
+      {
+        "name": "Jalen Brunson, 2021-22",
+        "x": 0.8,
+        "y": 0
+      },
+      {
+        "name": "Kyrie Irving, 2011-12",
+        "x": 1.1,
+        "y": 0.4
+      },
+      {
+        "name": "Shawn Marion, 2008-09",
+        "x": 1.3,
+        "y": 1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-robinson-2021",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      45
+    ],
+    "yDomain": [
+      40,
+      80
+    ],
+    "targetPlayer": "Mitchell Robinson, 2021-22",
+    "targetX": 11,
+    "targetY": 72.2,
+    "referencePlayers": [
+      {
+        "name": "Ben Wallace, 2003-04",
+        "x": 15,
+        "y": 44.1
+      },
+      {
+        "name": "Malcolm Brogdon, 2022-23",
+        "x": 22.3,
+        "y": 61.5
+      },
+      {
+        "name": "Anthony Edwards, 2022-23",
+        "x": 29.2,
+        "y": 56.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-reid-2020",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      25
+    ],
+    "yDomain": [
+      56.5,
+      60.5
+    ],
+    "targetPlayer": "Naz Reid, 2020-21",
+    "targetX": 8.3,
+    "targetY": 59.9,
+    "referencePlayers": [
+      {
+        "name": "Kyle Korver, 2005-06",
+        "x": 9.3,
+        "y": 57.7
+      },
+      {
+        "name": "Jimmy Butler III, 2018-19",
+        "x": 13.9,
+        "y": 57.1
+      },
+      {
+        "name": "Paul George, 2022-23",
+        "x": 17.9,
+        "y": 58.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-james-2003",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      25
+    ],
+    "yDomain": [
+      45,
+      85
+    ],
+    "targetPlayer": "LeBron James, 2003-04",
+    "targetX": 18.9,
+    "targetY": 48.8,
+    "referencePlayers": [
+      {
+        "name": "Kyle Korver, 2012-13",
+        "x": 8.1,
+        "y": 63.7
+      },
+      {
+        "name": "Baron Davis, 2002-03",
+        "x": 16,
+        "y": 50
+      },
+      {
+        "name": "Stephon Marbury, 2003-04",
+        "x": 17.1,
+        "y": 51.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-gasol-2009",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      15,
+      35
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Marc Gasol, 2009-10",
+    "targetX": 17,
+    "targetY": 61.7,
+    "referencePlayers": [
+      {
+        "name": "Jrue Holiday, 2009-10",
+        "x": 18,
+        "y": 52.6
+      },
+      {
+        "name": "Grant Hill, 2006-07",
+        "x": 21.3,
+        "y": 58.2
+      },
+      {
+        "name": "Jordan Clarkson, 2018-19",
+        "x": 26.6,
+        "y": 53.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-white-2019",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0.2,
+      1
+    ],
+    "targetPlayer": "Derrick White, 2019-20",
+    "targetX": 3.3,
+    "targetY": 0.9,
+    "referencePlayers": [
+      {
+        "name": "Donovan Mitchell, 2020-21",
+        "x": 4.4,
+        "y": 0.3
+      },
+      {
+        "name": "Jaylen Brown, 2017-18",
+        "x": 4.9,
+        "y": 0.4
+      },
+      {
+        "name": "Karl-Anthony Towns, 2023-24",
+        "x": 8.3,
+        "y": 0.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-george-2013",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Paul George, 2013-14",
+    "targetX": 6.8,
+    "targetY": 0.3,
+    "referencePlayers": [
+      {
+        "name": "Kyle Korver, 2014-15",
+        "x": 4.1,
+        "y": 0.6
+      },
+      {
+        "name": "Brook Lopez, 2016-17",
+        "x": 5.4,
+        "y": 1.7
+      },
+      {
+        "name": "Theo Ratliff, 2000-01",
+        "x": 8.3,
+        "y": 3.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-harrell-2019",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      25,
+      45
+    ],
+    "yDomain": [
+      13,
+      21
+    ],
+    "targetPlayer": "Montrezl Harrell, 2019-20",
+    "targetX": 27.8,
+    "targetY": 18.6,
+    "referencePlayers": [
+      {
+        "name": "Grant Hill, 2006-07",
+        "x": 30.9,
+        "y": 14.4
+      },
+      {
+        "name": "Ivica Zubac, 2024-25",
+        "x": 32.8,
+        "y": 16.8
+      },
+      {
+        "name": "Fred VanVleet, 2023-24",
+        "x": 36.8,
+        "y": 17.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-ast-capela-2018",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Assists per game (season)",
+    "yUnit": "APG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      1,
+      5
+    ],
+    "targetPlayer": "Clint Capela, 2018-19",
+    "targetX": 12.7,
+    "targetY": 1.4,
+    "referencePlayers": [
+      {
+        "name": "Lou Williams, 2016-17",
+        "x": 2.5,
+        "y": 3
+      },
+      {
+        "name": "Buddy Hield, 2020-21",
+        "x": 4.7,
+        "y": 3.6
+      },
+      {
+        "name": "Shaquille O'Neal, 2005-06",
+        "x": 9.2,
+        "y": 1.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-ewing-2000",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      2.5
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Patrick Ewing, 2000-01",
+    "targetX": 0.7,
+    "targetY": 1.2,
+    "referencePlayers": [
+      {
+        "name": "Andre Iguodala, 2017-18",
+        "x": 0.8,
+        "y": 0.6
+      },
+      {
+        "name": "Kevin Garnett, 2009-10",
+        "x": 1,
+        "y": 0.8
+      },
+      {
+        "name": "John Stockton, 2002-03",
+        "x": 1.7,
+        "y": 0.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-oneal-2001",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Shaquille O'Neal, 2001-02",
+    "targetX": 0.6,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Kyle Korver, 2006-07",
+        "x": 0.8,
+        "y": 0.3
+      },
+      {
+        "name": "Danny Green, 2016-17",
+        "x": 1,
+        "y": 0.8
+      },
+      {
+        "name": "Shane Battier, 2002-03",
+        "x": 1.3,
+        "y": 1.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-reid-2022",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      47.5,
+      67.5
+    ],
+    "targetPlayer": "Naz Reid, 2022-23",
+    "targetX": 3.2,
+    "targetY": 61.7,
+    "referencePlayers": [
+      {
+        "name": "Monta Ellis, 2012-13",
+        "x": 4,
+        "y": 49.3
+      },
+      {
+        "name": "Kyrie Irving, 2015-16",
+        "x": 4.9,
+        "y": 54
+      },
+      {
+        "name": "Trae Young, 2022-23",
+        "x": 6.3,
+        "y": 57.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-pippen-2000",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.25,
+      2.25
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Scottie Pippen, 2000-01",
+    "targetX": 1.5,
+    "targetY": 0.5,
+    "referencePlayers": [
+      {
+        "name": "Pau Gasol, 2012-13",
+        "x": 0.5,
+        "y": 1.2
+      },
+      {
+        "name": "Myles Turner, 2016-17",
+        "x": 0.9,
+        "y": 2.1
+      },
+      {
+        "name": "Ben Wallace, 2000-01",
+        "x": 1.3,
+        "y": 2.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-holiday-2010",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      3.25
+    ],
+    "yDomain": [
+      10,
+      50
+    ],
+    "targetPlayer": "Jrue Holiday, 2010-11",
+    "targetX": 2.7,
+    "targetY": 14,
+    "referencePlayers": [
+      {
+        "name": "Kawhi Leonard, 2014-15",
+        "x": 1.5,
+        "y": 16.5
+      },
+      {
+        "name": "Shai Gilgeous-Alexander, 2023-24",
+        "x": 2.2,
+        "y": 30.1
+      },
+      {
+        "name": "Kevin Garnett, 2003-04",
+        "x": 2.6,
+        "y": 24.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-booker-2017",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      55,
+      63
+    ],
+    "targetPlayer": "Devin Booker, 2017-18",
+    "targetX": 7.1,
+    "targetY": 56.1,
+    "referencePlayers": [
+      {
+        "name": "Wendell Carter Jr., 2021-22",
+        "x": 3.5,
+        "y": 60.1
+      },
+      {
+        "name": "Anfernee Simons, 2020-21",
+        "x": 4.4,
+        "y": 58.9
+      },
+      {
+        "name": "Jaylen Brown, 2019-20",
+        "x": 5.9,
+        "y": 58.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-ratliff-2003",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Theo Ratliff, 2003-04",
+    "targetX": 0.6,
+    "targetY": 3.6,
+    "referencePlayers": [
+      {
+        "name": "Steve Nash, 2007-08",
+        "x": 0.7,
+        "y": 0.1
+      },
+      {
+        "name": "Nikola Vučević, 2018-19",
+        "x": 1,
+        "y": 1.1
+      },
+      {
+        "name": "Herbert Jones, 2023-24",
+        "x": 1.4,
+        "y": 0.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-portis-2021",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Bobby Portis Jr., 2021-22",
+    "targetX": 9.1,
+    "targetY": 0.7,
+    "referencePlayers": [
+      {
+        "name": "Jordan Clarkson, 2016-17",
+        "x": 3,
+        "y": 0.1
+      },
+      {
+        "name": "Jaren Jackson Jr., 2024-25",
+        "x": 5.6,
+        "y": 1.5
+      },
+      {
+        "name": "Chet Holmgren, 2023-24",
+        "x": 7.9,
+        "y": 2.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-thompson-2013",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Klay Thompson, 2013-14",
+    "targetX": 6.6,
+    "targetY": 55.5,
+    "referencePlayers": [
+      {
+        "name": "Lou Williams, 2011-12",
+        "x": 3.6,
+        "y": 52.5
+      },
+      {
+        "name": "Victor Wembanyama, 2023-24",
+        "x": 5.5,
+        "y": 56.5
+      },
+      {
+        "name": "OG Anunoby, 2020-21",
+        "x": 6.1,
+        "y": 60.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-hield-2017",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      55,
+      63
+    ],
+    "targetPlayer": "Buddy Hield, 2017-18",
+    "targetX": 5.1,
+    "targetY": 55.7,
+    "referencePlayers": [
+      {
+        "name": "Bobby Portis Jr., 2022-23",
+        "x": 3.7,
+        "y": 57.5
+      },
+      {
+        "name": "Jaylen Brown, 2017-18",
+        "x": 4.4,
+        "y": 56.2
+      },
+      {
+        "name": "Tyrese Haliburton, 2023-24",
+        "x": 7.8,
+        "y": 60.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-mcgee-2010",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.25,
+      2.25
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "JaVale McGee, 2010-11",
+    "targetX": 0.5,
+    "targetY": 2.4,
+    "referencePlayers": [
+      {
+        "name": "Theo Ratliff, 2000-01",
+        "x": 0.6,
+        "y": 3.7
+      },
+      {
+        "name": "Steven Adams, 2022-23",
+        "x": 0.9,
+        "y": 1.1
+      },
+      {
+        "name": "Michael Jordan, 2002-03",
+        "x": 1.5,
+        "y": 0.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-bane-2021",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      25,
+      45
+    ],
+    "yDomain": [
+      11,
+      19
+    ],
+    "targetPlayer": "Desmond Bane, 2021-22",
+    "targetX": 29.8,
+    "targetY": 18.2,
+    "referencePlayers": [
+      {
+        "name": "Shawn Marion, 2010-11",
+        "x": 28.2,
+        "y": 12.5
+      },
+      {
+        "name": "Trevor Ariza, 2013-14",
+        "x": 35.4,
+        "y": 14.4
+      },
+      {
+        "name": "Paul George, 2012-13",
+        "x": 37.6,
+        "y": 17.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-robinson-2022",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      45
+    ],
+    "yDomain": [
+      55,
+      75
+    ],
+    "targetPlayer": "Mitchell Robinson, 2022-23",
+    "targetX": 10.1,
+    "targetY": 65.2,
+    "referencePlayers": [
+      {
+        "name": "Josh Hart, 2020-21",
+        "x": 13.3,
+        "y": 56.6
+      },
+      {
+        "name": "Bam Adebayo, 2022-23",
+        "x": 25.1,
+        "y": 59.2
+      },
+      {
+        "name": "Ja Morant, 2021-22",
+        "x": 33,
+        "y": 57.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-paul-2006",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      16.25,
+      26.25
+    ],
+    "targetPlayer": "Chris Paul, 2006-07",
+    "targetX": 36.8,
+    "targetY": 17.3,
+    "referencePlayers": [
+      {
+        "name": "Buddy Hield, 2019-20",
+        "x": 30.8,
+        "y": 19.2
+      },
+      {
+        "name": "Zach Randolph, 2005-06",
+        "x": 34.4,
+        "y": 18
+      },
+      {
+        "name": "Damian Lillard, 2015-16",
+        "x": 35.7,
+        "y": 25.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-murray-2023",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      4.5
+    ],
+    "yDomain": [
+      7.5,
+      27.5
+    ],
+    "targetPlayer": "Keegan Murray, 2023-24",
+    "targetX": 0.8,
+    "targetY": 15.2,
+    "referencePlayers": [
+      {
+        "name": "Nicolas Batum, 2018-19",
+        "x": 1.6,
+        "y": 9.3
+      },
+      {
+        "name": "Jamal Crawford, 2010-11",
+        "x": 1.9,
+        "y": 14.2
+      },
+      {
+        "name": "Elton Brand, 2000-01",
+        "x": 3,
+        "y": 20.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-pierce-2000",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      20
+    ],
+    "yDomain": [
+      55.5,
+      59.5
+    ],
+    "targetPlayer": "Paul Pierce, 2000-01",
+    "targetX": 18.5,
+    "targetY": 56.3,
+    "referencePlayers": [
+      {
+        "name": "Bobby Portis Jr., 2022-23",
+        "x": 11.5,
+        "y": 57.5
+      },
+      {
+        "name": "Jimmy Butler III, 2017-18",
+        "x": 15.6,
+        "y": 59
+      },
+      {
+        "name": "Jaylen Brown, 2023-24",
+        "x": 17.9,
+        "y": 58
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-hill-2007",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0.1,
+      0.9
+    ],
+    "targetPlayer": "Grant Hill, 2007-08",
+    "targetX": 5,
+    "targetY": 0.8,
+    "referencePlayers": [
+      {
+        "name": "Trae Young, 2020-21",
+        "x": 3.9,
+        "y": 0.2
+      },
+      {
+        "name": "Paul Pierce, 2012-13",
+        "x": 6.3,
+        "y": 0.4
+      },
+      {
+        "name": "James Harden, 2021-22",
+        "x": 7.7,
+        "y": 0.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-hill-2006",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0.1,
+      0.9
+    ],
+    "targetPlayer": "Grant Hill, 2006-07",
+    "targetX": 3.6,
+    "targetY": 0.4,
+    "referencePlayers": [
+      {
+        "name": "Jalen Williams, 2023-24",
+        "x": 4,
+        "y": 0.6
+      },
+      {
+        "name": "Trevor Ariza, 2014-15",
+        "x": 5.6,
+        "y": 0.2
+      },
+      {
+        "name": "Josh Hart, 2023-24",
+        "x": 8.3,
+        "y": 0.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-derozan-2010",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      47.5
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "DeMar DeRozan, 2010-11",
+    "targetX": 34.8,
+    "targetY": 17.2,
+    "referencePlayers": [
+      {
+        "name": "Manu Ginobili, 2007-08",
+        "x": 31.1,
+        "y": 19.5
+      },
+      {
+        "name": "Paul George, 2023-24",
+        "x": 33.8,
+        "y": 22.6
+      },
+      {
+        "name": "Monta Ellis, 2009-10",
+        "x": 41.4,
+        "y": 25.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-caruso-2023",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      34,
+      42
+    ],
+    "targetPlayer": "Alex Caruso, 2023-24",
+    "targetX": 4.7,
+    "targetY": 40.8,
+    "referencePlayers": [
+      {
+        "name": "Carmelo Anthony, 2010-11",
+        "x": 3.3,
+        "y": 37.8
+      },
+      {
+        "name": "Mikal Bridges, 2024-25",
+        "x": 5.6,
+        "y": 35.4
+      },
+      {
+        "name": "Buddy Hield, 2024-25",
+        "x": 6.7,
+        "y": 37
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-rectd-beckham-2021",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      30,
+      110
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Odell Beckham, 2021",
+    "targetX": 44,
+    "targetY": 5,
+    "referencePlayers": [
+      {
+        "name": "Edgerrin James, 2003",
+        "x": 51,
+        "y": 0
+      },
+      {
+        "name": "Alvin Kamara, 2023",
+        "x": 75,
+        "y": 1
+      },
+      {
+        "name": "Davante Adams, 2024",
+        "x": 85,
+        "y": 8
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-3pa-3pct-james-2005",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      32.5,
+      42.5
+    ],
+    "targetPlayer": "LeBron James, 2005-06",
+    "targetX": 4.8,
+    "targetY": 33.5,
+    "referencePlayers": [
+      {
+        "name": "Marcus Morris Sr., 2012-13",
+        "x": 3,
+        "y": 36.9
+      },
+      {
+        "name": "Manu Ginobili, 2006-07",
+        "x": 4.3,
+        "y": 39.6
+      },
+      {
+        "name": "Tyrese Haliburton, 2024-25",
+        "x": 7.7,
+        "y": 38.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-griffin-2010",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Blake Griffin, 2010-11",
+    "targetX": 12.1,
+    "targetY": 0.5,
+    "referencePlayers": [
+      {
+        "name": "Mike Conley, 2009-10",
+        "x": 2.4,
+        "y": 0.2
+      },
+      {
+        "name": "Myles Turner, 2019-20",
+        "x": 6.6,
+        "y": 2.1
+      },
+      {
+        "name": "Karl Malone, 2001-02",
+        "x": 8.6,
+        "y": 0.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-bridges-2022",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      3.25
+    ],
+    "yDomain": [
+      7.5,
+      27.5
+    ],
+    "targetPlayer": "Mikal Bridges, 2022-23",
+    "targetX": 1.5,
+    "targetY": 20.1,
+    "referencePlayers": [
+      {
+        "name": "Tony Allen, 2011-12",
+        "x": 1.6,
+        "y": 9.8
+      },
+      {
+        "name": "Marc Gasol, 2012-13",
+        "x": 2,
+        "y": 14.1
+      },
+      {
+        "name": "Stephon Marbury, 2005-06",
+        "x": 2.6,
+        "y": 16.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rushtd-rectd-tomlinson-2005",
+    "league": "NFL",
+    "xLabel": "Rushing touchdowns (season)",
+    "xUnit": "TDs",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "LaDainian Tomlinson, 2005",
+    "targetX": 18,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "LeSean McCoy, 2012",
+        "x": 2,
+        "y": 3
+      },
+      {
+        "name": "Christian McCaffrey, 2022",
+        "x": 8,
+        "y": 5
+      },
+      {
+        "name": "Josh Jacobs, 2024",
+        "x": 15,
+        "y": 1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-3b-hr-sheffield",
+    "league": "MLB",
+    "xLabel": "Career triples",
+    "xUnit": "3B",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      200
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Gary Sheffield",
+    "targetX": 27,
+    "targetY": 509,
+    "referencePlayers": [
+      {
+        "name": "Cal Ripken",
+        "x": 44,
+        "y": 431
+      },
+      {
+        "name": "Bernie Williams",
+        "x": 55,
+        "y": 287
+      },
+      {
+        "name": "Tim Raines",
+        "x": 113,
+        "y": 170
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-fg3a-ts-pierce-2004",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      50,
+      60
+    ],
+    "targetPlayer": "Paul Pierce, 2004-05",
+    "targetX": 3.6,
+    "targetY": 58.3,
+    "referencePlayers": [
+      {
+        "name": "Jordan Clarkson, 2015-16",
+        "x": 4.1,
+        "y": 51.6
+      },
+      {
+        "name": "Jerami Grant, 2023-24",
+        "x": 5.1,
+        "y": 57.3
+      },
+      {
+        "name": "Jamal Crawford, 2013-14",
+        "x": 6.5,
+        "y": 55.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-grant-2015",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Jerami Grant, 2015-16",
+    "targetX": 4.7,
+    "targetY": 1.6,
+    "referencePlayers": [
+      {
+        "name": "Andre Iguodala, 2015-16",
+        "x": 4,
+        "y": 0.3
+      },
+      {
+        "name": "Dirk Nowitzki, 2017-18",
+        "x": 5.7,
+        "y": 0.6
+      },
+      {
+        "name": "Pau Gasol, 2016-17",
+        "x": 7.8,
+        "y": 1.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-nance-2019",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Larry Nance Jr., 2019-20",
+    "targetX": 7.3,
+    "targetY": 0.4,
+    "referencePlayers": [
+      {
+        "name": "Jalen Williams, 2023-24",
+        "x": 4,
+        "y": 0.6
+      },
+      {
+        "name": "Keegan Murray, 2023-24",
+        "x": 5.5,
+        "y": 0.8
+      },
+      {
+        "name": "Amar'e Stoudemire, 2010-11",
+        "x": 8.2,
+        "y": 1.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-jackson-2024",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      47.5
+    ],
+    "yDomain": [
+      12.5,
+      32.5
+    ],
+    "targetPlayer": "Jaren Jackson Jr., 2024-25",
+    "targetX": 29.8,
+    "targetY": 22.2,
+    "referencePlayers": [
+      {
+        "name": "Vin Baker, 2001-02",
+        "x": 31.1,
+        "y": 14.1
+      },
+      {
+        "name": "Jalen Green, 2024-25",
+        "x": 32.9,
+        "y": 21
+      },
+      {
+        "name": "Joe Johnson, 2005-06",
+        "x": 40.7,
+        "y": 20.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-morant-2019",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.5,
+      3.5
+    ],
+    "yDomain": [
+      12.5,
+      32.5
+    ],
+    "targetPlayer": "Ja Morant, 2019-20",
+    "targetX": 3.3,
+    "targetY": 17.8,
+    "referencePlayers": [
+      {
+        "name": "Steven Adams, 2017-18",
+        "x": 1.7,
+        "y": 13.9
+      },
+      {
+        "name": "Jamal Crawford, 2008-09",
+        "x": 2.3,
+        "y": 19.7
+      },
+      {
+        "name": "Stephen Curry, 2014-15",
+        "x": 3.1,
+        "y": 23.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-young-2021",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      38,
+      40
+    ],
+    "targetPlayer": "Trae Young, 2021-22",
+    "targetX": 8,
+    "targetY": 38.2,
+    "referencePlayers": [
+      {
+        "name": "Kelly Olynyk, 2022-23",
+        "x": 3.5,
+        "y": 39.4
+      },
+      {
+        "name": "Kevin Durant, 2011-12",
+        "x": 5.2,
+        "y": 38.7
+      },
+      {
+        "name": "Anfernee Simons, 2023-24",
+        "x": 8.8,
+        "y": 38.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-allen-2011",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      2
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Tony Allen, 2011-12",
+    "targetX": 1.8,
+    "targetY": 0.6,
+    "referencePlayers": [
+      {
+        "name": "Pau Gasol, 2016-17",
+        "x": 0.4,
+        "y": 1.1
+      },
+      {
+        "name": "Devin Booker, 2016-17",
+        "x": 0.9,
+        "y": 0.3
+      },
+      {
+        "name": "Dirk Nowitzki, 2004-05",
+        "x": 1.2,
+        "y": 1.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-banchero-2024",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      50
+    ],
+    "yDomain": [
+      52.5,
+      72.5
+    ],
+    "targetPlayer": "Paolo Banchero, 2024-25",
+    "targetX": 33,
+    "targetY": 55.1,
+    "referencePlayers": [
+      {
+        "name": "Rudy Gobert, 2015-16",
+        "x": 14.3,
+        "y": 58.2
+      },
+      {
+        "name": "Jonas Valanciunas, 2020-21",
+        "x": 21.7,
+        "y": 63.6
+      },
+      {
+        "name": "Nikola Jokić, 2024-25",
+        "x": 28.5,
+        "y": 66.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fga-ts-holmgren-2023",
+    "league": "NBA",
+    "xLabel": "Field goal attempts per game (season)",
+    "xUnit": "FGA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      20
+    ],
+    "yDomain": [
+      55,
+      65
+    ],
+    "targetPlayer": "Chet Holmgren, 2023-24",
+    "targetX": 11.6,
+    "targetY": 63.2,
+    "referencePlayers": [
+      {
+        "name": "Paul Pierce, 2009-10",
+        "x": 12.2,
+        "y": 61.3
+      },
+      {
+        "name": "Reggie Miller, 2000-01",
+        "x": 14.5,
+        "y": 57.4
+      },
+      {
+        "name": "Pascal Siakam, 2022-23",
+        "x": 18.5,
+        "y": 56.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-durant-2008",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      47.5,
+      67.5
+    ],
+    "targetPlayer": "Kevin Durant, 2008-09",
+    "targetX": 3.1,
+    "targetY": 57.7,
+    "referencePlayers": [
+      {
+        "name": "JJ Redick, 2020-21",
+        "x": 4,
+        "y": 56.4
+      },
+      {
+        "name": "Antawn Jamison, 2006-07",
+        "x": 5.4,
+        "y": 54.5
+      },
+      {
+        "name": "Jamal Crawford, 2003-04",
+        "x": 6.5,
+        "y": 48.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-beal-2012",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Bradley Beal, 2012-13",
+    "targetX": 3.8,
+    "targetY": 0.5,
+    "referencePlayers": [
+      {
+        "name": "Buddy Hield, 2021-22",
+        "x": 4.4,
+        "y": 0.3
+      },
+      {
+        "name": "Carmelo Anthony, 2004-05",
+        "x": 5.7,
+        "y": 0.4
+      },
+      {
+        "name": "Tim Duncan, 2011-12",
+        "x": 9,
+        "y": 1.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-valanciunas-2016",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      11.25
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Jonas Valanciunas, 2016-17",
+    "targetX": 9.5,
+    "targetY": 0.8,
+    "referencePlayers": [
+      {
+        "name": "Malcolm Brogdon, 2016-17",
+        "x": 2.8,
+        "y": 0.2
+      },
+      {
+        "name": "Jermaine O'Neal, 2008-09",
+        "x": 6.4,
+        "y": 2
+      },
+      {
+        "name": "Brook Lopez, 2009-10",
+        "x": 8.6,
+        "y": 1.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-fox-2018",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      5
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "De'Aaron Fox, 2018-19",
+    "targetX": 2.8,
+    "targetY": 17.3,
+    "referencePlayers": [
+      {
+        "name": "Antawn Jamison, 2008-09",
+        "x": 1.5,
+        "y": 22.2
+      },
+      {
+        "name": "Franz Wagner, 2023-24",
+        "x": 1.9,
+        "y": 19.7
+      },
+      {
+        "name": "LeBron James, 2023-24",
+        "x": 3.5,
+        "y": 25.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-recyds-beckham-2019",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      150
+    ],
+    "yDomain": [
+      900,
+      1300
+    ],
+    "targetPlayer": "Odell Beckham, 2019",
+    "targetX": 75,
+    "targetY": 1091,
+    "referencePlayers": [
+      {
+        "name": "Brandon Aiyuk, 2022",
+        "x": 78,
+        "y": 1015
+      },
+      {
+        "name": "Antonio Gates, 2004",
+        "x": 81,
+        "y": 964
+      },
+      {
+        "name": "Larry Fitzgerald, 2015",
+        "x": 109,
+        "y": 1215
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-ast-tov-rozier-2021",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      1,
+      5
+    ],
+    "targetPlayer": "Terry Rozier, 2021-22",
+    "targetX": 4.5,
+    "targetY": 1.3,
+    "referencePlayers": [
+      {
+        "name": "Anthony Davis, 2015-16",
+        "x": 1.9,
+        "y": 2
+      },
+      {
+        "name": "Bojan Bogdanovic, 2022-23",
+        "x": 2.6,
+        "y": 2.3
+      },
+      {
+        "name": "John Wall, 2020-21",
+        "x": 6.9,
+        "y": 3.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-turner-2016",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      15,
+      35
+    ],
+    "yDomain": [
+      52,
+      60
+    ],
+    "targetPlayer": "Myles Turner, 2016-17",
+    "targetX": 19.5,
+    "targetY": 58.5,
+    "referencePlayers": [
+      {
+        "name": "Theo Ratliff, 2000-01",
+        "x": 17.1,
+        "y": 56.2
+      },
+      {
+        "name": "Bobby Portis Jr., 2024-25",
+        "x": 23.4,
+        "y": 54.2
+      },
+      {
+        "name": "Karl Malone, 2001-02",
+        "x": 28.5,
+        "y": 53.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-bridges-2020",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      11.25
+    ],
+    "yDomain": [
+      0,
+      1
+    ],
+    "targetPlayer": "Mikal Bridges, 2020-21",
+    "targetX": 4.3,
+    "targetY": 0.9,
+    "referencePlayers": [
+      {
+        "name": "JJ Redick, 2016-17",
+        "x": 2.2,
+        "y": 0.2
+      },
+      {
+        "name": "Shawn Marion, 2010-11",
+        "x": 6.9,
+        "y": 0.6
+      },
+      {
+        "name": "Karl Malone, 2003-04",
+        "x": 8.7,
+        "y": 0.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-mcgee-2011",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      1.5
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "JaVale McGee, 2011-12",
+    "targetX": 0.6,
+    "targetY": 2.2,
+    "referencePlayers": [
+      {
+        "name": "Dirk Nowitzki, 2005-06",
+        "x": 0.7,
+        "y": 1
+      },
+      {
+        "name": "Kyle Lowry, 2022-23",
+        "x": 1,
+        "y": 0.4
+      },
+      {
+        "name": "Anthony Davis, 2015-16",
+        "x": 1.3,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-payton-2000",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      2.5
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Gary Payton, 2000-01",
+    "targetX": 1.6,
+    "targetY": 0.3,
+    "referencePlayers": [
+      {
+        "name": "Naz Reid, 2024-25",
+        "x": 0.7,
+        "y": 0.9
+      },
+      {
+        "name": "Montrezl Harrell, 2018-19",
+        "x": 0.9,
+        "y": 1.3
+      },
+      {
+        "name": "Kobe Bryant, 2006-07",
+        "x": 1.4,
+        "y": 0.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-fox-2017",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      5
+    ],
+    "yDomain": [
+      5,
+      45
+    ],
+    "targetPlayer": "De'Aaron Fox, 2017-18",
+    "targetX": 2.4,
+    "targetY": 11.6,
+    "referencePlayers": [
+      {
+        "name": "Derrick White, 2023-24",
+        "x": 1.5,
+        "y": 15.2
+      },
+      {
+        "name": "Terry Rozier, 2022-23",
+        "x": 2.1,
+        "y": 21.1
+      },
+      {
+        "name": "Joel Embiid, 2021-22",
+        "x": 3.1,
+        "y": 30.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-green-2022",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      15,
+      25
+    ],
+    "yDomain": [
+      6.25,
+      16.25
+    ],
+    "targetPlayer": "Jalen Green, 2022-23",
+    "targetX": 22.1,
+    "targetY": 7.4,
+    "referencePlayers": [
+      {
+        "name": "Clint Capela, 2018-19",
+        "x": 16.6,
+        "y": 14.1
+      },
+      {
+        "name": "Jimmy Butler III, 2021-22",
+        "x": 21.4,
+        "y": 11.4
+      },
+      {
+        "name": "Anfernee Simons, 2023-24",
+        "x": 22.6,
+        "y": 9.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-jones-2022",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      0.5,
+      4.5
+    ],
+    "targetPlayer": "Tyus Jones, 2022-23",
+    "targetX": 5.2,
+    "targetY": 0.9,
+    "referencePlayers": [
+      {
+        "name": "Ben Wallace, 2005-06",
+        "x": 1.9,
+        "y": 1.1
+      },
+      {
+        "name": "Buddy Hield, 2020-21",
+        "x": 3.6,
+        "y": 1.8
+      },
+      {
+        "name": "Tony Parker, 2005-06",
+        "x": 5.8,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-claxton-2022",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      50
+    ],
+    "yDomain": [
+      50,
+      90
+    ],
+    "targetPlayer": "Nic Claxton, 2022-23",
+    "targetX": 15.5,
+    "targetY": 69.1,
+    "referencePlayers": [
+      {
+        "name": "Walker Kessler, 2024-25",
+        "x": 13.3,
+        "y": 66
+      },
+      {
+        "name": "Pau Gasol, 2006-07",
+        "x": 24.7,
+        "y": 59.3
+      },
+      {
+        "name": "Tracy McGrady, 2004-05",
+        "x": 30.4,
+        "y": 52.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-tatum-2017",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2.5,
+      6.5
+    ],
+    "yDomain": [
+      53,
+      61
+    ],
+    "targetPlayer": "Jayson Tatum, 2017-18",
+    "targetX": 3,
+    "targetY": 58.6,
+    "referencePlayers": [
+      {
+        "name": "DeMarcus Cousins, 2020-21",
+        "x": 3.3,
+        "y": 53.7
+      },
+      {
+        "name": "Joe Johnson, 2006-07",
+        "x": 5.5,
+        "y": 55.8
+      },
+      {
+        "name": "Naz Reid, 2024-25",
+        "x": 5.8,
+        "y": 57.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-white-2018",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      1,
+      5
+    ],
+    "targetPlayer": "Derrick White, 2018-19",
+    "targetX": 3.9,
+    "targetY": 1.4,
+    "referencePlayers": [
+      {
+        "name": "Myles Turner, 2024-25",
+        "x": 1.5,
+        "y": 1.7
+      },
+      {
+        "name": "Jaylen Brown, 2021-22",
+        "x": 3.5,
+        "y": 2.7
+      },
+      {
+        "name": "Bradley Beal, 2019-20",
+        "x": 6.1,
+        "y": 3.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-ast-adams-2014",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Assists per game (season)",
+    "yUnit": "APG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0,
+      10
+    ],
+    "targetPlayer": "Steven Adams, 2014-15",
+    "targetX": 7.5,
+    "targetY": 0.9,
+    "referencePlayers": [
+      {
+        "name": "Tyus Jones, 2023-24",
+        "x": 2.7,
+        "y": 7.3
+      },
+      {
+        "name": "Kelly Olynyk, 2020-21",
+        "x": 7,
+        "y": 2.9
+      },
+      {
+        "name": "Blake Griffin, 2012-13",
+        "x": 8.3,
+        "y": 3.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-haliburton-2021",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      1.75,
+      3.75
+    ],
+    "targetPlayer": "Tyrese Haliburton, 2021-22",
+    "targetX": 8.2,
+    "targetY": 2.6,
+    "referencePlayers": [
+      {
+        "name": "Wendell Carter Jr., 2022-23",
+        "x": 2.3,
+        "y": 1.9
+      },
+      {
+        "name": "Marc Gasol, 2017-18",
+        "x": 4.2,
+        "y": 2.7
+      },
+      {
+        "name": "Baron Davis, 2000-01",
+        "x": 7.3,
+        "y": 2.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-murray-2024",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      40
+    ],
+    "yDomain": [
+      10,
+      30
+    ],
+    "targetPlayer": "Keegan Murray, 2024-25",
+    "targetX": 34.3,
+    "targetY": 12.4,
+    "referencePlayers": [
+      {
+        "name": "Jalen Green, 2023-24",
+        "x": 31.7,
+        "y": 19.6
+      },
+      {
+        "name": "Pascal Siakam, 2023-24",
+        "x": 33.2,
+        "y": 21.7
+      },
+      {
+        "name": "DeMar DeRozan, 2013-14",
+        "x": 38.2,
+        "y": 22.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-fd-lockett-2024",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      10,
+      90
+    ],
+    "targetPlayer": "Tyler Lockett, 2024",
+    "targetX": 49,
+    "targetY": 36,
+    "referencePlayers": [
+      {
+        "name": "LaDainian Tomlinson, 2010",
+        "x": 52,
+        "y": 19
+      },
+      {
+        "name": "Breece Hall, 2023",
+        "x": 76,
+        "y": 28
+      },
+      {
+        "name": "Mike Evans, 2018",
+        "x": 86,
+        "y": 69
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-passtd-int-burrow-2024",
+    "league": "NFL",
+    "xLabel": "Interceptions (season)",
+    "xUnit": "INT",
+    "yLabel": "Passing touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      5,
+      25
+    ],
+    "yDomain": [
+      15,
+      55
+    ],
+    "targetPlayer": "Joe Burrow, 2024",
+    "targetX": 9,
+    "targetY": 43,
+    "referencePlayers": [
+      {
+        "name": "Lamar Jackson, 2023",
+        "x": 7,
+        "y": 24
+      },
+      {
+        "name": "Ben Roethlisberger, 2009",
+        "x": 12,
+        "y": 26
+      },
+      {
+        "name": "Brett Favre, 2006",
+        "x": 18,
+        "y": 18
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-3pa-3pct-gasol-2016",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      31.25,
+      41.25
+    ],
+    "targetPlayer": "Marc Gasol, 2016-17",
+    "targetX": 3.6,
+    "targetY": 38.8,
+    "referencePlayers": [
+      {
+        "name": "Kobe Bryant, 2002-03",
+        "x": 4,
+        "y": 38.3
+      },
+      {
+        "name": "Tracy McGrady, 2004-05",
+        "x": 5.6,
+        "y": 32.6
+      },
+      {
+        "name": "OG Anunoby, 2024-25",
+        "x": 6.2,
+        "y": 37.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-smart-2014",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      1,
+      3
+    ],
+    "targetPlayer": "Marcus Smart, 2014-15",
+    "targetX": 3.1,
+    "targetY": 1.3,
+    "referencePlayers": [
+      {
+        "name": "Yao Ming, 2005-06",
+        "x": 1.5,
+        "y": 2.6
+      },
+      {
+        "name": "Shawn Marion, 2003-04",
+        "x": 2.7,
+        "y": 2
+      },
+      {
+        "name": "Kemba Walker, 2012-13",
+        "x": 5.7,
+        "y": 2.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-haliburton-2020",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      1.25,
+      3.25
+    ],
+    "targetPlayer": "Tyrese Haliburton, 2020-21",
+    "targetX": 5.3,
+    "targetY": 1.6,
+    "referencePlayers": [
+      {
+        "name": "Tony Allen, 2016-17",
+        "x": 1.4,
+        "y": 1.4
+      },
+      {
+        "name": "Zach LaVine, 2016-17",
+        "x": 3,
+        "y": 1.8
+      },
+      {
+        "name": "Jamal Murray, 2019-20",
+        "x": 4.8,
+        "y": 2.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-jackson-2018",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      0.5,
+      4.5
+    ],
+    "targetPlayer": "Jaren Jackson Jr., 2018-19",
+    "targetX": 1.1,
+    "targetY": 1.7,
+    "referencePlayers": [
+      {
+        "name": "Bruce Bowen, 2000-01",
+        "x": 1.6,
+        "y": 0.9
+      },
+      {
+        "name": "Bradley Beal, 2017-18",
+        "x": 4.5,
+        "y": 2.6
+      },
+      {
+        "name": "Chris Paul, 2023-24",
+        "x": 6.8,
+        "y": 1.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-favors-2013",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      5,
+      13
+    ],
+    "targetPlayer": "Derrick Favors, 2013-14",
+    "targetX": 13.3,
+    "targetY": 9.9,
+    "referencePlayers": [
+      {
+        "name": "Danilo Gallinari, 2009-10",
+        "x": 15.1,
+        "y": 6.6
+      },
+      {
+        "name": "Bojan Bogdanovic, 2019-20",
+        "x": 20.2,
+        "y": 6.2
+      },
+      {
+        "name": "Joe Johnson, 2006-07",
+        "x": 25,
+        "y": 8.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-clarkson-2018",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      31.25,
+      41.25
+    ],
+    "targetPlayer": "Jordan Clarkson, 2018-19",
+    "targetX": 5.5,
+    "targetY": 32.4,
+    "referencePlayers": [
+      {
+        "name": "Carmelo Anthony, 2010-11",
+        "x": 3.3,
+        "y": 37.8
+      },
+      {
+        "name": "Bradley Beal, 2013-14",
+        "x": 4.7,
+        "y": 40.2
+      },
+      {
+        "name": "Tyrese Haliburton, 2023-24",
+        "x": 7.8,
+        "y": 36.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-gibson-2009",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.25,
+      2.25
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Taj Gibson, 2009-10",
+    "targetX": 0.6,
+    "targetY": 1.3,
+    "referencePlayers": [
+      {
+        "name": "Danilo Gallinari, 2019-20",
+        "x": 0.7,
+        "y": 0.1
+      },
+      {
+        "name": "Buddy Hield, 2019-20",
+        "x": 0.9,
+        "y": 0.2
+      },
+      {
+        "name": "Fred VanVleet, 2022-23",
+        "x": 1.8,
+        "y": 0.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-horry-2001",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      50,
+      58
+    ],
+    "targetPlayer": "Robert Horry, 2001-02",
+    "targetX": 12.7,
+    "targetY": 52.8,
+    "referencePlayers": [
+      {
+        "name": "Al Horford, 2016-17",
+        "x": 19.6,
+        "y": 55.3
+      },
+      {
+        "name": "Zach Randolph, 2012-13",
+        "x": 22.7,
+        "y": 50.6
+      },
+      {
+        "name": "Baron Davis, 2004-05",
+        "x": 27.3,
+        "y": 51.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-barrett-2020",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0.2,
+      1
+    ],
+    "targetPlayer": "RJ Barrett, 2020-21",
+    "targetX": 5.8,
+    "targetY": 0.3,
+    "referencePlayers": [
+      {
+        "name": "CJ McCollum, 2019-20",
+        "x": 4.2,
+        "y": 0.6
+      },
+      {
+        "name": "Marcus Morris Sr., 2019-20",
+        "x": 5,
+        "y": 0.5
+      },
+      {
+        "name": "Bam Adebayo, 2022-23",
+        "x": 9.2,
+        "y": 0.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-caruso-2021",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0.1,
+      0.9
+    ],
+    "targetPlayer": "Alex Caruso, 2021-22",
+    "targetX": 3.6,
+    "targetY": 0.4,
+    "referencePlayers": [
+      {
+        "name": "Stephen Curry, 2012-13",
+        "x": 4,
+        "y": 0.2
+      },
+      {
+        "name": "Marcus Morris Sr., 2016-17",
+        "x": 4.6,
+        "y": 0.3
+      },
+      {
+        "name": "James Harden, 2020-21",
+        "x": 7.9,
+        "y": 0.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-tucker-2013",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0.25,
+      0.65
+    ],
+    "targetPlayer": "P.J. Tucker, 2013-14",
+    "targetX": 6.5,
+    "targetY": 0.3,
+    "referencePlayers": [
+      {
+        "name": "Kyrie Irving, 2012-13",
+        "x": 3.7,
+        "y": 0.4
+      },
+      {
+        "name": "Scottie Pippen, 2000-01",
+        "x": 5.2,
+        "y": 0.5
+      },
+      {
+        "name": "LeBron James, 2010-11",
+        "x": 7.5,
+        "y": 0.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-leonard-2013",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      5,
+      13
+    ],
+    "targetPlayer": "Kawhi Leonard, 2013-14",
+    "targetX": 12.8,
+    "targetY": 8.2,
+    "referencePlayers": [
+      {
+        "name": "Bogdan Bogdanović, 2021-22",
+        "x": 15.1,
+        "y": 7.1
+      },
+      {
+        "name": "Anfernee Simons, 2021-22",
+        "x": 17.3,
+        "y": 6.5
+      },
+      {
+        "name": "Zion Williamson, 2023-24",
+        "x": 22.9,
+        "y": 10.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "mlb-bb-hr-guerrero",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Vladimir Guerrero",
+    "targetX": 737,
+    "targetY": 449,
+    "referencePlayers": [
+      {
+        "name": "Kenny Lofton",
+        "x": 945,
+        "y": 130
+      },
+      {
+        "name": "Craig Biggio",
+        "x": 1160,
+        "y": 291
+      },
+      {
+        "name": "Jim Thome",
+        "x": 1747,
+        "y": 612
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-stl-blk-pippen-2001",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.25,
+      2.25
+    ],
+    "yDomain": [
+      0.25,
+      2.25
+    ],
+    "targetPlayer": "Scottie Pippen, 2001-02",
+    "targetX": 1.6,
+    "targetY": 0.6,
+    "referencePlayers": [
+      {
+        "name": "Yao Ming, 2002-03",
+        "x": 0.4,
+        "y": 1.8
+      },
+      {
+        "name": "Derrick White, 2024-25",
+        "x": 0.9,
+        "y": 1.1
+      },
+      {
+        "name": "DeMarcus Cousins, 2013-14",
+        "x": 1.5,
+        "y": 1.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-cousins-2012",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      3.25
+    ],
+    "yDomain": [
+      13.75,
+      23.75
+    ],
+    "targetPlayer": "DeMarcus Cousins, 2012-13",
+    "targetX": 3,
+    "targetY": 17.1,
+    "referencePlayers": [
+      {
+        "name": "Nikola Vučević, 2016-17",
+        "x": 1.6,
+        "y": 14.6
+      },
+      {
+        "name": "Monta Ellis, 2014-15",
+        "x": 2.5,
+        "y": 18.9
+      },
+      {
+        "name": "Amar'e Stoudemire, 2006-07",
+        "x": 2.8,
+        "y": 20.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-sabonis-2018",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      8,
+      16
+    ],
+    "targetPlayer": "Domantas Sabonis, 2018-19",
+    "targetX": 14.1,
+    "targetY": 12.2,
+    "referencePlayers": [
+      {
+        "name": "Rudy Gobert, 2019-20",
+        "x": 15.1,
+        "y": 15
+      },
+      {
+        "name": "Tracy McGrady, 2007-08",
+        "x": 21.6,
+        "y": 11
+      },
+      {
+        "name": "Donovan Mitchell, 2021-22",
+        "x": 25.9,
+        "y": 9.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-fd-metcalf-2021",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      15,
+      55
+    ],
+    "targetPlayer": "DK Metcalf, 2021",
+    "targetX": 75,
+    "targetY": 48,
+    "referencePlayers": [
+      {
+        "name": "DeMarco Murray, 2016",
+        "x": 53,
+        "y": 20
+      },
+      {
+        "name": "Alvin Kamara, 2019",
+        "x": 81,
+        "y": 28
+      },
+      {
+        "name": "Steven Jackson, 2006",
+        "x": 90,
+        "y": 31
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "mlb-bb-hr-kent",
+    "league": "MLB",
+    "xLabel": "Career walks",
+    "xUnit": "BB",
+    "yLabel": "Career home runs",
+    "yUnit": "HR",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      100,
+      500
+    ],
+    "targetPlayer": "Jeff Kent",
+    "targetX": 801,
+    "targetY": 377,
+    "referencePlayers": [
+      {
+        "name": "Kenny Lofton",
+        "x": 945,
+        "y": 130
+      },
+      {
+        "name": "George Brett",
+        "x": 1096,
+        "y": 317
+      },
+      {
+        "name": "Rickey Henderson",
+        "x": 2190,
+        "y": 297
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "nba-reb-blk-gilgeousalexander-2018",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1.25,
+      11.25
+    ],
+    "yDomain": [
+      0,
+      0.8
+    ],
+    "targetPlayer": "Shai Gilgeous-Alexander, 2018-19",
+    "targetX": 2.8,
+    "targetY": 0.5,
+    "referencePlayers": [
+      {
+        "name": "Trae Young, 2021-22",
+        "x": 3.7,
+        "y": 0.1
+      },
+      {
+        "name": "James Harden, 2013-14",
+        "x": 4.7,
+        "y": 0.4
+      },
+      {
+        "name": "Kevin Love, 2019-20",
+        "x": 9.8,
+        "y": 0.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-edwards-2020",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      30,
+      50
+    ],
+    "targetPlayer": "Anthony Edwards, 2020-21",
+    "targetX": 7.2,
+    "targetY": 32.9,
+    "referencePlayers": [
+      {
+        "name": "Mikal Bridges, 2021-22",
+        "x": 3.8,
+        "y": 36.9
+      },
+      {
+        "name": "Reggie Miller, 2001-02",
+        "x": 5.6,
+        "y": 40.6
+      },
+      {
+        "name": "CJ McCollum, 2023-24",
+        "x": 8.4,
+        "y": 42.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-hield-2016",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      32,
+      40
+    ],
+    "targetPlayer": "Buddy Hield, 2016-17",
+    "targetX": 4.6,
+    "targetY": 39.1,
+    "referencePlayers": [
+      {
+        "name": "Joel Embiid, 2019-20",
+        "x": 3.4,
+        "y": 33.1
+      },
+      {
+        "name": "Jaren Jackson Jr., 2024-25",
+        "x": 5.3,
+        "y": 37.5
+      },
+      {
+        "name": "Keegan Murray, 2024-25",
+        "x": 5.9,
+        "y": 34.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-thompson-2012",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Klay Thompson, 2012-13",
+    "targetX": 6.4,
+    "targetY": 53.3,
+    "referencePlayers": [
+      {
+        "name": "Paul Pierce, 2008-09",
+        "x": 3.8,
+        "y": 58.2
+      },
+      {
+        "name": "Brook Lopez, 2023-24",
+        "x": 5.1,
+        "y": 60.8
+      },
+      {
+        "name": "Anthony Edwards, 2021-22",
+        "x": 8.4,
+        "y": 56
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-young-2018",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      10,
+      30
+    ],
+    "targetPlayer": "Trae Young, 2018-19",
+    "targetX": 30.9,
+    "targetY": 19.1,
+    "referencePlayers": [
+      {
+        "name": "Jarrett Allen, 2021-22",
+        "x": 32.3,
+        "y": 16.1
+      },
+      {
+        "name": "Marcus Camby, 2005-06",
+        "x": 33.2,
+        "y": 12.8
+      },
+      {
+        "name": "Vince Carter, 2005-06",
+        "x": 36.8,
+        "y": 24.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-murray-2023",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      16,
+      24
+    ],
+    "targetPlayer": "Jamal Murray, 2023-24",
+    "targetX": 31.5,
+    "targetY": 21.2,
+    "referencePlayers": [
+      {
+        "name": "Tyrese Haliburton, 2023-24",
+        "x": 32.2,
+        "y": 20.1
+      },
+      {
+        "name": "Mike Conley, 2013-14",
+        "x": 33.5,
+        "y": 17.2
+      },
+      {
+        "name": "Antawn Jamison, 2009-10",
+        "x": 36.5,
+        "y": 18.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-ypc-rushyds-holmes-2003",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      800,
+      1600
+    ],
+    "targetPlayer": "Priest Holmes, 2003",
+    "targetX": 4.4,
+    "targetY": 1420,
+    "referencePlayers": [
+      {
+        "name": "Jamal Lewis, 2005",
+        "x": 3.4,
+        "y": 906
+      },
+      {
+        "name": "Ricky Williams, 2009",
+        "x": 4.7,
+        "y": 1121
+      },
+      {
+        "name": "Nick Chubb, 2018",
+        "x": 5.2,
+        "y": 996
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-mpg-ppg-durant-2016",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      37.5
+    ],
+    "yDomain": [
+      18,
+      26
+    ],
+    "targetPlayer": "Kevin Durant, 2016-17",
+    "targetX": 33.4,
+    "targetY": 25.1,
+    "referencePlayers": [
+      {
+        "name": "Joel Embiid, 2019-20",
+        "x": 29.5,
+        "y": 23
+      },
+      {
+        "name": "Domantas Sabonis, 2021-22",
+        "x": 34.4,
+        "y": 18.9
+      },
+      {
+        "name": "Karl Malone, 2002-03",
+        "x": 36.2,
+        "y": 20.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-beal-2013",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      31,
+      39
+    ],
+    "yDomain": [
+      15,
+      35
+    ],
+    "targetPlayer": "Bradley Beal, 2013-14",
+    "targetX": 34.7,
+    "targetY": 17.1,
+    "referencePlayers": [
+      {
+        "name": "Kemba Walker, 2020-21",
+        "x": 31.8,
+        "y": 19.3
+      },
+      {
+        "name": "Luka Dončić, 2019-20",
+        "x": 33.6,
+        "y": 28.8
+      },
+      {
+        "name": "Devin Booker, 2024-25",
+        "x": 37.3,
+        "y": 25.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-murray-2017",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      1.75,
+      3.75
+    ],
+    "targetPlayer": "Jamal Murray, 2017-18",
+    "targetX": 3.4,
+    "targetY": 2.1,
+    "referencePlayers": [
+      {
+        "name": "Alonzo Mourning, 2001-02",
+        "x": 1.2,
+        "y": 2.4
+      },
+      {
+        "name": "Amar'e Stoudemire, 2010-11",
+        "x": 2.6,
+        "y": 3.2
+      },
+      {
+        "name": "Vince Carter, 2006-07",
+        "x": 4.8,
+        "y": 2.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-duren-2023",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2.5,
+      22.5
+    ],
+    "yDomain": [
+      0.5,
+      2.5
+    ],
+    "targetPlayer": "Jalen Duren, 2023-24",
+    "targetX": 11.6,
+    "targetY": 0.8,
+    "referencePlayers": [
+      {
+        "name": "Shane Battier, 2002-03",
+        "x": 4.4,
+        "y": 1.1
+      },
+      {
+        "name": "Pascal Siakam, 2019-20",
+        "x": 7.3,
+        "y": 0.9
+      },
+      {
+        "name": "Andre Drummond, 2017-18",
+        "x": 16,
+        "y": 1.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-usg-ts-powell-2019",
+    "league": "NBA",
+    "xLabel": "Usage rate (season)",
+    "xUnit": "USG%",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      5,
+      45
+    ],
+    "yDomain": [
+      45,
+      85
+    ],
+    "targetPlayer": "Dwight Powell, 2019-20",
+    "targetX": 12.6,
+    "targetY": 67.7,
+    "referencePlayers": [
+      {
+        "name": "Theo Ratliff, 2004-05",
+        "x": 9.8,
+        "y": 50
+      },
+      {
+        "name": "Brook Lopez, 2009-10",
+        "x": 23.3,
+        "y": 57
+      },
+      {
+        "name": "Joel Embiid, 2019-20",
+        "x": 31.5,
+        "y": 59
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-airyds-yac-nacua-2024",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      250,
+      2250
+    ],
+    "yDomain": [
+      200,
+      600
+    ],
+    "targetPlayer": "Puka Nacua, 2024",
+    "targetX": 839,
+    "targetY": 518,
+    "referencePlayers": [
+      {
+        "name": "Travis Kelce, 2014",
+        "x": 523,
+        "y": 479
+      },
+      {
+        "name": "Tyler Lockett, 2022",
+        "x": 1242,
+        "y": 272
+      },
+      {
+        "name": "Brandon Aiyuk, 2023",
+        "x": 1467,
+        "y": 362
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-ast-tov-derozan-2020",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      1,
+      5
+    ],
+    "targetPlayer": "DeMar DeRozan, 2020-21",
+    "targetX": 6.9,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Anthony Davis, 2016-17",
+        "x": 2.1,
+        "y": 2.4
+      },
+      {
+        "name": "Draymond Green, 2014-15",
+        "x": 3.7,
+        "y": 1.7
+      },
+      {
+        "name": "Monta Ellis, 2009-10",
+        "x": 5.3,
+        "y": 3.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-tucker-2014",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      27.5,
+      37.5
+    ],
+    "targetPlayer": "P.J. Tucker, 2014-15",
+    "targetX": 3.2,
+    "targetY": 34.5,
+    "referencePlayers": [
+      {
+        "name": "Nikola Vučević, 2023-24",
+        "x": 4.1,
+        "y": 29.4
+      },
+      {
+        "name": "Manu Ginobili, 2008-09",
+        "x": 4.8,
+        "y": 33
+      },
+      {
+        "name": "Anfernee Simons, 2024-25",
+        "x": 8.5,
+        "y": 36.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-towns-2017",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      60,
+      68
+    ],
+    "targetPlayer": "Karl-Anthony Towns, 2017-18",
+    "targetX": 3.5,
+    "targetY": 64.6,
+    "referencePlayers": [
+      {
+        "name": "Kelly Olynyk, 2018-19",
+        "x": 4,
+        "y": 61
+      },
+      {
+        "name": "Kevin Love, 2017-18",
+        "x": 5.6,
+        "y": 61.4
+      },
+      {
+        "name": "Zach LaVine, 2020-21",
+        "x": 8.2,
+        "y": 63.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-mobley-2022",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      8.5,
+      12.5
+    ],
+    "targetPlayer": "Evan Mobley, 2022-23",
+    "targetX": 16.2,
+    "targetY": 11.8,
+    "referencePlayers": [
+      {
+        "name": "Clint Capela, 2016-17",
+        "x": 12.6,
+        "y": 9.1
+      },
+      {
+        "name": "Fred VanVleet, 2020-21",
+        "x": 19.6,
+        "y": 10.5
+      },
+      {
+        "name": "Ja Morant, 2024-25",
+        "x": 23.2,
+        "y": 11.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-anunoby-2024",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0.2,
+      1
+    ],
+    "targetPlayer": "OG Anunoby, 2024-25",
+    "targetX": 4.8,
+    "targetY": 0.9,
+    "referencePlayers": [
+      {
+        "name": "Tyus Jones, 2023-24",
+        "x": 2.7,
+        "y": 0.3
+      },
+      {
+        "name": "Lauri Markkanen, 2019-20",
+        "x": 6.3,
+        "y": 0.5
+      },
+      {
+        "name": "LaMarcus Aldridge, 2011-12",
+        "x": 8,
+        "y": 0.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-ra-simons-2023",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      12.5,
+      32.5
+    ],
+    "yDomain": [
+      8,
+      16
+    ],
+    "targetPlayer": "Anfernee Simons, 2023-24",
+    "targetX": 22.6,
+    "targetY": 9.1,
+    "referencePlayers": [
+      {
+        "name": "Bobby Portis Jr., 2021-22",
+        "x": 14.6,
+        "y": 10.3
+      },
+      {
+        "name": "Tyrese Haliburton, 2023-24",
+        "x": 20.1,
+        "y": 14.8
+      },
+      {
+        "name": "Shai Gilgeous-Alexander, 2021-22",
+        "x": 24.5,
+        "y": 10.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-smart-2016",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      1.875,
+      2.875
+    ],
+    "targetPlayer": "Marcus Smart, 2016-17",
+    "targetX": 4.6,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Alonzo Mourning, 2001-02",
+        "x": 1.2,
+        "y": 2.4
+      },
+      {
+        "name": "Zion Williamson, 2020-21",
+        "x": 3.7,
+        "y": 2.7
+      },
+      {
+        "name": "Mike Conley, 2010-11",
+        "x": 6.5,
+        "y": 2.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-anunoby-2019",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "OG Anunoby, 2019-20",
+    "targetX": 3.3,
+    "targetY": 60,
+    "referencePlayers": [
+      {
+        "name": "Dirk Nowitzki, 2016-17",
+        "x": 3.9,
+        "y": 52.9
+      },
+      {
+        "name": "Brook Lopez, 2016-17",
+        "x": 5.2,
+        "y": 57.8
+      },
+      {
+        "name": "Luka Dončić, 2022-23",
+        "x": 8.2,
+        "y": 60.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-stl-blk-jones-2021",
+    "league": "NBA",
+    "xLabel": "Steals per game (season)",
+    "xUnit": "SPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0.5,
+      2.5
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Herbert Jones, 2021-22",
+    "targetX": 1.7,
+    "targetY": 0.8,
+    "referencePlayers": [
+      {
+        "name": "Patrick Ewing, 2000-01",
+        "x": 0.7,
+        "y": 1.2
+      },
+      {
+        "name": "Ray Allen, 2004-05",
+        "x": 1.1,
+        "y": 0.1
+      },
+      {
+        "name": "Ben Wallace, 2006-07",
+        "x": 1.4,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-korver-2006",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      3,
+      7
+    ],
+    "yDomain": [
+      27.5,
+      47.5
+    ],
+    "targetPlayer": "Kyle Korver, 2006-07",
+    "targetX": 4.1,
+    "targetY": 43,
+    "referencePlayers": [
+      {
+        "name": "Joel Embiid, 2017-18",
+        "x": 3.4,
+        "y": 30.8
+      },
+      {
+        "name": "Bogdan Bogdanović, 2024-25",
+        "x": 5.4,
+        "y": 36.3
+      },
+      {
+        "name": "Devin Booker, 2018-19",
+        "x": 6.5,
+        "y": 32.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-fg3a-ts-beverley-2014",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      47.5,
+      67.5
+    ],
+    "targetPlayer": "Patrick Beverley, 2014-15",
+    "targetX": 5.8,
+    "targetY": 50.9,
+    "referencePlayers": [
+      {
+        "name": "Jerami Grant, 2019-20",
+        "x": 3.5,
+        "y": 59.1
+      },
+      {
+        "name": "Marc Gasol, 2017-18",
+        "x": 4.4,
+        "y": 53.2
+      },
+      {
+        "name": "Terry Rozier, 2022-23",
+        "x": 8,
+        "y": 51.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-carter-2021",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2.5,
+      12.5
+    ],
+    "yDomain": [
+      0.5,
+      1.3
+    ],
+    "targetPlayer": "Wendell Carter Jr., 2021-22",
+    "targetX": 10.5,
+    "targetY": 0.7,
+    "referencePlayers": [
+      {
+        "name": "John Wall, 2017-18",
+        "x": 3.7,
+        "y": 1.1
+      },
+      {
+        "name": "Trevor Ariza, 2011-12",
+        "x": 5.2,
+        "y": 0.6
+      },
+      {
+        "name": "Ivica Zubac, 2023-24",
+        "x": 9.2,
+        "y": 1.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-george-2012",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      25,
+      45
+    ],
+    "yDomain": [
+      16,
+      24
+    ],
+    "targetPlayer": "Paul George, 2012-13",
+    "targetX": 37.6,
+    "targetY": 17.4,
+    "referencePlayers": [
+      {
+        "name": "Jordan Clarkson, 2020-21",
+        "x": 26.7,
+        "y": 18.4
+      },
+      {
+        "name": "Kemba Walker, 2017-18",
+        "x": 34.2,
+        "y": 22.1
+      },
+      {
+        "name": "Reggie Miller, 2000-01",
+        "x": 39.3,
+        "y": 18.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-green-2023",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      20,
+      40
+    ],
+    "yDomain": [
+      11.25,
+      21.25
+    ],
+    "targetPlayer": "Jalen Green, 2023-24",
+    "targetX": 31.7,
+    "targetY": 19.6,
+    "referencePlayers": [
+      {
+        "name": "Brook Lopez, 2017-18",
+        "x": 23.4,
+        "y": 13
+      },
+      {
+        "name": "Tyrese Haliburton, 2021-22",
+        "x": 35,
+        "y": 15.3
+      },
+      {
+        "name": "Shawn Marion, 2000-01",
+        "x": 36.2,
+        "y": 17.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-tov-adebayo-2024",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "Turnovers per game (season)",
+    "yUnit": "TOV",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      1.75,
+      3.75
+    ],
+    "targetPlayer": "Bam Adebayo, 2024-25",
+    "targetX": 4.3,
+    "targetY": 2.1,
+    "referencePlayers": [
+      {
+        "name": "Anthony Davis, 2016-17",
+        "x": 2.1,
+        "y": 2.4
+      },
+      {
+        "name": "Paul George, 2019-20",
+        "x": 3.9,
+        "y": 2.6
+      },
+      {
+        "name": "LeBron James, 2015-16",
+        "x": 6.8,
+        "y": 3.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-ast-allen-2016",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Assists per game (season)",
+    "yUnit": "APG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Tony Allen, 2016-17",
+    "targetX": 5.5,
+    "targetY": 1.4,
+    "referencePlayers": [
+      {
+        "name": "Bogdan Bogdanović, 2019-20",
+        "x": 3.4,
+        "y": 3.4
+      },
+      {
+        "name": "Monta Ellis, 2007-08",
+        "x": 5,
+        "y": 3.9
+      },
+      {
+        "name": "Draymond Green, 2016-17",
+        "x": 7.9,
+        "y": 7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-3pct-jones-2023",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "3-point percentage (season)",
+    "yUnit": "3P%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      30,
+      50
+    ],
+    "targetPlayer": "Herbert Jones, 2023-24",
+    "targetX": 3.6,
+    "targetY": 41.8,
+    "referencePlayers": [
+      {
+        "name": "OG Anunoby, 2018-19",
+        "x": 3,
+        "y": 33.2
+      },
+      {
+        "name": "Blake Griffin, 2020-21",
+        "x": 4.5,
+        "y": 34.1
+      },
+      {
+        "name": "Paul George, 2017-18",
+        "x": 7.7,
+        "y": 40.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-tov-pts-adebayo-2019",
+    "league": "NBA",
+    "xLabel": "Turnovers per game (season)",
+    "xUnit": "TOV",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      5
+    ],
+    "yDomain": [
+      12.5,
+      32.5
+    ],
+    "targetPlayer": "Bam Adebayo, 2019-20",
+    "targetX": 2.8,
+    "targetY": 15.9,
+    "referencePlayers": [
+      {
+        "name": "Deandre Ayton, 2021-22",
+        "x": 1.6,
+        "y": 17.2
+      },
+      {
+        "name": "Blake Griffin, 2014-15",
+        "x": 2.3,
+        "y": 21.9
+      },
+      {
+        "name": "LeBron James, 2007-08",
+        "x": 3.4,
+        "y": 30
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-korver-2008",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      1
+    ],
+    "targetPlayer": "Kyle Korver, 2008-09",
+    "targetX": 3.3,
+    "targetY": 0.4,
+    "referencePlayers": [
+      {
+        "name": "Bojan Bogdanovic, 2021-22",
+        "x": 4.3,
+        "y": 0
+      },
+      {
+        "name": "Taj Gibson, 2016-17",
+        "x": 6.2,
+        "y": 0.8
+      },
+      {
+        "name": "Zach Randolph, 2010-11",
+        "x": 12.2,
+        "y": 0.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-blk-beverley-2013",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0.1,
+      0.9
+    ],
+    "targetPlayer": "Patrick Beverley, 2013-14",
+    "targetX": 3.5,
+    "targetY": 0.4,
+    "referencePlayers": [
+      {
+        "name": "Danny Green, 2018-19",
+        "x": 4,
+        "y": 0.7
+      },
+      {
+        "name": "Trevor Ariza, 2014-15",
+        "x": 5.6,
+        "y": 0.2
+      },
+      {
+        "name": "Josh Hart, 2023-24",
+        "x": 8.3,
+        "y": 0.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ppg-barnes-2024",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "Points per game (season)",
+    "yUnit": "PPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      38
+    ],
+    "yDomain": [
+      13,
+      21
+    ],
+    "targetPlayer": "Scottie Barnes, 2024-25",
+    "targetX": 32.8,
+    "targetY": 19.3,
+    "referencePlayers": [
+      {
+        "name": "Bojan Bogdanovic, 2020-21",
+        "x": 30.8,
+        "y": 17
+      },
+      {
+        "name": "Al Horford, 2009-10",
+        "x": 35.1,
+        "y": 14.2
+      },
+      {
+        "name": "Reggie Miller, 2001-02",
+        "x": 36.6,
+        "y": 16.5
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nfl-rec-rectd-nacua-2023",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      3,
+      11
+    ],
+    "targetPlayer": "Puka Nacua, 2023",
+    "targetX": 105,
+    "targetY": 6,
+    "referencePlayers": [
+      {
+        "name": "Isaac Bruce, 2007",
+        "x": 55,
+        "y": 4
+      },
+      {
+        "name": "Terrell Owens, 2010",
+        "x": 72,
+        "y": 9
+      },
+      {
+        "name": "Antonio Gates, 2005",
+        "x": 89,
+        "y": 10
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nba-ppg-ra-capela-2017",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      8,
+      16
+    ],
+    "targetPlayer": "Clint Capela, 2017-18",
+    "targetX": 13.9,
+    "targetY": 11.7,
+    "referencePlayers": [
+      {
+        "name": "Derrick White, 2024-25",
+        "x": 16.4,
+        "y": 9.3
+      },
+      {
+        "name": "Pascal Siakam, 2024-25",
+        "x": 20.2,
+        "y": 10.3
+      },
+      {
+        "name": "LeBron James, 2011-12",
+        "x": 27.1,
+        "y": 14.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   }
 ]
