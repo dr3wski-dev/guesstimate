@@ -83,6 +83,22 @@ NFL_SOURCE = ('nflverse-data player_stats release, regular-season weekly rows '
               'or two.')
 # 1999-2001 play-by-play is materially less complete than 2002 onward.
 NFL_MIN_SEASON = 2002
+# Targets are UNUSABLE for 2003-2008. In that window the column simply echoes
+# receptions: measured across the cache, targets == receptions in 99-100% of rows
+# with a catch, against roughly 30-40% in every other season. Marvin Harrison's 2003
+# comes out as 94 targets and 94 catches — a hundred per cent catch rate, when he was
+# actually thrown at about 141 times.
+#
+# This shipped before it was noticed, in four plotted values, and the verifier passed
+# them: it re-derives targets from the same column, so both sides agreed and both were
+# wrong. Agreement between two readings of one broken source is not verification.
+# Anything derived from targets is withheld for these seasons instead.
+NFL_TARGETS_BROKEN = range(2003, 2009)
+# Air yards and yards-after-catch simply do not exist before 2006 — every row with
+# catches reports zero, which is a missing measurement wearing a real number's
+# clothes. Left as 0 it would plot Jerry Rice as having caught every ball at the line
+# of scrimmage. Withheld, so no archetype can reach for it.
+NFL_AIRYARDS_FROM = 2006
 NBA_SOURCE = ('stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR '
               'nba_stats_player_season_stats release. Regular-season per-game averages.')
 
@@ -337,9 +353,16 @@ def nfl_seasons(pool_all, gate=True):
         seasons[yr] = True
         names[pid] = r['player_display_name']
         wk[key].add(r['week'])
+        # Counting stats only, summed. NOT target_share / racr / wopr: those are
+        # weekly RATIOS, so summing them is meaningless and averaging them is an
+        # approximation of a season share rather than the season share — the true
+        # figure needs team totals this file does not carry. A number that is nearly
+        # right is the one thing this pipeline will not ship.
         for c in ('rushing_yards','rushing_tds','receiving_yards','receiving_tds',
                   'passing_yards','passing_tds','interceptions','attempts',
-                  'completions','receptions','carries','targets'):
+                  'completions','receptions','carries','targets',
+                  'receiving_air_yards','receiving_yards_after_catch',
+                  'receiving_first_downs'):
             v = r.get(c)
             if v:
                 try:
@@ -378,7 +401,19 @@ def nfl_seasons(pool_all, gate=True):
                 'rush_yds': int(c['rushing_yards']), 'rush_td': int(c['rushing_tds']),
                 'rec_yds': int(c['receiving_yards']), 'rec_td': int(c['receiving_tds']),
                 'rec': int(c['receptions']), 'carries': int(c['carries']),
-                'tgt': int(c['targets']), 'comp': int(c['completions']),
+                'tgt': None if yr in NFL_TARGETS_BROKEN else int(c['targets']),
+                'comp': int(c['completions']),
+                'air_yds': (int(c['receiving_air_yards'])
+                            if yr >= NFL_AIRYARDS_FROM else None),
+                'yac': (int(c['receiving_yards_after_catch'])
+                        if yr >= NFL_AIRYARDS_FROM else None),
+                'rec_fd': (int(c['receiving_first_downs'])
+                           if yr >= NFL_AIRYARDS_FROM else None),
+                # Both exact: a ratio of two summed counts, not an average of ratios.
+                'ypt': (round(c['receiving_yards'] / c['targets'], 1)
+                        if c['targets'] >= 50 and yr not in NFL_TARGETS_BROKEN else None),
+                'catch_pct': (round(c['receptions'] / c['targets'] * 100, 1)
+                              if c['targets'] >= 50 and yr not in NFL_TARGETS_BROKEN else None),
                 'pass_yds': int(c['passing_yards']), 'pass_td': int(c['passing_tds']),
                 'int': int(c['interceptions']), 'att': int(c['attempts']),
                 'rush_ypg': round(c['rushing_yards'] / g, 1),
@@ -544,6 +579,23 @@ NFL_ARCHETYPES = [
     dict(id='comp-passtd', x='comp', y='pass_td', xl='Completions (season)', xu='comp',
          yl='Passing touchdowns (season)', yu='TDs', xstep=1, ystep=1,
          need=('pass_yds', 3000)),
+    # Receivers. The pool leaned on running backs because rushing archetypes were
+    # written first; every column these need was already in the cache, unused.
+    dict(id='airyds-yac', x='air_yds', y='yac', xl='Receiving air yards (season)',
+         xu='air yds', yl='Yards after catch (season)', yu='YAC', xstep=1, ystep=1,
+         need=('rec_yds', 700)),
+    dict(id='tgt-catchpct', x='tgt', y='catch_pct', xl='Targets (season)', xu='targets',
+         yl='Catch rate (season)', yu='catch%', xstep=1, ystep=0.1,
+         need=('rec_yds', 600)),
+    dict(id='ypt-recyds', x='ypt', y='rec_yds', xl='Yards per target (season)',
+         xu='Y/T', yl='Receiving yards (season)', yu='yards', xstep=0.1, ystep=1,
+         need=('rec_yds', 700)),
+    dict(id='rec-fd', x='rec', y='rec_fd', xl='Receptions (season)', xu='rec',
+         yl='Receiving first downs (season)', yu='1st downs', xstep=1, ystep=1,
+         need=('rec', 45)),
+    dict(id='airyds-rectd', x='air_yds', y='rec_td', xl='Receiving air yards (season)',
+         xu='air yds', yl='Receiving touchdowns (season)', yu='TDs', xstep=1, ystep=1,
+         need=('rec_yds', 600)),
     dict(id='rushtd-rectd', x='rush_td', y='rec_td', xl='Rushing touchdowns (season)',
          xu='TDs', yl='Receiving touchdowns (season)', yu='TDs', xstep=1, ystep=1,
          need=('rush_yds', 400)),

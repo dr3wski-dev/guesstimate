@@ -28,25 +28,25 @@
     "nba-usg-ts-webber-2000"
   ],
   "2026-08-21": [
-    "nba-fga-ts-aldridge-2014",
-    "nba-stl-blk-mutombo-2000",
-    "mlb-w-era-clemens",
-    "nba-reb-blk-love-2009",
-    "mlb-w-era-young"
+    "nba-mpg-ppg-marion-2004",
+    "nba-3pa-3pct-hart-2017",
+    "nfl-ypc-rushyds-taylor-2022",
+    "nba-mpg-ppg-williams",
+    "nba-ppg-stuff-green"
   ],
   "2026-08-22": [
-    "nba-3pa-3pct-gallinari-2009",
-    "nba-stl-blk-horford-2009",
-    "nba-fga-ts-ayton-2020",
-    "nfl-rec-recyds-mccaffrey-2019",
-    "mlb-cg-so-koufax"
+    "nfl-rushypg-td-dillon-2006",
+    "nfl-passtd-int-manning-2002",
+    "nfl-tgt-catchpct-holmes-2002",
+    "nba-fg3a-ts-allen-2002",
+    "mlb-so-era-hershiser"
   ],
   "2026-08-23": [
-    "nba-fga-ts-ellis-2010",
-    "mlb-so-era-hershiser",
-    "mlb-whip-so-cone",
-    "nba-stl-blk-baker-2000",
-    "nba-usg-ts-parker-2008"
+    "nfl-att-ypc-charles",
+    "mlb-so-avg-jackson",
+    "nfl-rushyds-recyds-henry-2020",
+    "nfl-passtd-rushyds-vick",
+    "nfl-airyds-rectd-andrews-2024"
   ],
   "2026-08-24": [
     "nba-ppg-ra-bryant-2000",
@@ -56,367 +56,367 @@
     "nba-fga-ts-bryant-2015"
   ],
   "2026-08-25": [
-    "nfl-ypc-rushyds-kamara-2020",
-    "nfl-ypc-rushyds-jackson-2006",
-    "mlb-avg-hr-puckett",
-    "nfl-ypc-rushyds-williams-2003",
-    "nba-stl-blk-lopez-2010"
+    "nba-mpg-ppg-gasol-2008",
+    "mlb-so-era-johnson",
+    "mlb-w-era-clemens",
+    "nba-3pa-3pct-johnson-2016",
+    "nba-height-3p-nowitzki"
   ],
   "2026-08-26": [
-    "nba-mpg-ppg-gasol-2008",
-    "nfl-rushyds-recyds-white-2024",
-    "nfl-ypc-rushyds-gore-2015",
-    "nfl-rushypg-td-montgomery-2024",
-    "nfl-tgt-recyds-owens-2003"
+    "nfl-rec-recyds-edelman-2013",
+    "nba-ppg-ra-carter-2000",
+    "nba-fga-ts-mccollum-2019",
+    "nfl-rec-recyds-witten-2012",
+    "nba-usg-ts-vucevic-2020"
   ],
   "2026-08-27": [
-    "nfl-passtd-int-manning-2013",
-    "nba-3pa-3pct-johnson-2016",
-    "nba-ast-tov-stoudemire-2002",
-    "nba-mpg-ppg-lavine-2016",
-    "nba-usg-ts-bowen-2002"
+    "nba-fga-ts-marbury-2000",
+    "mlb-h-bb-winfield",
+    "mlb-so-era-eckersley",
+    "nfl-rec-recyds-welker-2008",
+    "nba-fga-ts-ellis-2010"
   ],
   "2026-08-28": [
-    "nfl-rushypg-td-jacobs-2021",
-    "nfl-carries-rushtd-martin-2003",
-    "nba-usg-ts-mcgrady-2000",
-    "nba-mpg-ppg-brand-2000",
-    "mlb-sb-hr-biggio"
+    "nba-3pa-3pct-gordon-2024",
+    "nba-ppg-ra-brunson-2024",
+    "nba-fga-ts-gobert-2023",
+    "nfl-int-td-winston",
+    "nfl-rec-recyds-gonzalez-2012"
   ],
   "2026-08-29": [
-    "nba-reb-blk-green-2012",
+    "nba-mpg-ppg-lavine-2016",
+    "nfl-ypr-recyds-moss-2004",
+    "mlb-whip-so-seaver",
     "nba-fg3a-ts-crawford-2003",
-    "nba-reb-ast-olajuwon-2000",
-    "mlb-as-hr-walker",
-    "nba-ppg-ra-irving-2012"
+    "nfl-pb-recyds-boldin"
   ],
   "2026-08-30": [
-    "nfl-ypr-recyds-moss-2004",
-    "nba-stl-blk-iverson-2006",
-    "nba-fga-ts-jordan-2001",
-    "mlb-sb-hr-smith",
-    "mlb-as-hr-palmeiro"
+    "mlb-so-era-halladay",
+    "nba-mpg-ppg-brand-2000",
+    "nfl-rushypg-td-lewis-2002",
+    "mlb-w-era-maddux",
+    "mlb-cg-so-koufax"
   ],
   "2026-08-31": [
-    "nfl-passtd-int-mahomes-2020",
-    "nba-fg3a-ts-allen-2002",
-    "mlb-as-hr-abreu",
-    "mlb-so-era-johnson",
-    "nfl-passtd-int-manning-2002"
+    "nfl-tgt-catchpct-kelce-2014",
+    "nfl-ypc-rushyds-stevenson-2022",
+    "nba-ppg-ra-brown-2022",
+    "nfl-rushyds-recyds-peterson-2008",
+    "mlb-as-hr-walker"
   ],
   "2026-09-01": [
-    "nfl-tgt-recyds-johnson-2008",
-    "mlb-3b-hr-mcgriff",
-    "nfl-ypr-recyds-evans-2014",
-    "mlb-sb-hr-ramirez",
-    "nfl-passtd-int-rodgers-2014"
+    "nba-3pa-3pct-gallinari-2009",
+    "nba-reb-ast-camby-2000",
+    "nfl-airyds-rectd-gates-2006",
+    "nfl-passtd-int-brees-2002",
+    "mlb-bb-hr-dawson"
   ],
   "2026-09-02": [
-    "nfl-rushypg-td-bell-2016",
-    "mlb-avg-hr-gwynn",
-    "nfl-rushtd-rectd-taylor-2002",
-    "nfl-rushyds-recyds-alexander-2005",
-    "nba-usg-ts-iguodala-2016"
+    "nfl-ypt-recyds-beckham-2016",
+    "nfl-comp-passtd-warner-2007",
+    "nfl-passtd-int-favre-2008",
+    "nba-fga-ts-aldridge-2014",
+    "nfl-passtd-int-mahomes-2020"
   ],
   "2026-09-03": [
-    "nba-fga-ts-davis-2003",
-    "mlb-so-era-eckersley",
-    "nba-reb-ast-wallace-2000",
-    "nfl-carries-rushtd-smith-2002",
-    "nfl-comp-passtd-brady-2004"
+    "nfl-ypt-recyds-lockett-2018",
+    "nfl-rushypg-td-jacobs-2021",
+    "nfl-ypc-rushyds-forte-2010",
+    "mlb-avg-hr-puckett",
+    "nfl-rec-recyds-diggs-2019"
   ],
   "2026-09-04": [
-    "mlb-sb-rbi-berra",
-    "mlb-as-hr-bagwell",
-    "nba-pts-ast-mitchell-2018",
-    "mlb-sb-hr-lofton",
-    "nba-mpg-ppg-miller-2000"
+    "mlb-so-hr-musial",
+    "nfl-rushyds-recyds-portis-2008",
+    "nba-fga-ts-jordan-2001",
+    "nba-reb-blk-malone-2003",
+    "nba-usg-ts-bowen-2002"
   ],
   "2026-09-05": [
-    "mlb-3b-hr-clemente",
-    "nba-pts-ast-ming-2006",
-    "nfl-rushypg-td-lewis-2002",
-    "nba-ppg-ra-drummond-2013",
-    "nfl-rushypg-td-hurts-2022"
-  ],
-  "2026-09-06": [
-    "mlb-so-avg-jackson",
-    "nfl-rec-recyds-gronkowski-2017",
-    "nba-ppg-ra-williamson-2020",
-    "nba-fga-ts-mccollum-2019",
-    "nba-ppg-ra-brunson-2024"
-  ],
-  "2026-09-07": [
-    "nba-ast-tov-vanvleet-2018",
-    "nba-mpg-ppg-wall-2010",
-    "mlb-ip-so-smoltz",
-    "nfl-pb-recyds-boldin",
-    "nba-ppg-ra-carter-2000"
-  ],
-  "2026-09-08": [
-    "nba-as-ppg-randolph",
-    "nfl-rushypg-td-dillon-2006",
-    "nba-tov-pts-anthony-2017",
-    "nfl-rushtd-rectd-chubb-2019",
-    "nba-ast-tov-conley-2010"
-  ],
-  "2026-09-09": [
-    "nfl-ypc-rushyds-murray-2011",
-    "nfl-rec-recyds-edelman-2013",
-    "nfl-ypc-rushyds-forte-2010",
-    "nba-pts-ast-stockton-2001",
-    "nfl-tgt-recyds-rice-2002"
-  ],
-  "2026-09-10": [
-    "nba-ppg-ra-brown-2022",
-    "mlb-k9-bb9-schilling",
-    "nba-3pa-3pct-hart-2017",
-    "nfl-rec-recyds-johnson-2014",
-    "nfl-rushyds-recyds-dunn-2003"
-  ],
-  "2026-09-11": [
-    "nba-tov-pts-bogdanovic-2020",
-    "nfl-comp-passtd-prescott-2019",
-    "mlb-g-hr-ripken",
-    "nba-reb-ast-camby-2000",
-    "nba-fga-ts-marbury-2000"
-  ],
-  "2026-09-12": [
-    "mlb-so-hr-ruth",
-    "nfl-rec-rectd-brown-2002",
-    "mlb-as-hr-carew",
-    "nba-mpg-ppg-marion-2004",
-    "nba-reg-playoff-iverson"
-  ],
-  "2026-09-13": [
-    "mlb-so-hr-musial",
-    "nfl-comp-passtd-warner-2007",
-    "nfl-rec-recyds-bruce-2006",
-    "nba-reb-blk-malone-2003",
-    "mlb-sb-hr-raines"
-  ],
-  "2026-09-14": [
-    "mlb-3b-hr-thome",
-    "nba-tov-pts-westbrook-2008",
-    "nba-ppg-ra-batum-2013",
-    "nfl-rushyds-recyds-peterson-2008",
+    "mlb-w-era-mathewson",
+    "mlb-sb-rbi-berra",
+    "nfl-airyds-rectd-brown-2011",
+    "nfl-carries-rushtd-martin-2003",
     "mlb-sb-hr-rodriguez"
   ],
-  "2026-09-15": [
-    "mlb-r-sb-gehrig",
-    "mlb-h-bb-jeter",
-    "mlb-so-hr-yount",
+  "2026-09-06": [
     "nba-fg3a-ts-redick-2009",
+    "nfl-rec-recyds-brown-2024",
+    "nba-usg-ts-lowry-2022",
+    "mlb-sb-hr-lofton",
+    "nfl-rec-fd-amendola-2010"
+  ],
+  "2026-09-07": [
+    "nba-ppg-ra-drummond-2013",
+    "nfl-passtd-int-rodgers-2011",
+    "nfl-rec-rectd-brown-2002",
+    "nba-usg-ts-allen-2020",
+    "nba-ppg-ra-williamson-2020"
+  ],
+  "2026-09-08": [
+    "mlb-sb-rbi-trammell",
+    "nfl-rushyds-recyds-faulk-2004",
+    "nfl-airyds-yac-barkley-2018",
+    "nfl-rushtd-rectd-chubb-2019",
+    "nba-tov-pts-bogdanovic-2020"
+  ],
+  "2026-09-09": [
+    "nba-fga-ts-garnett-2000",
+    "mlb-ip-so-smoltz",
+    "mlb-as-hr-bagwell",
+    "nba-stl-blk-lopez-2010",
+    "nfl-ypc-rushyds-gore-2015"
+  ],
+  "2026-09-10": [
+    "nfl-ypc-rushyds-murray-2011",
+    "nba-ast-tov-conley-2010",
+    "nba-reb-ast-olajuwon-2000",
+    "nfl-passtd-int-roethlisberger-2015",
+    "nfl-rec-recyds-mccaffrey-2019"
+  ],
+  "2026-09-11": [
+    "nba-3pa-3pct-morris-2012",
+    "nba-reg-playoff-iverson",
+    "nfl-tgt-catchpct-sharpe-2002",
+    "nfl-carries-rushtd-smith-2002",
+    "mlb-avg-hr-gwynn"
+  ],
+  "2026-09-12": [
+    "nfl-rec-recyds-waddle-2022",
+    "nba-reb-ast-wallace-2000",
+    "nfl-rushyds-recyds-alexander-2005",
+    "mlb-sb-hr-biggio",
+    "mlb-sb-hr-raines"
+  ],
+  "2026-09-13": [
+    "nfl-rushyds-recyds-alexander-2004",
+    "nba-mpg-ppg-miller-2000",
+    "mlb-as-hr-jones",
+    "nfl-ypr-recyds-lamb-2021",
+    "nfl-rushypg-td-hurts-2022"
+  ],
+  "2026-09-14": [
+    "mlb-2b-hr-mcgwire",
+    "nfl-ypc-rushyds-williams-2003",
+    "nfl-passtd-int-manning-2013",
+    "nba-fga-ts-ayton-2020",
+    "nfl-ypc-rushyds-kamara-2020"
+  ],
+  "2026-09-15": [
+    "mlb-hr-sb-mays",
+    "nfl-rec-recyds-aiyuk-2023",
+    "mlb-as-hr-carew",
+    "nfl-rushypg-td-montgomery-2024",
     "mlb-whip-so-fingers"
   ],
   "2026-09-16": [
-    "mlb-2b-hr-molitor",
-    "nfl-rushypg-td-james-2007",
-    "nfl-rushyds-recyds-dillon-2004",
-    "nba-ppg-stuff-green",
-    "nba-tov-pts-bogdanovic-2022"
+    "nba-tov-pts-anthony-2017",
+    "nba-reb-blk-love-2009",
+    "mlb-sb-hr-ramirez",
+    "mlb-g-hr-ripken",
+    "nfl-rec-recyds-bruce-2006"
   ],
   "2026-09-17": [
-    "nfl-rec-recyds-brown-2022",
-    "nba-mpg-ppg-williams",
-    "nfl-passtd-int-favre-2008",
-    "nba-ppg-ra-walker-2018",
-    "nba-usg-ts-bryant-2000"
+    "nba-usg-ts-parker-2008",
+    "nfl-rec-fd-hall-2023",
+    "nfl-tgt-recyds-fitzgerald-2012",
+    "nfl-ypr-recyds-allen-2013",
+    "nba-stl-blk-iverson-2006"
   ],
   "2026-09-18": [
-    "nba-stl-blk-williams-2024",
-    "nba-fga-ts-garnett-2000",
-    "mlb-so-era-halladay",
-    "nba-fga-ts-gobert-2023",
-    "mlb-whip-so-seaver"
+    "mlb-avg-hr-boggs",
+    "mlb-r-sb-gehrig",
+    "nfl-rushtd-rectd-taylor-2002",
+    "nba-ppg-ra-batum-2013",
+    "nba-reb-blk-green-2012"
   ],
   "2026-09-19": [
-    "nfl-comp-passtd-herbert-2022",
-    "nba-mpg-ppg-battier-2001",
-    "mlb-w-era-mathewson",
-    "mlb-k9-bb9-hoffman",
-    "nfl-rec-recyds-brown-2024"
+    "mlb-avg-hr-bench",
+    "nfl-rushtd-rectd-white-2018",
+    "nfl-ypc-rushyds-jackson-2006",
+    "nba-3pa-3pct-lillard-2014",
+    "nba-stl-blk-mutombo-2000"
   ],
   "2026-09-20": [
-    "nba-fg3a-ts-nash-2000",
     "mlb-2b-hr-schmidt",
-    "nfl-rushtd-rectd-white-2018",
-    "nba-usg-ts-allen-2020",
-    "nfl-carries-rushtd-cook-2023"
+    "nfl-ypr-recyds-hopkins-2014",
+    "nfl-rushypg-td-bell-2016",
+    "nba-ppg-ra-walker-2018",
+    "nba-stl-blk-horford-2009"
   ],
   "2026-09-21": [
-    "nfl-ypc-rushyds-jackson-2023",
-    "nba-height-3p-nowitzki",
-    "mlb-avg-hr-larkin",
-    "mlb-avg-hr-boggs",
-    "mlb-2b-hr-mcgwire"
-  ],
-  "2026-09-22": [
-    "mlb-h-bb-winfield",
-    "nba-3pa-3pct-morris-2012",
-    "nfl-rushypg-td-elliott-2017",
-    "mlb-sb-rbi-ortiz",
-    "mlb-h-bb-mantle"
-  ],
-  "2026-09-23": [
-    "nfl-tgt-recyds-harrison-2003",
-    "nba-usg-ts-lowry-2022",
-    "nfl-rec-recyds-gonzalez-2012",
-    "nfl-rushyds-recyds-portis-2008",
-    "nfl-ypr-recyds-allen-2013"
-  ],
-  "2026-09-24": [
-    "mlb-2b-hr-sosa",
-    "nfl-rec-recyds-welker-2008",
-    "mlb-g-hr-martinez",
+    "nfl-passtd-int-rodgers-2014",
+    "nba-tov-pts-bogdanovic-2022",
     "nba-pts-ast-antetokounmpo-2014",
-    "mlb-w-era-maddux"
-  ],
-  "2026-09-25": [
-    "nfl-passtd-rushyds-vick",
-    "nfl-passtd-int-rodgers-2011",
-    "mlb-as-hr-jones",
-    "nba-stl-blk-duncan-2009",
-    "mlb-bb-hr-jones"
-  ],
-  "2026-09-26": [
-    "mlb-sb-rbi-trammell",
-    "mlb-2b-hr-mccovey",
-    "mlb-bb-so-banks",
-    "mlb-bb-hr-henderson",
-    "nfl-rushypg-td-charles-2012"
-  ],
-  "2026-09-27": [
-    "nfl-rushyds-recyds-henry-2020",
-    "mlb-hr-sb-mays",
-    "mlb-avg-hr-bench",
-    "nfl-ypr-recyds-hopkins-2014",
-    "nfl-rushtd-rectd-williams-2021"
-  ],
-  "2026-09-28": [
-    "mlb-avg-hr-cobb",
-    "nfl-int-td-winston",
-    "mlb-hits-hr-ichiro",
-    "nfl-rec-recyds-witten-2012",
-    "nfl-rushyds-recyds-faulk-2004"
-  ],
-  "2026-09-29": [
-    "nfl-att-ypc-charles",
-    "nfl-rushyds-recyds-alexander-2004",
-    "nba-3pa-3pct-gordon-2024",
-    "nfl-passtd-int-roethlisberger-2015",
-    "nba-usg-ts-vucevic-2020"
-  ],
-  "2026-09-30": [
-    "nba-3pa-3pct-lillard-2014",
-    "mlb-bb-hr-dawson",
-    "nfl-passtd-int-brees-2002",
-    "mlb-ba-hr-williams",
-    "nfl-rushyds-recyds-faulk-2004"
-  ],
-  "2026-10-01": [
-    "nba-3pa-3pct-ginobili-2016",
-    "mlb-sb-rbi-berra",
-    "nba-ppg-ra-bryant-2000",
-    "nfl-tgt-recyds-johnson-2008",
-    "mlb-as-hr-bagwell"
-  ],
-  "2026-10-02": [
-    "nba-fg3a-ts-crawford-2003",
-    "nba-reb-blk-love-2009",
-    "nba-mpg-ppg-battier-2001",
-    "mlb-avg-hr-boggs",
-    "nba-stl-blk-bryant-2005"
-  ],
-  "2026-10-03": [
-    "mlb-g-hr-ripken",
-    "nba-fg3a-ts-nash-2000",
-    "nfl-ypc-rushyds-achane-2023",
-    "nba-3pa-3pct-bryant-2007",
-    "nfl-passtd-int-favre-2008"
-  ],
-  "2026-10-04": [
-    "nfl-passtd-int-manning-2002",
-    "nba-ppg-ra-brown-2022",
-    "nba-mpg-ppg-miller-2000",
-    "nfl-carries-rushtd-martin-2003",
-    "nfl-ypc-rushyds-forte-2010"
-  ],
-  "2026-10-05": [
-    "mlb-w-era-young",
-    "nfl-passtd-int-manning-2013",
-    "mlb-ba-hr-williams",
-    "nba-mpg-ppg-gasol-2008",
-    "mlb-g-hr-brett"
-  ],
-  "2026-10-06": [
-    "nfl-comp-passtd-brady-2004",
-    "mlb-3b-hr-thome",
-    "mlb-whip-so-fingers",
-    "nfl-ypr-recyds-hopkins-2014",
-    "nba-mpg-ppg-lavine-2016"
-  ],
-  "2026-10-07": [
-    "mlb-2b-hr-mccovey",
-    "nba-mpg-ppg-marion-2004",
-    "mlb-h-bb-mantle",
-    "nba-fga-ts-ayton-2020",
-    "nfl-rushypg-td-bell-2016"
-  ],
-  "2026-10-08": [
-    "nba-stl-blk-williams-2024",
-    "nfl-rec-recyds-gronkowski-2017",
-    "nba-fga-ts-marbury-2000",
-    "nfl-tgt-recyds-harrison-2003",
-    "nba-ppg-ra-wagner-2024"
-  ],
-  "2026-10-09": [
-    "nba-mpg-ppg-ariza-2009",
-    "mlb-bb-hr-henderson",
-    "mlb-sb-rbi-trammell",
-    "nfl-rec-recyds-witten-2012",
+    "mlb-avg-hr-larkin",
     "nba-ast-tov-vanvleet-2018"
   ],
-  "2026-10-10": [
-    "nfl-rushyds-recyds-alexander-2005",
+  "2026-09-22": [
+    "nba-stl-blk-duncan-2009",
+    "nfl-ypc-rushyds-jackson-2023",
+    "nba-ast-tov-stoudemire-2002",
+    "nba-stl-blk-williams-2024",
+    "nfl-rushtd-rectd-robinson-2023"
+  ],
+  "2026-09-23": [
+    "mlb-whip-so-cone",
+    "nfl-rushtd-rectd-allen-2018",
+    "nba-tov-pts-westbrook-2008",
+    "nfl-rushypg-td-james-2007",
+    "nba-usg-ts-iguodala-2016"
+  ],
+  "2026-09-24": [
+    "nba-fg3a-ts-nash-2000",
+    "mlb-2b-hr-sosa",
+    "nfl-rushtd-rectd-williams-2021",
+    "nfl-ypt-recyds-beasley-2016",
+    "nfl-rushtd-rectd-walker-2022"
+  ],
+  "2026-09-25": [
+    "mlb-2b-hr-molitor",
+    "mlb-w-era-young",
+    "mlb-sb-rbi-ortiz",
+    "nba-usg-ts-mcgrady-2000",
+    "nba-mpg-ppg-wall-2010"
+  ],
+  "2026-09-26": [
+    "nfl-rec-recyds-gronkowski-2017",
+    "mlb-sb-hr-smith",
+    "mlb-h-bb-mantle",
+    "nfl-rec-recyds-johnson-2014",
+    "nfl-ypr-recyds-evans-2014"
+  ],
+  "2026-09-27": [
+    "nba-pts-ast-mitchell-2018",
+    "nba-ppg-ra-irving-2012",
+    "mlb-bb-so-banks",
+    "mlb-so-hr-yount",
+    "nfl-comp-passtd-prescott-2019"
+  ],
+  "2026-09-28": [
+    "mlb-3b-hr-mcgriff",
+    "nfl-tgt-catchpct-holt-2002",
+    "nba-as-ppg-randolph",
+    "nba-fga-ts-davis-2003",
+    "nfl-comp-passtd-brady-2004"
+  ],
+  "2026-09-29": [
+    "mlb-k9-bb9-hoffman",
+    "nba-pts-ast-ming-2006",
+    "mlb-avg-hr-cobb",
+    "mlb-3b-hr-clemente",
+    "mlb-k9-bb9-schilling"
+  ],
+  "2026-09-30": [
+    "nfl-tgt-catchpct-foster-2010",
+    "mlb-g-hr-martinez",
+    "nfl-rushyds-recyds-dunn-2003",
+    "mlb-2b-hr-mccovey",
+    "mlb-bb-hr-jones"
+  ],
+  "2026-10-01": [
+    "nfl-rushypg-td-elliott-2017",
+    "mlb-so-hr-ruth",
+    "nfl-ypt-recyds-adams-2018",
+    "mlb-3b-hr-thome",
+    "mlb-as-hr-abreu"
+  ],
+  "2026-10-02": [
+    "nfl-rushypg-td-charles-2012",
+    "mlb-as-hr-palmeiro",
+    "nfl-rec-recyds-brown-2022",
+    "nba-mpg-ppg-battier-2001",
+    "mlb-hits-hr-ichiro"
+  ],
+  "2026-10-03": [
     "nfl-comp-passtd-herbert-2022",
-    "nfl-rushtd-rectd-white-2018",
-    "nba-ppg-ra-batum-2013",
-    "nba-fga-ts-jamison-2000"
+    "mlb-ba-hr-williams",
+    "nfl-ypc-rushyds-pollard-2022",
+    "nba-pts-ast-stockton-2001",
+    "nba-stl-blk-baker-2000"
+  ],
+  "2026-10-04": [
+    "nfl-rushyds-recyds-dillon-2004",
+    "nba-usg-ts-bryant-2000",
+    "nfl-rushyds-recyds-white-2024",
+    "nfl-carries-rushtd-cook-2023",
+    "mlb-bb-hr-henderson"
+  ],
+  "2026-10-05": [
+    "mlb-h-bb-jeter",
+    "mlb-w-era-mathewson",
+    "nfl-passtd-int-rivers-2009",
+    "mlb-g-hr-ripken",
+    "nba-fga-ts-ellis-2010"
+  ],
+  "2026-10-06": [
+    "mlb-as-hr-walker",
+    "nfl-rec-fd-amendola-2010",
+    "nba-stl-blk-iverson-2006",
+    "nba-usg-ts-bryant-2000",
+    "mlb-h-bb-winfield"
+  ],
+  "2026-10-07": [
+    "nba-tov-pts-anthony-2017",
+    "mlb-bb-hr-jones",
+    "nfl-passtd-int-mahomes-2020",
+    "nfl-comp-passtd-herbert-2022",
+    "nfl-rushyds-recyds-dillon-2004"
+  ],
+  "2026-10-08": [
+    "nba-ppg-ra-wagner-2024",
+    "nfl-rushyds-recyds-alexander-2005",
+    "nfl-carries-rushtd-martin-2003",
+    "mlb-k9-bb9-hoffman",
+    "nfl-airyds-rectd-brown-2011"
+  ],
+  "2026-10-09": [
+    "nba-reb-ast-wallace-2000",
+    "nba-reb-ast-camby-2000",
+    "nfl-rushyds-recyds-alexander-2004",
+    "nfl-airyds-yac-barkley-2018",
+    "nba-reb-ast-olajuwon-2000"
+  ],
+  "2026-10-10": [
+    "nfl-rushtd-rectd-taylor-2002",
+    "nba-3pa-3pct-hart-2017",
+    "mlb-as-hr-bagwell",
+    "mlb-g-hr-martinez",
+    "nfl-rec-rectd-brown-2002"
   ],
   "2026-10-11": [
-    "nba-ppg-ra-brunson-2024",
-    "mlb-2b-hr-mcgwire",
-    "nfl-att-ypc-charles",
-    "nba-pts-ast-antetokounmpo-2014",
-    "nba-usg-ts-allen-2020"
+    "nfl-ypc-rushyds-williams-2003",
+    "nba-ppg-ra-irving-2012",
+    "nfl-rushypg-td-charles-2012",
+    "nba-fga-ts-robinson-2000",
+    "mlb-sb-rbi-ortiz"
   ],
   "2026-10-12": [
-    "nba-fg3a-ts-allen-2002",
-    "nba-fga-ts-jordan-2001",
-    "nba-pts-ast-mitchell-2018",
-    "nfl-carries-rushtd-smith-2002",
-    "nfl-ypr-recyds-allen-2013"
+    "nfl-ypc-rushyds-taylor-2022",
+    "mlb-as-hr-jones",
+    "nba-fga-ts-marbury-2000",
+    "nba-ast-tov-vanvleet-2018",
+    "nba-fga-ts-bryant-2015"
   ],
   "2026-10-13": [
-    "mlb-bb-so-banks",
-    "mlb-so-era-halladay",
-    "nba-reb-ast-olajuwon-2000",
-    "nfl-rec-recyds-mccaffrey-2019",
-    "nfl-ypc-rushyds-murray-2011"
+    "nba-ppg-ra-williamson-2020",
+    "nba-3pa-3pct-harden-2022",
+    "nba-fga-ts-gobert-2023",
+    "nfl-rushypg-td-jacobs-2021",
+    "mlb-as-hr-abreu"
   ],
   "2026-10-14": [
-    "nfl-rushypg-td-mccoy-2014",
-    "nfl-ypc-rushyds-gore-2015",
-    "mlb-avg-hr-gwynn",
-    "mlb-so-hr-ruth",
-    "nba-usg-ts-parker-2008"
+    "mlb-h-bb-jeter",
+    "nfl-comp-passtd-warner-2007",
+    "nba-stl-blk-nowitzki-2005",
+    "mlb-so-era-hershiser",
+    "nba-stl-blk-lopez-2010"
   ],
   "2026-10-15": [
-    "nba-3pa-3pct-morris-2012",
-    "mlb-sb-hr-raines",
-    "mlb-as-hr-abreu",
-    "mlb-so-era-eckersley",
-    "nba-usg-ts-mcgrady-2000"
+    "nba-ppg-ra-brunson-2024",
+    "nba-usg-ts-allen-2020",
+    "nba-usg-ts-bowen-2002",
+    "nba-mpg-ppg-brand-2000",
+    "nfl-rushypg-td-dillon-2006"
   ]
 }

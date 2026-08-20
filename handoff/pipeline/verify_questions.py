@@ -79,6 +79,27 @@ NFL_LABELS = {
     'Yards per catch (season)': 'ypr',
     'Targets (season)': 'tgt',
     'Completions (season)': 'comp',
+    'Receiving air yards (season)': 'air_yds',
+    'Yards after catch (season)': 'yac',
+    'Receiving first downs (season)': 'rec_fd',
+    'Yards per target (season)': 'ypt',
+    'Catch rate (season)': 'catch_pct',
+}
+# Seasons where a column exists but is not a measurement. Targets echo receptions in
+# 2003-2008, and air yards are flat zero before 2006. Four values shipped from the
+# first window before anyone checked, and THIS FILE PASSED THEM — it re-derived from
+# the same broken column and agreed with the generator. Two readings of one bad
+# source agreeing is not verification, so the windows are named here as well: a
+# question that plots one now fails rather than reproduces.
+NFL_TARGETS_BROKEN = range(2003, 2009)
+NFL_AIRYARDS_FROM = 2006
+NFL_SEASON_GATED = {
+    'tgt': lambda yr: yr not in NFL_TARGETS_BROKEN,
+    'ypt': lambda yr: yr not in NFL_TARGETS_BROKEN,
+    'catch_pct': lambda yr: yr not in NFL_TARGETS_BROKEN,
+    'air_yds': lambda yr: yr >= NFL_AIRYARDS_FROM,
+    'yac': lambda yr: yr >= NFL_AIRYARDS_FROM,
+    'rec_fd': lambda yr: yr >= NFL_AIRYARDS_FROM,
 }
 
 
@@ -243,7 +264,8 @@ def nfl_table():
         wk[(pid, yr)].add(r['week'])
         for c in ('rushing_yards','rushing_tds','receiving_yards','receiving_tds',
                   'receptions','targets','completions','carries','passing_tds',
-                  'interceptions'):
+                  'interceptions','receiving_air_yards',
+                  'receiving_yards_after_catch','receiving_first_downs'):
             if r.get(c):
                 agg[(pid, yr)][c] += float(r[c])
         for c in ('rushing_yards','receiving_yards','passing_yards'):
@@ -274,6 +296,13 @@ def nfl_table():
             'rush_ypg': round(c['rushing_yards'] / g, 1) if g else None,
             'ypc': round(c['rushing_yards'] / c['carries'], 1) if c['carries'] >= 100 else None,
             'ypr': round(c['receiving_yards'] / c['receptions'], 1) if c['receptions'] >= 30 else None,
+            'air_yds': int(c['receiving_air_yards']),
+            'yac': int(c['receiving_yards_after_catch']),
+            'rec_fd': int(c['receiving_first_downs']),
+            'ypt': (round(c['receiving_yards'] / c['targets'], 1)
+                    if c['targets'] >= 50 else None),
+            'catch_pct': (round(c['receptions'] / c['targets'] * 100, 1)
+                          if c['targets'] >= 50 else None),
         }
     return out
 
@@ -326,6 +355,15 @@ def main():
                 mismatched += 1
                 continue
             for key, shipped, axis in ((xk, gx, 'x'), (yk, gy, 'y')):
+                # A value from a season where this column is not a measurement is a
+                # failure however well the two sides agree about it.
+                gate = NFL_SEASON_GATED.get(key) if q['league'] == 'NFL' else None
+                if gate and season is not None and not gate(season):
+                    mismatched += 1
+                    problems.append(
+                        f"{q['id']}: {kind} '{who}' {axis} ({key}) comes from a season "
+                        f"where that column carries no measurement")
+                    continue
                 actual = rec.get(key)
                 checked += 1
                 if actual is None or abs(float(actual) - float(shipped)) > 1e-6:

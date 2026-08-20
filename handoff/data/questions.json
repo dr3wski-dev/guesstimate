@@ -5747,46 +5747,6 @@
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
   },
   {
-    "id": "nfl-tgt-recyds-harrison-2003",
-    "league": "NFL",
-    "xLabel": "Targets (season)",
-    "xUnit": "targets",
-    "yLabel": "Receiving yards (season)",
-    "yUnit": "yards",
-    "xStep": 1,
-    "yStep": 1,
-    "xDomain": [
-      80,
-      160
-    ],
-    "yDomain": [
-      600,
-      1400
-    ],
-    "targetPlayer": "Marvin Harrison, 2003",
-    "targetX": 94,
-    "targetY": 1272,
-    "referencePlayers": [
-      {
-        "name": "Alvin Kamara, 2018",
-        "x": 105,
-        "y": 709
-      },
-      {
-        "name": "Chris Godwin, 2021",
-        "x": 127,
-        "y": 1103
-      },
-      {
-        "name": "Jason Witten, 2012",
-        "x": 149,
-        "y": 1039
-      }
-    ],
-    "fact": "",
-    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
-  },
-  {
     "id": "nfl-rushtd-rectd-taylor-2002",
     "league": "NFL",
     "xLabel": "Rushing touchdowns (season)",
@@ -6187,46 +6147,6 @@
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
-    "id": "nfl-tgt-recyds-owens-2003",
-    "league": "NFL",
-    "xLabel": "Targets (season)",
-    "xUnit": "targets",
-    "yLabel": "Receiving yards (season)",
-    "yUnit": "yards",
-    "xStep": 1,
-    "yStep": 1,
-    "xDomain": [
-      50,
-      250
-    ],
-    "yDomain": [
-      600,
-      1400
-    ],
-    "targetPlayer": "Terrell Owens, 2003",
-    "targetX": 80,
-    "targetY": 1102,
-    "referencePlayers": [
-      {
-        "name": "Cole Beasley, 2016",
-        "x": 98,
-        "y": 833
-      },
-      {
-        "name": "Saquon Barkley, 2018",
-        "x": 121,
-        "y": 721
-      },
-      {
-        "name": "Andre Johnson, 2014",
-        "x": 147,
-        "y": 936
-      }
-    ],
-    "fact": "",
-    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
-  },
-  {
     "id": "nfl-rushtd-rectd-white-2018",
     "league": "NFL",
     "xLabel": "Rushing touchdowns (season)",
@@ -6587,46 +6507,6 @@
     "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   },
   {
-    "id": "nfl-tgt-recyds-johnson-2008",
-    "league": "NFL",
-    "xLabel": "Targets (season)",
-    "xUnit": "targets",
-    "yLabel": "Receiving yards (season)",
-    "yUnit": "yards",
-    "xStep": 1,
-    "yStep": 1,
-    "xDomain": [
-      70,
-      150
-    ],
-    "yDomain": [
-      900,
-      1700
-    ],
-    "targetPlayer": "Calvin Johnson, 2008",
-    "targetX": 78,
-    "targetY": 1331,
-    "referencePlayers": [
-      {
-        "name": "George Kittle, 2023",
-        "x": 90,
-        "y": 1020
-      },
-      {
-        "name": "Terry McLaurin, 2024",
-        "x": 117,
-        "y": 1096
-      },
-      {
-        "name": "DK Metcalf, 2022",
-        "x": 141,
-        "y": 1048
-      }
-    ],
-    "fact": "",
-    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
-  },
-  {
     "id": "nfl-rushtd-rectd-williams-2021",
     "league": "NFL",
     "xLabel": "Rushing touchdowns (season)",
@@ -6981,46 +6861,6 @@
         "name": "Jason Witten, 2012",
         "x": 110,
         "y": 1039
-      }
-    ],
-    "fact": "",
-    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
-  },
-  {
-    "id": "nfl-tgt-recyds-rice-2002",
-    "league": "NFL",
-    "xLabel": "Targets (season)",
-    "xUnit": "targets",
-    "yLabel": "Receiving yards (season)",
-    "yUnit": "yards",
-    "xStep": 1,
-    "yStep": 1,
-    "xDomain": [
-      80,
-      160
-    ],
-    "yDomain": [
-      800,
-      1600
-    ],
-    "targetPlayer": "Jerry Rice, 2002",
-    "targetX": 150,
-    "targetY": 1211,
-    "referencePlayers": [
-      {
-        "name": "Marvin Harrison, 2003",
-        "x": 94,
-        "y": 1272
-      },
-      {
-        "name": "Tim Brown, 2002",
-        "x": 127,
-        "y": 930
-      },
-      {
-        "name": "Tyreek Hill, 2018",
-        "x": 137,
-        "y": 1479
       }
     ],
     "fact": "",
@@ -8945,5 +8785,1045 @@
     ],
     "fact": "",
     "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-airyds-yac-barkley-2018",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      100,
+      900
+    ],
+    "targetPlayer": "Saquon Barkley, 2018",
+    "targetX": 18,
+    "targetY": 768,
+    "referencePlayers": [
+      {
+        "name": "Randy Moss, 2008",
+        "x": 676,
+        "y": 347
+      },
+      {
+        "name": "Justin Jefferson, 2023",
+        "x": 1258,
+        "y": 260
+      },
+      {
+        "name": "Davante Adams, 2021",
+        "x": 1614,
+        "y": 601
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-tgt-catchpct-kelce-2014",
+    "league": "NFL",
+    "xLabel": "Targets (season)",
+    "xUnit": "targets",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      75,
+      275
+    ],
+    "yDomain": [
+      45,
+      85
+    ],
+    "targetPlayer": "Travis Kelce, 2014",
+    "targetX": 87,
+    "targetY": 77,
+    "referencePlayers": [
+      {
+        "name": "Torry Holt, 2009",
+        "x": 103,
+        "y": 49.5
+      },
+      {
+        "name": "Tyreek Hill, 2024",
+        "x": 122,
+        "y": 66.4
+      },
+      {
+        "name": "Andre Johnson, 2009",
+        "x": 171,
+        "y": 59.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushtd-rectd-allen-2018",
+    "league": "NFL",
+    "xLabel": "Rushing touchdowns (season)",
+    "xUnit": "TDs",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Josh Allen, 2018",
+    "targetX": 8,
+    "targetY": 0,
+    "referencePlayers": [
+      {
+        "name": "Alvin Kamara, 2021",
+        "x": 4,
+        "y": 5
+      },
+      {
+        "name": "Steven Jackson, 2008",
+        "x": 7,
+        "y": 1
+      },
+      {
+        "name": "Ricky Williams, 2009",
+        "x": 11,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-waddle-2022",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      150
+    ],
+    "yDomain": [
+      900,
+      1700
+    ],
+    "targetPlayer": "Jaylen Waddle, 2022",
+    "targetX": 75,
+    "targetY": 1356,
+    "referencePlayers": [
+      {
+        "name": "Isaac Bruce, 2002",
+        "x": 79,
+        "y": 1075
+      },
+      {
+        "name": "Cole Beasley, 2020",
+        "x": 82,
+        "y": 967
+      },
+      {
+        "name": "Wes Welker, 2007",
+        "x": 112,
+        "y": 1175
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-airyds-rectd-gates-2006",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Antonio Gates, 2006",
+    "targetX": 649,
+    "targetY": 9,
+    "referencePlayers": [
+      {
+        "name": "Jaylen Waddle, 2024",
+        "x": 827,
+        "y": 2
+      },
+      {
+        "name": "Torry Holt, 2009",
+        "x": 1275,
+        "y": 0
+      },
+      {
+        "name": "Odell Beckham, 2018",
+        "x": 1412,
+        "y": 6
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-aiyuk-2023",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      70,
+      150
+    ],
+    "yDomain": [
+      800,
+      1600
+    ],
+    "targetPlayer": "Brandon Aiyuk, 2023",
+    "targetX": 75,
+    "targetY": 1342,
+    "referencePlayers": [
+      {
+        "name": "Tim Brown, 2002",
+        "x": 81,
+        "y": 930
+      },
+      {
+        "name": "Travis Kelce, 2019",
+        "x": 97,
+        "y": 1229
+      },
+      {
+        "name": "Wes Welker, 2008",
+        "x": 112,
+        "y": 1165
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushtd-rectd-walker-2022",
+    "league": "NFL",
+    "xLabel": "Rushing touchdowns (season)",
+    "xUnit": "TDs",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Kenneth Walker, 2022",
+    "targetX": 9,
+    "targetY": 0,
+    "referencePlayers": [
+      {
+        "name": "Christian McCaffrey, 2017",
+        "x": 2,
+        "y": 5
+      },
+      {
+        "name": "Matt Forte, 2010",
+        "x": 6,
+        "y": 3
+      },
+      {
+        "name": "Curtis Martin, 2004",
+        "x": 12,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-tgt-catchpct-holmes-2002",
+    "league": "NFL",
+    "xLabel": "Targets (season)",
+    "xUnit": "targets",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      50,
+      250
+    ],
+    "yDomain": [
+      55,
+      95
+    ],
+    "targetPlayer": "Priest Holmes, 2002",
+    "targetX": 81,
+    "targetY": 86.4,
+    "referencePlayers": [
+      {
+        "name": "Mike Evans, 2020",
+        "x": 109,
+        "y": 64.2
+      },
+      {
+        "name": "Randy Moss, 2009",
+        "x": 138,
+        "y": 60.1
+      },
+      {
+        "name": "Marvin Harrison, 2002",
+        "x": 205,
+        "y": 69.8
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-tgt-catchpct-sharpe-2002",
+    "league": "NFL",
+    "xLabel": "Targets (season)",
+    "xUnit": "targets",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      75,
+      275
+    ],
+    "yDomain": [
+      57.5,
+      77.5
+    ],
+    "targetPlayer": "Shannon Sharpe, 2002",
+    "targetX": 88,
+    "targetY": 69.3,
+    "referencePlayers": [
+      {
+        "name": "Tyler Lockett, 2021",
+        "x": 107,
+        "y": 68.2
+      },
+      {
+        "name": "Rob Gronkowski, 2014",
+        "x": 131,
+        "y": 62.6
+      },
+      {
+        "name": "Davante Adams, 2023",
+        "x": 175,
+        "y": 58.9
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypt-recyds-lockett-2018",
+    "league": "NFL",
+    "xLabel": "Yards per target (season)",
+    "xUnit": "Y/T",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      7,
+      15
+    ],
+    "yDomain": [
+      875,
+      1875
+    ],
+    "targetPlayer": "Tyler Lockett, 2018",
+    "targetX": 13.8,
+    "targetY": 965,
+    "referencePlayers": [
+      {
+        "name": "Chris Godwin, 2023",
+        "x": 7.9,
+        "y": 1024
+      },
+      {
+        "name": "Wes Welker, 2011",
+        "x": 9.1,
+        "y": 1569
+      },
+      {
+        "name": "Brandon Aiyuk, 2023",
+        "x": 12.8,
+        "y": 1342
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypc-rushyds-pollard-2022",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3.75,
+      5.75
+    ],
+    "yDomain": [
+      950,
+      1350
+    ],
+    "targetPlayer": "Tony Pollard, 2022",
+    "targetX": 5.2,
+    "targetY": 1007,
+    "referencePlayers": [
+      {
+        "name": "Edgerrin James, 2003",
+        "x": 4.1,
+        "y": 1257
+      },
+      {
+        "name": "Arian Foster, 2011",
+        "x": 4.4,
+        "y": 1224
+      },
+      {
+        "name": "Saquon Barkley, 2018",
+        "x": 5,
+        "y": 1307
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-airyds-rectd-brown-2011",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      2000
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Antonio Brown, 2011",
+    "targetX": 1566,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Christian McCaffrey, 2017",
+        "x": 245,
+        "y": 5
+      },
+      {
+        "name": "CeeDee Lamb, 2021",
+        "x": 1233,
+        "y": 6
+      },
+      {
+        "name": "Davante Adams, 2016",
+        "x": 1438,
+        "y": 12
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-tgt-catchpct-holt-2002",
+    "league": "NFL",
+    "xLabel": "Targets (season)",
+    "xUnit": "targets",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      50,
+      250
+    ],
+    "yDomain": [
+      55,
+      75
+    ],
+    "targetPlayer": "Torry Holt, 2002",
+    "targetX": 160,
+    "targetY": 56.9,
+    "referencePlayers": [
+      {
+        "name": "Tyler Lockett, 2024",
+        "x": 74,
+        "y": 66.2
+      },
+      {
+        "name": "Antonio Gates, 2009",
+        "x": 114,
+        "y": 69.3
+      },
+      {
+        "name": "Davante Adams, 2024",
+        "x": 141,
+        "y": 60.3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-airyds-rectd-andrews-2024",
+    "league": "NFL",
+    "xLabel": "Receiving air yards (season)",
+    "xUnit": "air yds",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      500,
+      2500
+    ],
+    "yDomain": [
+      0,
+      20
+    ],
+    "targetPlayer": "Mark Andrews, 2024",
+    "targetX": 731,
+    "targetY": 11,
+    "referencePlayers": [
+      {
+        "name": "Rob Gronkowski, 2020",
+        "x": 845,
+        "y": 7
+      },
+      {
+        "name": "Andre Johnson, 2008",
+        "x": 1078,
+        "y": 8
+      },
+      {
+        "name": "Antonio Brown, 2011",
+        "x": 1566,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-tgt-catchpct-foster-2010",
+    "league": "NFL",
+    "xLabel": "Targets (season)",
+    "xUnit": "targets",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      50,
+      250
+    ],
+    "yDomain": [
+      50,
+      90
+    ],
+    "targetPlayer": "Arian Foster, 2010",
+    "targetX": 84,
+    "targetY": 78.6,
+    "referencePlayers": [
+      {
+        "name": "Travis Kelce, 2015",
+        "x": 103,
+        "y": 69.9
+      },
+      {
+        "name": "Ja'Marr Chase, 2021",
+        "x": 128,
+        "y": 63.3
+      },
+      {
+        "name": "DeAndre Hopkins, 2017",
+        "x": 174,
+        "y": 55.2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-tgt-recyds-fitzgerald-2012",
+    "league": "NFL",
+    "xLabel": "Targets (season)",
+    "xUnit": "targets",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      90,
+      170
+    ],
+    "yDomain": [
+      700,
+      1500
+    ],
+    "targetPlayer": "Larry Fitzgerald, 2012",
+    "targetX": 156,
+    "targetY": 798,
+    "referencePlayers": [
+      {
+        "name": "Le'Veon Bell, 2014",
+        "x": 105,
+        "y": 854
+      },
+      {
+        "name": "Terry McLaurin, 2020",
+        "x": 134,
+        "y": 1118
+      },
+      {
+        "name": "Travis Kelce, 2018",
+        "x": 150,
+        "y": 1336
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-fd-amendola-2010",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      30,
+      70
+    ],
+    "targetPlayer": "Danny Amendola, 2010",
+    "targetX": 85,
+    "targetY": 35,
+    "referencePlayers": [
+      {
+        "name": "Brandon Aiyuk, 2020",
+        "x": 60,
+        "y": 42
+      },
+      {
+        "name": "Antonio Gates, 2007",
+        "x": 75,
+        "y": 54
+      },
+      {
+        "name": "Jason Witten, 2009",
+        "x": 94,
+        "y": 48
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypt-recyds-adams-2018",
+    "league": "NFL",
+    "xLabel": "Yards per target (season)",
+    "xUnit": "Y/T",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      7.5,
+      11.5
+    ],
+    "yDomain": [
+      625,
+      1625
+    ],
+    "targetPlayer": "Davante Adams, 2018",
+    "targetX": 8.2,
+    "targetY": 1386,
+    "referencePlayers": [
+      {
+        "name": "Tony Gonzalez, 2002",
+        "x": 7.8,
+        "y": 773
+      },
+      {
+        "name": "Chris Godwin, 2018",
+        "x": 8.9,
+        "y": 842
+      },
+      {
+        "name": "Rob Gronkowski, 2017",
+        "x": 10.3,
+        "y": 1084
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypc-rushyds-taylor-2022",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      4,
+      6
+    ],
+    "yDomain": [
+      750,
+      1750
+    ],
+    "targetPlayer": "Jonathan Taylor, 2022",
+    "targetX": 4.5,
+    "targetY": 861,
+    "referencePlayers": [
+      {
+        "name": "LaDainian Tomlinson, 2010",
+        "x": 4.2,
+        "y": 914
+      },
+      {
+        "name": "DeMarco Murray, 2016",
+        "x": 4.4,
+        "y": 1287
+      },
+      {
+        "name": "Christian McCaffrey, 2023",
+        "x": 5.4,
+        "y": 1459
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypt-recyds-beckham-2016",
+    "league": "NFL",
+    "xLabel": "Yards per target (season)",
+    "xUnit": "Y/T",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      5,
+      13
+    ],
+    "yDomain": [
+      700,
+      1500
+    ],
+    "targetPlayer": "Odell Beckham, 2016",
+    "targetX": 8.1,
+    "targetY": 1367,
+    "referencePlayers": [
+      {
+        "name": "DeAndre Hopkins, 2016",
+        "x": 6.3,
+        "y": 954
+      },
+      {
+        "name": "Antonio Gates, 2011",
+        "x": 8.8,
+        "y": 778
+      },
+      {
+        "name": "Jaylen Waddle, 2023",
+        "x": 9.8,
+        "y": 1014
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-fd-hall-2023",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving first downs (season)",
+    "yUnit": "1st downs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      130
+    ],
+    "yDomain": [
+      20,
+      100
+    ],
+    "targetPlayer": "Breece Hall, 2023",
+    "targetX": 76,
+    "targetY": 28,
+    "referencePlayers": [
+      {
+        "name": "A.J. Brown, 2021",
+        "x": 63,
+        "y": 45
+      },
+      {
+        "name": "Rob Gronkowski, 2017",
+        "x": 69,
+        "y": 57
+      },
+      {
+        "name": "Tyreek Hill, 2022",
+        "x": 119,
+        "y": 77
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rushtd-rectd-robinson-2023",
+    "league": "NFL",
+    "xLabel": "Rushing touchdowns (season)",
+    "xUnit": "TDs",
+    "yLabel": "Receiving touchdowns (season)",
+    "yUnit": "TDs",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      3,
+      11
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Bijan Robinson, 2023",
+    "targetX": 4,
+    "targetY": 4,
+    "referencePlayers": [
+      {
+        "name": "Derrick Henry, 2016",
+        "x": 5,
+        "y": 0
+      },
+      {
+        "name": "Nick Chubb, 2021",
+        "x": 8,
+        "y": 1
+      },
+      {
+        "name": "Frank Gore, 2009",
+        "x": 10,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-recyds-diggs-2019",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      50,
+      150
+    ],
+    "yDomain": [
+      800,
+      1600
+    ],
+    "targetPlayer": "Stefon Diggs, 2019",
+    "targetX": 63,
+    "targetY": 1130,
+    "referencePlayers": [
+      {
+        "name": "CeeDee Lamb, 2020",
+        "x": 74,
+        "y": 935
+      },
+      {
+        "name": "Davante Adams, 2019",
+        "x": 83,
+        "y": 997
+      },
+      {
+        "name": "Wes Welker, 2009",
+        "x": 123,
+        "y": 1348
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypc-rushyds-stevenson-2022",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Rushing yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3.5,
+      5.5
+    ],
+    "yDomain": [
+      900,
+      1700
+    ],
+    "targetPlayer": "Rhamondre Stevenson, 2022",
+    "targetX": 5,
+    "targetY": 1040,
+    "referencePlayers": [
+      {
+        "name": "Emmitt Smith, 2002",
+        "x": 3.8,
+        "y": 975
+      },
+      {
+        "name": "Edgerrin James, 2005",
+        "x": 4.2,
+        "y": 1506
+      },
+      {
+        "name": "Bijan Robinson, 2024",
+        "x": 4.8,
+        "y": 1456
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypr-recyds-lamb-2021",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "YPC",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      11.5,
+      15.5
+    ],
+    "yDomain": [
+      1000,
+      1800
+    ],
+    "targetPlayer": "CeeDee Lamb, 2021",
+    "targetX": 13.9,
+    "targetY": 1102,
+    "referencePlayers": [
+      {
+        "name": "Tony Gonzalez, 2007",
+        "x": 11.8,
+        "y": 1172
+      },
+      {
+        "name": "Davante Adams, 2021",
+        "x": 12.6,
+        "y": 1553
+      },
+      {
+        "name": "Odell Beckham, 2014",
+        "x": 14.3,
+        "y": 1305
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypt-recyds-beasley-2016",
+    "league": "NFL",
+    "xLabel": "Yards per target (season)",
+    "xUnit": "Y/T",
+    "yLabel": "Receiving yards (season)",
+    "yUnit": "yards",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      7.5,
+      9.5
+    ],
+    "yDomain": [
+      700,
+      1500
+    ],
+    "targetPlayer": "Cole Beasley, 2016",
+    "targetX": 8.5,
+    "targetY": 833,
+    "referencePlayers": [
+      {
+        "name": "Andre Johnson, 2013",
+        "x": 7.8,
+        "y": 1407
+      },
+      {
+        "name": "Terrell Owens, 2002",
+        "x": 8.2,
+        "y": 1300
+      },
+      {
+        "name": "CeeDee Lamb, 2021",
+        "x": 9.2,
+        "y": 1102
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   }
 ]
