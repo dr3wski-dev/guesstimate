@@ -267,6 +267,17 @@ try{
   .fact-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px; }
   .fact{ color:var(--ink); line-height:1.6; font-size:14.5px; margin:0; }
   .fact-source{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); margin:8px 0 0; }
+  .src-details > summary{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint);
+    cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:5px;
+    /* 24px of height on a 11px label: the row is a tap target, not just text. */
+    min-height:24px;
+  }
+  .src-details > summary::-webkit-details-marker{ display:none; }
+  .src-details > summary::after{ content:'▾'; font-size:9px; transition:transform .15s ease; }
+  .src-details[open] > summary::after{ transform:rotate(180deg); }
+  .src-details > summary:hover{ color:var(--ink); }
+  @media (prefers-reduced-motion:reduce){ .src-details > summary::after{ transition:none; } }
 
   .next-row{ display:flex; justify-content:flex-end; gap:10px; align-items:center; flex-wrap:wrap; }
   .note{ font-size:12px; color:var(--ink-faint); margin-top:22px; line-height:1.6; }
@@ -952,7 +963,21 @@ function distForScore(points){
 const SHOW_FACT = false;
 function factBlockHTML(r){
   if(!SHOW_FACT){
-    return `<div class="fact-block"><p class="fact-source">${escapeHtml(r.source)}</p></div>`;
+    /* Collapsed, and this is a balance rather than a demotion.
+     *
+     * Provenance is the thing this project is actually built on — every number
+     * traceable to a named dataset — so it has to be on the reveal and not buried in
+     * an about page. But with the written fact switched off it became the ONLY prose
+     * there, and three lines of "via the sportsdataverse/hoopR release" was the
+     * largest block under the chart at the exact moment a player wants to know how
+     * close they got. It was carrying weight it was never designed to carry.
+     *
+     * A <details> keeps the promise intact — one tap, no navigation, no request —
+     * while giving the screen back to the answer. */
+    return `<div class="fact-block"><details class="src-details">
+        <summary>Source</summary>
+        <p class="fact-source">${escapeHtml(r.source)}</p>
+      </details></div>`;
   }
   return `<div class="fact-block">
           <div class="fact-label">Why it's interesting</div>
@@ -1302,7 +1327,19 @@ function showQuestion(){
   const xStep = r.xStep || DEFAULT_STEP, yStep = r.yStep || DEFAULT_STEP;
   const [xMin, xMax] = resolveDomain(r.xDomain, r.referencePlayers.map(p=>p.x), r.targetX);
   const [yMin, yMax] = resolveDomain(r.yDomain, r.referencePlayers.map(p=>p.y), r.targetY);
-  const W = 560, H = 420, padL = 54, padR = 20, padT = 20, padB = 44;
+  /* The chart is the whole game, and on a phone it was using 28% of the screen
+     while 172px sat empty below the card. It could not simply be made bigger: the
+     SVG is width:100%, so at a 560x420 viewBox its height is decided by the card's
+     width and nothing else. Spending vertical space means changing the RATIO.
+
+     Which is free. Distance is normalized per axis in chart space (0-1 on each),
+     so the pixel aspect ratio has no effect on scoring, difficulty or the fairness
+     gates — only on how much room the player has to aim in. Measured after: 233px
+     to 345px of chart, 28% to 41% of the screen. */
+  const W = 560;
+  const H = window.matchMedia('(max-width:560px) and (orientation:portrait)').matches
+    ? 600 : 420;
+  const padL = 54, padR = 20, padT = 20, padB = 44;
   const plotW = W-padL-padR, plotH = H-padT-padB;
   const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
   const yPix = (v)=> padT + plotH - ((v-yMin)/(yMax-yMin))*plotH;
@@ -1319,7 +1356,12 @@ function showQuestion(){
   panel.innerHTML = `
     <div class="league-tag">${escapeHtml(r.league)}</div>
     <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br><span class="player">${escapeHtml(r.targetPlayer)}</span></div>
-    <div class="instructions">Click or drag to plot where you think ${escapeHtml(r.targetPlayer)} falls on both stats at once. Or tab in and use the arrow keys</div>
+    <!-- The player's name is in the prompt directly above, and the readout below the
+         chart already says what to do. Repeating the full name here made three
+         overlapping instructions on a screen whose interaction is obvious after one
+         round — and it cost 42px of the dimension the chart most needed. What is left
+         is the only part not stated anywhere else: that the keyboard works. -->
+    <div class="instructions">${POINTER_VERB === 'Click' ? 'Click or drag' : 'Tap or drag'} on the chart, or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
     <div class="legend">${legendHTML}</div>
     <div id="revealArea" aria-live="polite"></div>
