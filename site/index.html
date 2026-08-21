@@ -333,6 +333,15 @@ try{
   .recap-row summary::after{ content:'+'; margin-left:auto; color:var(--ink-faint); font-weight:600; }
   .recap-row[open] summary::after{ content:'–'; }
   .rc-emoji{ flex:none; }
+  .tier-dot{
+    display:inline-block; width:.72em; height:.72em; border-radius:50%;
+    border:1.5px solid var(--ink); vertical-align:-.02em; flex:none;
+    /* The palette runs from a deep green to a near-black brown, and the last two sit
+       close enough to the ink outline that the dot could read as a hole. A hairline
+       of paper between fill and outline keeps every one of them legible on both the
+       card and the paper background. */
+    box-shadow:0 0 0 1.5px var(--paper);
+  }
   .rc-who{ color:var(--ink); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .rc-pts{ font-weight:600; flex:none; }
   .rc-body{ padding:0 2px 12px; }
@@ -1091,6 +1100,27 @@ function scoreTier(points){
   return TIERS.find(t => points >= t.min) || TIERS[TIERS.length-1];
 }
 
+/* How a tier appears IN THE APP.
+ *
+ * The coloured-square emoji were doing a job the page can do properly itself, and
+ * doing it in whatever shape the reader's font vendor picked — different on iOS,
+ * Android, Windows and in every browser's fallback, none of them matching the
+ * palette they sat next to. A styled dot is the same colour as the band it names,
+ * outlined in the same ink as everything else on the page, and identical everywhere.
+ *
+ * Sized in em, so one helper serves the 26px reveal line and the 12px band list.
+ *
+ * The bullseye keeps its emoji. It is the one tier that means something other than
+ * "further away than the last one", and it earns the exception.
+ *
+ * SHARE TEXT IS NOT THIS. A shared result is plain text in someone's messages, where
+ * a span is a span and nothing renders it — the strip there stays emoji, which is
+ * also the only reason those emoji were ever the right call. */
+function tierMark(t){
+  if(t.emoji === '🎯') return '🎯';
+  return `<span class="tier-dot" style="background:${t.color}"></span>`;
+}
+
 /* ============================= RENDER ============================= */
 const panel = document.getElementById('panel');
 const appEl = document.getElementById('app');
@@ -1778,7 +1808,7 @@ function showQuestion(){
     revealArea.innerHTML = `
       <div class="reveal ${tierAnimClass}">
         <div class="verdict-row ${tierAnimClass}">
-          <div class="pts" style="color:${t.color}">${t.emoji} ${t.label} <span class="pts-num" id="ptsNum">+0</span></div>
+          <div class="pts" style="color:${t.color}">${tierMark(t)} ${t.label} <span class="pts-num" id="ptsNum">+0</span></div>
           <div class="compare">
             Actual: ${fmtVal(r.targetX, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(r.targetY, yStep)} ${escapeHtml(r.yUnit)}<br>
             <span class="miss">You were ${escapeHtml(missText(guess.x, r.targetX, r.xUnit, xStep))} · ${escapeHtml(missText(guess.y, r.targetY, r.yUnit, yStep))}</span>
@@ -1824,7 +1854,7 @@ function showResults(){
     : `StatMap #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>{
     const tier = scoreTier(s);
-    return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tier.emoji} +${s}</span>`;
+    return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tierMark(tier)} +${s}</span>`;
   }).join('');
   // The recap. Collapsed by default so the score still lands first, but the facts
   // are one tap away instead of gone.
@@ -1834,7 +1864,7 @@ function showResults(){
       ${roundDetails.map((d,i)=>`
         <details class="recap-row">
           <summary>
-            <span class="rc-emoji">${d.tier.emoji}</span>
+            <span class="rc-emoji">${tierMark(d.tier)}</span>
             <span class="rc-who">${escapeHtml(dotLabel(d.player))}</span>
             <span class="rc-pts" style="color:${d.tier.color}">+${d.points}</span>
           </summary>
@@ -1924,7 +1954,7 @@ const howModal = document.getElementById('howModal');
 function renderHow(){
   const bands = TIERS.map((t,i)=>{
     const next = i === 0 ? 100 : TIERS[i-1].min - 1;
-    return `<div class="how-band"><span>${t.emoji}</span><span class="bn" style="color:${t.color}">${t.label}</span><span class="bp">${t.min}${t.min===next?'':'–'+next} pts</span></div>`;
+    return `<div class="how-band"><span>${tierMark(t)}</span><span class="bn" style="color:${t.color}">${t.label}</span><span class="bp">${t.min}${t.min===next?'':'–'+next} pts</span></div>`;
   }).join('');
   document.getElementById('howBody').innerHTML = `
     <div class="how-step"><span class="n">1</span><div>Five questions a day, the <b>same five for everyone</b>, until midnight ET.</div></div>
@@ -2059,7 +2089,7 @@ function renderStatsModal(){
   const maxCount = Math.max(1, ...counts);
   const rows = TIERS.map((t,i)=>{
     const w = Math.round((counts[i]/maxCount)*100);
-    return `<div class="dist-row"><span class="dl">${t.emoji} ${t.label}</span><span class="db" style="width:${w}%;background:${t.color}"></span><span class="dn">${counts[i]}</span></div>`;
+    return `<div class="dist-row"><span class="dl">${tierMark(t)} ${t.label}</span><span class="db" style="width:${w}%;background:${t.color}"></span><span class="dn">${counts[i]}</span></div>`;
   }).join('');
   body.innerHTML = `
     <div class="stat-grid">
