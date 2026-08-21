@@ -230,8 +230,21 @@ try{
     margin:14px calc(var(--panel-pad) * -1) calc(var(--panel-pad) * -1);
     padding:12px var(--panel-pad) calc(12px + env(safe-area-inset-bottom, 0px));
   }
+  /* Wraps rather than ellipsising, and this is a correction.
+   *
+   * The nowrap+ellipsis came in to stop the readout growing and shoving the button
+   * onto a second line at the left, which cost a player their aim mid-round. The
+   * actionbar is flex-wrap:nowrap now, so the button cannot be pushed anywhere — but
+   * the ellipsis stayed, and on every phone size it was eating the SECOND stat of
+   * "Your guess: 34.8 MPG, 19.2 PPG". 240px of text in 158px of room on an SE. Half
+   * the readout's job is telling you the value you just chose on both axes, so the
+   * guard was quietly removing the thing it was guarding.
+   *
+   * The reserved height is what keeps the original promise: two lines' worth is held
+   * whether the text needs one or two, so the bar is the same height before and after
+   * a guess and the button does not move. */
   .actionbar .readout{ flex:1 1 auto; min-width:0;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    white-space:normal; overflow:visible; text-overflow:clip; min-height:36px; }
   .actionbar button.primary{ flex:none; }
   .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:left; min-height:18px; }
 
