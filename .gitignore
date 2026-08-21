@@ -17,3 +17,9 @@ handoff/*.png
 # been 46, 63, 68 and 104 questions, and importing an old export drops the rest.
 handoff/content/questions.csv
 handoff/content/questions.xlsx
+# Same reasoning, and more so: the calendar re-deals every future day on each content
+# run, so this one is stale the next time anything is added. Regenerate with
+# `pipeline/export_schedule.py`. It also contains every answer for the whole
+# calendar, which is a second reason not to have it sitting in the repo.
+handoff/content/schedule-master.csv
+handoff/content/schedule-master.xlsx
