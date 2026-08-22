@@ -150,6 +150,9 @@ try{
     font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint);
     letter-spacing:0.06em; text-transform:uppercase; margin-bottom:12px;
   }
+  /* Mirrors .topline-end, so the two ends of the bar are the same shape: a circular
+     control against the edge, with its label inboard of it. */
+  .topline-start{ display:flex; align-items:center; gap:10px; flex:none; }
   .topline-end{ display:flex; align-items:center; gap:10px; flex:none; }
   /* The topline label doubles as the way back to the home screen. A real <button>
      rather than a styled span so it's keyboard-reachable and announced as a
@@ -601,7 +604,10 @@ try{
 <body>
 <div class="app" id="app">
   <div class="topline">
-    <button id="topLeft" class="home-btn" title="Back to the home screen">STATMAP</button>
+    <span class="topline-start">
+      <button id="homeBtn" class="icon-btn" aria-label="Back to the home screen" title="Back to the home screen">⌂</button>
+      <button id="topLeft" class="home-btn" title="Back to the home screen">#1</button>
+    </span>
     <span class="topline-end">
       <span id="topRight">···</span>
       <span class="controls">
@@ -1346,9 +1352,12 @@ function renderProgress(){
   });
 }
 function setTopline(right){
+  // Just the number. The wordmark is on the start screen, the tab title and the
+  // share card; repeating it in a bar the player stares at for five rounds spent
+  // width on the one thing they already know.
   topLeft.textContent = MODE === 'challenge'
-    ? `STATMAP #${puzzleNumber(SERVED_DATE)} · CHALLENGE`
-    : `STATMAP #${PUZZLE_NO}`;
+    ? `#${puzzleNumber(SERVED_DATE)} · CHALLENGE`
+    : `#${PUZZLE_NO}`;
   topRight.textContent = right;
 }
 
@@ -1362,7 +1371,11 @@ function goHome(){ startScreen(); }
 
 function startScreen(){
   appEl.removeAttribute('data-league');
-  setTopline(`${ROUNDS.length} QUESTIONS`);
+  // Deliberately blank while playing. The progress bar immediately below this draws
+  // one segment per question and fills them in as you go, so "5 QUESTIONS" was a
+  // worse version of the thing already on screen — and it sat in the corner a player
+  // glances at to check which round they are on.
+  setTopline('');
   progressEl.innerHTML = '';
   const stats = loadStats();
   const streak = liveStreak(stats, TODAY);
@@ -2230,6 +2243,9 @@ init();
 // Safe mid-run because startScreen() offers Resume rather than restarting — see
 // runInProgress().
 topLeft.addEventListener('click', goHome);
+// The number beside it stays clickable too. It was the way home before the button
+// existed, and somebody who learned that should not find it dead.
+document.getElementById('homeBtn').addEventListener('click', goHome);
 </script>
 </body>
 </html>
