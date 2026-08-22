@@ -28,7 +28,18 @@
  */
 import { fingerprint } from './build_fingerprint.mjs';
 
-const BASE = (process.env.API || 'https://statmap.app').replace(/\/$/, '');
+/* Every hostname the site answers on, not just the canonical one.
+ *
+ * www.statmap.app served the page and 404'd the API for days, because the Worker was
+ * routed at the apex only — and nothing caught it, since this canary asked for
+ * https://statmap.app and the deploy check asked for the apex too. Both were
+ * honestly green while the hostname carrying most of the traffic gave nobody a
+ * question. A monitor that knows one of your hostnames is monitoring one of your
+ * hostnames. */
+const BASES = (process.env.API
+  ? [process.env.API]
+  : ['https://statmap.app', 'https://www.statmap.app']).map(u => u.replace(/\/$/, ''));
+const BASE = BASES[0];
 const STRICT = process.env.CANARY_STRICT === '1';
 
 let failures = 0, warnings = 0;
@@ -44,10 +55,12 @@ const warn = (name, ok, detail = '') => {
 // One retry on a network blip. A canary that pages on a single dropped packet gets
 // muted, and a muted canary is worse than none — it is a monitoring system everyone
 // has learned to ignore.
-async function get(path) {
+const host = u => u.replace(/^https?:\/\//, '');
+
+async function get(path, base = BASE) {
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
-      return await fetch(BASE + path, { cache: 'no-store' });
+      return await fetch(base + path, { cache: 'no-store' });
     } catch (err) {
       if (attempt === 2) throw err;
       await new Promise(r => setTimeout(r, 5000));
@@ -69,15 +82,16 @@ try {
   check('the site responds', false, err.message);
 }
 
-// 2-5. The API
+// 2-5. The API, on every hostname the site answers on.
+for (const base of BASES) {
 try {
-  const res = await get('/api/daily');
-  check('the API responds', res.ok, `HTTP ${res.status}`);
+  const res = await get('/api/daily', base);
+  check(`${host(base)}: the API responds`, res.ok, `HTTP ${res.status}`);
 
   const build = res.headers.get('x-build');
   const data = await res.json();
 
-  check('five questions', Array.isArray(data.questions) && data.questions.length === 5,
+  check(`${host(base)}: five questions`, Array.isArray(data.questions) && data.questions.length === 5,
     `got ${data.questions?.length}`);
 
   const bad = (data.questions || []).filter(q =>
@@ -86,23 +100,24 @@ try {
     || !Array.isArray(q.yDomain) || q.yDomain.length !== 2
     || typeof q.targetX !== 'number' || typeof q.targetY !== 'number'
     || !Array.isArray(q.referencePlayers) || q.referencePlayers.length < 2);
-  check('every question is well-formed', bad.length === 0,
+  check(`${host(base)}: every question is well-formed`, bad.length === 0,
     bad.length ? bad.map(q => q.id).join(', ') : `${data.questions?.length} checked`);
 
   // The Worker decides the date in America/New_York. If the edge freezes, this is
   // the first thing that goes wrong and the last thing anyone notices.
   const et = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
-  check('serving today in ET', data.date === et, `API says ${data.date}, ET is ${et}`);
+  check(`${host(base)}: serving today in ET`, data.date === et, `API says ${data.date}, ET is ${et}`);
 
-  check('puzzle number is present', Number.isInteger(data.puzzleNumber),
+  check(`${host(base)}: puzzle number is present`, Number.isInteger(data.puzzleNumber),
     `#${data.puzzleNumber}`);
 
   const want = fingerprint();
   const matches = build === want;
-  (STRICT ? check : warn)('live pool matches this checkout', matches,
+  (STRICT ? check : warn)(`${host(base)}: live pool matches this checkout`, matches,
     matches ? build : `live ${build ?? '(header missing)'}, checkout ${want}`);
 } catch (err) {
-  check('the API responds', false, err.message);
+  check(`${host(base)}: the API responds`, false, err.message);
+}
 }
 
 console.log();

@@ -19,8 +19,21 @@ compatibility_date = "2026-08-10"
 # account. If the deploy fails with a zone error, the domain's nameservers have not
 # finished moving yet — wait, do not work around it by moving the API to a
 # workers.dev host, because the page's CSP would then block every call it makes.
+# BOTH hostnames, and the www one is not optional.
+#
+# Pages serves the page on statmap.app AND www.statmap.app. The client asks for
+# `/api/daily` as a relative path, so on www it asks www.statmap.app/api/daily — and
+# with only the apex routed here, nothing matched, Cloudflare fell through to Pages,
+# and the browser got a 404 HTML page where it expected JSON. The page loaded, the
+# chart never did, and the site looked broken to anyone who typed the www.
+#
+# It went unnoticed because every check reaches the apex: the canary requests
+# https://statmap.app, the deploy verification requests the apex, and both were
+# honestly green while www served nobody any questions. A monitor that only knows one
+# of your hostnames is only monitoring one of your hostnames.
 routes = [
-  { pattern = "statmap.app/api/*", zone_name = "statmap.app" }
+  { pattern = "statmap.app/api/*", zone_name = "statmap.app" },
+  { pattern = "www.statmap.app/api/*", zone_name = "statmap.app" }
 ]
 
 # No KV, no D1, no Durable Objects, no secrets, no bindings of any kind. If this
