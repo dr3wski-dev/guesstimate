@@ -9,6 +9,12 @@ __pycache__/
 
 # Dev-only test deps (see handoff/package.json) — the game itself has none
 node_modules
+# Written by `npm install` before running the browser suites. Untracked on purpose:
+# nothing shipped to players comes from npm, so a lockfile here would pin only the
+# test harness. Worth committing the day those versions need to be reproducible —
+# a Playwright upgrade changing a screenshot assertion would be the moment — but
+# until then it is a large generated file appearing in unrelated diffs.
+handoff/package-lock.json
 handoff/v-*.png
 handoff/*.png
 
