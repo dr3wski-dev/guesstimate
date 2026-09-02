@@ -320,6 +320,28 @@ try{
   @media (prefers-reduced-motion:reduce){ .src-details > summary::after{ transition:none; } }
 
   .next-row{ display:flex; justify-content:flex-end; gap:10px; align-items:center; flex-wrap:wrap; }
+
+  /* The start screen's ways in, stacked and ranged left.
+   *
+   * Left because every other thing on that panel already is — the title, the blurb,
+   * the date line, the replay note, the byline. The buttons were the one element
+   * ranged right, so the eye finished the sentence telling it what to do and then
+   * had to travel back across the panel to find the control that does it. This is
+   * only for the start screen: .next-row stays right-aligned mid-round, where the
+   * button sits under the chart's bottom-right corner and belongs there.
+   *
+   * Stacked rather than side by side because the archive is a second way to play,
+   * not a modifier on the first. */
+  .start-actions{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; }
+  /* Same geometry as the primary — font size, padding, border, radius, offset
+   * shadow — so the two read as one group of controls rather than a button and
+   * some furniture. Only the fill differs, which is what keeps today's puzzle the
+   * obvious default while giving the archive equal standing as a place to go. */
+  .start-actions button.ghost{
+    font-size:14px; padding:12px 22px;
+    box-shadow:4px 4px 0 rgba(var(--ink-rgb),0.18);
+  }
+  .start-actions button.ghost:hover{ transform:translate(-2px,-2px); }
   .note{ font-size:12px; color:var(--ink-faint); margin-top:22px; line-height:1.6; }
   .pill{ font-family:'IBM Plex Mono',monospace; font-size:12px; border:2px solid var(--ink); border-radius:20px; padding:5px 10px; }
   .streak-line{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); text-align:center; margin-bottom:16px; }
@@ -1401,6 +1423,12 @@ function startScreen(){
   // being a TypeError, and "fixing" the casing would have silently unescaped it.
   const leaveChallengeBtn = MODE === 'challenge'
     ? `<button class="ghost" id="todayBtn">Play today's instead</button>` : '';
+  // Promoted out of the help line and given the same shape as the start button.
+  // It was a 12.5px underlined word next to "How does scoring work?", which is
+  // where a player looks for instructions — so the one feature that gives the game
+  // 100-odd puzzles instead of one was filed under help text.
+  const archiveBtn = MODE === 'daily'
+    ? `<button class="ghost" id="archiveBtn">Archive →</button>` : '';
   // Going home mid-run must not discard scored rounds, and replaying a finished
   // puzzle shouldn't be dressed up as a fresh start.
   const resuming = runInProgress();
@@ -1420,9 +1448,9 @@ function startScreen(){
     <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}. Same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
     ${challengeHTML}
     ${streakHTML}
-    <div class="next-row">${leaveChallengeBtn}<button class="primary" id="startBtn">${startLabel}</button></div>
+    <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
     ${replayNote}
-    <div><button class="how-link" id="howLink">How does scoring work?</button>${MODE === 'daily' ? ' · <button class="how-link" id="archiveLink">Archive</button>' : ''}</div>
+    <div><button class="how-link" id="howLink">How does scoring work?</button></div>
     <p class="byline">Built by Drew Tanous · <button class="how-link" id="privacyLink">Privacy</button></p>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
@@ -1432,8 +1460,8 @@ function startScreen(){
   });
   const tb = document.getElementById('todayBtn');
   if(tb) tb.addEventListener('click', leaveChallenge);
-  const al = document.getElementById('archiveLink');
-  if(al) al.addEventListener('click', openArchive);
+  const ab = document.getElementById('archiveBtn');
+  if(ab) ab.addEventListener('click', openArchive);
   const pl = document.getElementById('privacyLink');
   if(pl) pl.addEventListener('click', openPrivacy);
   const hl = document.getElementById('howLink');
