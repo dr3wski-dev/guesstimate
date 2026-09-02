@@ -235,7 +235,10 @@ try{
        line, which pushed the button onto a second line at the LEFT. The one control
        on the screen has to stay where the thumb last found it. */
     display:flex; align-items:center; gap:12px; flex-wrap:nowrap;
-    background:var(--paper); border-top:2px dashed var(--line);
+    /* Solid, matching the reveal's rule and the one under the references. The panel
+       previously mixed a 2px dashed bar here with solid rules elsewhere, which reads
+       as two different kinds of separation for no reason. */
+    background:var(--paper); border-top:1px solid var(--line);
     margin:14px calc(var(--panel-pad) * -1) calc(var(--panel-pad) * -1);
     padding:12px var(--panel-pad) calc(12px + env(safe-area-inset-bottom, 0px));
   }
@@ -273,16 +276,88 @@ try{
     .coach-ring{ opacity:0.55; }
   }
 
-  .reveal{ margin-top:6px; padding-top:16px; border-top:2px dashed var(--line); }
-  .verdict-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:6px; }
-  .verdict-row .pts{ font-family:'Fraunces',serif; font-weight:900; font-size:26px; white-space:nowrap; }
+  /* THE REVEAL, IN THREE TIERS.
+     It used to be one flex row with the verdict on the left and, on the right, two
+     lines of prose in an outlined box: "Actual: 0.6 SPG · 3.6 BPG" over "You were
+     0.5 SPG high · 0.8 BPG high". Four numbers and two comparisons, encoded as a
+     sentence with middle dots, right-aligned against a left-aligned column, at
+     11.5px. The player had to READ it to learn how they did — and the score, the
+     thing they actually wanted, was the same visual weight as the rest.
+
+     Now: the verdict is the hero, the numbers are a table, the reference players
+     are demoted to context. One divider style throughout — solid --line — rather
+     than the old mix of dashed and solid. */
+  .reveal{ margin-top:6px; padding-top:16px; border-top:1px solid var(--line); }
+
+  /* TIER 1 — the verdict. Should land in under a second. */
+  .verdict-row{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .verdict-row .pts{
+    font-family:'Fraunces',serif; font-weight:900; font-size:34px; line-height:1.05;
+    white-space:nowrap; display:flex; align-items:baseline; gap:10px;
+  }
   /* The score used to be separated from the tier label by an em dash — "Way off —
      +27" — which sits immediately before the plus and reads as a minus sign at a
      glance. Every score in this game is a gain, so nothing here should ever look
      negative. Spacing does the separating instead. */
-  .verdict-row .pts-num{ margin-left:0.4em; }
-  .verdict-row .compare{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; line-height:1.5; }
-  .verdict-row .compare .miss{ color:var(--guess); }
+  .verdict-row .pts-num{ margin-left:0; }
+  /* "points" spelled out and set small: the number is the figure, the word is the
+     unit, and they should not compete. */
+  .verdict-row .pts-unit{
+    font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint);
+    align-self:center;
+  }
+
+  /* TIER 2 — guess against actual, as a table rather than a sentence.
+     Rows are the two stats, columns are the three numbers a player wants to
+     compare. tabular-nums so the digits line up down each column, which is the
+     entire reason a table beats prose here. */
+  .scorecard{
+    border-collapse:collapse; width:100%; margin:0 0 14px;
+    font-family:'IBM Plex Mono',monospace; font-size:13px;
+    font-variant-numeric:tabular-nums;
+  }
+  .scorecard th, .scorecard td{ text-align:right; padding:6px 0 6px 14px; white-space:nowrap; }
+  .scorecard thead th{
+    font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint); font-weight:400; border-bottom:1px solid var(--line);
+    padding-bottom:5px;
+  }
+  /* The stat column is the row key, so it ranges left and everything else ranges
+     right off the decimal. */
+  .scorecard th[scope="row"], .scorecard thead th:first-child{ text-align:left; padding-left:0; }
+  .scorecard th[scope="row"]{ font-weight:600; color:var(--ink-soft); font-size:12px; letter-spacing:0.06em; }
+  .scorecard tbody tr + tr td, .scorecard tbody tr + tr th{ border-top:1px solid var(--line); }
+  .scorecard .v-guess{ color:var(--guess); font-weight:600; }
+  .scorecard .v-actual{ color:var(--good); font-weight:600; }
+  .scorecard .diff{ color:var(--ink-soft); }
+  .scorecard .diff .dir{
+    font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-faint); margin-left:5px;
+  }
+  .scorecard .diff.exact{ color:var(--good); }
+  /* The swatches tie each column to the dot it describes on the chart — the blue
+     one the player placed, the green one that was the answer. Without them the
+     table and the chart are two unconnected readings of the same round. */
+  .scorecard .sw{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    border:1.5px solid var(--ink); margin-right:5px; vertical-align:middle;
+  }
+  .scorecard .sw-guess{ background:var(--guess); }
+  .scorecard .sw-actual{ background:var(--good); }
+
+  /* TIER 3 — the reference players. Context, not the answer. */
+  .refs-label{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--ink-faint); margin:0 0 6px; font-weight:400;
+  }
+  /* Demoted only AFTER the guess. Before it these are working data — they are the
+     only thing naming the dots you are aiming between, and shrinking them then
+     would be taking away the instrument to tidy the panel. Once the answer is up
+     they are context, so they step back. */
+  .revealed .legend{ color:var(--ink-faint); }
+  .revealed .legend b{ color:var(--ink-soft); font-weight:400; }
+  .revealed .legend i{ opacity:0.65; }
 
   /* The fact is the actual product — it's the only thing in this genre that
      teaches you something, and it was previously rendered at 13.5px in muted grey
@@ -549,8 +624,45 @@ try{
     .has-chart .league-tag{ grid-column:2; grid-row:1; }
     .has-chart .prompt{ grid-column:2; grid-row:2; }
     .has-chart .instructions{ grid-column:2; grid-row:3; }
-    .has-chart .legend{ grid-column:2; grid-row:4; }
+    .has-chart .refs{ grid-column:2; grid-row:4; }
     .has-chart #revealArea{ grid-column:2; grid-row:5; align-self:start; }
+    /* After the guess the two swap: the answer takes the content row, the
+       references drop into the flexible one below it. The DOM move alone is not
+       enough here — these rows are pinned explicitly, so grid would otherwise keep
+       them where they started regardless of document order. */
+    .has-chart.revealed #revealArea{ grid-row:4; }
+    .has-chart.revealed .refs{ grid-row:5; align-self:start; padding-top:14px; border-top:1px solid var(--line); }
+
+    /* SHORT TWO-COLUMN SCREENS.
+       The rebuilt reveal is taller than the two-line block it replaced — a 34px
+       verdict, a four-column table and a labelled reference list where there used
+       to be one flex row. On a roomy screen that is the point. At 582px of height
+       it overflowed: the third reference player rendered UNDERNEATH the action bar,
+       and the panel ran 47px past the bottom of the viewport, undoing the no-scroll
+       guarantee the 561px breakpoint above exists to provide.
+       So the hierarchy survives and the spacing compresses. Nothing is removed —
+       the verdict is still by far the largest thing on the panel, just not 34px. */
+    @media (max-height:800px){
+      .has-chart .verdict-row .pts{ font-size:26px; }
+      .has-chart .verdict-row{ margin-bottom:9px; }
+      .has-chart .reveal{ padding-top:11px; }
+      .has-chart .scorecard{ margin-bottom:9px; }
+      .has-chart .scorecard th, .has-chart .scorecard td{ padding:4px 0 4px 12px; }
+      .has-chart.revealed .refs{ padding-top:9px; }
+      .has-chart.revealed .legend{ font-size:11.5px; gap:2px 12px; margin-bottom:0; }
+      .has-chart .fact-block{ margin:10px 0 11px; }
+    }
+    /* Below 600px the spacing above is not enough — measured 26px over at 561 — and
+       the reference list is the block to give up rather than the answer.
+       It is not a guess that it can go: the chart is RIGHT THERE in column one with
+       every reference dot drawn and labelled by name and season, so after the reveal
+       the list restates what the player is already looking at. Before the guess it
+       stays, because then it is the instrument you aim with rather than a caption.
+       The phone-landscape block below already trades the instruction line away on
+       the same reasoning. */
+    @media (max-height:600px){
+      .has-chart.revealed .refs{ display:none; }
+    }
     /* The bar bleeds to the card edge with negative margins so its rule spans the
        full width — right in one column, wrong in two, where the left bleed reaches
        under the chart and its divider crosses the x-axis labels. Only the right
@@ -618,10 +730,16 @@ try{
       aspect-ratio:560 / 420;
       max-width:58vw;
     }
-    .league-tag,.prompt,.legend,#revealArea,.actionbar{ grid-column:2; }
+    .league-tag,.prompt,.refs,#revealArea,.actionbar{ grid-column:2; }
     /* The readout already says "Tap the chart to place your guess", so the long-form
        instruction is pure vertical cost in the dimension there is least of. */
     .instructions{ display:none; }
+    /* Same trade, one step further, and only after the answer is up: the action bar
+       here is pinned to the bottom of the viewport, so a reference list that grows
+       past it renders UNDERNEATH it — measured at 959x437, all three players were
+       behind the bar and unreadable. The chart beside them already names every dot,
+       so the list goes rather than being hidden by an overlap nobody chose. */
+    .revealed .refs{ display:none; }
     .prompt{ font-size:15px; line-height:1.25; margin-bottom:6px; }
     .legend{ font-size:11px; gap:3px 10px; margin-bottom:8px; }
     /* Stays stuck to the bottom of the viewport, as in portrait. Making it static
@@ -1574,7 +1692,7 @@ function showQuestion(){
          is the only part not stated anywhere else: that the keyboard works. -->
     <div class="instructions">${POINTER_VERB === 'Click' ? 'Click or drag' : 'Tap or drag'} on the chart, or tab in and use the arrow keys</div>
     <div class="chart-frame"><svg id="chartSvg" viewBox="0 0 ${W} ${H}"></svg></div>
-    <div class="legend">${legendHTML}</div>
+    <div class="refs" id="refs"><div class="refs-label">For reference</div><div class="legend">${legendHTML}</div></div>
     <div id="revealArea" aria-live="polite"></div>
     <div class="actionbar">
       <div class="readout" id="readout" aria-live="polite">${POINTER_VERB} the chart to place your guess</div>
@@ -1886,19 +2004,59 @@ function showQuestion(){
     // Still telling the player how to place a guess they have already placed.
     const howToPlot = panel.querySelector('.instructions');
     if(howToPlot) howToPlot.style.display = 'none';
+    // One row per stat, so the diff can be read across rather than parsed out of a
+    // sentence. The units are the row keys because they are what the axes are
+    // labelled with — the full stat names are in the prompt directly above and
+    // would wrap this table onto three lines for nothing.
+    const scoreRows = [
+      { unit:r.xUnit, g:guess.x, a:r.targetX, step:xStep },
+      { unit:r.yUnit, g:guess.y, a:r.targetY, step:yStep },
+    ].map(s => {
+      const d = s.g - s.a;
+      // Same threshold missText uses, so "exact" here and "exact on" there can
+      // never disagree about the same guess.
+      const diff = Math.abs(d) < s.step/2
+        ? '<td class="diff exact">exact</td>'
+        : `<td class="diff">${d > 0 ? '+' : '−'}${fmtVal(Math.abs(d), s.step)}`
+          + `<span class="dir">${d > 0 ? 'high' : 'low'}</span></td>`;
+      return `<tr>
+          <th scope="row">${escapeHtml(s.unit)}</th>
+          <td class="v-guess">${fmtVal(s.g, s.step)}</td>
+          <td class="v-actual">${fmtVal(s.a, s.step)}</td>
+          ${diff}
+        </tr>`;
+    }).join('');
+
     revealArea.innerHTML = `
       <div class="reveal ${tierAnimClass}">
         <div class="verdict-row ${tierAnimClass}">
-          <div class="pts" style="color:${t.color}">${tierMark(t)} ${t.label} <span class="pts-num" id="ptsNum">+0</span></div>
-          <div class="compare">
-            Actual: ${fmtVal(r.targetX, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(r.targetY, yStep)} ${escapeHtml(r.yUnit)}<br>
-            <span class="miss">You were ${escapeHtml(missText(guess.x, r.targetX, r.xUnit, xStep))} · ${escapeHtml(missText(guess.y, r.targetY, r.yUnit, yStep))}</span>
-          </div>
+          <div class="pts" style="color:${t.color}"><span>${tierMark(t)} ${t.label}</span><span class="pts-num" id="ptsNum">+0</span><span class="pts-unit">points</span></div>
         </div>
-        <div class="heat-key">${keyHTML}</div>
+        <table class="scorecard">
+          <thead>
+            <tr>
+              <th scope="col">Stat</th>
+              <th scope="col"><i class="sw sw-guess"></i>Your guess</th>
+              <th scope="col"><i class="sw sw-actual"></i>Actual</th>
+              <th scope="col">Diff</th>
+            </tr>
+          </thead>
+          <tbody>${scoreRows}</tbody>
+        </table>
         ${factBlockHTML(r)}
       </div>
     `;
+    // The references drop below the answer once there is an answer. Before the
+    // guess they are the only thing naming the dots, so they lead; after it they
+    // are context and the score should not be underneath them. Moved in the DOM
+    // rather than reordered in CSS because the phone layout is plain block flow,
+    // where `order` does nothing — and the desktop grid pins rows explicitly, so
+    // it needs the class below as well.
+    const refsEl = document.getElementById('refs');
+    if(refsEl && revealArea.parentNode){
+      revealArea.after(refsEl);
+      panel.classList.add('revealed');
+    }
     countUp(document.getElementById('ptsNum'), points);
     track('question_submit', { question: r.id, league: r.league, tier: t.label, index: idx+1 });
     roundDetails.push({
