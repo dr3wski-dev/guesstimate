@@ -112,6 +112,12 @@ try{
     margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11px;
     letter-spacing:0.04em; color:var(--ink-faint);
   }
+  /* Matches the Privacy button beside it, which is a .how-link at a smaller size —
+     the two sit in the same line and would look like two different kinds of thing
+     otherwise. Inherits the byline's size and colour rather than restating them, so
+     the pair cannot drift apart the next time either is adjusted. */
+  .byline a{ color:inherit; text-decoration:underline; }
+  .byline a:hover{ color:var(--ink); }
   html{
     /* Safari inflates text when a phone rotates to landscape unless this is pinned. */
     -webkit-text-size-adjust:100%; text-size-adjust:100%;
@@ -1466,7 +1472,10 @@ function startScreen(){
     <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
     ${replayNote}
     <div><button class="how-link" id="howLink">How does scoring work?</button></div>
-    <p class="byline">Built by Drew Tanous · <button class="how-link" id="privacyLink">Privacy</button></p>
+    <!-- rel="noopener noreferrer" is not boilerplate here: target="_blank" without
+         noopener hands the opened tab a window.opener handle back to this page, and
+         noreferrer keeps a player's puzzle URL out of LinkedIn's referer log. -->
+    <p class="byline">Built by <a href="https://www.linkedin.com/in/drewtanous/" target="_blank" rel="noopener noreferrer">Drew Tanous</a> · <button class="how-link" id="privacyLink">Privacy</button></p>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     if(resuming){ idx = roundScores.length; showQuestion(); return; }
