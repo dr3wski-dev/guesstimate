@@ -162,6 +162,10 @@ try{
      control against the edge, with its label inboard of it. */
   .topline-start{ display:flex; align-items:center; gap:10px; flex:none; }
   .topline-end{ display:flex; align-items:center; gap:10px; flex:none; }
+  /* An empty status slot is still a flex item, so it keeps drawing its 10px gap and
+     pushes the buttons in by that much for nothing. It is empty on the start screen
+     and during load, which is most of the time a player spends looking at this bar. */
+  #topRight:empty{ display:none; }
   /* The topline label doubles as the way back to the home screen. A real <button>
      rather than a styled span so it's keyboard-reachable and announced as a
      control; the reset strips the chrome so it still reads as a label. */
@@ -776,7 +780,18 @@ try{
       <button id="topLeft" class="home-btn" title="Back to the home screen">#1</button>
     </span>
     <span class="topline-end">
-      <span id="topRight">···</span>
+      <!-- Starts EMPTY, and the emptiness is the point. This slot held a literal
+           "···" until the first render replaced it with "1 / 5" — so on every cold
+           load, three dots sat in the top-right corner immediately beside the ?
+           and stats buttons. Three dots inside a cluster of round controls is the
+           universal "more options" affordance, and this is a <span> that does
+           nothing. A reviewer looking straight at it reported the nav as
+           inconsistent for mixing an overflow menu with standalone icons; there
+           was no menu, only a placeholder that looked like one.
+           Empty also matches the start screen, where setTopline('') already
+           leaves this blank, so the bar now has one appearance before content
+           rather than two. -->
+      <span id="topRight"></span>
       <span class="controls">
         <button id="howBtn" class="icon-btn" aria-label="How to play" title="How to play">?</button>
         <button id="statsBtn" class="icon-btn" aria-label="View your stats" title="Your stats">▤</button>
