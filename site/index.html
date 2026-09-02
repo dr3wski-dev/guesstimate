@@ -471,8 +471,26 @@ try{
 
      Unlike the phone-landscape block below, nothing here is compressed away: the
      instruction line stays, the type stays at reading size. There is room; the
-     layout just was not asking for it. */
-  @media (min-width:1080px) and (min-height:620px){
+     layout just was not asking for it.
+
+     THE MIN-HEIGHT IS 561, AND THE EXACT NUMBER MATTERS.
+     It was 620, and the phone-landscape block below stops at max-height:560, which
+     left 561-619px of height belonging to neither. A window in that band fell all
+     the way back to phone stacking: measured at 1279x582, the card was 620px wide
+     on a 1279px screen with 851px of content in a 582px viewport, so the chart ran
+     off the bottom while 659px of width sat empty beside it. A SHORTER window was
+     better than that one — at 437px tall the landscape block caught it and gave a
+     two-column layout that fit without scrolling.
+
+     That band is not exotic. 1920x1080 at 150% display scaling — the Windows laptop
+     default — is 1280x720 in CSS pixels, and browser chrome takes the rest down to
+     about 582. It reads as "100% zoom" to the person using it, because their browser
+     zoom IS 100%; the scaling is a display setting underneath it.
+
+     So the two ranges now meet with nothing between them: <=560 is compressed
+     landscape, >=561 with the width for it is this. Anything that changes either
+     number has to change the other in the same commit. */
+  @media (min-width:1080px) and (min-height:561px){
     /* Scoped to .has-chart, and that scoping is the whole point. The two-column
        layout exists to put a chart beside its text; applied to a screen with no
        chart it just chops whatever is there into two arbitrary columns — which is
