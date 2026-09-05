@@ -114,12 +114,22 @@ try{
     margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11px;
     letter-spacing:0.04em; color:var(--ink-faint);
   }
-  /* Matches the Privacy button beside it, which is a .how-link at a smaller size —
-     the two sit in the same line and would look like two different kinds of thing
-     otherwise. Inherits the byline's size and colour rather than restating them, so
-     the pair cannot drift apart the next time either is adjusted. */
-  .byline a{ color:inherit; text-decoration:underline; }
-  .byline a:hover{ color:var(--ink); }
+  /* The name carries full ink against the byline's muted grey, and the thicker
+     offset underline is the same device the score tiers use elsewhere. It was
+     colour:inherit before, which made an 11px faint-grey underline that read as
+     typographic texture rather than as somewhere to click — the one piece of text on
+     the page naming a person, and nothing about it invited a press.
+     "Built by" stays muted so the emphasis lands on the name rather than the
+     sentence, and the size stays 11px: this is a byline, and a byline that competes
+     with the game is a worse byline. */
+  .byline a{
+    color:var(--ink); font-weight:600; text-decoration:none;
+    border-bottom:1.5px solid var(--guess); padding-bottom:1px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .byline a:hover, .byline a:focus-visible{
+    color:var(--guess); border-bottom-color:var(--ink);
+  }
   html{
     /* Safari inflates text when a phone rotates to landscape unless this is pinned. */
     -webkit-text-size-adjust:100%; text-size-adjust:100%;
@@ -204,6 +214,15 @@ try{
   .league-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; background:var(--accent); color:var(--accent-ink); padding:3px 9px; border:1.5px solid var(--ink); margin-bottom:10px; }
   .prompt{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1.3; margin-bottom:4px; }
   .prompt .player{ color:var(--guess); }
+  /* The years sit beside the name in the utility face at roughly half its size, so
+     they read as an annotation on the name rather than part of it. The name is still
+     the thing being asked about; the era is the context you place it with. */
+  .prompt .player-span{
+    font-family:'IBM Plex Mono',monospace; font-size:0.52em; font-weight:400;
+    color:var(--ink-faint); letter-spacing:0.02em; margin-left:0.55em;
+    white-space:nowrap;
+  }
+  .legend .ref-span{ color:var(--ink-faint); margin-left:5px; }
   .instructions{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin-bottom:14px; }
 
   .chart-frame{
@@ -1372,6 +1391,18 @@ function seasonTag(name){
   return m ? '’' + m[1].slice(2) : '';
 }
 
+function spanTag(span){
+  // "1993–2009", with an en dash: it is a range, not a subtraction.
+  //
+  // Career totals are era-dependent in a way season lines are not — 500 home runs
+  // means something different in 1935 than in 2005 — and a reader who does not
+  // recognise the name has nothing to place it against. Only career questions carry
+  // one; a season question already prints its season, and the data has no span for
+  // NBA or NFL careers because no source here covers those eras completely.
+  if(!Array.isArray(span) || span.length !== 2) return '';
+  return `${span[0]}–${span[1]}`;
+}
+
 function dotLabel(name){
   // What a plotted dot is called. Without the year, three reference dots are three
   // players and no context — the prompt states the season for the player being
@@ -1693,13 +1724,20 @@ function showQuestion(){
   const xTickD = tickDecimals(xTicks), yTickD = tickDecimals(yTicks);
 
   const legendHTML = r.referencePlayers.map(p =>
-    `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b> · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
+    `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b>${spanTag(p.span) ? `<span class="ref-span">${spanTag(p.span)}</span>` : ''} · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
   ).join('');
 
   panel.classList.add('has-chart');
+  // Clear the reveal state, or the NEXT question inherits it. This shipped
+  // broken: 'revealed' moves the reference list below the answer and, on a
+  // short screen or in phone landscape, hides it outright — which is fine once
+  // the answer is up and wrong before a guess, where those three dots are the
+  // only thing you have to aim between. Questions 2 through 5 were being played
+  // without them on every viewport under 600px tall.
+  panel.classList.remove('revealed');
   panel.innerHTML = `
     <div class="league-tag">${escapeHtml(r.league)}</div>
-    <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br><span class="player">${escapeHtml(r.targetPlayer)}</span></div>
+    <div class="prompt">${escapeHtml(r.xLabel)} vs. ${escapeHtml(r.yLabel)}<br><span class="player">${escapeHtml(r.targetPlayer)}</span>${spanTag(r.span) ? `<span class="player-span">${spanTag(r.span)}</span>` : ''}</div>
     <!-- The player's name is in the prompt directly above, and the readout below the
          chart already says what to do. Repeating the full name here made three
          overlapping instructions on a screen whose interaction is obvious after one

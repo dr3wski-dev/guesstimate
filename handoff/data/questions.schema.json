@@ -9,6 +9,17 @@
     "$ref": "#/$defs/question"
   },
   "$defs": {
+    "span": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "integer",
+        "minimum": 1871,
+        "maximum": 2100
+      },
+      "description": "[first season, last season]. 1871 is the first year in the Lahman database, so an earlier value means the data is wrong rather than the player is old."
+    },
     "question": {
       "type": "object",
       "additionalProperties": false,
@@ -79,6 +90,10 @@
           "maxLength": 48,
           "description": "Full name. Append a season for season-scoped questions: 'Derrick Henry, 2020' (NFL/MLB) or 'Baron Davis, 2003-04' (NBA). The chart strips the season from the dot label; the prompt above it already states the season."
         },
+        "span": {
+          "$ref": "#/$defs/span",
+          "description": "Optional, and only meaningful on career-stat questions: the first and last season this player appeared in, giving the reader the era a career total belongs to. Written by pipeline/add_career_spans.py from the source dataset and re-derived by verify_questions.py — never typed by hand. Absent where no era-complete source exists, which today is every NBA and NFL career question: those files start at 2000 and 1999, so they would report Dirk Nowitzki as debuting in 2000 rather than 1998."
+        },
         "targetX": {
           "type": "number"
         },
@@ -109,6 +124,9 @@
               },
               "y": {
                 "type": "number"
+              },
+              "span": {
+                "$ref": "#/$defs/span"
               }
             }
           }
