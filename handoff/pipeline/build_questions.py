@@ -643,6 +643,27 @@ NBA_ARCHETYPES = [
 ]
 
 
+def span_of(league, p):
+    """The years this player played, for career questions only — {} otherwise.
+
+    Career totals are era-dependent in a way season lines are not: 500 home runs means
+    something different in 1935 and 2005, and a reader who does not recognise the name
+    has nothing to place it with. A season question already prints its season.
+
+    MLB ONLY, and that restriction is not laziness. Lahman runs 1871-2021, so it
+    covers every player here. The NBA and NFL caches start at 2000 and 1999 — ask them
+    for Dirk Nowitzki and they answer 2000, two years after he debuted, because that is
+    when their coverage starts rather than when he did. A truncation artifact that
+    looks exactly like a fact is worse than no answer, so those leagues get nothing
+    until a source that reaches their eras is wired up.
+    """
+    if league != 'MLB' or 'season' in p:
+        return {}
+    if 'first_season' not in p or 'last_season' not in p:
+        return {}
+    return {'span': [p['first_season'], p['last_season']]}
+
+
 def rank_of(v, vals):
     return sorted(vals).index(v)
 
@@ -850,8 +871,10 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=N
                 'targetPlayer': label_fn(tgt),
                 'target_who': tgt['who'],
                 'targetX': tgt['stats'][xk], 'targetY': tgt['stats'][yk],
+                **span_of(league, tgt),
                 'referencePlayers': [
-                    {'name': label_fn(r), 'x': r['stats'][xk], 'y': r['stats'][yk]}
+                    {'name': label_fn(r), 'x': r['stats'][xk], 'y': r['stats'][yk],
+                     **span_of(league, r)}
                     for r in refs],
                 'fact': '', 'source': source,
             })

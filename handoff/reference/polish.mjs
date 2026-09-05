@@ -44,6 +44,43 @@ for(let i=0;i<5;i++){
   await p.mouse.click(bb.x+bb.width*0.5, bb.y+bb.height*0.45);
   await p.click('#submitBtn'); await p.waitForSelector('.reveal'); await p.click('#submitBtn');
 }
+// The reference list must be present BEFORE every guess, not just the first.
+//
+// This is here because it shipped broken. The reveal adds a `revealed` class that
+// demotes the reference players below the answer and, on a viewport under 600px
+// tall or in phone landscape, hides them entirely — correct once the answer is up,
+// wrong before a guess, where those dots are the only thing you have to aim
+// between. showQuestion() did not clear the class, so questions 2 through 5 were
+// played without them on every short screen. Checked at 1279x582 specifically,
+// because at 1280x1000 the rule never applies and the bug is invisible.
+{
+  const sc = await b.newContext({viewport:{width:1279,height:582}});
+  const sp = await sc.newPage();
+  await sp.goto(BASE);
+  await sp.waitForSelector('#startBtn');
+  await sp.click('#startBtn');
+  let missing = [];
+  for (let n = 1; n <= 3; n++) {
+    await sp.waitForSelector('#chartSvg');
+    const shown = await sp.evaluate(() => {
+      const r = document.getElementById('refs');
+      return !!r && r.getBoundingClientRect().height > 0
+             && !document.querySelector('.panel').classList.contains('revealed');
+    });
+    if (!shown) missing.push(n);
+    const bb = await sp.locator('#chartSvg').boundingBox();
+    await sp.mouse.click(bb.x + bb.width * 0.5, bb.y + bb.height * 0.45);
+    await sp.click('#submitBtn');
+    await sp.waitForSelector('.reveal');
+    await sp.click('#submitBtn');
+    await sp.waitForTimeout(200);
+  }
+  ck('reference list is shown before every guess, not just the first',
+     missing.length === 0,
+     missing.length ? `hidden on question ${missing.join(', ')} at 1279x582` : 'questions 1-3 at 1279x582');
+  await sc.close();
+}
+
 await p.waitForSelector('.share-card');
 ck('recap present', await p.locator('.recap-row').count()===5,
    `${await p.locator('.recap-row').count()} rows`);
@@ -51,7 +88,15 @@ ck('recap collapsed by default', await p.locator('.recap-row[open]').count()===0
 await p.locator('.recap-row').first().locator('summary').click();
 await p.waitForTimeout(150);
 const opened=await p.locator('.recap-row').first().innerText();
-ck('expanding shows guess and actual', /You said/.test(opened) && opened.length>120,
+// Assert what the row is supposed to CONTAIN, not how many characters it runs to.
+// This previously required `opened.length > 120`, which is a proxy for "it expanded"
+// that depends on how long the day's player names and stat labels happen to be. It
+// passed in CI on 2 September and failed on 5 September against identical code,
+// because the calendar had moved to a question whose recap line is 105 characters —
+// a red build caused by a short name. Both halves below are things the row genuinely
+// must show, and neither moves with the content.
+ck('expanding shows guess and actual',
+   /You said/.test(opened) && /actual/.test(opened),
    opened.replace(/\n/g,' | ').slice(0,110)+'...');
 ck('no JS errors', errs.length===0, errs[0]||'');
 await p.screenshot({path:'v-recap.png', fullPage:true});
