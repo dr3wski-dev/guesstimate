@@ -114,12 +114,22 @@ try{
     margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11px;
     letter-spacing:0.04em; color:var(--ink-faint);
   }
-  /* Matches the Privacy button beside it, which is a .how-link at a smaller size —
-     the two sit in the same line and would look like two different kinds of thing
-     otherwise. Inherits the byline's size and colour rather than restating them, so
-     the pair cannot drift apart the next time either is adjusted. */
-  .byline a{ color:inherit; text-decoration:underline; }
-  .byline a:hover{ color:var(--ink); }
+  /* The name carries full ink against the byline's muted grey, and the thicker
+     offset underline is the same device the score tiers use elsewhere. It was
+     colour:inherit before, which made an 11px faint-grey underline that read as
+     typographic texture rather than as somewhere to click — the one piece of text on
+     the page naming a person, and nothing about it invited a press.
+     "Built by" stays muted so the emphasis lands on the name rather than the
+     sentence, and the size stays 11px: this is a byline, and a byline that competes
+     with the game is a worse byline. */
+  .byline a{
+    color:var(--ink); font-weight:600; text-decoration:none;
+    border-bottom:1.5px solid var(--guess); padding-bottom:1px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .byline a:hover, .byline a:focus-visible{
+    color:var(--guess); border-bottom-color:var(--ink);
+  }
   html{
     /* Safari inflates text when a phone rotates to landscape unless this is pinned. */
     -webkit-text-size-adjust:100%; text-size-adjust:100%;
