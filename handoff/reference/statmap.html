@@ -755,6 +755,18 @@ try{
     /* The readout already says "Tap the chart to place your guess", so the long-form
        instruction is pure vertical cost in the dimension there is least of. */
     .instructions{ display:none; }
+    /* The career years go too, and here it is WIDTH that cannot afford them. A legend
+       item is white-space:nowrap so a name and its two values stay on one line, which
+       means an item too wide for the column does not wrap — it overflows the page.
+       Measured on an iPhone SE in landscape: adding "1979-2003" to Rickey Henderson
+       pushed the document to 685px inside a 667px viewport.
+       That overflow also went undetected, which is the more useful half of the story.
+       orientation.mjs compares scrollWidth against window.innerWidth, and under mobile
+       emulation innerWidth GROWS to the overflowed width — so the horizontal-scroll
+       guard reported 685 against 685 and passed. It now measures clientWidth, which
+       stays at the real viewport. The years are context; the values are the question,
+       so on the narrowest screen the context is what gives way. */
+    .legend .ref-span{ display:none; }
     /* Same trade, one step further, and only after the answer is up: the action bar
        here is pinned to the bottom of the viewport, so a reference list that grows
        past it renders UNDERNEATH it — measured at 959x437, all three players were

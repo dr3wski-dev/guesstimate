@@ -62,8 +62,35 @@ NFL_URL = 'https://github.com/nflverse/nflverse-data/releases/download/player_st
 # One file per season, so fetch() collapses the ones we need into a single compact CSV.
 NBA_URL = ('https://github.com/sportsdataverse/sportsdataverse-data/releases/download/'
            'nba_stats_player_season_stats/player_season_stats_{season}.csv')
-NBA_SEASONS = range(2000, 2025)          # season = start year; 2024 is 2024-25
+# UPSTREAM KEYS BY END YEAR; THIS PROJECT KEYS BY START YEAR.
+#
+# player_season_stats_2004.csv holds the 2003-04 season — LeBron's rookie year, 79
+# games at 20.9 a night, is in the file numbered 2004. Everything downstream of here
+# uses the start year, because that is how the questions are labelled ("Baron Davis,
+# 2003-04") and how people say a season out loud. So the fetch subtracts one and the
+# compact CSV is start-year throughout.
+#
+# This was NOT always true, which is the part worth remembering. The cache built in
+# August was start-year as it came, and a re-fetch in September came back shifted a
+# year — same code, same URL, different content. Nothing failed: the pool still
+# served correct numbers, but verify_questions.py reported 1,488 NBA mismatches that
+# were all the verifier reading the wrong season, and a content run that day would
+# have labelled every new NBA question with the wrong year while looking perfectly
+# normal. NBA_ANCHORS below turns a silent convention flip into a loud failure.
+NBA_URL_YEAR_IS_END_OF_SEASON = True
+NBA_SEASONS = range(2001, 2026)          # upstream file numbers; start years 2000-2024
 NBA_COMPACT = 'nba_player_seasons.csv'
+
+# Known season lines, by START year. Checked against the compact CSV every fetch. If
+# upstream re-keys again, or quietly swaps per-game for totals, this stops the run
+# instead of writing a plausible-looking file that poisons the next content batch.
+NBA_ANCHORS = [
+    # start year, player,           gp,  pts,  fga
+    (2003, 'LeBron James',          79, 20.9, 18.9),   # rookie season
+    (2005, 'Kobe Bryant',           80, 35.4, 27.2),   # the 81-point year
+    (2015, 'Stephen Curry',         79, 30.1, 20.2),   # unanimous MVP
+    (2003, 'Baron Davis',           67, 22.9, 20.9),   # the season that caught this
+]
 
 MLB_SOURCE = ('Lahman / Chadwick Bureau baseball databank (core/Batting.csv, '
               'core/AllstarFull.csv), regular season.')
@@ -126,9 +153,11 @@ def fetch_nba():
     keep = ['pts','reb','ast','stl','blk','fga','fg3a','fg3_pct','fg3m','min','tov',
             'usg_pct','ts_pct']
     rows = []
-    for season in NBA_SEASONS:
-        print(f'  nba {season} ...', end='', flush=True)
-        with urllib.request.urlopen(NBA_URL.format(season=season)) as fh:
+    for file_year in NBA_SEASONS:
+        # The number in the URL is upstream's key; `season` is ours.
+        season = file_year - 1 if NBA_URL_YEAR_IS_END_OF_SEASON else file_year
+        print(f'  nba {season}-{str(season+1)[2:]} ...', end='', flush=True)
+        with urllib.request.urlopen(NBA_URL.format(season=file_year)) as fh:
             data = fh.read().decode('utf-8', 'replace')
         merged = {}
         rows_by_measure = {'base': [], 'advanced': []}
@@ -153,6 +182,33 @@ def fetch_nba():
                         d[c] = v
         rows.extend(merged.values())
         print(f' {len(merged)}')
+
+    # Does this file say what we think it says? Four seasons everyone can check by
+    # memory, asserted before anything is written. The alternative is what already
+    # happened once: a silent re-key upstream, a cache that looks entirely normal,
+    # and the error surfacing later as 1,488 verifier mismatches on a pool that was
+    # in fact correct.
+    index = {(int(d['season']), d['player_name']): d for d in rows}
+    drift = []
+    for year, who, gp, pts, fga in NBA_ANCHORS:
+        d = index.get((year, who))
+        if d is None:
+            drift.append(f'{who} {year}-{str(year+1)[2:]}: not in the fetched data')
+            continue
+        got = (int(float(d['gp'])), float(d['pts']), float(d['fga']))
+        if got != (gp, pts, fga):
+            drift.append(f'{who} {year}-{str(year+1)[2:]}: expected gp/pts/fga '
+                         f'{(gp, pts, fga)}, got {got}')
+    if drift:
+        print('\n  NBA ANCHOR CHECK FAILED — refusing to write the cache:')
+        for d in drift:
+            print(f'    {d}')
+        print('    Upstream has changed its season keying or its measure semantics.\n'
+              '    Work out which before regenerating any content: the last time this\n'
+              '    happened every season was off by one and nothing looked wrong.')
+        raise SystemExit(1)
+    print(f'  anchors OK ({len(NBA_ANCHORS)} known season lines reproduce)')
+
     dest = os.path.join(CACHE, NBA_COMPACT)
     cols = ['season', 'player_id', 'player_name', 'gp'] + keep
     with open(dest, 'w', newline='', encoding='utf-8') as fh:
