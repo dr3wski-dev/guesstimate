@@ -64,7 +64,13 @@ for (const v of VIEWS) {
       chartFits: c.bottom <= window.innerHeight + 1 && c.top >= 0,
       chartH: Math.round(c.height),
       btnOn: b.bottom <= window.innerHeight + 1 && b.top >= 0,
-      hScroll: document.documentElement.scrollWidth > window.innerWidth + 1,
+      // clientWidth, NOT innerWidth. Under Playwright's isMobile emulation the
+      // layout viewport expands to fit overflowing content, so window.innerWidth
+      // grows to match scrollWidth and this check compares a number against
+      // itself. It passed at 685 vs 685 on an iPhone SE while the page really was
+      // 18px wider than the screen. clientWidth stays at the actual viewport.
+      hScroll: document.documentElement.scrollWidth
+               > document.documentElement.clientWidth + 1,
       screenH: window.innerHeight,
     };
   });

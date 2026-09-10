@@ -143,7 +143,11 @@ def mlb_table():
     name_of = {p['playerID']: f"{p.get('nameFirst','')} {p.get('nameLast','')}".strip()
                for p in people}
     tot = defaultdict(Counter)
+    # Seasons come off the SAME rows the totals do, so a career span can never
+    # describe a different player than the numbers beside it.
+    seasons = defaultdict(set)
     for r in bat:
+        seasons[r['playerID']].add(int(r['yearID']))
         for c in ('AB','H','HR','SB','2B','3B','SO','BB','RBI','R','G'):
             if r[c]:
                 tot[r['playerID']][c] += int(r[c])
@@ -160,7 +164,8 @@ def mlb_table():
         return {'AS': len(asy[pid]), 'HR': c['HR'], 'SB': c['SB'],
                 '2B': c['2B'], '3B': c['3B'], 'SO': c['SO'], 'BB': c['BB'],
                 'RBI': c['RBI'], 'R': c['R'], 'G': c['G'], 'H': c['H'],
-                'AVG': round(c['H'] / c['AB'], 3)}
+                'AVG': round(c['H'] / c['AB'], 3),
+                '_span': [min(seasons[pid]), max(seasons[pid])]}
 
     out = {}
     for key, cl in claims.items():
@@ -186,7 +191,9 @@ def mlb_pitch_table():
     name_of = {p['playerID']: f"{p.get('nameFirst','')} {p.get('nameLast','')}".strip()
                for p in people}
     tot = defaultdict(Counter)
+    seasons = defaultdict(set)
     for r in pitch:
+        seasons[r['playerID']].add(int(r['yearID']))
         for c in ('W','L','G','GS','CG','SHO','SV','IPouts','H','ER','HR','BB','SO'):
             if r[c]:
                 tot[r['playerID']][c] += int(r[c])
@@ -197,21 +204,23 @@ def mlb_pitch_table():
             continue
         claims[norm(name_of.get(pid, ''))].append((pid, c))
 
-    def row(c):
+    def row(pid, c):
         outs = c['IPouts']
         return {'SO': c['SO'], 'W': c['W'], 'SV': c['SV'], 'CG': c['CG'],
                 'IP': round(outs / 3, 1),
                 'ERA': round(c['ER'] * 27 / outs, 2),
                 'K9': round(c['SO'] * 27 / outs, 1),
                 'BB9': round(c['BB'] * 27 / outs, 1),
-                'WHIP': round((c['H'] + c['BB']) * 3 / outs, 2)}
+                'WHIP': round((c['H'] + c['BB']) * 3 / outs, 2),
+                # Pitching rows only, so a pitcher's span is the years he pitched.
+                '_span': [min(seasons[pid]), max(seasons[pid])]}
 
     out = {}
     for key, cl in claims.items():
         cl.sort(key=lambda t: -t[1]['IPouts'])
         if len(cl) > 1 and cl[1][1]['IPouts'] / cl[0][1]['IPouts'] >= 0.5:
             continue                                  # ambiguous name, refuse to guess
-        out[key] = row(cl[0][1])
+        out[key] = row(*cl[0])
     return out
 
 
@@ -339,9 +348,9 @@ def main():
             unverified += 1
             skipped.append(f"{q['id']} ({q['league']}: {q['xLabel']} / {q['yLabel']})")
             continue
-        points = [(q['targetPlayer'], q['targetX'], q['targetY'], 'target')]
-        points += [(r['name'], r['x'], r['y'], 'ref') for r in q['referencePlayers']]
-        for who, gx, gy, kind in points:
+        points = [(q['targetPlayer'], q['targetX'], q['targetY'], 'target', q)]
+        points += [(r['name'], r['x'], r['y'], 'ref', r) for r in q['referencePlayers']]
+        for who, gx, gy, kind, holder in points:
             nm, season = split_season(who)
             if q['league'] == 'MLB':
                 rec = (mlbp.get(norm(nm)) if pitching
@@ -354,6 +363,21 @@ def main():
                 problems.append(f"{q['id']}: {kind} '{who}' not resolvable in the dataset")
                 mismatched += 1
                 continue
+            # A career span is a claim about a person, so it gets re-derived like any
+            # other number rather than trusted from the script that wrote it. It comes
+            # off the same rows as the totals above, so a span that disagrees means the
+            # name resolved to a different player than the stats did — which is the
+            # failure this whole file exists to catch.
+            span = holder.get('span')
+            if span is not None:
+                checked += 1
+                actual = rec.get('_span')
+                if actual is None or list(span) != list(actual):
+                    mismatched += 1
+                    problems.append(
+                        f"{q['id']}: {kind} '{who}' span ships {span}, "
+                        f"dataset says {actual}")
+
             for key, shipped, axis in ((xk, gx, 'x'), (yk, gy, 'y')):
                 # A value from a season where this column is not a measurement is a
                 # failure however well the two sides agree about it.
