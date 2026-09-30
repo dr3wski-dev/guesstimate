@@ -1638,14 +1638,21 @@ function startScreen(){
     : playedToday
       ? `Replay today's questions →`
       : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+  // The fact, without the three clauses explaining it. The button directly above
+  // already reads "Replay today's questions", so what pressing it does needs no
+  // second telling.
   const replayNote = playedToday
-    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
+    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}.</p>`
     : '';
   panel.classList.remove('has-chart');
   panel.innerHTML = `
     <h1 class="title">StatMap</h1>
     <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
-    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}. Same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
+    <!-- Just the date. "Same 5 questions for everyone, in this order, until midnight
+         ET" explained the format to somebody who had never played, on a screen they
+         see every single day afterwards — and the progress bar, the round counter and
+         the midnight reset all state it again by doing it. -->
+    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}`}</p>
     ${challengeHTML}
     ${streakHTML}
     <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
