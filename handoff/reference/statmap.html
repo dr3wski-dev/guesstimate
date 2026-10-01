@@ -241,6 +241,10 @@ try{
   .legend span{ white-space:nowrap; }
   .legend i{ display:inline-block; width:8px; height:8px; border-radius:50%; border:1.5px solid var(--ink); background:var(--paper); margin-right:6px; vertical-align:baseline; }
   .legend b{ color:var(--ink); font-weight:600; }
+  /* The numbers carry the comparison — they are what you are reading the list FOR —
+     so they get the weight and the name keeps the colour. tabular-nums so the three
+     rows line up down the column instead of wobbling on digit widths. */
+  .legend .ref-val{ color:var(--ink); font-weight:700; font-variant-numeric:tabular-nums; }
 
   /* The action bar pins the readout and the submit button to the bottom of the
      viewport whenever the panel is taller than the screen. Previously, on a 390x664
@@ -280,6 +284,11 @@ try{
     white-space:normal; overflow:visible; text-overflow:clip; min-height:36px; }
   .actionbar button.primary{ flex:none; }
   .readout{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--guess); text-align:left; min-height:18px; }
+  /* Clipped, not hidden. visibility:hidden and display:none both remove an element
+     from the accessibility tree, which would silence the readout's aria-live — the
+     only feedback a keyboard player gets while arrowing the dot around. */
+  .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+            overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
 
   /* Reveal "juice", ported from the original 1D slider prototype: the target marker
      bounce-drops in, and the verdict row pulses (great guess) or shakes (bad
@@ -539,6 +548,42 @@ try{
   .how-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.55; margin:12px 0 0; }
   .how-link{ background:none; border:0; padding:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); text-decoration:underline; cursor:pointer; margin-top:14px; }
   .how-link:hover{ color:var(--ink); }
+
+  /* THE START SCREEN'S LAYOUT.
+     Scoped to its own wrapper rather than to .panel, because the results screen is
+     also a .panel without .has-chart and would otherwise inherit all of this.
+
+     WHAT WAS WRONG, MEASURED
+     Every block ranged left at the same x — except the streak line, which was
+     text-align:center. One centred item in a left-ranged column is the whole of the
+     "slinky" feeling: the eye follows a rail down the page and that line steps off it.
+
+     The vertical gaps ran 8, 17, 16, 16, 10, 14, 18 — no scale, and worse, no
+     meaning. Spacing is the main thing telling a reader which items belong together,
+     and at a near-constant ~15px it said everything was equally related to
+     everything else. The 10px under the buttons was the tightest gap on the screen
+     and sat between two things that are NOT a pair.
+
+     WHAT IT IS NOW
+     Four groups on one rail — who this is, what today is, what you can do, and the
+     footer — with 7px inside a group and 28px between them. Those two numbers do all
+     the work that seven hand-tuned margins were failing to do, and every margin
+     below is zeroed so there is exactly one thing controlling the rhythm. */
+  .start-screen{ display:flex; flex-direction:column; align-items:flex-start; gap:28px; }
+  .start-group{ display:flex; flex-direction:column; align-items:flex-start; gap:7px; width:100%; }
+  /* Named elements rather than `> *`, and that is a specificity fix, not a style
+     choice: `h1.title` and `p.sub` are (0,1,1) and beat a `.start-group > *` reset at
+     (0,1,0), so their own 8px and 18px margins survived and the gaps came out 15 and
+     46 instead of 7 and 28. Selector weight has to match or the scale is a fiction. */
+  .start-screen h1, .start-screen p, .start-screen div, .start-screen button{ margin:0; }
+  /* The footer's two lines are related but quieter than the rest; a slightly wider
+     gap than 7 keeps them legible as separate lines without reading as a new group. */
+  .start-foot{ gap:10px; }
+  .start-screen .how-link{ margin-top:0; }
+  .start-screen .byline{ margin-top:0; font-size:11.5px; }
+  /* Ranged left with everything else. Centring it was the one break in the rail. */
+  .start-screen .streak-line{ text-align:left; margin-bottom:0; }
+  .start-screen .challenge-banner{ margin-bottom:0; }
   .restore{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); }
   .restore-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
   .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
@@ -642,7 +687,11 @@ try{
        a max-height has nothing to resolve against and collapses to 0x0. The cap
        stops a tall monitor from producing a chart bigger than it is useful to aim at. */
     .has-chart .chart-frame svg{ width:100%; height:auto; }
-    .has-chart .league-tag{ grid-column:2; grid-row:1; }
+    /* justify-self, because display:inline-block means nothing to a grid item: the
+       grid stretches it to the column regardless, which turned a small chip into a
+       full-width orange band — the heaviest element in the column carrying the least
+       information in it. */
+    .has-chart .league-tag{ grid-column:2; grid-row:1; justify-self:start; }
     .has-chart .prompt{ grid-column:2; grid-row:2; }
     .has-chart .instructions{ grid-column:2; grid-row:3; }
     .has-chart .refs{ grid-column:2; grid-row:4; }
@@ -882,9 +931,6 @@ try{
 
     <p><b>Children.</b> This is a sports trivia game, not aimed at children, and it
     collects nothing that would identify anyone of any age.</p>
-
-    <p class="sub" style="margin-top:14px;">Questions: the whole site is open source —
-    you can read exactly what it collects rather than take my word for it.</p>
   </div>
 </dialog>
 
@@ -1577,9 +1623,13 @@ function setTopline(right){
   // Just the number. The wordmark is on the start screen, the tab title and the
   // share card; repeating it in a bar the player stares at for five rounds spent
   // width on the one thing they already know.
-  topLeft.textContent = MODE === 'challenge'
-    ? `#${puzzleNumber(SERVED_DATE)} · CHALLENGE`
-    : `#${PUZZLE_NO}`;
+  // ARCHIVE, not CHALLENGE, when replaying a past day. Both run through challenge
+  // mode, but this bar is the only thing on screen for all five rounds saying which
+  // puzzle you are on, and "CHALLENGE" there told a player somebody had challenged
+  // them when they had picked a date off a list themselves.
+  topLeft.textContent = MODE !== 'challenge'
+    ? `#${PUZZLE_NO}`
+    : `#${puzzleNumber(SERVED_DATE)} · ${CHALLENGE.archive ? 'ARCHIVE' : 'CHALLENGE'}`;
   topRight.textContent = right;
 }
 
@@ -1602,11 +1652,15 @@ function startScreen(){
   const stats = loadStats();
   const streak = liveStreak(stats, TODAY);
   const streakHTML = streak>0 ? `<div class="streak-line">🔥 <b>${streak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  // Replaying a past day runs through the challenge machinery, so MODE is 'challenge'
+  // here even though nobody challenged anyone. Several things below need to tell the
+  // two apart rather than treating every non-daily round as a friend's link.
+  const isArchive = CHALLENGE.active && CHALLENGE.archive;
   let challengeHTML = '';
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
     challengeHTML = CHALLENGE.archive
-      ? `<div class="challenge-banner">📁 Puzzle <b>#${puzzleNumber(SERVED_DATE)}</b> from ${SERVED_DATE}, replayed from the archive. It won't affect your streak or stats.</div>`
+      ? `<div class="challenge-banner">📁 You're playing <b>#${puzzleNumber(SERVED_DATE)}</b> from ${SERVED_DATE}</div>`
       : MODE === 'challenge'
       ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}). You're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b>. Think you can beat them?</div>`;
@@ -1624,34 +1678,69 @@ function startScreen(){
   // It was a 12.5px underlined word next to "How does scoring work?", which is
   // where a player looks for instructions — so the one feature that gives the game
   // 100-odd puzzles instead of one was filed under help text.
-  const archiveBtn = MODE === 'daily'
+  //
+  // Shown while replaying a past day too, and that is a dead end being closed rather
+  // than a nicety: picking a day from the archive put the game in 'challenge' mode,
+  // which hid this button — so the one screen where somebody has just demonstrated
+  // they want to browse past puzzles was the one screen with no way back into the
+  // list. Reaching a second archive day meant returning to today first.
+  const archiveBtn = (MODE === 'daily' || isArchive)
     ? `<button class="ghost" id="archiveBtn">Archive →</button>` : '';
   // Going home mid-run must not discard scored rounds, and replaying a finished
   // puzzle shouldn't be dressed up as a fresh start.
   const resuming = runInProgress();
   const playedToday = MODE === 'daily' && !resuming && stats.lastPlayed === TODAY;
+  // "Start the challenge" was reaching the archive too, because replaying a past day
+  // borrows challenge mode — so the button announced a challenge to a player who had
+  // simply picked a date off a list, with nobody on the other end of it.
   const startLabel = resuming
     ? `Resume: question ${roundScores.length + 1} of ${ROUNDS.length} →`
     : playedToday
       ? `Replay today's questions →`
-      : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+      : isArchive
+        ? `Start these questions →`
+        : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+  // The fact, without the three clauses explaining it. The button directly above
+  // already reads "Replay today's questions", so what pressing it does needs no
+  // second telling.
   const replayNote = playedToday
-    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}. You can replay it, but you'll know the answers and it won't affect your streak or stats. Next puzzle at midnight ET.</p>`
+    ? `<p class="instructions">You've already played puzzle #${PUZZLE_NO}.</p>`
     : '';
   panel.classList.remove('has-chart');
+  // Four groups, in the order a person actually needs them: what this is, where
+  // today stands, what they can do, and the small print.
+  //
+  // The replay note moved UP into the status group, which is the one structural
+  // change here. It was sitting under the buttons, describing the state of the day
+  // rather than either button — and with the Archive button between it and the
+  // control it related to. As a status line it belongs beside the date, and moving
+  // it leaves the actions as nothing but actions.
   panel.innerHTML = `
-    <h1 class="title">StatMap</h1>
-    <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
-    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}. Same ${ROUNDS.length} question${ROUNDS.length===1?'':'s'} for everyone, in this order, until midnight ET.`}</p>
-    ${challengeHTML}
-    ${streakHTML}
-    <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
-    ${replayNote}
-    <div><button class="how-link" id="howLink">How does scoring work?</button></div>
-    <!-- rel="noopener noreferrer" is not boilerplate here: target="_blank" without
-         noopener hands the opened tab a window.opener handle back to this page, and
-         noreferrer keeps a player's puzzle URL out of LinkedIn's referer log. -->
-    <p class="byline">Built by <a href="https://www.linkedin.com/in/drewtanous/" target="_blank" rel="noopener noreferrer">Drew Tanous</a> · <button class="how-link" id="privacyLink">Privacy</button></p>
+    <div class="start-screen">
+      <div class="start-group">
+        <h1 class="title">StatMap</h1>
+        <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
+      </div>
+      <div class="start-group">
+        <!-- Just the date. "Same 5 questions for everyone, in this order, until
+             midnight ET" explained the format to somebody who had never played, on a
+             screen they see every single day afterwards — and the progress bar, the
+             round counter and the midnight reset all state it again by doing it. -->
+        ${isArchive ? '' : `<p class="instructions">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}`}</p>`}
+        ${challengeHTML}
+        ${replayNote}
+        ${streakHTML}
+      </div>
+      <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
+      <div class="start-group start-foot">
+        <button class="how-link" id="howLink">How does scoring work?</button>
+        <!-- rel="noopener noreferrer" is not boilerplate here: target="_blank"
+             without noopener hands the opened tab a window.opener handle back to this
+             page, and noreferrer keeps a player's puzzle URL out of LinkedIn's
+             referer log. -->
+        <p class="byline">Built by <a href="https://www.linkedin.com/in/drewtanous/" target="_blank" rel="noopener noreferrer">Drew Tanous</a> · <button class="how-link" id="privacyLink">Privacy</button></p>
+      </div>
+    </div>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     if(resuming){ idx = roundScores.length; showQuestion(); return; }
@@ -1722,7 +1811,11 @@ function showQuestion(){
   const W = 560;
   const H = window.matchMedia('(max-width:560px) and (orientation:portrait)').matches
     ? 600 : 420;
-  const padL = 54, padR = 20, padT = 20, padB = 44;
+  // padT carries the y-axis label now that it reads horizontally above the plot
+  // instead of rotated up the side, and padL shrinks because the sideways text is
+  // no longer taking a 20px channel there — the tick numbers are all that is left
+  // to fit. Net plot area is within a few px of what it was.
+  const padL = 46, padR = 20, padT = 40, padB = 44;
   const plotW = W-padL-padR, plotH = H-padT-padB;
   const xPix = (v)=> padL + ((v-xMin)/(xMax-xMin))*plotW;
   const yPix = (v)=> padT + plotH - ((v-yMin)/(yMax-yMin))*plotH;
@@ -1733,7 +1826,7 @@ function showQuestion(){
   const xTickD = tickDecimals(xTicks), yTickD = tickDecimals(yTicks);
 
   const legendHTML = r.referencePlayers.map(p =>
-    `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b>${spanTag(p.span) ? `<span class="ref-span">${spanTag(p.span)}</span>` : ''} · ${fmtVal(p.x, xStep)} ${escapeHtml(r.xUnit)} · ${fmtVal(p.y, yStep)} ${escapeHtml(r.yUnit)}</span>`
+    `<span><i></i><b>${escapeHtml(dotLabel(p.name))}</b>${spanTag(p.span) ? `<span class="ref-span">${spanTag(p.span)}</span>` : ''} · <b class="ref-val">${fmtVal(p.x, xStep)}</b> ${escapeHtml(r.xUnit)} · <b class="ref-val">${fmtVal(p.y, yStep)}</b> ${escapeHtml(r.yUnit)}</span>`
   ).join('');
 
   panel.classList.add('has-chart');
@@ -1769,6 +1862,7 @@ function showQuestion(){
   let answered = false;
   let guessEl = null;
   let guideXEl = null, guideYEl = null;
+  let guessTagEl = null, guessTagBg = null, guessTagTx = null;
   let placer = null;
   let coachActive = false;
   try{ coachActive = !localStorage.getItem(INTRO_KEY); }catch(e){ coachActive = false; }
@@ -1797,7 +1891,14 @@ function showQuestion(){
     gx = Math.max(xMin, Math.min(xMax, gx));
     gy = Math.max(yMin, Math.min(yMax, gy));
     guess = { x: roundToStep(gx, xStep), y: roundToStep(gy, yStep) };
-    readout.innerHTML = `Your guess: <b>${fmtVal(guess.x, xStep)} ${escapeHtml(r.xUnit)}</b>, <b>${fmtVal(guess.y, yStep)} ${escapeHtml(r.yUnit)}</b>`;
+    // The values show on the dot now, so the bar would be saying the same thing a
+    // second time — but the announcement has to survive, because this is the
+    // aria-live region and the tag on the chart is a drawing no screen reader can
+    // read. So the TEXT goes into a clipped span while the readout element itself
+    // stays in the flex row: .sr-only is position:absolute, and putting it on the
+    // readout would pull it out of flow and slide the submit button left, which is
+    // precisely what the orientation suite exists to catch.
+    readout.innerHTML = `<span class="sr-only">Your guess: ${fmtVal(guess.x, xStep)} ${escapeHtml(r.xUnit)}, ${fmtVal(guess.y, yStep)} ${escapeHtml(r.yUnit)}</span>`;
     submitBtn.disabled = false;
     const gxPix = xPix(guess.x), gyPix = yPix(guess.y);
 
@@ -1822,6 +1923,47 @@ function showQuestion(){
       guessEl = el('circle',{cx:gxPix,cy:gyPix,r:9, fill:'var(--guess)', stroke:'var(--ink)','stroke-width':2.5, style:'pointer-events:none;'});
       svg.appendChild(guessEl);
     }
+    updateGuessTag(gxPix, gyPix);
+  }
+
+  /* The guess values, pinned to the dot instead of parked in the action bar.
+   *
+   * They used to live at the bottom of the panel, which meant reading your own
+   * number required looking away from the thing you were aiming — on a wide screen
+   * that is most of the card's width away from the cursor, and you lose the dot's
+   * position against the gridlines in the time it takes to glance down and back.
+   * The value belongs where the eye already is.
+   *
+   * Sized from the text's own measured box rather than an estimate, because the
+   * strings run from "1.1 SPG, 2.2 BPG" to ".317 AVG, 1,745 SO" and a guessed width
+   * is a box that clips on the long ones. */
+  function updateGuessTag(gxPix, gyPix){
+    if(!guessTagEl){
+      guessTagEl = el('g', { style:'pointer-events:none;' });
+      guessTagBg = el('rect', { rx:3, fill:'var(--guess)', stroke:'var(--ink)', 'stroke-width':2 });
+      guessTagTx = el('text', { 'font-size':11.5, 'font-weight':700, fill:'#fff', class:'mono',
+                                'dominant-baseline':'middle' });
+      guessTagEl.appendChild(guessTagBg);
+      guessTagEl.appendChild(guessTagTx);
+      svg.appendChild(guessTagEl);
+    }
+    guessTagTx.textContent =
+      `${fmtVal(guess.x, xStep)} ${r.xUnit}, ${fmtVal(guess.y, yStep)} ${r.yUnit}`;
+    const padX = 7, padY = 5;
+    const tw = guessTagTx.getComputedTextLength();
+    const th = 13;
+    const bw = tw + padX*2, bh = th + padY*2;
+    // Above-right of the dot by default, and it flips rather than being clipped:
+    // a guess in the top-right corner is exactly where a naive offset puts the box
+    // off the edge of the chart.
+    let bx = gxPix + 14, by = gyPix - 14 - bh;
+    if(bx + bw > W - 2) bx = gxPix - 14 - bw;
+    if(bx < 2) bx = 2;
+    if(by < 2) by = gyPix + 14;
+    if(by + bh > padT + plotH + 2) by = gyPix - 14 - bh;
+    guessTagBg.setAttribute('x', bx);        guessTagBg.setAttribute('y', by);
+    guessTagBg.setAttribute('width', bw);    guessTagBg.setAttribute('height', bh);
+    guessTagTx.setAttribute('x', bx + padX); guessTagTx.setAttribute('y', by + bh/2 + 0.5);
   }
 
   // Pointer coordinates (client pixels) -> data space, then hands off to applyGuess.
@@ -1836,6 +1978,7 @@ function showQuestion(){
     svg.innerHTML = '';
     // svg just got wiped, so any prior element references are stale
     guessEl = null; guideXEl = null; guideYEl = null;
+    guessTagEl = guessTagBg = guessTagTx = null;
     placer = makeLabelPlacer({ x0:4, x1:W-4, y0:padT+2, y1:padT+plotH+2 });
 
     svg.appendChild(el('line',{x1:padL,y1:padT,x2:padL,y2:padT+plotH, stroke:'var(--ink)','stroke-width':2}));
@@ -1843,18 +1986,21 @@ function showQuestion(){
     xTicks.forEach(xv=>{
       const px = xPix(xv);
       svg.appendChild(el('line',{x1:px,y1:padT,x2:px,y2:padT+plotH, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:px,y:padT+plotH+18,'text-anchor':'middle','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'});
+      const t = el('text',{x:px,y:padT+plotH+19,'text-anchor':'middle','font-size':11,'font-weight':600, fill:'var(--ink)','fill-opacity':1, class:'mono', style:'pointer-events:none;'});
       t.textContent = fmtTick(xv, xTickD); svg.appendChild(t);
     });
     yTicks.forEach(yv=>{
       const py = yPix(yv);
       svg.appendChild(el('line',{x1:padL,y1:py,x2:padL+plotW,y2:py, stroke:'var(--ink)','stroke-opacity':0.08,'stroke-width':1}));
-      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':10.5, fill:'var(--ink)','fill-opacity':0.85, class:'mono', style:'pointer-events:none;'});
+      const t = el('text',{x:padL-8,y:py+4,'text-anchor':'end','font-size':11,'font-weight':600, fill:'var(--ink)','fill-opacity':1, class:'mono', style:'pointer-events:none;'});
       t.textContent = fmtTick(yv, yTickD); svg.appendChild(t);
     });
-    const xl = el('text',{x:padL+plotW/2,y:H-6,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;'});
-    xl.textContent = `${r.xLabel} (${r.xUnit}) →`; svg.appendChild(xl);
-    const yl = el('text',{x:14,y:padT+plotH/2,'text-anchor':'middle','font-size':11, fill:'var(--ink)','fill-opacity':0.95, class:'mono', style:'pointer-events:none;', transform:`rotate(-90 14 ${padT+plotH/2})`});
+    const xl = el('text',{x:padL,y:H-8,'text-anchor':'start','font-size':11.5,'font-weight':700, fill:'var(--ink)','fill-opacity':1, class:'mono', style:'pointer-events:none;'});
+    xl.textContent = `→ ${r.xLabel} (${r.xUnit})`; svg.appendChild(xl);
+    // Horizontal, in the top-left corner, reading the way everything else on the
+    // page reads. Rotated -90 it was the only text on screen you had to tilt your
+    // head for, and it sat beside the tick numbers competing for the same channel.
+    const yl = el('text',{x:4,y:16,'text-anchor':'start','font-size':11.5,'font-weight':700, fill:'var(--ink)','fill-opacity':1, class:'mono', style:'pointer-events:none;'});
     yl.textContent = `↑ ${r.yLabel} (${r.yUnit})`; svg.appendChild(yl);
 
     // The hit rect already spans the full plot area (hundreds of CSS px on any
@@ -2034,6 +2180,8 @@ function showQuestion(){
        question is over — the readout underneath states both values in words. What
        replaces them is one line from the guess to the truth, and two dashed lines
        running off to the axes compete with it for the same glance. */
+    if(guessTagEl) guessTagEl.remove();
+    guessTagEl = guessTagBg = guessTagTx = null;
     if(guideXEl) guideXEl.remove();
     if(guideYEl) guideYEl.remove();
     guideXEl = guideYEl = null;
