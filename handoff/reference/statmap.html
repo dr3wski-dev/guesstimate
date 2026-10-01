@@ -539,6 +539,42 @@ try{
   .how-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.55; margin:12px 0 0; }
   .how-link{ background:none; border:0; padding:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); text-decoration:underline; cursor:pointer; margin-top:14px; }
   .how-link:hover{ color:var(--ink); }
+
+  /* THE START SCREEN'S LAYOUT.
+     Scoped to its own wrapper rather than to .panel, because the results screen is
+     also a .panel without .has-chart and would otherwise inherit all of this.
+
+     WHAT WAS WRONG, MEASURED
+     Every block ranged left at the same x — except the streak line, which was
+     text-align:center. One centred item in a left-ranged column is the whole of the
+     "slinky" feeling: the eye follows a rail down the page and that line steps off it.
+
+     The vertical gaps ran 8, 17, 16, 16, 10, 14, 18 — no scale, and worse, no
+     meaning. Spacing is the main thing telling a reader which items belong together,
+     and at a near-constant ~15px it said everything was equally related to
+     everything else. The 10px under the buttons was the tightest gap on the screen
+     and sat between two things that are NOT a pair.
+
+     WHAT IT IS NOW
+     Four groups on one rail — who this is, what today is, what you can do, and the
+     footer — with 7px inside a group and 28px between them. Those two numbers do all
+     the work that seven hand-tuned margins were failing to do, and every margin
+     below is zeroed so there is exactly one thing controlling the rhythm. */
+  .start-screen{ display:flex; flex-direction:column; align-items:flex-start; gap:28px; }
+  .start-group{ display:flex; flex-direction:column; align-items:flex-start; gap:7px; width:100%; }
+  /* Named elements rather than `> *`, and that is a specificity fix, not a style
+     choice: `h1.title` and `p.sub` are (0,1,1) and beat a `.start-group > *` reset at
+     (0,1,0), so their own 8px and 18px margins survived and the gaps came out 15 and
+     46 instead of 7 and 28. Selector weight has to match or the scale is a fiction. */
+  .start-screen h1, .start-screen p, .start-screen div, .start-screen button{ margin:0; }
+  /* The footer's two lines are related but quieter than the rest; a slightly wider
+     gap than 7 keeps them legible as separate lines without reading as a new group. */
+  .start-foot{ gap:10px; }
+  .start-screen .how-link{ margin-top:0; }
+  .start-screen .byline{ margin-top:0; font-size:11.5px; }
+  /* Ranged left with everything else. Centring it was the one break in the rail. */
+  .start-screen .streak-line{ text-align:left; margin-bottom:0; }
+  .start-screen .challenge-banner{ margin-bottom:0; }
   .restore{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); }
   .restore-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
   .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
@@ -1577,9 +1613,13 @@ function setTopline(right){
   // Just the number. The wordmark is on the start screen, the tab title and the
   // share card; repeating it in a bar the player stares at for five rounds spent
   // width on the one thing they already know.
-  topLeft.textContent = MODE === 'challenge'
-    ? `#${puzzleNumber(SERVED_DATE)} · CHALLENGE`
-    : `#${PUZZLE_NO}`;
+  // ARCHIVE, not CHALLENGE, when replaying a past day. Both run through challenge
+  // mode, but this bar is the only thing on screen for all five rounds saying which
+  // puzzle you are on, and "CHALLENGE" there told a player somebody had challenged
+  // them when they had picked a date off a list themselves.
+  topLeft.textContent = MODE !== 'challenge'
+    ? `#${PUZZLE_NO}`
+    : `#${puzzleNumber(SERVED_DATE)} · ${CHALLENGE.archive ? 'ARCHIVE' : 'CHALLENGE'}`;
   topRight.textContent = right;
 }
 
@@ -1602,11 +1642,15 @@ function startScreen(){
   const stats = loadStats();
   const streak = liveStreak(stats, TODAY);
   const streakHTML = streak>0 ? `<div class="streak-line">🔥 <b>${streak}</b>-day streak · best: <b>${stats.bestStreak}</b></div>` : '';
+  // Replaying a past day runs through the challenge machinery, so MODE is 'challenge'
+  // here even though nobody challenged anyone. Several things below need to tell the
+  // two apart rather than treating every non-daily round as a friend's link.
+  const isArchive = CHALLENGE.active && CHALLENGE.archive;
   let challengeHTML = '';
   if(CHALLENGE.active){
     const who = escapeHtml(CHALLENGE.from || 'A friend');
     challengeHTML = CHALLENGE.archive
-      ? `<div class="challenge-banner">📁 Puzzle <b>#${puzzleNumber(SERVED_DATE)}</b> from ${SERVED_DATE}, replayed from the archive. It won't affect your streak or stats.</div>`
+      ? `<div class="challenge-banner">📁 You're playing <b>#${puzzleNumber(SERVED_DATE)}</b> from ${SERVED_DATE}</div>`
       : MODE === 'challenge'
       ? `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b> on puzzle #${puzzleNumber(SERVED_DATE)} (${SERVED_DATE}). You're playing that exact puzzle, so it's a fair fight. It won't affect your streak.</div>`
       : `<div class="challenge-banner">🎯 <b>${who}</b> scored <b>${CHALLENGE.score ?? '?'}</b>. Think you can beat them?</div>`;
@@ -1624,41 +1668,69 @@ function startScreen(){
   // It was a 12.5px underlined word next to "How does scoring work?", which is
   // where a player looks for instructions — so the one feature that gives the game
   // 100-odd puzzles instead of one was filed under help text.
-  const archiveBtn = MODE === 'daily'
+  //
+  // Shown while replaying a past day too, and that is a dead end being closed rather
+  // than a nicety: picking a day from the archive put the game in 'challenge' mode,
+  // which hid this button — so the one screen where somebody has just demonstrated
+  // they want to browse past puzzles was the one screen with no way back into the
+  // list. Reaching a second archive day meant returning to today first.
+  const archiveBtn = (MODE === 'daily' || isArchive)
     ? `<button class="ghost" id="archiveBtn">Archive →</button>` : '';
   // Going home mid-run must not discard scored rounds, and replaying a finished
   // puzzle shouldn't be dressed up as a fresh start.
   const resuming = runInProgress();
   const playedToday = MODE === 'daily' && !resuming && stats.lastPlayed === TODAY;
+  // "Start the challenge" was reaching the archive too, because replaying a past day
+  // borrows challenge mode — so the button announced a challenge to a player who had
+  // simply picked a date off a list, with nobody on the other end of it.
   const startLabel = resuming
     ? `Resume: question ${roundScores.length + 1} of ${ROUNDS.length} →`
     : playedToday
       ? `Replay today's questions →`
-      : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
+      : isArchive
+        ? `Start these questions →`
+        : `Start ${MODE==='challenge'?'the challenge':`today's ${ROUNDS.length===1?'question':'questions'}`} →`;
   // The fact, without the three clauses explaining it. The button directly above
   // already reads "Replay today's questions", so what pressing it does needs no
   // second telling.
   const replayNote = playedToday
-    ? `<p class="instructions" style="margin-top:10px;">You've already played puzzle #${PUZZLE_NO}.</p>`
+    ? `<p class="instructions">You've already played puzzle #${PUZZLE_NO}.</p>`
     : '';
   panel.classList.remove('has-chart');
+  // Four groups, in the order a person actually needs them: what this is, where
+  // today stands, what they can do, and the small print.
+  //
+  // The replay note moved UP into the status group, which is the one structural
+  // change here. It was sitting under the buttons, describing the state of the day
+  // rather than either button — and with the Archive button between it and the
+  // control it related to. As a status line it belongs beside the date, and moving
+  // it leaves the actions as nothing but actions.
   panel.innerHTML = `
-    <h1 class="title">StatMap</h1>
-    <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
-    <!-- Just the date. "Same 5 questions for everyone, in this order, until midnight
-         ET" explained the format to somebody who had never played, on a screen they
-         see every single day afterwards — and the progress bar, the round counter and
-         the midnight reset all state it again by doing it. -->
-    <p class="instructions" style="margin-bottom:16px;">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}`}</p>
-    ${challengeHTML}
-    ${streakHTML}
-    <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
-    ${replayNote}
-    <div><button class="how-link" id="howLink">How does scoring work?</button></div>
-    <!-- rel="noopener noreferrer" is not boilerplate here: target="_blank" without
-         noopener hands the opened tab a window.opener handle back to this page, and
-         noreferrer keeps a player's puzzle URL out of LinkedIn's referer log. -->
-    <p class="byline">Built by <a href="https://www.linkedin.com/in/drewtanous/" target="_blank" rel="noopener noreferrer">Drew Tanous</a> · <button class="how-link" id="privacyLink">Privacy</button></p>
+    <div class="start-screen">
+      <div class="start-group">
+        <h1 class="title">StatMap</h1>
+        <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
+      </div>
+      <div class="start-group">
+        <!-- Just the date. "Same 5 questions for everyone, in this order, until
+             midnight ET" explained the format to somebody who had never played, on a
+             screen they see every single day afterwards — and the progress bar, the
+             round counter and the midnight reset all state it again by doing it. -->
+        ${isArchive ? '' : `<p class="instructions">${MODE === 'challenge' ? `Puzzle #${puzzleNumber(SERVED_DATE)} · ${SERVED_DATE}` : `Today: ${TODAY}`}</p>`}
+        ${challengeHTML}
+        ${replayNote}
+        ${streakHTML}
+      </div>
+      <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
+      <div class="start-group start-foot">
+        <button class="how-link" id="howLink">How does scoring work?</button>
+        <!-- rel="noopener noreferrer" is not boilerplate here: target="_blank"
+             without noopener hands the opened tab a window.opener handle back to this
+             page, and noreferrer keeps a player's puzzle URL out of LinkedIn's
+             referer log. -->
+        <p class="byline">Built by <a href="https://www.linkedin.com/in/drewtanous/" target="_blank" rel="noopener noreferrer">Drew Tanous</a> · <button class="how-link" id="privacyLink">Privacy</button></p>
+      </div>
+    </div>
   `;
   document.getElementById('startBtn').addEventListener('click', ()=>{
     if(resuming){ idx = roundScores.length; showQuestion(); return; }
