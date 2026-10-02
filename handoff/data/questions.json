@@ -25753,5 +25753,1517 @@
     ],
     "fact": "Highest usage on the chart, lowest efficiency. Webber took every hard shot Sacramento had.",
     "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-ra-mutombo-2000",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      2.5,
+      22.5
+    ],
+    "targetPlayer": "Dikembe Mutombo, 2000-01",
+    "targetX": 0,
+    "targetY": 14.5,
+    "referencePlayers": [
+      {
+        "name": "Carmelo Anthony, 2004-05",
+        "x": 2.1,
+        "y": 8.3
+      },
+      {
+        "name": "Shai Gilgeous-Alexander, 2023-24",
+        "x": 3.6,
+        "y": 11.7
+      },
+      {
+        "name": "Kyle Korver, 2016-17",
+        "x": 5.4,
+        "y": 4.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ts-webber-2000",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      47.5
+    ],
+    "yDomain": [
+      51,
+      55
+    ],
+    "targetPlayer": "Chris Webber, 2000-01",
+    "targetX": 40.5,
+    "targetY": 51.6,
+    "referencePlayers": [
+      {
+        "name": "Marc Gasol, 2018-19",
+        "x": 30.8,
+        "y": 54.6
+      },
+      {
+        "name": "Jalen Green, 2022-23",
+        "x": 34.2,
+        "y": 53.8
+      },
+      {
+        "name": "Kobe Bryant, 2011-12",
+        "x": 38.5,
+        "y": 52.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-ts-marbury-2000",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      53.5,
+      57.5
+    ],
+    "targetPlayer": "Stephon Marbury, 2000-01",
+    "targetX": 7.6,
+    "targetY": 54,
+    "referencePlayers": [
+      {
+        "name": "Grant Hill, 2010-11",
+        "x": 2.5,
+        "y": 56.3
+      },
+      {
+        "name": "Jamal Crawford, 2005-06",
+        "x": 3.8,
+        "y": 54.4
+      },
+      {
+        "name": "Fred VanVleet, 2019-20",
+        "x": 6.6,
+        "y": 55.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ts-jamison-2000",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      47.5
+    ],
+    "yDomain": [
+      47.5,
+      67.5
+    ],
+    "targetPlayer": "Antawn Jamison, 2000-01",
+    "targetX": 41.4,
+    "targetY": 49.9,
+    "referencePlayers": [
+      {
+        "name": "Buddy Hield, 2019-20",
+        "x": 30.8,
+        "y": 56.6
+      },
+      {
+        "name": "Franz Wagner, 2022-23",
+        "x": 32.6,
+        "y": 58.9
+      },
+      {
+        "name": "Zach LaVine, 2020-21",
+        "x": 35.1,
+        "y": 63.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-ra-brand-2000",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      2.5,
+      22.5
+    ],
+    "targetPlayer": "Elton Brand, 2000-01",
+    "targetX": 0,
+    "targetY": 13.3,
+    "referencePlayers": [
+      {
+        "name": "Jimmy Butler III, 2012-13",
+        "x": 1.3,
+        "y": 5.4
+      },
+      {
+        "name": "Dirk Nowitzki, 2017-18",
+        "x": 4.4,
+        "y": 7.3
+      },
+      {
+        "name": "Manu Ginobili, 2010-11",
+        "x": 5.5,
+        "y": 8.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ts-marion-2001",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      47.5
+    ],
+    "yDomain": [
+      51,
+      59
+    ],
+    "targetPlayer": "Shawn Marion, 2001-02",
+    "targetX": 38.4,
+    "targetY": 51.8,
+    "referencePlayers": [
+      {
+        "name": "Patrick Beverley, 2015-16",
+        "x": 28.7,
+        "y": 55.3
+      },
+      {
+        "name": "Scottie Barnes, 2024-25",
+        "x": 32.8,
+        "y": 52.3
+      },
+      {
+        "name": "CJ McCollum, 2019-20",
+        "x": 36.5,
+        "y": 54.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-stl-bowen-2001",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Steals per game (season)",
+    "yUnit": "SPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      0.5,
+      1.3
+    ],
+    "targetPlayer": "Bruce Bowen, 2001-02",
+    "targetX": 2.7,
+    "targetY": 1.1,
+    "referencePlayers": [
+      {
+        "name": "Kyle Korver, 2014-15",
+        "x": 4.1,
+        "y": 0.7
+      },
+      {
+        "name": "P.J. Tucker, 2017-18",
+        "x": 5.6,
+        "y": 1
+      },
+      {
+        "name": "Theo Ratliff, 2000-01",
+        "x": 8.3,
+        "y": 0.6
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-ts-payton-2000",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      50,
+      70
+    ],
+    "targetPlayer": "Gary Payton, 2000-01",
+    "targetX": 8.1,
+    "targetY": 52.2,
+    "referencePlayers": [
+      {
+        "name": "Bobby Portis Jr., 2024-25",
+        "x": 2.1,
+        "y": 54.2
+      },
+      {
+        "name": "Bam Adebayo, 2021-22",
+        "x": 3.4,
+        "y": 60.8
+      },
+      {
+        "name": "DeMar DeRozan, 2020-21",
+        "x": 6.9,
+        "y": 59.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-stl-gasol-2001",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Steals per game (season)",
+    "yUnit": "SPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      10
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Pau Gasol, 2001-02",
+    "targetX": 8.9,
+    "targetY": 0.5,
+    "referencePlayers": [
+      {
+        "name": "Jamal Crawford, 2016-17",
+        "x": 1.6,
+        "y": 0.7
+      },
+      {
+        "name": "Fred VanVleet, 2021-22",
+        "x": 4.4,
+        "y": 1.7
+      },
+      {
+        "name": "Kawhi Leonard, 2014-15",
+        "x": 7.2,
+        "y": 2.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-blk-wallace-2000",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      40
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Ben Wallace, 2000-01",
+    "targetX": 6.4,
+    "targetY": 2.3,
+    "referencePlayers": [
+      {
+        "name": "Manu Ginobili, 2003-04",
+        "x": 12.8,
+        "y": 0.2
+      },
+      {
+        "name": "Marc Gasol, 2015-16",
+        "x": 16.6,
+        "y": 1.3
+      },
+      {
+        "name": "James Harden, 2014-15",
+        "x": 27.4,
+        "y": 0.7
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-mpg-ts-duncan-2000",
+    "league": "NBA",
+    "xLabel": "Minutes per game (season)",
+    "xUnit": "MPG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      27.5,
+      47.5
+    ],
+    "yDomain": [
+      52.5,
+      62.5
+    ],
+    "targetPlayer": "Tim Duncan, 2000-01",
+    "targetX": 38.7,
+    "targetY": 53.6,
+    "referencePlayers": [
+      {
+        "name": "Myles Turner, 2021-22",
+        "x": 29.4,
+        "y": 61.5
+      },
+      {
+        "name": "Alonzo Mourning, 2001-02",
+        "x": 32.7,
+        "y": 55.8
+      },
+      {
+        "name": "DeMar DeRozan, 2022-23",
+        "x": 36.2,
+        "y": 59.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-ra-garnett-2000",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      5,
+      25
+    ],
+    "targetPlayer": "Kevin Garnett, 2000-01",
+    "targetX": 0.8,
+    "targetY": 16.4,
+    "referencePlayers": [
+      {
+        "name": "Antawn Jamison, 2001-02",
+        "x": 2.6,
+        "y": 8.8
+      },
+      {
+        "name": "Vince Carter, 2012-13",
+        "x": 4.9,
+        "y": 6.5
+      },
+      {
+        "name": "James Harden, 2018-19",
+        "x": 13.2,
+        "y": 14.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-reb-stl-oneal-2000",
+    "league": "NBA",
+    "xLabel": "Rebounds per game (season)",
+    "xUnit": "RPG",
+    "yLabel": "Steals per game (season)",
+    "yUnit": "SPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2.5,
+      22.5
+    ],
+    "yDomain": [
+      0.5,
+      1.5
+    ],
+    "targetPlayer": "Shaquille O'Neal, 2000-01",
+    "targetX": 12.7,
+    "targetY": 0.6,
+    "referencePlayers": [
+      {
+        "name": "Danny Green, 2020-21",
+        "x": 3.8,
+        "y": 1.3
+      },
+      {
+        "name": "RJ Barrett, 2020-21",
+        "x": 5.8,
+        "y": 0.7
+      },
+      {
+        "name": "Jermaine O'Neal, 2002-03",
+        "x": 10.3,
+        "y": 0.9
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-3pa-ra-ewing-2000",
+    "league": "NBA",
+    "xLabel": "3-point attempts per game (season)",
+    "xUnit": "3PA",
+    "yLabel": "Rebounds + assists per game (season)",
+    "yUnit": "REB+AST",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8
+    ],
+    "yDomain": [
+      4,
+      12
+    ],
+    "targetPlayer": "Patrick Ewing, 2000-01",
+    "targetX": 0,
+    "targetY": 8.6,
+    "referencePlayers": [
+      {
+        "name": "Myles Turner, 2017-18",
+        "x": 2.4,
+        "y": 7.7
+      },
+      {
+        "name": "Lou Williams, 2015-16",
+        "x": 4.8,
+        "y": 5
+      },
+      {
+        "name": "Keegan Murray, 2022-23",
+        "x": 6.3,
+        "y": 5.8
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-ts-nash-2002",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      57,
+      61
+    ],
+    "targetPlayer": "Steve Nash, 2002-03",
+    "targetX": 7.3,
+    "targetY": 57.6,
+    "referencePlayers": [
+      {
+        "name": "Elton Brand, 2001-02",
+        "x": 2.4,
+        "y": 58.6
+      },
+      {
+        "name": "Joel Embiid, 2019-20",
+        "x": 3,
+        "y": 59
+      },
+      {
+        "name": "Jayson Tatum, 2023-24",
+        "x": 4.9,
+        "y": 60.4
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-blk-ratliff-2000",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      0,
+      8
+    ],
+    "targetPlayer": "Theo Ratliff, 2000-01",
+    "targetX": 12.4,
+    "targetY": 3.7,
+    "referencePlayers": [
+      {
+        "name": "Jarrett Allen, 2022-23",
+        "x": 14.3,
+        "y": 1.2
+      },
+      {
+        "name": "Alonzo Mourning, 2001-02",
+        "x": 15.7,
+        "y": 2.5
+      },
+      {
+        "name": "Allen Iverson, 2002-03",
+        "x": 27.6,
+        "y": 0.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-blk-olajuwon-2000",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Hakeem Olajuwon, 2000-01",
+    "targetX": 11.9,
+    "targetY": 1.5,
+    "referencePlayers": [
+      {
+        "name": "Jerami Grant, 2018-19",
+        "x": 13.6,
+        "y": 1.3
+      },
+      {
+        "name": "Franz Wagner, 2023-24",
+        "x": 19.7,
+        "y": 0.4
+      },
+      {
+        "name": "Joe Johnson, 2009-10",
+        "x": 21.3,
+        "y": 0.1
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-blk-camby-2000",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      50
+    ],
+    "yDomain": [
+      0,
+      4
+    ],
+    "targetPlayer": "Marcus Camby, 2000-01",
+    "targetX": 12,
+    "targetY": 2.2,
+    "referencePlayers": [
+      {
+        "name": "Al Horford, 2009-10",
+        "x": 14.2,
+        "y": 1.1
+      },
+      {
+        "name": "John Wall, 2013-14",
+        "x": 19.3,
+        "y": 0.5
+      },
+      {
+        "name": "Kevin Durant, 2012-13",
+        "x": 28.1,
+        "y": 1.3
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ppg-blk-baker-2000",
+    "league": "NBA",
+    "xLabel": "Points per game (season)",
+    "xUnit": "PPG",
+    "yLabel": "Blocks per game (season)",
+    "yUnit": "BPG",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      10,
+      30
+    ],
+    "yDomain": [
+      0,
+      2
+    ],
+    "targetPlayer": "Vin Baker, 2000-01",
+    "targetX": 12.2,
+    "targetY": 1,
+    "referencePlayers": [
+      {
+        "name": "Kyle Lowry, 2021-22",
+        "x": 13.4,
+        "y": 0.3
+      },
+      {
+        "name": "Jrue Holiday, 2012-13",
+        "x": 17.7,
+        "y": 0.4
+      },
+      {
+        "name": "Stephon Marbury, 2002-03",
+        "x": 22.3,
+        "y": 0.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "nba-ast-ts-pippen-2001",
+    "league": "NBA",
+    "xLabel": "Assists per game (season)",
+    "xUnit": "APG",
+    "yLabel": "True shooting percentage (season)",
+    "yUnit": "TS%",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      1,
+      9
+    ],
+    "yDomain": [
+      47.5,
+      67.5
+    ],
+    "targetPlayer": "Scottie Pippen, 2001-02",
+    "targetX": 5.9,
+    "targetY": 49.7,
+    "referencePlayers": [
+      {
+        "name": "Jamal Crawford, 2017-18",
+        "x": 2.3,
+        "y": 51.9
+      },
+      {
+        "name": "Mikal Bridges, 2023-24",
+        "x": 3.6,
+        "y": 56
+      },
+      {
+        "name": "Jimmy Butler III, 2021-22",
+        "x": 5.5,
+        "y": 59.2
+      }
+    ],
+    "fact": "",
+    "source": "stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR nba_stats_player_season_stats release. Regular-season per-game averages."
+  },
+  {
+    "id": "mlb-as-so-carew",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career times struck out",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      750,
+      2750
+    ],
+    "targetPlayer": "Rod Carew",
+    "targetX": 18,
+    "targetY": 1028,
+    "span": [
+      1967,
+      1985
+    ],
+    "referencePlayers": [
+      {
+        "name": "Bernie Williams",
+        "x": 5,
+        "y": 1212,
+        "span": [
+          1991,
+          2006
+        ]
+      },
+      {
+        "name": "Alfonso Soriano",
+        "x": 7,
+        "y": 1803,
+        "span": [
+          1999,
+          2014
+        ]
+      },
+      {
+        "name": "Dave Winfield",
+        "x": 12,
+        "y": 1686,
+        "span": [
+          1973,
+          1995
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-as-so-yount",
+    "league": "MLB",
+    "xLabel": "Career All-Star selections",
+    "xUnit": "AS",
+    "yLabel": "Career times struck out",
+    "yUnit": "SO",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      1000,
+      1400
+    ],
+    "targetPlayer": "Robin Yount",
+    "targetX": 3,
+    "targetY": 1350,
+    "span": [
+      1974,
+      1993
+    ],
+    "referencePlayers": [
+      {
+        "name": "Larry Walker",
+        "x": 5,
+        "y": 1231,
+        "span": [
+          1989,
+          2005
+        ]
+      },
+      {
+        "name": "Ichiro Suzuki",
+        "x": 10,
+        "y": 1080,
+        "span": [
+          2001,
+          2019
+        ]
+      },
+      {
+        "name": "Johnny Bench",
+        "x": 14,
+        "y": 1278,
+        "span": [
+          1967,
+          1983
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-avg-bb-jackson",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career walks",
+    "yUnit": "BB",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.25,
+      0.35
+    ],
+    "yDomain": [
+      500,
+      1500
+    ],
+    "targetPlayer": "Reggie Jackson",
+    "targetX": 0.262,
+    "targetY": 1375,
+    "span": [
+      1967,
+      1987
+    ],
+    "referencePlayers": [
+      {
+        "name": "Sammy Sosa",
+        "x": 0.273,
+        "y": 929,
+        "span": [
+          1989,
+          2007
+        ]
+      },
+      {
+        "name": "Bernie Williams",
+        "x": 0.297,
+        "y": 1069,
+        "span": [
+          1991,
+          2006
+        ]
+      },
+      {
+        "name": "Al Simmons",
+        "x": 0.334,
+        "y": 615,
+        "span": [
+          1924,
+          1944
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-avg-g-gehrig",
+    "league": "MLB",
+    "xLabel": "Career batting average",
+    "xUnit": "AVG",
+    "yLabel": "Career games played",
+    "yUnit": "G",
+    "xStep": 0.001,
+    "yStep": 1,
+    "xDomain": [
+      0.25,
+      0.35
+    ],
+    "yDomain": [
+      2000,
+      3000
+    ],
+    "targetPlayer": "Lou Gehrig",
+    "targetX": 0.34,
+    "targetY": 2164,
+    "span": [
+      1923,
+      1939
+    ],
+    "referencePlayers": [
+      {
+        "name": "Ozzie Smith",
+        "x": 0.262,
+        "y": 2573,
+        "span": [
+          1978,
+          1996
+        ]
+      },
+      {
+        "name": "Craig Biggio",
+        "x": 0.281,
+        "y": 2850,
+        "span": [
+          1988,
+          2007
+        ]
+      },
+      {
+        "name": "Manny Ramirez",
+        "x": 0.312,
+        "y": 2302,
+        "span": [
+          1993,
+          2011
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+  },
+  {
+    "id": "mlb-cg-whip-mathewson",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career WHIP",
+    "yUnit": "WHIP",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      1,
+      1.4
+    ],
+    "targetPlayer": "Christy Mathewson",
+    "targetX": 435,
+    "targetY": 1.06,
+    "span": [
+      1900,
+      1916
+    ],
+    "referencePlayers": [
+      {
+        "name": "Mike Mussina",
+        "x": 57,
+        "y": 1.19,
+        "span": [
+          1991,
+          2008
+        ]
+      },
+      {
+        "name": "Vida Blue",
+        "x": 143,
+        "y": 1.23,
+        "span": [
+          1969,
+          1986
+        ]
+      },
+      {
+        "name": "Tom Seaver",
+        "x": 231,
+        "y": 1.12,
+        "span": [
+          1967,
+          1986
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-cg-whip-johnson",
+    "league": "MLB",
+    "xLabel": "Career complete games",
+    "xUnit": "CG",
+    "yLabel": "Career WHIP",
+    "yUnit": "WHIP",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      1,
+      1.4
+    ],
+    "targetPlayer": "Walter Johnson",
+    "targetX": 531,
+    "targetY": 1.06,
+    "span": [
+      1907,
+      1927
+    ],
+    "referencePlayers": [
+      {
+        "name": "Rick Aguilera",
+        "x": 10,
+        "y": 1.23,
+        "span": [
+          1985,
+          2000
+        ]
+      },
+      {
+        "name": "Tommy John",
+        "x": 162,
+        "y": 1.28,
+        "span": [
+          1963,
+          1989
+        ]
+      },
+      {
+        "name": "Carl Hubbell",
+        "x": 260,
+        "y": 1.17,
+        "span": [
+          1928,
+          1943
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "mlb-w-whip-young",
+    "league": "MLB",
+    "xLabel": "Career wins",
+    "xUnit": "W",
+    "yLabel": "Career WHIP",
+    "yUnit": "WHIP",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      1.1,
+      1.5
+    ],
+    "targetPlayer": "Cy Young",
+    "targetX": 511,
+    "targetY": 1.13,
+    "span": [
+      1890,
+      1911
+    ],
+    "referencePlayers": [
+      {
+        "name": "Rick Aguilera",
+        "x": 86,
+        "y": 1.23,
+        "span": [
+          1985,
+          2000
+        ]
+      },
+      {
+        "name": "Jim Bunning",
+        "x": 224,
+        "y": 1.18,
+        "span": [
+          1955,
+          1971
+        ]
+      },
+      {
+        "name": "Early Wynn",
+        "x": 300,
+        "y": 1.33,
+        "span": [
+          1939,
+          1963
+        ]
+      }
+    ],
+    "fact": "",
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+  },
+  {
+    "id": "nfl-rec-catchpct-dillon-2002",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      110
+    ],
+    "yDomain": [
+      57.5,
+      77.5
+    ],
+    "targetPlayer": "Corey Dillon, 2002",
+    "targetX": 43,
+    "targetY": 70.5,
+    "referencePlayers": [
+      {
+        "name": "Derrick Mason, 2010",
+        "x": 61,
+        "y": 61
+      },
+      {
+        "name": "Terry McLaurin, 2022",
+        "x": 77,
+        "y": 64.2
+      },
+      {
+        "name": "CeeDee Lamb, 2024",
+        "x": 101,
+        "y": 66.4
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypr-yac-bruce-2006",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "Y/REC",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      2.5,
+      22.5
+    ],
+    "yDomain": [
+      250,
+      450
+    ],
+    "targetPlayer": "Isaac Bruce, 2006",
+    "targetX": 14.8,
+    "targetY": 269,
+    "referencePlayers": [
+      {
+        "name": "Javonte Williams, 2023",
+        "x": 4.9,
+        "y": 301
+      },
+      {
+        "name": "Keenan Allen, 2021",
+        "x": 10.7,
+        "y": 341
+      },
+      {
+        "name": "Stefon Diggs, 2022",
+        "x": 13.2,
+        "y": 419
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-catchpct-mccoy-2009",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      30,
+      110
+    ],
+    "yDomain": [
+      50,
+      90
+    ],
+    "targetPlayer": "LeSean McCoy, 2009",
+    "targetX": 40,
+    "targetY": 72.7,
+    "referencePlayers": [
+      {
+        "name": "Shannon Sharpe, 2002",
+        "x": 61,
+        "y": 69.3
+      },
+      {
+        "name": "Chad Johnson, 2009",
+        "x": 72,
+        "y": 56.2
+      },
+      {
+        "name": "Antonio Brown, 2017",
+        "x": 101,
+        "y": 62
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-catchpct-dunn-2002",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      50,
+      90
+    ],
+    "targetPlayer": "Warrick Dunn, 2002",
+    "targetX": 50,
+    "targetY": 76.9,
+    "referencePlayers": [
+      {
+        "name": "Bijan Robinson, 2023",
+        "x": 58,
+        "y": 67.4
+      },
+      {
+        "name": "Mike Evans, 2019",
+        "x": 67,
+        "y": 56.8
+      },
+      {
+        "name": "Andre Johnson, 2010",
+        "x": 86,
+        "y": 62.3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-catchpct-moss-2002",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      40,
+      120
+    ],
+    "yDomain": [
+      55,
+      95
+    ],
+    "targetPlayer": "Randy Moss, 2002",
+    "targetX": 106,
+    "targetY": 57.6,
+    "referencePlayers": [
+      {
+        "name": "Arian Foster, 2011",
+        "x": 53,
+        "y": 73.6
+      },
+      {
+        "name": "Wes Welker, 2013",
+        "x": 73,
+        "y": 65.8
+      },
+      {
+        "name": "Danny Amendola, 2010",
+        "x": 85,
+        "y": 69.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypr-yac-tomlinson-2006",
+    "league": "NFL",
+    "xLabel": "Yards per catch (season)",
+    "xUnit": "Y/REC",
+    "yLabel": "Yards after catch (season)",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      8,
+      16
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "LaDainian Tomlinson, 2006",
+    "targetX": 9.1,
+    "targetY": 479,
+    "referencePlayers": [
+      {
+        "name": "Chad Johnson, 2008",
+        "x": 10.2,
+        "y": 114
+      },
+      {
+        "name": "Tyler Lockett, 2023",
+        "x": 11.3,
+        "y": 210
+      },
+      {
+        "name": "Isaac Bruce, 2006",
+        "x": 14.8,
+        "y": 269
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-rec-catchpct-williams-2002",
+    "league": "NFL",
+    "xLabel": "Receptions (season)",
+    "xUnit": "rec",
+    "yLabel": "Catch rate (season)",
+    "yUnit": "catch%",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      25,
+      225
+    ],
+    "yDomain": [
+      50,
+      90
+    ],
+    "targetPlayer": "Ricky Williams, 2002",
+    "targetX": 47,
+    "targetY": 79.7,
+    "referencePlayers": [
+      {
+        "name": "DeSean Jackson, 2009",
+        "x": 63,
+        "y": 53.4
+      },
+      {
+        "name": "Randy Moss, 2009",
+        "x": 83,
+        "y": 60.1
+      },
+      {
+        "name": "Marvin Harrison, 2002",
+        "x": 143,
+        "y": 69.8
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ypc-carries-gore-2005",
+    "league": "NFL",
+    "xLabel": "Yards per carry (season)",
+    "xUnit": "YPC",
+    "yLabel": "Carries (season)",
+    "yUnit": "carries",
+    "xStep": 0.1,
+    "yStep": 1,
+    "xDomain": [
+      3.25,
+      5.25
+    ],
+    "yDomain": [
+      50,
+      450
+    ],
+    "targetPlayer": "Frank Gore, 2005",
+    "targetX": 4.8,
+    "targetY": 127,
+    "referencePlayers": [
+      {
+        "name": "Edgerrin James, 2002",
+        "x": 3.6,
+        "y": 277
+      },
+      {
+        "name": "Arian Foster, 2012",
+        "x": 4.1,
+        "y": 351
+      },
+      {
+        "name": "DeMarco Murray, 2014",
+        "x": 4.7,
+        "y": 392
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id and season. Season yardage is derived from play-by-play and can differ from official gamebook totals by a yard or two."
   }
 ]

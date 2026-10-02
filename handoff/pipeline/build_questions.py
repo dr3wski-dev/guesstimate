@@ -573,6 +573,26 @@ MLB_ARCHETYPES = [
          yl='Career walks', yu='BB', xstep=1, ystep=1, minab=5000),
     dict(id='r-sb',    x='R',   y='SB',  xl='Career runs scored', xu='R',
          yl='Career stolen bases', yu='SB', xstep=1, ystep=1, minab=5000),
+    # ---- ADDED FOR CHART VARIETY.
+    # 565 questions were spread over 57 chart shapes, so a daily player met the same
+    # chart about three times a month. More players poured into the same shapes does
+    # not fix that; more shapes does. Every pair below comes from columns already in
+    # the cache — no new data acquisition — and was chosen for LOW CORRELATION across
+    # the curated pool, because a correlated pair lets you read the second axis off
+    # the first and the chart stops asking anything. Measured |r| is on each line.
+    # Pairs also have to describe the SAME KIND OF PLAYER: plenty of uncorrelated
+    # pairs exist only because they cross positions (completions against yards per
+    # target is a quarterback stat against a receiver's), and those charts are
+    # nonsense however good the correlation looks.
+    dict(id='avg-bb',  x='AVG', y='BB',  xl='Career batting average', xu='AVG',
+         yl='Career walks', yu='BB', xstep=0.001, ystep=1, minab=5000),       # |r| 0.16
+    dict(id='avg-sb',  x='AVG', y='SB',  xl='Career batting average', xu='AVG',
+         yl='Career stolen bases', yu='SB', xstep=0.001, ystep=1, minab=5000),# |r| 0.11
+    dict(id='as-so',   x='AS',  y='SO',  xl='Career All-Star selections', xu='AS',
+         yl='Career times struck out', yu='SO', xstep=1, ystep=1,
+         minab=4000, min_first=1963),                                         # |r| 0.02
+    dict(id='avg-g',   x='AVG', y='G',   xl='Career batting average', xu='AVG',
+         yl='Career games played', yu='G', xstep=0.001, ystep=1, minab=5000), # |r| 0.14
 ]
 
 MLB_PITCH_ARCHETYPES = [
@@ -601,6 +621,26 @@ MLB_PITCH_ARCHETYPES = [
          yl='Career strikeouts', yu='K', xstep=0.1, ystep=1, need=('IP', 1000)),
     dict(id='whip-so', x='WHIP', y='SO', xl='Career WHIP', xu='WHIP',
          yl='Career strikeouts', yu='K', xstep=0.01, ystep=1, need=('IP', 1000)),
+    # ---- ADDED FOR CHART VARIETY.
+    # 565 questions were spread over 57 chart shapes, so a daily player met the same
+    # chart about three times a month. More players poured into the same shapes does
+    # not fix that; more shapes does. Every pair below comes from columns already in
+    # the cache — no new data acquisition — and was chosen for LOW CORRELATION across
+    # the curated pool, because a correlated pair lets you read the second axis off
+    # the first and the chart stops asking anything. Measured |r| is on each line.
+    # Pairs also have to describe the SAME KIND OF PLAYER: plenty of uncorrelated
+    # pairs exist only because they cross positions (completions against yards per
+    # target is a quarterback stat against a receiver's), and those charts are
+    # nonsense however good the correlation looks.
+    dict(id='era-ip',  x='ERA',  y='IP', xl='Career earned run average', xu='ERA',
+         yl='Career innings pitched', yu='IP', xstep=0.01, ystep=1, need=('IP', 1000)),  # |r| 0.13
+    dict(id='w-whip',  x='W',    y='WHIP', xl='Career wins', xu='W',
+         yl='Career WHIP', yu='WHIP', xstep=1, ystep=0.01, need=('IP', 1000)),           # |r| 0.09
+    dict(id='cg-whip', x='CG',   y='WHIP', xl='Career complete games', xu='CG',
+         yl='Career WHIP', yu='WHIP', xstep=1, ystep=0.01, need=('IP', 1000)),           # |r| 0.06
+    dict(id='sv-bb9',  x='SV',   y='BB9', xl='Career saves', xu='SV',
+         yl='Career walks per nine innings', yu='BB/9', xstep=1, ystep=0.1,
+         need=('IP', 600)),                                                              # |r| 0.13
 ]
 
 
@@ -654,6 +694,26 @@ NFL_ARCHETYPES = [
     dict(id='rushtd-rectd', x='rush_td', y='rec_td', xl='Rushing touchdowns (season)',
          xu='TDs', yl='Receiving touchdowns (season)', yu='TDs', xstep=1, ystep=1,
          need=('rush_yds', 400)),
+    # ---- ADDED FOR CHART VARIETY.
+    # 565 questions were spread over 57 chart shapes, so a daily player met the same
+    # chart about three times a month. More players poured into the same shapes does
+    # not fix that; more shapes does. Every pair below comes from columns already in
+    # the cache — no new data acquisition — and was chosen for LOW CORRELATION across
+    # the curated pool, because a correlated pair lets you read the second axis off
+    # the first and the chart stops asking anything. Measured |r| is on each line.
+    # Pairs also have to describe the SAME KIND OF PLAYER: plenty of uncorrelated
+    # pairs exist only because they cross positions (completions against yards per
+    # target is a quarterback stat against a receiver's), and those charts are
+    # nonsense however good the correlation looks.
+    dict(id='ypr-yac', x='ypr', y='yac', xl='Yards per catch (season)', xu='Y/REC',
+         yl='Yards after catch (season)', yu='YAC', xstep=0.1, ystep=1,
+         need=('rec', 40)),                                        # |r| 0.01
+    dict(id='ypc-carries', x='ypc', y='carries', xl='Yards per carry (season)', xu='YPC',
+         yl='Carries (season)', yu='carries', xstep=0.1, ystep=1,
+         need=('carries', 120)),                                   # |r| 0.01
+    dict(id='rec-catchpct', x='rec', y='catch_pct', xl='Receptions (season)', xu='rec',
+         yl='Catch rate (season)', yu='catch%', xstep=1, ystep=0.1,
+         need=('rec', 40)),                                        # |r| 0.03
 ]
 
 
@@ -696,6 +756,32 @@ NBA_ARCHETYPES = [
     dict(id='tov-pts', x='tov', y='pts', xl='Turnovers per game (season)', xu='TOV',
          yl='Points per game (season)', yu='PPG', xstep=0.1, ystep=0.1,
          need=('min', 24)),
+    # ---- ADDED FOR CHART VARIETY.
+    # 565 questions were spread over 57 chart shapes, so a daily player met the same
+    # chart about three times a month. More players poured into the same shapes does
+    # not fix that; more shapes does. Every pair below comes from columns already in
+    # the cache — no new data acquisition — and was chosen for LOW CORRELATION across
+    # the curated pool, because a correlated pair lets you read the second axis off
+    # the first and the chart stops asking anything. Measured |r| is on each line.
+    # Pairs also have to describe the SAME KIND OF PLAYER: plenty of uncorrelated
+    # pairs exist only because they cross positions (completions against yards per
+    # target is a quarterback stat against a receiver's), and those charts are
+    # nonsense however good the correlation looks.
+    dict(id='ppg-blk', x='pts', y='blk', xl='Points per game (season)', xu='PPG',
+         yl='Blocks per game (season)', yu='BPG', xstep=0.1, ystep=0.1,
+         need=('min', 24)),                                       # |r| 0.00
+    dict(id='reb-stl', x='reb', y='stl', xl='Rebounds per game (season)', xu='RPG',
+         yl='Steals per game (season)', yu='SPG', xstep=0.1, ystep=0.1,
+         need=('min', 24)),                                       # |r| 0.01
+    dict(id='3pa-ra', x='fg3a', y='ra', xl='3-point attempts per game (season)', xu='3PA',
+         yl='Rebounds + assists per game (season)', yu='REB+AST', xstep=0.1, ystep=0.1,
+         need=('min', 24)),                                       # |r| 0.01
+    dict(id='mpg-ts', x='min', y='ts_pct', xl='Minutes per game (season)', xu='MPG',
+         yl='True shooting percentage (season)', yu='TS%', xstep=0.1, ystep=0.1,
+         need=('fga', 8)),                                        # |r| 0.01
+    dict(id='ast-ts', x='ast', y='ts_pct', xl='Assists per game (season)', xu='APG',
+         yl='True shooting percentage (season)', yu='TS%', xstep=0.1, ystep=0.1,
+         need=('fga', 8)),                                        # |r| 0.03
 ]
 
 
@@ -976,7 +1062,8 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=N
             # A second question about the same player has to be a second SEASON.
             if season is not None and season in seasons_used[who]:
                 continue
-            if norm(c['targetPlayer'].split(',')[0]) in shipped:
+            if (norm(c['targetPlayer'].split(',')[0]),
+                    f"{c['xLabel']} / {c['yLabel']}") in shipped:
                 continue
         per[a] += 1
         used[who] += 1
@@ -987,20 +1074,38 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=N
 
 
 def shipped_targets():
-    """Normalised identities of every player who is already the answer to a question.
+    """{(normalised name, chart shape)} for every question already in the pool.
 
     Matched on the normalised name rather than the dataset's internal id, because the
     pool stores display names ("Jermaine O'Neal, 2002-03") and the generator works in
     player ids. A season suffix is stripped so a player cannot come back as the answer
-    to a different season of the same archetype — appearing as the answer twice is
-    the thing being prevented, and which season it was does not change that."""
+    to a different season of the same chart — appearing twice on one shape is the
+    thing being prevented, and which season it was does not change that.
+
+    KEYED ON THE SHAPE AS WELL AS THE PLAYER, AND THAT PART IS NEW.
+    It used to be the player alone, which was right when every archetype already had
+    questions: the rule existed because a second batch came back with 6 new candidates
+    out of 80, the other 74 being questions the pool already had.
+
+    But it also meant a brand-new chart shape could only be filled by a player who
+    answers nothing at all — and after 565 questions almost nobody is left. Adding
+    sixteen archetypes produced six candidates covering four of them, not because the
+    charts were bad but because Babe Ruth was already spoken for. Ruth on batting
+    average against walks is not a duplicate of Ruth on strikeouts against home runs;
+    it is a different question with a different answer position.
+
+    The shape key is (xLabel, yLabel) — the same identity schedule_days.mjs uses for
+    spacing, so "the same chart again" means one thing across the whole project. The
+    per-player cap in the caller still bounds how many questions one person can pick
+    up in a single run."""
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data',
                         'questions.json')
     if not os.path.exists(path):
         return set()
     out = set()
     for q in json.load(open(path, encoding='utf-8')):
-        out.add(norm(q['targetPlayer'].split(',')[0]))
+        out.add((norm(q['targetPlayer'].split(',')[0]),
+                 f"{q['xLabel']} / {q['yLabel']}"))
     return out
 
 
