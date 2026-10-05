@@ -1,1 +1,268 @@
-{}
+{
+  "2026-10-05": [
+    "nba-capg-bpg-amare-stoudemire",
+    "nba-cra-spg-elton-brand",
+    "nba-ctov-3pa-monta-ellis",
+    "nba-cg-ppg-vince-carter",
+    "nba-cg-bpg-joe-johnson"
+  ],
+  "2026-10-06": [
+    "nba-cg-rpg-derrick-favors",
+    "nba-cg-apg-john-wall",
+    "nba-c3pct-apg-kyle-korver",
+    "nba-c3pct-rpg-jj-redick",
+    "nba-cppg-spg-carmelo-anthony"
+  ],
+  "2026-10-07": [
+    "nba-cg-spg-joe-johnson",
+    "nba-c3pct-bpg-lou-williams",
+    "nba-cfga-ato-elton-brand",
+    "nba-cato-ppg-amare-stoudemire",
+    "nba-ctov-bpg-steve-nash"
+  ],
+  "2026-10-08": [
+    "nba-crpg-spg-blake-griffin",
+    "nba-cra-ato-elton-brand",
+    "nba-cspg-bpg-manu-ginobili",
+    "nba-crpg-apg-yao-ming",
+    "nba-c3pa-ppg-lou-williams"
+  ],
+  "2026-10-09": [
+    "nba-ctov-rpg-tony-parker",
+    "nba-cfga-rpg-trevor-ariza",
+    "nba-cmpg-bpg-allen-iverson",
+    "nba-cppg-apg-paul-pierce",
+    "nba-cra-g-jamal-crawford"
+  ],
+  "2026-10-10": [
+    "nba-ctov-3pa-yao-ming",
+    "nba-cfga-bpg-derrick-favors",
+    "nba-cra-spg-zach-randolph",
+    "nba-cppg-rpg-trevor-ariza",
+    "nba-cg-bpg-kobe-bryant"
+  ],
+  "2026-10-11": [
+    "nba-cato-g-javale-mcgee",
+    "nba-cg-apg-blake-griffin",
+    "nba-cppg-bpg-marcus-camby",
+    "nba-cg-rpg-paul-pierce",
+    "nba-cmpg-rpg-kemba-walker"
+  ],
+  "2026-10-12": [
+    "nba-cato-ppg-manu-ginobili",
+    "nba-ctov-bpg-allen-iverson",
+    "nba-cppg-spg-marcus-camby",
+    "nba-cfga-ato-antawn-jamison",
+    "nba-capg-bpg-monta-ellis"
+  ],
+  "2026-10-13": [
+    "nba-c3pct-bpg-jj-redick",
+    "nba-crpg-apg-tony-parker",
+    "nba-c3pct-ppg-trevor-ariza",
+    "nba-cra-ato-shane-battier",
+    "nba-crpg-spg-zach-randolph"
+  ],
+  "2026-10-14": [
+    "nba-ctov-rpg-kobe-bryant",
+    "nba-cmpg-3pct-allen-iverson",
+    "nba-c3pa-ppg-jj-redick",
+    "nba-cra-g-marc-gasol",
+    "nba-cspg-bpg-baron-davis"
+  ],
+  "2026-10-15": [
+    "nba-cmpg-bpg-jermaine-oneal",
+    "nba-cfga-bpg-kobe-bryant",
+    "nba-c3pct-rpg-lou-williams",
+    "nba-cfga-rpg-marcus-camby",
+    "nba-cra-spg-blake-griffin"
+  ],
+  "2026-10-16": [
+    "nba-cppg-apg-amare-stoudemire",
+    "nba-c3pct-apg-ray-allen",
+    "nba-cppg-bpg-derrick-favors",
+    "nba-cmpg-rpg-zach-randolph",
+    "nba-cg-bpg-yao-ming"
+  ],
+  "2026-10-17": [
+    "nba-capg-bpg-derrick-favors",
+    "nba-cato-g-kemba-walker",
+    "nba-ctov-3pa-shane-battier",
+    "nba-ctov-bpg-dirk-nowitzki",
+    "nba-cppg-spg-patrick-beverley"
+  ],
+  "2026-10-18": [
+    "nba-cppg-rpg-javale-mcgee",
+    "nba-cg-spg-vince-carter",
+    "nba-cra-ato-jamal-crawford",
+    "nba-cato-ppg-steve-nash",
+    "nba-crpg-spg-tim-duncan"
+  ],
+  "2026-10-19": [
+    "nba-cmpg-3pct-stephon-marbury",
+    "nba-cfga-ato-carmelo-anthony",
+    "nba-cg-rpg-jamal-crawford",
+    "nba-cg-apg-baron-davis",
+    "nba-cg-ppg-kemba-walker"
+  ],
+  "2026-10-20": [
+    "nba-cra-g-vince-carter",
+    "nba-cfga-bpg-antawn-jamison",
+    "nba-cra-spg-manu-ginobili",
+    "nba-crpg-apg-stephon-marbury",
+    "nba-ctov-rpg-paul-pierce"
+  ],
+  "2026-10-21": [
+    "nba-cg-bpg-tony-parker",
+    "nba-c3pct-ppg-ray-allen",
+    "nba-cspg-bpg-pau-gasol",
+    "nba-cmpg-rpg-monta-ellis",
+    "nba-c3pct-apg-baron-davis"
+  ],
+  "2026-10-22": [
+    "nba-cmpg-bpg-ray-allen",
+    "nba-c3pa-ppg-danny-green",
+    "nba-capg-bpg-javale-mcgee",
+    "nba-ctov-3pa-tim-duncan",
+    "nba-cppg-spg-pau-gasol"
+  ],
+  "2026-10-23": [
+    "nba-ctov-bpg-shawn-marion",
+    "nba-cato-g-john-wall",
+    "nba-c3pct-rpg-zach-randolph",
+    "nba-cppg-bpg-andre-iguodala",
+    "nba-crpg-spg-jamal-crawford"
+  ],
+  "2026-10-24": [
+    "nba-cg-spg-dirk-nowitzki",
+    "nba-cato-ppg-zach-randolph",
+    "nba-cmpg-3pct-kobe-bryant",
+    "nba-cra-ato-lou-williams",
+    "nba-cfga-ato-shane-battier"
+  ],
+  "2026-10-25": [
+    "nba-crpg-apg-shawn-marion",
+    "nba-cppg-apg-dirk-nowitzki",
+    "nba-cra-g-john-wall",
+    "nba-cfga-bpg-marcus-camby",
+    "nba-c3pct-bpg-tracy-mcgrady"
+  ],
+  "2026-10-26": [
+    "nba-cra-spg-tim-duncan",
+    "nba-c3pct-apg-jj-redick",
+    "nba-cg-bpg-amare-stoudemire",
+    "nba-cg-rpg-ray-allen",
+    "nba-cfga-rpg-carmelo-anthony"
+  ],
+  "2026-10-27": [
+    "nba-cmpg-bpg-javale-mcgee",
+    "nba-cg-apg-monta-ellis",
+    "nba-cppg-rpg-tony-allen",
+    "nba-cppg-spg-dirk-nowitzki",
+    "nba-c3pa-ppg-yao-ming"
+  ],
+  "2026-10-28": [
+    "nba-c3pct-rpg-kyle-korver",
+    "nba-cppg-bpg-shane-battier",
+    "nba-cmpg-rpg-javale-mcgee",
+    "nba-ctov-rpg-baron-davis",
+    "nba-cato-g-carmelo-anthony"
+  ],
+  "2026-10-29": [
+    "nba-cmpg-3pct-trevor-ariza",
+    "nba-cspg-bpg-yao-ming",
+    "nba-crpg-spg-pau-gasol",
+    "nba-capg-bpg-tony-parker",
+    "nba-ctov-3pa-kyle-korver"
+  ],
+  "2026-10-30": [
+    "nba-ctov-bpg-patrick-beverley",
+    "nba-cg-spg-tim-duncan",
+    "nba-cra-g-kyle-korver",
+    "nba-cfga-bpg-andre-iguodala",
+    "nba-crpg-apg-steve-nash"
+  ],
+  "2026-10-31": [
+    "nba-cra-ato-tim-duncan",
+    "nba-c3pct-bpg-tony-allen",
+    "nba-cato-ppg-antawn-jamison",
+    "nba-cg-rpg-vince-carter",
+    "nba-cfga-ato-patrick-beverley"
+  ],
+  "2026-11-01": [
+    "nba-c3pa-ppg-kyle-korver",
+    "nba-cg-bpg-dirk-nowitzki",
+    "nba-cra-spg-pau-gasol",
+    "nba-cmpg-bpg-stephon-marbury",
+    "nba-c3pct-ppg-shane-battier"
+  ],
+  "2026-11-02": [
+    "nba-cppg-bpg-danny-green",
+    "nba-cppg-spg-andre-iguodala",
+    "nba-cmpg-rpg-allen-iverson",
+    "nba-ctov-rpg-shawn-marion",
+    "nba-cato-g-stephon-marbury"
+  ],
+  "2026-11-03": [
+    "nba-cmpg-3pct-jj-redick",
+    "nba-cppg-rpg-shawn-marion",
+    "nba-c3pct-rpg-steve-nash",
+    "nba-c3pct-apg-danny-green",
+    "nba-capg-bpg-jermaine-oneal"
+  ],
+  "2026-11-04": [
+    "nba-cfga-bpg-tony-allen",
+    "nba-cg-spg-john-wall",
+    "nba-ctov-bpg-paul-pierce",
+    "nba-crpg-apg-marcus-camby",
+    "nba-cspg-bpg-allen-iverson"
+  ],
+  "2026-11-05": [
+    "nba-cato-ppg-carmelo-anthony",
+    "nba-c3pct-bpg-lamarcus-aldridge",
+    "nba-cra-g-lou-williams",
+    "nba-ctov-3pa-trevor-ariza",
+    "nba-cg-rpg-joe-johnson"
+  ],
+  "2026-11-06": [
+    "nba-cg-bpg-jamal-crawford",
+    "nba-c3pa-ppg-joe-johnson",
+    "nba-cra-spg-paul-pierce",
+    "nba-cra-ato-kemba-walker",
+    "nba-crpg-spg-lamarcus-aldridge"
+  ],
+  "2026-11-07": [
+    "nba-cato-g-jermaine-oneal",
+    "nba-ctov-rpg-stephon-marbury",
+    "nba-cppg-bpg-kobe-bryant",
+    "nba-cppg-spg-tony-allen",
+    "nba-cppg-apg-amare-stoudemire"
+  ],
+  "2026-11-08": [
+    "nba-cppg-rpg-javale-mcgee",
+    "nba-cmpg-bpg-stephon-marbury",
+    "nba-c3pct-ppg-trevor-ariza",
+    "nba-cg-apg-baron-davis",
+    "nba-capg-bpg-jermaine-oneal"
+  ],
+  "2026-11-09": [
+    "nba-crpg-apg-yao-ming",
+    "nba-c3pct-apg-baron-davis",
+    "nba-ctov-bpg-danny-green",
+    "nba-cfga-ato-shane-battier",
+    "nba-cg-ppg-vince-carter"
+  ],
+  "2026-11-10": [
+    "nba-cg-spg-joe-johnson",
+    "nba-cg-rpg-derrick-favors",
+    "nba-cspg-bpg-baron-davis",
+    "nba-cato-ppg-steve-nash",
+    "nba-cra-g-vince-carter"
+  ],
+  "2026-11-11": [
+    "nba-c3pct-bpg-steve-nash",
+    "nba-c3pa-ppg-danny-green",
+    "nba-crpg-spg-pau-gasol",
+    "nba-cmpg-rpg-zach-randolph",
+    "nba-cmpg-3pct-kobe-bryant"
+  ]
+}

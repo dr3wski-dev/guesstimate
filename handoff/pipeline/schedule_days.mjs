@@ -26,16 +26,36 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { BAG_EPOCH, DAILY_COUNT, hashString, seededShuffle, daysSince } from '../worker/src/selection.js';
+import { DAILY_COUNT, hashString, seededShuffle, daysSince, poolForGame, MAIN_GAME }
+  from '../worker/src/selection.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DATA = path.join(HERE, '..', 'data');
 const POOL_PATH = path.join(DATA, 'questions.json');
-const SCHEDULE_PATH = path.join(DATA, 'schedule.json');
 
 const read = p => JSON.parse(fs.readFileSync(p, 'utf8'));
-const dateFor = dayIndex => new Date(Date.parse(BAG_EPOCH + 'T00:00:00Z') + dayIndex * 86400000)
-  .toISOString().slice(0, 10);
+
+/* Each game has its own calendar file and its own epoch, so the day index that
+ * everything below is keyed on — the deal cycle, the rotation slot, the archetype
+ * cooldown — counts from that game's first day rather than from the original game's.
+ * Sharing one epoch would mean a game that opened in October started on day 50 of a
+ * rotation it had never played. */
+const GAMES = read(path.join(DATA, 'games.json'));
+// The original game keeps the unsuffixed filenames it has always had. Renaming them
+// would be a rename of 140 played days for no gain.
+const schedulePathOf = id => path.join(DATA,
+  id === MAIN_GAME ? 'schedule.json' : `schedule-${id}.json`);
+// Themed days are hand-authored, kept in their own file so an editorial decision is
+// never mistaken for generator output — a themed day in schedule.json would be
+// indistinguishable from the days a script dealt, and the next run would quietly deal
+// over it.
+const themedPathOf = id => path.join(DATA,
+  id === MAIN_GAME ? 'themed_days.json' : `themed_days-${id}.json`);
+const readIfPresent = p => (fs.existsSync(p) ? read(p) : {});
+
+const dateFor = (dayIndex, epoch) =>
+  new Date(Date.parse(epoch + 'T00:00:00Z') + dayIndex * 86400000)
+    .toISOString().slice(0, 10);
 
 /* Deal order for questions nobody has been given yet.
  *
@@ -166,7 +186,26 @@ const ROTATION = [
   { NBA: 2, NFL: 1, MLB: 2 },
 ];
 
-function extend(pool, schedule, days, themed = {}, curated = new Set()) {
+/* The rotation this game needs.
+ *
+ * The three-day cycle above is a fix for a problem a single-league game does not
+ * have. One league means every day is already "balanced", and applying a quota of
+ * {NBA: 2} to a pool that is entirely NBA would simply cap the day at two questions
+ * and then relax its way out — a short day, or five constraints fought over nothing.
+ *
+ * Anything other than one league or exactly these three throws rather than guessing.
+ * A silent even-split of an unforeseen league mix is how a game ends up with a
+ * rotation nobody designed. */
+function rotationFor(pool) {
+  const leagues = [...new Set(pool.map(q => q.league))].sort();
+  if (leagues.length === 1) return [{ [leagues[0]]: DAILY_COUNT }];
+  if (leagues.join(',') === 'MLB,NBA,NFL') return ROTATION;
+  throw new Error(`no rotation designed for the league mix ${leagues.join('/')} `
+    + `— add one to rotationFor() rather than letting the deal improvise`);
+}
+
+function extend(pool, schedule, days, themed = {}, curated = new Set(), epoch) {
+  const rotation = rotationFor(pool);
   const today = frozenThrough();
   const played = Object.fromEntries(
     Object.entries(schedule).filter(([date]) => date <= today));
@@ -194,7 +233,7 @@ function extend(pool, schedule, days, themed = {}, curated = new Set()) {
    * nothing. `cooldown` is how many days an archetype must have sat out; the caller
    * lowers it and retries rather than letting a day come up short. */
   function dealDay(day, cooldown, maxUncurated) {
-    const want = { ...ROTATION[day % ROTATION.length] };
+    const want = { ...rotation[day % rotation.length] };
     const seen = new Set(used);
     const onDeck = new Set(), shapes = new Set();
     const queue = [];
@@ -237,7 +276,7 @@ function extend(pool, schedule, days, themed = {}, curated = new Set()) {
   }
 
   for (let day = 0; day < days; day++) {
-    const date = dateFor(day);
+    const date = dateFor(day, epoch);
     // Played and themed days are not dealt, but they are still days a player saw, so
     // the cooldown has to count them. Skipping them silently is how a themed Kobe day
     // would let the chart it used come straight back the morning after.
@@ -275,7 +314,7 @@ function extend(pool, schedule, days, themed = {}, curated = new Set()) {
   return { schedule: out, added, relaxed };
 }
 
-function check(pool, schedule, curated = new Set()) {
+function check(pool, schedule, curated = new Set(), epoch) {
   const ids = new Set(pool.map(q => q.id));
   const byId = new Map(pool.map(q => [q.id, q]));
   const problems = [];
@@ -313,9 +352,15 @@ function check(pool, schedule, curated = new Set()) {
   // Every date from launch to the last scheduled one must be covered. A hole falls
   // through to the bag, which is the exact behaviour this file exists to retire.
   if (dates.length) {
-    const last = daysSince(dates[dates.length - 1], BAG_EPOCH);
+    const last = daysSince(dates[dates.length - 1], epoch);
     for (let d = 0; d <= last; d++) {
-      if (!schedule[dateFor(d)]) problems.push(`${dateFor(d)}: no questions pinned (gap in the calendar)`);
+      const date = dateFor(d, epoch);
+      if (!schedule[date]) problems.push(`${date}: no questions pinned (gap in the calendar)`);
+    }
+    // A pinned date before this game's epoch would be a puzzle numbered zero or
+    // less, and would never be reachable — the API refuses any date before the epoch.
+    for (const d of dates) {
+      if (d < epoch) problems.push(`${d}: pinned before this game's epoch (${epoch})`);
     }
   }
 
@@ -362,47 +407,82 @@ function check(pool, schedule, curated = new Set()) {
 }
 
 const args = process.argv.slice(2);
-const pool = read(POOL_PATH);
-const schedule = fs.existsSync(SCHEDULE_PATH) ? read(SCHEDULE_PATH) : {};
-// Hand-authored days, kept in their own file so an editorial decision is never
-// mistaken for generator output — a themed day in schedule.json would be
-// indistinguishable from the 59 days a script dealt, and the next run would quietly
-// deal over it.
-const THEMED_PATH = path.join(DATA, 'themed_days.json');
-const themed = fs.existsSync(THEMED_PATH) ? read(THEMED_PATH) : {};
+const gi = args.indexOf('--game');
+const ALL_POOL = read(POOL_PATH);
+const curated = curatedNames(path.join(DATA, 'athlete_pool.csv'));
 
-if (args.includes('--check')) {
-  const curatedCheck = curatedNames(path.join(DATA, 'athlete_pool.csv'));
-  const { problems, quality, dates, covered, today } = check(pool, schedule, curatedCheck);
-  console.log(`${dates.length} scheduled days, ${covered} of them today or later (pool ${pool.length})`);
-  for (const p of problems) console.log('  ' + p);
-  if (problems.length) {
-    console.error(`\n${problems.length} problem(s) with data/schedule.json`);
+function load(id) {
+  if (!GAMES[id]) {
+    console.error(`no such game: ${id} (data/games.json has `
+      + `${Object.keys(GAMES).join(', ')})`);
     process.exit(1);
   }
-  /* A repeated chart is not corruption, so this warns rather than fails: as the
-   * calendar runs further ahead of the pool the spacing has to give somewhere, and a
-   * gate that fails on that would be telling you to write more questions by breaking
-   * the build. It is loud because the alternative is what already happened — nobody
-   * noticing for sixteen days. */
-  if (quality.length) {
-    console.log(`\n${quality.length} variety warning(s) on upcoming days:`);
-    for (const q of quality.slice(0, 20)) console.log('  ' + q);
-    if (quality.length > 20) console.log(`  ...and ${quality.length - 20} more`);
-    console.log('  Re-run `node pipeline/schedule_days.mjs --days N` to re-deal, or add questions.');
+  return {
+    id,
+    epoch: GAMES[id].epoch,
+    pool: poolForGame(ALL_POOL, id),
+    schedule: readIfPresent(schedulePathOf(id)),
+    themed: readIfPresent(themedPathOf(id)),
+  };
+}
+
+/* --check with no --game checks EVERY game that has content, and that default is
+ * the whole point of the flag. CI runs this one line; if it only ever checked the
+ * game named on the command line, adding a game would silently stop its calendar
+ * from being checked while the step stayed green — the same shape of hole as a
+ * deploy that reports success and releases nothing. */
+if (args.includes('--check')) {
+  const ids = gi >= 0 ? [args[gi + 1]]
+    : Object.keys(GAMES).filter(id => poolForGame(ALL_POOL, id).length);
+  let failed = 0;
+  for (const id of ids) {
+    const g = load(id);
+    const { problems, quality, dates, covered, today } =
+      check(g.pool, g.schedule, curated, g.epoch);
+    console.log(`[${id}] ${dates.length} scheduled days, ${covered} of them today `
+      + `or later (pool ${g.pool.length})`);
+    for (const p of problems) console.log('  ' + p);
+    if (problems.length) {
+      console.error(`  ${problems.length} problem(s) with ${path.basename(schedulePathOf(id))}`);
+      failed += problems.length;
+      continue;
+    }
+    /* A repeated chart is not corruption, so this warns rather than fails: as the
+     * calendar runs further ahead of the pool the spacing has to give somewhere, and
+     * a gate that fails on that would be telling you to write more questions by
+     * breaking the build. It is loud because the alternative is what already
+     * happened — nobody noticing for sixteen days. */
+    if (quality.length) {
+      console.log(`  ${quality.length} variety warning(s) on upcoming days:`);
+      for (const q of quality.slice(0, 12)) console.log('    ' + q);
+      if (quality.length > 12) console.log(`    ...and ${quality.length - 12} more`);
+      console.log(`    Re-run \`node pipeline/schedule_days.mjs --game ${id} --days N\` `
+        + `to re-deal, or add questions.`);
+    }
+    // Running out of calendar is not an error today and is an outage in three weeks,
+    // so it warns rather than fails.
+    if (covered < 14) {
+      console.log(`  WARNING: only ${covered} days of content remain after ${today}.`);
+    }
   }
-  // Running out of calendar is not an error today and is an outage in three weeks,
-  // so it warns rather than fails.
-  if (covered < 14) console.log(`\nWARNING: only ${covered} days of content remain after ${today}.`);
+  if (failed) {
+    console.error(`\n${failed} problem(s) across ${ids.length} game(s)`);
+    process.exit(1);
+  }
   console.log('schedule is sound');
   process.exit(0);
 }
 
+const game = load(gi >= 0 ? args[gi + 1] : MAIN_GAME);
 const di = args.indexOf('--days');
 const days = di >= 0 ? parseInt(args[di + 1], 10) : 60;
-const before = Object.keys(schedule).length;
-const curated = curatedNames(path.join(DATA, 'athlete_pool.csv'));
-const { schedule: next, added, relaxed } = extend(pool, schedule, days, themed, curated);
+if (!game.pool.length) {
+  console.error(`game "${game.id}" has no questions in data/questions.json`);
+  process.exit(1);
+}
+const before = Object.keys(game.schedule).length;
+const { schedule: next, added, relaxed } =
+  extend(game.pool, game.schedule, days, game.themed, curated, game.epoch);
 
 // Sorted on write so a diff shows what moved rather than a reshuffled object.
 const sorted = Object.fromEntries(Object.keys(next).sort().map(k => [k, next[k]]));
@@ -411,21 +491,22 @@ const sorted = Object.fromEntries(Object.keys(next).sort().map(k => [k, next[k]]
 // cannot be rewritten by anything above — not a themed day authored over the top of
 // it, not a re-deal, not a bug in this file.
 const today = frozenThrough();
-for (const date of Object.keys(schedule)) {
+for (const date of Object.keys(game.schedule)) {
   if (date > today) continue;
-  if (JSON.stringify(schedule[date]) !== JSON.stringify(sorted[date])) {
+  if (JSON.stringify(game.schedule[date]) !== JSON.stringify(sorted[date])) {
     console.error(`REFUSING TO WRITE: ${date} has been played and would change.`);
     process.exit(1);
   }
 }
-const moved = Object.keys(sorted).filter(d => d > today && schedule[d]
-  && JSON.stringify(schedule[d]) !== JSON.stringify(sorted[d])).length;
-fs.writeFileSync(SCHEDULE_PATH, JSON.stringify(sorted, null, 2) + '\n');
-if (Object.keys(themed).length) {
-  console.log(`themed days honoured: ${Object.keys(themed).sort().join(', ')}`);
+const moved = Object.keys(sorted).filter(d => d > today && game.schedule[d]
+  && JSON.stringify(game.schedule[d]) !== JSON.stringify(sorted[d])).length;
+fs.writeFileSync(schedulePathOf(game.id), JSON.stringify(sorted, null, 2) + '\n');
+if (Object.keys(game.themed).length) {
+  console.log(`themed days honoured: ${Object.keys(game.themed).sort().join(', ')}`);
 }
 if (moved) console.log(`${moved} future day(s) re-dealt; every played day unchanged`);
 // Worth saying out loud: a day that needed a constraint loosened is a day the pool
 // was too thin to serve properly, which is a content signal rather than a bug.
 if (relaxed) console.log(`${relaxed} day(s) needed chart spacing or the name cap relaxed to fill`);
-console.log(`schedule: ${before} days -> ${Object.keys(sorted).length} (${added} appended, 0 changed)`);
+console.log(`[${game.id}] schedule: ${before} days -> ${Object.keys(sorted).length} `
+  + `(${added} appended, 0 changed)`);

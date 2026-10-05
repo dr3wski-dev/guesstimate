@@ -65,6 +65,51 @@ NBA_LABELS = {
     'Assists per game (season)': 'ast',
     'Turnovers per game (season)': 'tov',
 }
+# The NBA minigame's axes. Kept apart from NBA_LABELS, which is all season figures
+# and says so in every label, because these are whole-career averages: one shared
+# table would let a career question be checked against a season row and pass.
+NBA_CAREER_LABELS = {
+    'Career games played': 'G',
+    'Career points per game': 'ppg',
+    'Career rebounds per game': 'rpg',
+    'Career assists per game': 'apg',
+    'Career steals per game': 'spg',
+    'Career blocks per game': 'bpg',
+    'Career minutes per game': 'mpg',
+    'Career turnovers per game': 'topg',
+    'Career shot attempts per game': 'fgapg',
+    'Career 3-point attempts per game': 'tpapg',
+    'Career rebounds + assists per game': 'rapg',
+    'Career 3-point percentage': 'tppct',
+    'Career assists per turnover': 'astto',
+}
+# Published career points per game for the players whose first season in the cache IS
+# the first season the cache covers.
+#
+# WHY THIS IS HERE AND NOT IMPORTED FROM THE GENERATOR
+# For the same reason this whole file re-derives rather than re-reads. The cache
+# cannot tell "debuted that year" from "was already playing when coverage began", so
+# a career average for anyone at the boundary is either a complete career or a
+# truncated one wearing the same clothes — and a truncated one is the dangerous case,
+# because both sides would compute it identically and agree. Karl Malone comes out of
+# this cache at 23.5 points a game against a published 25.0.
+#
+# So the rule below is independent of the generator's: a boundary player not named
+# here is refused outright, and a boundary player named here must also reproduce the
+# published figure. The generator keeps its own copy of these numbers; if the two
+# lists ever disagree about who is complete, the gate fails, which is the point of
+# not sharing them.
+#
+# Source: Basketball-Reference career regular-season averages.
+NBA_CAREER_BOUNDARY_OK = {
+    'allen iverson': 26.7,
+    'kobe bryant': 25.0,
+    'stephon marbury': 19.3,
+    'ray allen': 18.9,
+    'steve nash': 14.3,
+    'jermaine oneal': 13.2,
+    'marcus camby': 9.5,
+}
 NFL_LABELS = {
     'Rushing yards per game (season)': 'rush_ypg',
     'Rushing touchdowns (season)': 'rush_td',
@@ -277,6 +322,83 @@ def nba_table():
     return out
 
 
+def nba_career_table():
+    """{normalized name: {stat: value}} — career averages, re-derived.
+
+    FROM TOTALS, NOT FROM THE PER-GAME COLUMNS
+    A career average is career totals over career games. Weighting the per-game
+    season figures by games instead looks equivalent and is not: those figures are
+    rounded to a tenth, and twenty of them accumulate enough error to move an answer
+    by a whole scoring band — measured on Ray Allen, who comes out at 18.8 that way
+    against an actual 18.9. The rates are rebuilt from components for the same
+    reason: career 3-point percentage is career makes over career attempts, never an
+    average of season percentages.
+
+    It refuses in two situations rather than guessing, and both are failures worth
+    having: a name two players share (same rule as every other table here), and a
+    career that may be cut off at the front by where coverage begins (see
+    NBA_CAREER_BOUNDARY_OK).
+    """
+    rows = read('nba_player_seasons.csv')
+    names, games, years = {}, Counter(), defaultdict(set)
+    tot = defaultdict(Counter)
+    for r in rows:
+        pid = r['player_id']
+        names[pid] = r['player_name']
+        games[pid] += float(r['gp'] or 0)
+        years[pid].add(int(r['season']))
+        for c in ('pts', 'reb', 'ast', 'stl', 'blk', 'fga', 'fg3a', 'fg3m', 'min', 'tov'):
+            v = r.get('tot_' + c)
+            if v not in ('', None):
+                tot[pid][c] += float(v)
+    coverage_start = min(int(r['season']) for r in rows)
+
+    claims = defaultdict(list)
+    for pid, nm in names.items():
+        claims[norm(nm)].append(pid)
+    alias = {pid: '@' + label for label, pid in NBA_ALIAS.items() if pid in names}
+
+    out = {}
+    for key, pids in claims.items():
+        pids.sort(key=lambda p: -games[p])
+        keys = []
+        if not (len(pids) > 1 and games[pids[0]] > 0
+                and games[pids[1]] / games[pids[0]] >= 0.5):
+            keys.append(key)
+        pid = pids[0]
+        if pid in alias:
+            keys.append(alias[pid])
+        if not keys or not games[pid]:
+            continue
+        g = games[pid]
+        per = lambda c: round(tot[pid][c] / g, 1)
+        ppg = per('pts')
+        if min(years[pid]) <= coverage_start:
+            want = NBA_CAREER_BOUNDARY_OK.get(key)
+            # Not on the confirmed list: this career may begin before the data does,
+            # so no number derived from it can be trusted. Emitting nothing makes any
+            # question about the player fail as unresolvable, which is the correct
+            # outcome — it is exactly how a truncated career would otherwise ship.
+            if want is None:
+                continue
+            if abs(ppg - want) > 0.05:
+                continue
+        st = {
+            'G': int(g), 'ppg': ppg, 'rpg': per('reb'), 'apg': per('ast'),
+            'spg': per('stl'), 'bpg': per('blk'), 'mpg': per('min'),
+            'topg': per('tov'), 'fgapg': per('fga'), 'tpapg': per('fg3a'),
+            'rapg': round((tot[pid]['reb'] + tot[pid]['ast']) / g, 1),
+            'tppct': (round(100 * tot[pid]['fg3m'] / tot[pid]['fg3a'], 1)
+                      if tot[pid]['fg3a'] else None),
+            'astto': (round(tot[pid]['ast'] / tot[pid]['tov'], 2)
+                      if tot[pid]['tov'] else None),
+            '_span': [min(years[pid]), max(years[pid])],
+        }
+        for k in keys:
+            out[k] = st
+    return out
+
+
 def nfl_table():
     """{(normalized name, season): {stat: value}} — keyed by player_id throughout."""
     rows = [r for r in read('nfl_player_stats.csv') if r.get('season_type') == 'REG']
@@ -341,18 +463,25 @@ def main():
     questions = json.load(open(QJSON))
     mlb, nfl, nba = mlb_table(), nfl_table(), nba_table()
     mlbp = mlb_pitch_table()
+    nba_career = nba_career_table()
     checked = mismatched = unverified = 0
     problems, skipped = [], []
 
     for q in questions:
-        labels = ({'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
+        # Dispatch on the GAME first where one exists, then on the league. A career
+        # question and a season question can carry the same league and completely
+        # different axes, and resolving one against the other's table is a mismatch
+        # this file would otherwise have to catch by luck.
+        game = q.get('game')
+        labels = ({'nba': NBA_CAREER_LABELS}.get(game)
+                  or {'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
                   .get(q['league'], {}))
         xk, yk = labels.get(q['xLabel']), labels.get(q['yLabel'])
         # A pitching question is an MLB question whose labels are not in the hitters'
         # table. Resolve against the pitchers' table instead, and only if BOTH axes
         # are pitching stats — a chart mixing the two would be a bug worth catching,
         # not something to paper over by looking in two tables.
-        pitching = (q['league'] == 'MLB' and not (xk and yk)
+        pitching = (q['league'] == 'MLB' and not game and not (xk and yk)
                     and MLB_PITCH_LABELS.get(q['xLabel'])
                     and MLB_PITCH_LABELS.get(q['yLabel']))
         if pitching:
@@ -366,7 +495,12 @@ def main():
         points += [(r['name'], r['x'], r['y'], 'ref', r) for r in q['referencePlayers']]
         for who, gx, gy, kind, holder in points:
             nm, season = split_season(who)
-            if q['league'] == 'MLB':
+            if game == 'nba':
+                # No season: a career is the whole thing. A label that carries one
+                # anyway is a question authored against the wrong table, so it is left
+                # to fail on the lookup rather than quietly ignored.
+                rec = None if season is not None else nba_career.get(norm(nm))
+            elif q['league'] == 'MLB':
                 rec = (mlbp.get(norm(nm)) if pitching
                        else (mlb.get('@' + who) or mlb.get(norm(nm))))
             elif q['league'] == 'NBA':

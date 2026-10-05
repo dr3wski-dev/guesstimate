@@ -13,8 +13,7 @@
     "short": "NBA careers",
     "blurb": "Career per-game averages only. One league, one kind of number, so you can actually calibrate.",
     "epoch": "2026-10-05",
-    "status": "soon",
-    "note": "Questions are being written and verified. The game opens when its pool is big enough to run without repeating and every number in it has been re-derived from the source dataset."
+    "status": "live"
   },
   "mlb": {
     "name": "StatMap MLB",

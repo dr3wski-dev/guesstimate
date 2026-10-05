@@ -349,6 +349,9 @@ def mlb_careers(pool_all, gate=True):
         out[key] = {
             'name': nm, 'last_season': last, 'first_season': min(years[pid]),
             'who': key, 'player_id': pid,
+            # Lahman runs from 1871, so these first/last seasons are when the career
+            # happened rather than where the file starts. See span_of().
+            'span_trusted': True,
             'career_complete': last <= data_max - 2,
             'pool': pool.get(key, {'Tier': '', 'Status': ''}),
             'stats': {
@@ -412,6 +415,9 @@ def mlb_pitchers(pool_all, gate=True):
         out[key] = {
             'name': nm, 'last_season': last, 'first_season': min(years[pid]),
             'who': key, 'player_id': pid,
+            # Lahman runs from 1871, so these first/last seasons are when the career
+            # happened rather than where the file starts. See span_of().
+            'span_trusted': True,
             'career_complete': last <= data_max - 2,
             'pool': pool.get(key, {'Tier': '', 'Status': ''}),
             'stats': {
@@ -573,6 +579,152 @@ def nba_seasons(pool_all, gate=True):
             'stats': st,
         }
     return out, max(seasons)
+
+
+# ------------------------------------------------- NBA careers (the easy-mode game)
+# The first season the NBA cache covers. Derived, not typed: NBA_SEASONS holds
+# upstream's end-of-season file numbers and this project keys by start year, so
+# getting this wrong by one is exactly the off-by-one the whole NBA_ANCHORS block
+# exists to catch.
+NBA_COVERAGE_START = min(NBA_SEASONS) - 1
+
+# Players whose career is COMPLETE in the cache even though their first season in it
+# is the coverage boundary, because the boundary is genuinely where they started.
+#
+# WHY A LIST AND NOT A RULE
+# The cache cannot tell the difference between "debuted in 1996-97" and "was already
+# playing when coverage began". Treating every 1996 first-season as truncated throws
+# away the 1996 draft class, which is Kobe, Iverson, Nash, Ray Allen and Marbury —
+# most of the recognisable retired careers the data can actually reach. Treating none
+# of them as truncated is far worse: it would ship Karl Malone at 23.5 points a game
+# against an actual 25.0, and Shaquille O'Neal at 22.6 against 23.7, with the cache
+# and the verifier agreeing with each other and both being wrong.
+#
+# THE VALUE IS THE PROOF, NOT A NOTE
+# Each entry carries the player's published career points per game. It is asserted
+# against the cache every time this loads, so the claim "their career is complete
+# here" is checked rather than trusted. A truncated career cannot match: Kevin
+# Garnett, who debuted in 1995-96, comes out at 18.3 against a published 17.8, and
+# would drop out loudly if anybody added him to this list by mistake.
+NBA_CAREER_DEBUT_1996 = {
+    'Allen Iverson': 26.7,
+    'Kobe Bryant': 25.0,
+    'Stephon Marbury': 19.3,
+    'Ray Allen': 18.9,
+    'Steve Nash': 14.3,
+    "Jermaine O'Neal": 13.2,
+    'Marcus Camby': 9.5,
+}
+# A rate stat needs a career behind it. 400 games is five full seasons, which is
+# enough that a per-game average is a description of a player rather than of a spell.
+NBA_CAREER_MIN_GAMES = 400
+# Why the aggregation is spelled out in the citation: a career average computed the
+# other plausible way (averaging the rounded per-game season figures) differs, so
+# "career per-game averages" alone would not identify which number this is.
+NBA_CAREER_SOURCE = (
+    'stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR '
+    'nba_stats_player_season_stats release. Career averages are career regular-season '
+    'totals divided by career games played, not an average of season figures.')
+
+
+def nba_careers(pool_all, gate=True):
+    """Career per-game averages, keyed by stats.nba.com player_id.
+
+    WHY THIS IS SEPARATE FROM nba_seasons
+    Not just a different aggregation — a different set of players. A season is frozen
+    history and safe for anyone the cache covers. A career is only safe when the
+    whole career is inside the cache AND is actually over, so this applies two gates
+    the season loader has no need for: coverage (see NBA_CAREER_DEBUT_1996) and
+    retirement. A career line for an active player is a snapshot wearing a finished
+    career's clothes, and it would quietly become wrong the next time anybody fetched
+    the data — the same rule mlb_careers already applies.
+
+    RATES ARE REBUILT FROM COMPONENTS
+    Career 3-point percentage is career makes over career attempts, not an average of
+    season percentages. True shooting is deliberately absent: it needs free-throw
+    attempts, which this cache does not carry, and a career TS% built without them
+    would be a plausible-looking number that is not TS%.
+    """
+    pool = pool_all['NBA']
+    rows = _read(NBA_COMPACT)
+    tot, games, years, names = defaultdict(Counter), Counter(), defaultdict(set), {}
+    for r in rows:
+        pid = r['player_id']
+        names[pid] = r['player_name']
+        years[pid].add(int(r['season']))
+        games[pid] += float(r['gp'] or 0)
+        for c in ('pts', 'reb', 'ast', 'stl', 'blk', 'fga', 'fg3a', 'fg3m', 'min', 'tov'):
+            v = r.get('tot_' + c)
+            if v not in ('', None):
+                tot[pid][c] += float(v)
+    data_max = max(int(r['season']) for r in rows)
+
+    by_name = defaultdict(list)
+    for pid, nm in names.items():
+        by_name[norm(nm)].append(pid)
+    chosen = disambiguate(by_name, lambda pid: games[pid])
+
+    # The allow-list, checked rather than believed. Done before any question is built
+    # so a bad entry is a hard failure at load time instead of a wrong dot on a chart.
+    allowed = {}
+    for nm, want_ppg in NBA_CAREER_DEBUT_1996.items():
+        pid = chosen.get(norm(nm))
+        if pid is None:
+            raise SystemExit(f'NBA_CAREER_DEBUT_1996: {nm} is not resolvable in the cache')
+        got = round(tot[pid]['pts'] / games[pid], 1)
+        if min(years[pid]) != NBA_COVERAGE_START:
+            raise SystemExit(
+                f'NBA_CAREER_DEBUT_1996: {nm} first appears in {min(years[pid])}, not '
+                f'{NBA_COVERAGE_START} — the list is for the coverage boundary only')
+        if abs(got - want_ppg) > 0.05:
+            raise SystemExit(
+                f'NBA_CAREER_DEBUT_1996: {nm} computes to {got} career points per game '
+                f'but is listed as {want_ppg}. Either the listed figure is wrong or this '
+                f'career is NOT complete in the cache — do not ship it either way.')
+        allowed[norm(nm)] = True
+
+    out = {}
+    for key, pid in chosen.items():
+        if gate and key not in pool:
+            continue
+        g = games[pid]
+        if g < NBA_CAREER_MIN_GAMES:
+            continue
+        first, last = min(years[pid]), max(years[pid])
+        # Truncated at the front: the career started before the cache did.
+        if first <= NBA_COVERAGE_START and key not in allowed:
+            continue
+        row = pool.get(key, {'Tier': '', 'Status': ''})
+        per = lambda c: round(tot[pid][c] / g, 1)
+        st = {
+            'G': int(g),
+            'ppg': per('pts'), 'rpg': per('reb'), 'apg': per('ast'),
+            'spg': per('stl'), 'bpg': per('blk'), 'mpg': per('min'),
+            'topg': per('tov'), 'fgapg': per('fga'), 'tpapg': per('fg3a'),
+            'rapg': round((tot[pid]['reb'] + tot[pid]['ast']) / g, 1),
+            # Both of these are ratios of two career totals, which is the only way a
+            # career rate means anything. The attempt floors keep a big man who took
+            # eleven threes in sixteen years off a shooting chart.
+            'tppct': (round(100 * tot[pid]['fg3m'] / tot[pid]['fg3a'], 1)
+                      if tot[pid]['fg3a'] >= 250 else None),
+            'astto': (round(tot[pid]['ast'] / tot[pid]['tov'], 2)
+                      if tot[pid]['tov'] >= 100 else None),
+        }
+        out[key] = {
+            'name': names[pid], 'first_season': first, 'last_season': last,
+            'who': key, 'player_id': pid, 'games': int(g),
+            # Earned: a player only reaches this dict if the whole career is inside
+            # the cache's coverage, so the span is a fact and not a truncation.
+            'span_trusted': True,
+            # Retired in the curated pool AND last seen before the final season in the
+            # cache. Two independent signals because each one alone has failed: the
+            # Status column is hand-maintained and goes stale, and a player can miss a
+            # whole season injured without having retired.
+            'career_complete': row['Status'].strip() == 'Retired' and last <= data_max - 1,
+            'pool': row,
+            'stats': st,
+        }
+    return out, data_max
 
 
 # ---------------------------------------------------------------- archetypes
@@ -820,6 +972,80 @@ NBA_ARCHETYPES = [
          need=('fga', 8)),                                        # |r| 0.03
 ]
 
+# ------------------------------------------------- NBA career archetypes (easy mode)
+# WHY THIS IS A SEPARATE LIST FROM NBA_ARCHETYPES
+# Not a different difficulty setting on the same charts — different axes entirely.
+# Hard mode asks for one season of one player, which means knowing that Westbrook
+# averaged 10.7 rebounds in 2016-17 specifically. These ask what a player did over a
+# whole career, which is the number people actually carry around.
+#
+# EVERY LABEL SAYS "CAREER" AND SAYS THE UNIT
+# Hard mode shipped "Air yards on all targets" next to receiving yards and a player
+# read it as receiving yards, which is a question nobody could answer correctly for
+# the right reason. A chart is only fair if the axis says exactly which number it
+# wants, so these are spelled out rather than abbreviated.
+#
+# The |r| after each line is the Pearson correlation between the two axes across the
+# eligible field. Low is the whole point: on a chart whose axes correlate at 0.98,
+# knowing one coordinate hands you the other and the second guess is free.
+NBA_CAREER = dict(
+    G=('Career games played', 'G', 1),
+    ppg=('Career points per game', 'PPG', 0.1),
+    rpg=('Career rebounds per game', 'RPG', 0.1),
+    apg=('Career assists per game', 'APG', 0.1),
+    spg=('Career steals per game', 'SPG', 0.1),
+    bpg=('Career blocks per game', 'BPG', 0.1),
+    mpg=('Career minutes per game', 'MPG', 0.1),
+    topg=('Career turnovers per game', 'TOV', 0.1),
+    fgapg=('Career shot attempts per game', 'FGA', 0.1),
+    tpapg=('Career 3-point attempts per game', '3PA', 0.1),
+    rapg=('Career rebounds + assists per game', 'REB+AST', 0.1),
+    tppct=('Career 3-point percentage', '3P%', 0.1),
+    astto=('Career assists per turnover', 'AST/TOV', 0.01),
+)
+
+
+def _nba_career_arch(aid, x, y, r):
+    xl, xu, xs = NBA_CAREER[x]
+    yl, yu, ys = NBA_CAREER[y]
+    return dict(id=aid, x=x, y=y, xl=xl, xu=xu, yl=yl, yu=yu, xstep=xs, ystep=ys, r=r)
+
+
+NBA_CAREER_ARCHETYPES = [
+    _nba_career_arch('cppg-rpg',   'ppg',   'rpg',   0.20),
+    _nba_career_arch('cppg-apg',   'ppg',   'apg',   0.40),
+    _nba_career_arch('crpg-apg',   'rpg',   'apg',  -0.42),
+    _nba_career_arch('cppg-bpg',   'ppg',   'bpg',  -0.11),
+    _nba_career_arch('cppg-spg',   'ppg',   'spg',   0.26),
+    _nba_career_arch('cspg-bpg',   'spg',   'bpg',  -0.37),
+    _nba_career_arch('crpg-spg',   'rpg',   'spg',  -0.31),
+    _nba_career_arch('capg-bpg',   'apg',   'bpg',  -0.44),
+    _nba_career_arch('cg-ppg',     'G',     'ppg',   0.19),
+    _nba_career_arch('cg-rpg',     'G',     'rpg',   0.02),
+    _nba_career_arch('cg-apg',     'G',     'apg',  -0.06),
+    _nba_career_arch('cg-bpg',     'G',     'bpg',  -0.14),
+    _nba_career_arch('cg-spg',     'G',     'spg',  -0.11),
+    _nba_career_arch('cmpg-bpg',   'mpg',   'bpg',  -0.09),
+    _nba_career_arch('cmpg-rpg',   'mpg',   'rpg',   0.22),
+    _nba_career_arch('cmpg-3pct',  'mpg',   'tppct', -0.27),
+    _nba_career_arch('c3pct-bpg',  'tppct', 'bpg',  -0.01),
+    _nba_career_arch('c3pct-apg',  'tppct', 'apg',  -0.13),
+    _nba_career_arch('c3pct-rpg',  'tppct', 'rpg',  -0.29),
+    _nba_career_arch('c3pct-ppg',  'tppct', 'ppg',  -0.29),
+    _nba_career_arch('cato-ppg',   'astto', 'ppg',   0.00),
+    _nba_career_arch('cato-g',     'astto', 'G',     0.00),
+    _nba_career_arch('ctov-rpg',   'topg',  'rpg',  -0.01),
+    _nba_career_arch('ctov-bpg',   'topg',  'bpg',  -0.14),
+    _nba_career_arch('ctov-3pa',   'topg',  'tpapg', 0.06),
+    _nba_career_arch('c3pa-ppg',   'tpapg', 'ppg',   0.15),
+    _nba_career_arch('cfga-rpg',   'fgapg', 'rpg',   0.15),
+    _nba_career_arch('cfga-bpg',   'fgapg', 'bpg',  -0.16),
+    _nba_career_arch('cfga-ato',   'fgapg', 'astto', 0.06),
+    _nba_career_arch('cra-spg',    'rapg',  'spg',   0.10),
+    _nba_career_arch('cra-g',      'rapg',  'G',    -0.04),
+    _nba_career_arch('cra-ato',    'rapg',  'astto', 0.05),
+]
+
 
 def span_of(league, p):
     """The years this player played, for career questions only — {} otherwise.
@@ -828,14 +1054,17 @@ def span_of(league, p):
     something different in 1935 and 2005, and a reader who does not recognise the name
     has nothing to place it with. A season question already prints its season.
 
-    MLB ONLY, and that restriction is not laziness. Lahman runs 1871-2021, so it
-    covers every player here. The NBA and NFL caches start at 2000 and 1999 — ask them
-    for Dirk Nowitzki and they answer 2000, two years after he debuted, because that is
-    when their coverage starts rather than when he did. A truncation artifact that
-    looks exactly like a fact is worse than no answer, so those leagues get nothing
-    until a source that reaches their eras is wired up.
+    GATED ON span_trusted, NOT ON THE LEAGUE
+    It used to be MLB-only, because Lahman runs 1871-2021 and covers every player in
+    it, while asking the NBA cache for Dirk Nowitzki's first season got 2000 — two
+    years after he debuted, because that is when coverage started rather than when he
+    did. A truncation artifact that looks exactly like a fact is worse than no answer.
+    What changed is not the restriction but who can satisfy it: nba_careers() will not
+    emit a player at all unless the whole career is inside the cache, so for those
+    entries the span is a fact rather than an artifact. The flag says which loaders
+    have earned it; a loader that has not says nothing.
     """
-    if league != 'MLB' or 'season' in p:
+    if 'season' in p or not p.get('span_trusted'):
         return {}
     if 'first_season' not in p or 'last_season' not in p:
         return {}
@@ -960,7 +1189,7 @@ def ref_combos(n, seed):
 
 
 def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=None,
-          per_player=1):
+          per_player=1, game=None):
     """entries: list of player/season dicts. Returns ranked candidate questions.
 
     `only` is a normalised player key. Passing one builds a THEMED DAY: every
@@ -1038,9 +1267,24 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=N
             ys = [p['stats'][yk] for p in refs + [tgt]]
             out.append({
                 'score': round(s, 3),
-                'id': (f"{league.lower()}-{arch['id']}-{norm(tgt['name']).split()[-1]}"
+                # The FULL normalised name, not the last name. Last names collide:
+                # Ray Allen and Tony Allen both produced 'nba-c3pct-bpg-allen' in one
+                # batch, and because an id is how a question is identified everywhere,
+                # the second one was silently dropped at merge time — a question that
+                # passed every gate and then did not exist. Existing ids keep the old
+                # shorter form; they are opaque identifiers and renaming one would
+                # orphan the day it has been served on.
+                'id': (f"{league.lower()}-{arch['id']}-"
+                       + norm(tgt['name']).replace(' ', '-')
                        + (f"-{tgt['season']}" if 'season' in tgt else '')),
                 'league': league,
+                # Which archetype produced this, carried explicitly. It used to be
+                # recovered from the id as `id.split('-')[1]`, which reads the FIRST
+                # token of a two-token archetype name: 'as-hr' and 'as-so' both came
+                # back as 'as', so --per-archetype 2 was quietly capping the pair of
+                # them at two between them rather than two each. Popped before the
+                # candidate is written out, like target_who.
+                '_arch': arch['id'],
                 'xLabel': arch['xl'], 'xUnit': arch['xu'],
                 'yLabel': arch['yl'], 'yUnit': arch['yu'],
                 'xStep': arch['xstep'], 'yStep': arch['ystep'],
@@ -1055,7 +1299,14 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=N
                      **span_of(league, r)}
                     for r in refs],
                 'fact': '', 'source': source,
+                **({'game': game} if game else {}),
             })
+    # An id collision here means two different questions would be written to the same
+    # key, and whichever is merged second disappears. Loud, because the symptom is a
+    # missing question rather than a broken one.
+    dup = [i for i, n in Counter(c['id'] for c in out).items() if n > 1]
+    if dup:
+        raise SystemExit(f'generated duplicate question ids: {dup}')
     out.sort(key=lambda c: -c['score'])
     # At most `per_arch` per archetype so a batch isn't six versions of one idea, and
     # one question per player — Rod Carew is a great answer three different ways,
@@ -1083,7 +1334,7 @@ def build(entries, archetypes, league, label_fn, source, top, per_arch=2, only=N
     per, used, final = Counter(), Counter(), []
     seasons_used = defaultdict(set)
     for c in out:
-        a = c['id'].split('-')[1]
+        a = c['_arch']
         who = c['target_who']
         season = c['targetPlayer'].split(',')[-1].strip() if ',' in c['targetPlayer'] else None
         # On a themed day the same person is the answer every round by design, so the
@@ -1242,9 +1493,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--fetch', action='store_true')
     ap.add_argument('--validate', action='store_true')
-    ap.add_argument('--league', choices=['mlb', 'mlbp', 'nfl', 'nba'],
+    ap.add_argument('--league', choices=['mlb', 'mlbp', 'nfl', 'nba', 'nbac'],
                     help="mlbp is MLB pitchers, which are a separate dataset "
-                         "(Pitching.csv) and separate archetypes from the hitters")
+                         "(Pitching.csv) and separate archetypes from the hitters. "
+                         "nbac is NBA CAREER averages, which feed the separate 'nba' "
+                         "minigame rather than hard mode")
     ap.add_argument('--top', type=int, default=10)
     ap.add_argument('--per-archetype', type=int, default=2)
     ap.add_argument('--per-player', type=int, default=1,
@@ -1274,6 +1527,16 @@ def main():
                       lambda e: f"{e['name']}, {e['season']}-{str(e['season']+1)[2:]}",
                       NBA_SOURCE, a.top, a.per_archetype, only=only,
                       per_player=a.per_player)
+    elif a.league == 'nbac':
+        entries, dmax = nba_careers(pool)
+        # Same staleness rule the MLB careers use, for the same reason: a career line
+        # for somebody still playing is a snapshot presented as a finished career, and
+        # it would go wrong the next time the cache was refreshed — silently, because
+        # the question has already shipped and a served question cannot be withdrawn.
+        elig = [e for e in entries.values() if e['career_complete']]
+        cands = build(elig, NBA_CAREER_ARCHETYPES, 'NBA', lambda e: e['name'],
+                      NBA_CAREER_SOURCE, a.top, a.per_archetype, only=only,
+                      per_player=a.per_player, game='nba')
     elif a.league == 'mlb':
         entries, dmax = mlb_careers(pool)
         # career questions only for players whose career finished inside the data
@@ -1309,6 +1572,7 @@ def main():
 
     for c in cands:
         c.pop('target_who', None)
+        c.pop('_arch', None)
     if a.json:
         with open(a.json, 'w') as fh:
             json.dump(cands, fh, indent=2)
