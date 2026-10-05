@@ -313,6 +313,16 @@ def build(site_url, check=False, provider=None, domain=None):
     # the one file that changes when content ships, and a stale copy means a player
     # sees yesterday's puzzle. Fonts are immutable and cached hard.
     csp = csp_with(provider)
+    # A rule PER GAME, in both the directory and the file form, rather than one
+    # wildcard. Pages matches these against the request path, and a visitor asks for
+    # /nba/ — which `/*/index.html` does not match, so the page a player actually
+    # requests would have been the one page with no cache rule on it. Same reasoning
+    # as /index.html above: the HTML names the day's puzzle number and the game it
+    # belongs to, so a cached copy is a wrong page rather than a slow one.
+    game_pages = ''.join(
+        f'\n/{g["slug"]}/\n  Cache-Control: public, max-age=0, must-revalidate\n'
+        f'\n/{g["slug"]}/index.html\n  Cache-Control: public, max-age=0, must-revalidate\n'
+        for g in sorted(live.values(), key=lambda g: g['slug']) if g['slug'])
     open(os.path.join(OUT, '_headers'), 'w').write(f"""/*
   Content-Security-Policy: {csp}
   X-Content-Type-Options: nosniff
@@ -331,12 +341,7 @@ def build(site_url, check=False, provider=None, domain=None):
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
-
-# Every game's page, same reasoning: the HTML names the day's puzzle number and the
-# game it belongs to, so a cached copy is a wrong page rather than a slow one.
-/*/index.html
-  Cache-Control: public, max-age=0, must-revalidate
-""")
+{game_pages}""")
 
     json.dump({
         "$schema": "https://openapi.vercel.sh/vercel.json",

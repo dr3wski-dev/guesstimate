@@ -32,21 +32,31 @@ content, no other game modes. That direction was considered and scrapped. See
 
 | | |
 |---|---|
-| Questions in the pool | **565** |
-| Distinct chart types | **57** |
-| League split | NBA 216 · MLB 198 · NFL 151 |
-| Calendar pinned through | **2026-12-14** (120 days from launch) |
-| Days of content left | ~104 |
-| Launch day (puzzle #1) | 2026-08-17 |
+| Questions in the pool | **1,128** |
+| Games served from it | **3 live** (hard mode, NBA careers, MLB careers) · 4 declared and not open |
+| Split by game | main 600 · nba 192 · mlb 336 |
+| Hard mode's league split | NBA 236 · MLB 205 · NFL 159 |
+| Distinct chart types | **141** |
+| Launch day (hard mode puzzle #1) | 2026-08-17 |
+| The minigames' puzzle #1 | 2026-10-05 |
 | Runtime dependencies | **zero** |
-| Total pipeline + worker code | ~6,300 lines |
-| The game itself | one 2,464-line HTML file |
+| Total pipeline + worker code | ~5,700 lines, plus ~1,000 of browser suites |
+| The game itself | one 2,774-line HTML file |
 
 ---
 
 ## 3. Architecture, in one page
 
 Three pieces. That is the whole system.
+
+**One pool, several games.** A game is a named slice of the pool with its own epoch,
+its own rotation, its own pinned calendar, its own page and its own streak.
+`data/games.json` is the manifest; `pipeline/check_games.mjs` is the gate that holds it
+to the pool, the schedules and the Worker. A question belongs to a game by a `game`
+field, and the questions that predate the split carry none, meaning hard mode — adding
+one would have changed the pool the shuffled bag is a function of and re-dealt every
+day in the calendar, and played days are immutable. `README.md` has the table and the
+steps for adding a game.
 
 **The game** — `handoff/reference/statmap.html`. A single file. Vanilla JS, hand-built
 SVG, no framework, no build step for the JS itself, no runtime dependencies at all. This
@@ -58,7 +68,7 @@ wholesale and your edit will vanish silently. CI fails if the committed `site/` 
 match a fresh build, which is how that rule is enforced rather than remembered.
 
 **The API** — `handoff/worker/`. A Cloudflare Worker at `/api/*` serving today's five
-questions. Stateless: no KV, no D1, no Durable Objects, no secrets, no bindings. It is a
+questions for the game named by `?g=` (hard mode when absent). Stateless: no KV, no D1, no Durable Objects, no secrets, no bindings. It is a
 pure function of (date, bundled pool). That property is what makes it free and
 un-abusable; if you find yourself adding a binding, read `ACTION_PLAN.md` §3 first.
 

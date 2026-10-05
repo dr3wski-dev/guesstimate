@@ -17,7 +17,14 @@
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
 
-# Every game's page, same reasoning: the HTML names the day's puzzle number and the
-# game it belongs to, so a cached copy is a wrong page rather than a slow one.
-/*/index.html
+/mlb/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/mlb/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/nba/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/nba/index.html
   Cache-Control: public, max-age=0, must-revalidate
