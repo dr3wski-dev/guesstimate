@@ -112,6 +112,13 @@ MLB_ALIAS = {
     'Ken Griffey Jr.': 'griffke02',   # not griffke01, his father, debut 1973
 }
 
+NBA_ALIAS = {
+    # not 1114, Jaren Jackson Sr., whose 1996-2001 seasons entered the cache when
+    # coverage was extended back to 1996-97. The son's id is the one carrying the
+    # 2018-19 debut and the 1.4-3.0 blocks per game; the father never blocked 0.2.
+    'Jaren Jackson Jr.': '1628991',
+}
+
 
 def norm(s):
     s = unicodedata.normalize('NFD', s.lower().strip())
@@ -247,9 +254,15 @@ def nba_table():
         except (TypeError, ValueError):
             return None
 
+    alias_of = {pid: '@' + label for label, pid in NBA_ALIAS.items() if pid in names}
+
     out = {}
     for r in rows:
-        if r['player_id'] not in keep:
+        pid = r['player_id']
+        keys = [norm(names[pid])] if pid in keep else []
+        if pid in alias_of:
+            keys.append(alias_of[pid])
+        if not keys:
             continue
         st = {k: num(r.get(k)) for k in
               ('pts', 'reb', 'ast', 'stl', 'blk', 'fga', 'fg3a', 'fg3_pct', 'min',
@@ -259,7 +272,8 @@ def nba_table():
         for k in ('ts_pct', 'fg3_pct', 'usg_pct'):
             if st[k] is not None:
                 st[k] = round(st[k] * 100, 1)
-        out[(norm(names[r['player_id']]), int(r['season']))] = st
+        for key in keys:
+            out[(key, int(r['season']))] = st
     return out
 
 
@@ -356,7 +370,7 @@ def main():
                 rec = (mlbp.get(norm(nm)) if pitching
                        else (mlb.get('@' + who) or mlb.get(norm(nm))))
             elif q['league'] == 'NBA':
-                rec = nba.get((norm(nm), season))
+                rec = nba.get(('@' + nm, season)) or nba.get((norm(nm), season))
             else:
                 rec = nfl.get((norm(nm), season))
             if rec is None:

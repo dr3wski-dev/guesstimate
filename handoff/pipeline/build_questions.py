@@ -78,7 +78,18 @@ NBA_URL = ('https://github.com/sportsdataverse/sportsdataverse-data/releases/dow
 # have labelled every new NBA question with the wrong year while looking perfectly
 # normal. NBA_ANCHORS below turns a silent convention flip into a loud failure.
 NBA_URL_YEAR_IS_END_OF_SEASON = True
-NBA_SEASONS = range(2001, 2026)          # upstream file numbers; start years 2000-2024
+# Starts at file 1997 — the 1996-97 season — because that is as far back as upstream
+# publishes, and we were only ever asking for 2001 onward. Four seasons were sitting
+# there unfetched, and they are the four that decide whether a CAREER average is a
+# career or a fragment: Kobe, Iverson, Ray Allen and Steve Nash all debut in 1996-97.
+# Checked before extending, against the real rookie lines — Kobe 71 games at 7.6,
+# Iverson 76 at 23.5, Jordan's 1996-97 82 at 29.6 — all exact.
+#
+# It is still not the whole league's history, and that limit has to be respected
+# rather than papered over: anyone who debuted before 1996-97 (Jordan, Shaq, Garnett,
+# Hakeem) has a truncated career here, so career-average content gates on first
+# season the way MLB archetypes already gate with min_first.
+NBA_SEASONS = range(1997, 2026)          # upstream file numbers; start years 1996-2024
 NBA_COMPACT = 'nba_player_seasons.csv'
 
 # Known season lines, by START year. Checked against the compact CSV every fetch. If
@@ -147,11 +158,22 @@ def fetch():
 
 def fetch_nba():
     """Season files are ~3.7 MB each and carry six measure types x two per-modes x
-    two season types. We want one slice of that — regular season, per-game, with the
-    'base' and 'advanced' rows merged so counting stats and TS% land on one row — so
-    collapse it here rather than caching 90 MB of mostly-unused columns."""
+    two season types. We want one slice of that — regular season, with the 'base' and
+    'advanced' rows merged so counting stats and TS% land on one row — so collapse it
+    here rather than caching 90 MB of mostly-unused columns.
+
+    BOTH PER-GAME AND TOTALS, and the totals are not redundant.
+    A career average cannot be built from per-game season figures: those are rounded
+    to one decimal, and weighting ~20 of them by games accumulates the error. Measured
+    on Ray Allen it came out 18.8 against an actual 18.9 — small, except the number IS
+    the answer in this game, and a tenth is a whole scoring band. Career averages are
+    therefore computed the only correct way, sum(totals) / sum(games), which needs the
+    unrounded season totals stored alongside."""
     keep = ['pts','reb','ast','stl','blk','fga','fg3a','fg3_pct','fg3m','min','tov',
             'usg_pct','ts_pct']
+    # Counting stats only. A total of a percentage is meaningless; career rates are
+    # rebuilt from their components (3P% from made over attempted, and so on).
+    keep_tot = ['pts','reb','ast','stl','blk','fga','fg3a','fg3m','min','tov']
     rows = []
     for file_year in NBA_SEASONS:
         # The number in the URL is upstream's key; `season` is ours.
@@ -161,8 +183,14 @@ def fetch_nba():
             data = fh.read().decode('utf-8', 'replace')
         merged = {}
         rows_by_measure = {'base': [], 'advanced': []}
+        totals_by_id = {}
         for r in csv.DictReader(data.splitlines()):
-            if (r['season_type'] != 'regular-season' or r['per_mode'] != 'pergame'
+            if r['season_type'] != 'regular-season':
+                continue
+            if r['per_mode'] == 'totals' and r['measure_type'] == 'base':
+                totals_by_id[r['player_id']] = r
+                continue
+            if (r['per_mode'] != 'pergame'
                     or r['measure_type'] not in ('base', 'advanced')):
                 continue
             rows_by_measure[r['measure_type']].append(r)
@@ -180,6 +208,14 @@ def fetch_nba():
                     v = r.get(c, '')
                     if v not in ('', None) and not d.get(c):
                         d[c] = v
+        for pid, d in merged.items():
+            t = totals_by_id.get(pid)
+            if not t:
+                continue
+            for c in keep_tot:
+                v = t.get(c, '')
+                if v not in ('', None):
+                    d['tot_' + c] = v
         rows.extend(merged.values())
         print(f' {len(merged)}')
 
@@ -210,7 +246,7 @@ def fetch_nba():
     print(f'  anchors OK ({len(NBA_ANCHORS)} known season lines reproduce)')
 
     dest = os.path.join(CACHE, NBA_COMPACT)
-    cols = ['season', 'player_id', 'player_name', 'gp'] + keep
+    cols = ['season', 'player_id', 'player_name', 'gp'] + keep + ['tot_' + c for c in keep_tot]
     with open(dest, 'w', newline='', encoding='utf-8') as fh:
         w = csv.DictWriter(fh, fieldnames=cols, extrasaction='ignore')
         w.writeheader()
