@@ -26574,10 +26574,6 @@
     "targetPlayer": "Rod Carew",
     "targetX": 18,
     "targetY": 1028,
-    "span": [
-      1967,
-      1985
-    ],
     "referencePlayers": [
       {
         "name": "Bernie Williams",
@@ -26608,7 +26604,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season.",
+    "span": [
+      1967,
+      1985
+    ]
   },
   {
     "id": "mlb-as-so-yount",
@@ -26630,10 +26630,6 @@
     "targetPlayer": "Robin Yount",
     "targetX": 3,
     "targetY": 1350,
-    "span": [
-      1974,
-      1993
-    ],
     "referencePlayers": [
       {
         "name": "Larry Walker",
@@ -26664,7 +26660,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season.",
+    "span": [
+      1974,
+      1993
+    ]
   },
   {
     "id": "mlb-avg-bb-jackson",
@@ -26686,10 +26686,6 @@
     "targetPlayer": "Reggie Jackson",
     "targetX": 0.262,
     "targetY": 1375,
-    "span": [
-      1967,
-      1987
-    ],
     "referencePlayers": [
       {
         "name": "Sammy Sosa",
@@ -26720,7 +26716,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season.",
+    "span": [
+      1967,
+      1987
+    ]
   },
   {
     "id": "mlb-avg-g-gehrig",
@@ -26742,10 +26742,6 @@
     "targetPlayer": "Lou Gehrig",
     "targetX": 0.34,
     "targetY": 2164,
-    "span": [
-      1923,
-      1939
-    ],
     "referencePlayers": [
       {
         "name": "Ozzie Smith",
@@ -26776,7 +26772,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Batting.csv, core/AllstarFull.csv), regular season.",
+    "span": [
+      1923,
+      1939
+    ]
   },
   {
     "id": "mlb-cg-whip-mathewson",
@@ -26798,10 +26798,6 @@
     "targetPlayer": "Christy Mathewson",
     "targetX": 435,
     "targetY": 1.06,
-    "span": [
-      1900,
-      1916
-    ],
     "referencePlayers": [
       {
         "name": "Mike Mussina",
@@ -26832,7 +26828,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year.",
+    "span": [
+      1900,
+      1916
+    ]
   },
   {
     "id": "mlb-cg-whip-johnson",
@@ -26854,10 +26854,6 @@
     "targetPlayer": "Walter Johnson",
     "targetX": 531,
     "targetY": 1.06,
-    "span": [
-      1907,
-      1927
-    ],
     "referencePlayers": [
       {
         "name": "Rick Aguilera",
@@ -26888,7 +26884,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year.",
+    "span": [
+      1907,
+      1927
+    ]
   },
   {
     "id": "mlb-w-whip-young",
@@ -26910,10 +26910,6 @@
     "targetPlayer": "Cy Young",
     "targetX": 511,
     "targetY": 1.13,
-    "span": [
-      1890,
-      1911
-    ],
     "referencePlayers": [
       {
         "name": "Rick Aguilera",
@@ -26944,7 +26940,11 @@
       }
     ],
     "fact": "",
-    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year."
+    "source": "Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. Career rates are recomputed from season totals — ERA as earned runs per 27 outs, K/9 and BB/9 likewise — rather than averaged across seasons, which would weight a September call-up the same as a 250-inning year.",
+    "span": [
+      1890,
+      1911
+    ]
   },
   {
     "id": "nfl-rec-catchpct-dillon-2002",

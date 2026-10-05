@@ -50,19 +50,47 @@ SCHEDULE_JSON = os.path.join(DATA, 'schedule.json')
 SCHEMA = os.path.join(DATA, 'questions.schema.json')
 MAX_REFS = 5
 
-BASE_COLS = ['id', 'league',
+# `game` and the career spans are in the round trip for a blunt reason: a column
+# that is not here is DELETED by an import. The export/import loop is the documented
+# authoring workflow, so leaving `game` out would have silently moved every minigame
+# question into hard mode, and leaving the spans out would have stripped the
+# "1991-2003" labels off every career question — both with a clean validation pass
+# and no error anywhere, which is this project's worst failure shape.
+BASE_COLS = ['id', 'league', 'game',
              'x_label', 'x_unit', 'x_step', 'x_min', 'x_max',
              'y_label', 'y_unit', 'y_step', 'y_min', 'y_max',
-             'target_player', 'target_x', 'target_y']
-REF_COLS = [f'ref{i}_{f}' for i in range(1, MAX_REFS + 1) for f in ('name', 'x', 'y')]
+             'target_player', 'span', 'target_x', 'target_y']
+REF_COLS = [f'ref{i}_{f}' for i in range(1, MAX_REFS + 1) for f in ('name', 'span', 'x', 'y')]
 TAIL_COLS = ['fact', 'source']
 COLUMNS = BASE_COLS + REF_COLS + TAIL_COLS
 
 
 # ---------------------------------------------------------------- flatten / inflate
+# A career span travels through the spreadsheet as "1991-2003", which is what it
+# reads as on the chart, rather than as two columns nobody would keep in step.
+def span_out(v):
+    return f'{v[0]}-{v[1]}' if isinstance(v, list) and len(v) == 2 else ''
+
+
+def span_in(v, field, rid, errors):
+    s = (str(v) if v is not None else '').strip()
+    if not s:
+        return None
+    m = re.fullmatch(r'(\d{4})\s*[-–]\s*(\d{4})', s)
+    if not m:
+        errors.append(f'{rid}: {field} must look like "1991-2003", got {s!r}')
+        return None
+    a, b = int(m.group(1)), int(m.group(2))
+    if a > b:
+        errors.append(f'{rid}: {field} ends before it starts ({s})')
+        return None
+    return [a, b]
+
+
 def to_row(q):
     row = {
-        'id': q['id'], 'league': q['league'],
+        'id': q['id'], 'league': q['league'], 'game': q.get('game', ''),
+        'span': span_out(q.get('span')),
         'x_label': q['xLabel'], 'x_unit': q['xUnit'], 'x_step': q.get('xStep', ''),
         'x_min': q['xDomain'][0], 'x_max': q['xDomain'][1],
         'y_label': q['yLabel'], 'y_unit': q['yUnit'], 'y_step': q.get('yStep', ''),
@@ -73,6 +101,7 @@ def to_row(q):
     }
     for i, r in enumerate(q['referencePlayers'][:MAX_REFS], start=1):
         row[f'ref{i}_name'], row[f'ref{i}_x'], row[f'ref{i}_y'] = r['name'], r['x'], r['y']
+        row[f'ref{i}_span'] = span_out(r.get('span'))
     for c in COLUMNS:
         row.setdefault(c, '')
     return row
@@ -115,19 +144,31 @@ def to_question(row, errors):
         v = num(row.get(col), col, rid, errors, required=False)
         if v is not None:
             q[k] = v
+    game = (row.get('game') or '').strip()
+    if game:
+        q['game'] = game
+    span = span_in(row.get('span'), 'span', rid, errors)
+    if span:
+        q['span'] = span
     for i in range(1, MAX_REFS + 1):
         name = (row.get(f'ref{i}_name') or '').strip()
         if not name:
             continue
-        q['referencePlayers'].append({
+        ref = {
             'name': name,
             'x': num(row.get(f'ref{i}_x'), f'ref{i}_x', rid, errors),
             'y': num(row.get(f'ref{i}_y'), f'ref{i}_y', rid, errors),
-        })
+        }
+        rspan = span_in(row.get(f'ref{i}_span'), f'ref{i}_span', rid, errors)
+        if rspan:
+            ref['span'] = rspan
+        q['referencePlayers'].append(ref)
     # Field order matches the hand-authored questions so diffs stay readable.
-    ordered = ['id', 'league', 'xLabel', 'xUnit', 'yLabel', 'yUnit', 'xStep', 'yStep',
-               'xDomain', 'yDomain', 'targetPlayer', 'targetX', 'targetY',
-               'referencePlayers', 'fact', 'source']
+    # `span` goes last, where the backfill script put it, so a round trip through the
+    # spreadsheet is a no-op diff rather than 220 records reordered.
+    ordered = ['id', 'league', 'game', 'xLabel', 'xUnit', 'yLabel', 'yUnit',
+               'xStep', 'yStep', 'xDomain', 'yDomain', 'targetPlayer',
+               'targetX', 'targetY', 'referencePlayers', 'fact', 'source', 'span']
     return {k: q[k] for k in ordered if k in q}
 
 
@@ -201,6 +242,41 @@ def validate(questions):
         tgt = re.sub(r',?\s*\d{4}(-\d{2})?$', '', q.get('targetPlayer', '')).strip().lower()
         if tgt in base:
             errors.append(f'{rid}: target "{tgt}" is also a reference player')
+    return errors
+
+
+def roundtrip_errors(questions):
+    """Would exporting and re-importing change anything?
+
+    WHY THIS IS A GATE AND NOT A COMMENT
+    Export-edit-import is the documented way to author content, and an import
+    REPLACES questions.json. So any field the flattener does not carry is deleted by
+    the documented workflow, silently, with every other gate still green. That is not
+    hypothetical: `span` was already being dropped — a round trip would have stripped
+    the "1991-2003" career labels off 220 questions — and `game` would have been
+    next, which would have moved every minigame question into hard mode.
+
+    Comparing serialised JSON rather than dicts, because key ORDER is part of what
+    gets written, and a round trip that reorders fields turns a one-line content
+    change into a whole-file diff nobody can review.
+    """
+    errors = []
+    for q in questions:
+        # Projected onto COLUMNS first, because that is what the spreadsheet writer
+        # does and it is where a field actually gets lost. Round-tripping the raw
+        # to_row() dict instead passes even when the column is missing — which is how
+        # the first version of this gate reported 0 problems with `span` deliberately
+        # removed from BASE_COLS.
+        row = {c: to_row(q).get(c, '') for c in COLUMNS}
+        back = to_question(row, errors)
+        if json.dumps(back) != json.dumps(q):
+            lost = [k for k in q if k not in back]
+            changed = [k for k in q if k in back and json.dumps(back[k]) != json.dumps(q[k])]
+            detail = (f'drops {lost}' if lost else
+                      f'changes {changed}' if changed else
+                      'reorders fields')
+            errors.append(f"{q.get('id')}: a spreadsheet round trip {detail} — "
+                          f'add the column to BASE_COLS/REF_COLS')
     return errors
 
 
@@ -308,8 +384,10 @@ def main():
         return build_schedule(a.schedule)
 
     if a.check:
-        errors = validate(json.load(open(QJSON)))
-        print(f'{len(json.load(open(QJSON)))} questions, {len(errors)} problems')
+        questions = json.load(open(QJSON))
+        errors = validate(questions)
+        errors += roundtrip_errors(questions)
+        print(f'{len(questions)} questions, {len(errors)} problems')
         for e in errors:
             print('  -', e)
         return 1 if errors else 0
