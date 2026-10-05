@@ -1,1 +1,422 @@
-{}
+{
+  "2026-10-05": [
+    "mlb-cwhip-wpct-randy-myers",
+    "mlb-cavg-hr-willie-mccovey",
+    "mlb-ch9-kbb-billy-wagner",
+    "mlb-cera-bb9-joe-nathan",
+    "mlb-cobp-rbig-tim-raines"
+  ],
+  "2026-10-06": [
+    "mlb-cera-k9-sandy-koufax",
+    "mlb-cobp-hr-dave-kingman",
+    "mlb-cops-g-pete-rose",
+    "mlb-cera-wpct-christy-mathewson",
+    "mlb-cobp-g-robin-yount"
+  ],
+  "2026-10-07": [
+    "mlb-ck9-wpct-cy-young",
+    "mlb-cera-kbb-don-drysdale",
+    "mlb-ciso-rg-pete-rose",
+    "mlb-cavg-sb-andruw-jones",
+    "mlb-cavg-bb-ozzie-smith"
+  ],
+  "2026-10-08": [
+    "mlb-ch9-wpct-jim-kaat",
+    "mlb-cobp-so-andruw-jones",
+    "mlb-cslg-sb-luis-aparicio",
+    "mlb-cbb9-wpct-walter-johnson",
+    "mlb-chr-rg-derek-jeter"
+  ],
+  "2026-10-09": [
+    "mlb-cobp-sb-wade-boggs",
+    "mlb-ckbb-wpct-bucky-walters",
+    "mlb-cwhip-ip-allie-reynolds",
+    "mlb-cbb-so-barry-bonds",
+    "mlb-cops-sb-alan-trammell"
+  ],
+  "2026-10-10": [
+    "mlb-cavg-iso-kirby-puckett",
+    "mlb-cwhip-k9-ted-lyons",
+    "mlb-cwhip-wpct-jose-mesa",
+    "mlb-cavg-rbig-rod-carew",
+    "mlb-cobp-iso-edgar-martinez"
+  ],
+  "2026-10-11": [
+    "mlb-crg-rbig-brooks-robinson",
+    "mlb-cbb-sb-jim-thome",
+    "mlb-cbb9-h9-walter-johnson",
+    "mlb-cobp-hr-wade-boggs",
+    "mlb-cavg-slg-ichiro-suzuki"
+  ],
+  "2026-10-12": [
+    "mlb-cavg-ops-mike-schmidt",
+    "mlb-cso-sb-lance-parrish",
+    "mlb-cavg-hr-roberto-clemente",
+    "mlb-cslg-g-jeff-bagwell",
+    "mlb-cera-k9-early-wynn"
+  ],
+  "2026-10-13": [
+    "mlb-chr-rg-paul-molitor",
+    "mlb-cops-g-dave-concepcion",
+    "mlb-ciso-rg-willie-stargell",
+    "mlb-cobp-so-tim-raines",
+    "mlb-cobp-rbig-rickey-henderson"
+  ],
+  "2026-10-14": [
+    "mlb-cso-rg-pete-rose",
+    "mlb-ch9-kbb-carl-hubbell",
+    "mlb-cera-wpct-bob-gibson",
+    "mlb-cslg-sb-hank-aaron",
+    "mlb-ck9-wpct-trevor-hoffman"
+  ],
+  "2026-10-15": [
+    "mlb-cwhip-ip-lefty-gomez",
+    "mlb-cavg-sb-dave-concepcion",
+    "mlb-cops-sb-jim-thome",
+    "mlb-cobp-g-mike-schmidt",
+    "mlb-cavg-iso-roberto-clemente"
+  ],
+  "2026-10-16": [
+    "mlb-cbb-sb-luis-aparicio",
+    "mlb-ckbb-wpct-bob-lemon",
+    "mlb-cavg-bb-kirby-puckett",
+    "mlb-cbb-so-gary-sheffield",
+    "mlb-ch9-wpct-babe-ruth"
+  ],
+  "2026-10-17": [
+    "mlb-cobp-hr-rod-carew",
+    "mlb-cwhip-k9-bucky-walters",
+    "mlb-ckbb-ip-red-ruffing",
+    "mlb-cavg-rbig-reggie-jackson",
+    "mlb-cera-bb9-tom-seaver"
+  ],
+  "2026-10-18": [
+    "mlb-cera-k9-paul-derringer",
+    "mlb-cwhip-wpct-juan-marichal",
+    "mlb-cobp-sb-edgar-martinez",
+    "mlb-cso-sb-alan-trammell",
+    "mlb-cobp-rbig-eddie-murray"
+  ],
+  "2026-10-19": [
+    "mlb-chr-rg-ron-santo",
+    "mlb-cavg-hr-kirby-puckett",
+    "mlb-cera-kbb-sandy-koufax",
+    "mlb-cso-rg-reggie-jackson",
+    "mlb-cbb9-h9-lefty-gomez"
+  ],
+  "2026-10-20": [
+    "mlb-cavg-iso-reggie-jackson",
+    "mlb-cavg-slg-darrell-evans",
+    "mlb-cera-ip-jose-mesa",
+    "mlb-crg-rbig-rickey-henderson",
+    "mlb-cobp-g-larry-walker"
+  ],
+  "2026-10-21": [
+    "mlb-ch9-kbb-pedro-martinez",
+    "mlb-cobp-iso-alfonso-soriano",
+    "mlb-cobp-so-lance-parrish",
+    "mlb-ck9-wpct-babe-ruth",
+    "mlb-ciso-rg-kenny-lofton"
+  ],
+  "2026-10-22": [
+    "mlb-cslg-g-brooks-robinson",
+    "mlb-ch9-wpct-joe-nathan",
+    "mlb-cera-wpct-tom-seaver",
+    "mlb-cops-g-edgar-martinez",
+    "mlb-cbb-so-ivan-rodriguez"
+  ],
+  "2026-10-23": [
+    "mlb-cbb9-wpct-juan-marichal",
+    "mlb-cwhip-wpct-sandy-koufax",
+    "mlb-cwhip-k9-early-wynn",
+    "mlb-cops-sb-manny-ramirez",
+    "mlb-cobp-hr-edgar-martinez"
+  ],
+  "2026-10-24": [
+    "mlb-cwhip-ip-don-sutton",
+    "mlb-cera-kbb-fernando-valenzuela",
+    "mlb-cso-rg-barry-larkin",
+    "mlb-cavg-hr-harmon-killebrew",
+    "mlb-cavg-bb-willie-mccovey"
+  ],
+  "2026-10-25": [
+    "mlb-cso-sb-carl-yastrzemski",
+    "mlb-cbb9-h9-paul-derringer",
+    "mlb-crg-rbig-paul-molitor",
+    "mlb-chr-rg-barry-larkin",
+    "mlb-cavg-iso-johnny-bench"
+  ],
+  "2026-10-26": [
+    "mlb-cavg-ops-harmon-killebrew",
+    "mlb-cslg-sb-willie-stargell",
+    "mlb-ck9-wpct-bucky-walters",
+    "mlb-cavg-slg-tony-gwynn",
+    "mlb-cobp-g-edgar-martinez"
+  ],
+  "2026-10-27": [
+    "mlb-ckbb-wpct-trevor-hoffman",
+    "mlb-cobp-sb-jason-giambi",
+    "mlb-cslg-g-mike-piazza",
+    "mlb-cera-wpct-dennis-eckersley",
+    "mlb-ch9-kbb-mariano-rivera"
+  ],
+  "2026-10-28": [
+    "mlb-cera-bb9-billy-wagner",
+    "mlb-cwhip-k9-allie-reynolds",
+    "mlb-ch9-wpct-tommy-john",
+    "mlb-ciso-rg-derek-jeter",
+    "mlb-cobp-rbig-andre-dawson"
+  ],
+  "2026-10-29": [
+    "mlb-cso-rg-tim-raines",
+    "mlb-cera-ip-todd-jones",
+    "mlb-cera-kbb-ted-lyons",
+    "mlb-cavg-hr-rod-carew",
+    "mlb-cavg-rbig-willie-mccovey"
+  ],
+  "2026-10-30": [
+    "mlb-cobp-hr-tim-raines",
+    "mlb-cbb-so-wade-boggs",
+    "mlb-ckbb-ip-billy-wagner",
+    "mlb-cbb9-wpct-ewell-blackwell",
+    "mlb-cso-sb-barry-larkin"
+  ],
+  "2026-10-31": [
+    "mlb-cbb9-h9-christy-mathewson",
+    "mlb-cobp-so-sammy-sosa",
+    "mlb-cwhip-ip-walter-johnson",
+    "mlb-ck9-wpct-carl-hubbell",
+    "mlb-cavg-slg-roberto-clemente"
+  ],
+  "2026-11-01": [
+    "mlb-cops-g-brooks-robinson",
+    "mlb-ch9-kbb-red-ruffing",
+    "mlb-cslg-g-larry-walker",
+    "mlb-cobp-sb-ivan-rodriguez",
+    "mlb-cops-sb-kenny-lofton"
+  ],
+  "2026-11-02": [
+    "mlb-cera-k9-ted-lyons",
+    "mlb-cobp-rbig-barry-larkin",
+    "mlb-crg-rbig-craig-biggio",
+    "mlb-ckbb-wpct-tommy-bridges",
+    "mlb-cavg-bb-roberto-clemente"
+  ],
+  "2026-11-03": [
+    "mlb-cera-bb9-curt-schilling",
+    "mlb-cera-wpct-walter-johnson",
+    "mlb-cobp-iso-juan-gonzalez",
+    "mlb-cwhip-wpct-todd-jones",
+    "mlb-cavg-iso-mike-schmidt"
+  ],
+  "2026-11-04": [
+    "mlb-cera-kbb-red-ruffing",
+    "mlb-cwhip-k9-trevor-hoffman",
+    "mlb-cera-ip-tommy-bridges",
+    "mlb-cslg-sb-craig-biggio",
+    "mlb-cbb-sb-willie-mccovey"
+  ],
+  "2026-11-05": [
+    "mlb-cbb9-h9-hal-newhouser",
+    "mlb-cbb9-wpct-jose-mesa",
+    "mlb-cso-rg-hank-aaron",
+    "mlb-cavg-rbig-tony-gwynn",
+    "mlb-cso-sb-harmon-killebrew"
+  ],
+  "2026-11-06": [
+    "mlb-cwhip-ip-hal-newhouser",
+    "mlb-cavg-ops-ivan-rodriguez",
+    "mlb-cobp-so-andre-dawson",
+    "mlb-ch9-wpct-paul-derringer",
+    "mlb-ch9-kbb-trevor-hoffman"
+  ],
+  "2026-11-07": [
+    "mlb-cobp-g-gary-carter",
+    "mlb-cobp-rbig-joe-morgan",
+    "mlb-ciso-rg-eddie-murray",
+    "mlb-cera-k9-rollie-fingers",
+    "mlb-cops-g-mark-mcgwire"
+  ],
+  "2026-11-08": [
+    "mlb-cwhip-wpct-early-wynn",
+    "mlb-cobp-iso-joe-morgan",
+    "mlb-cavg-hr-wade-boggs",
+    "mlb-cslg-g-mark-mcgwire",
+    "mlb-cobp-sb-ozzie-smith"
+  ],
+  "2026-11-09": [
+    "mlb-cslg-sb-kenny-lofton",
+    "mlb-ckbb-wpct-lefty-gomez",
+    "mlb-cavg-bb-darrell-evans",
+    "mlb-cobp-hr-andruw-jones",
+    "mlb-ckbb-ip-sandy-koufax"
+  ],
+  "2026-11-10": [
+    "mlb-cbb9-h9-robin-roberts",
+    "mlb-chr-rg-rickey-henderson",
+    "mlb-cera-ip-christy-mathewson",
+    "mlb-crg-rbig-lou-brock",
+    "mlb-cera-wpct-babe-ruth"
+  ],
+  "2026-11-11": [
+    "mlb-cbb9-wpct-mike-mussina",
+    "mlb-cbb-so-joe-morgan",
+    "mlb-cobp-so-ivan-rodriguez",
+    "mlb-cavg-slg-andruw-jones",
+    "mlb-cwhip-k9-bob-lemon"
+  ],
+  "2026-11-12": [
+    "mlb-cera-k9-billy-wagner",
+    "mlb-cobp-rbig-johnny-bench",
+    "mlb-ch9-kbb-bucky-walters",
+    "mlb-cera-bb9-jamie-moyer",
+    "mlb-cavg-ops-robin-yount"
+  ],
+  "2026-11-13": [
+    "mlb-cobp-iso-wade-boggs",
+    "mlb-cobp-sb-jim-thome",
+    "mlb-cobp-g-brooks-robinson",
+    "mlb-cwhip-ip-fergie-jenkins",
+    "mlb-cops-g-robin-yount"
+  ],
+  "2026-11-14": [
+    "mlb-ckbb-wpct-hal-newhouser",
+    "mlb-ckbb-ip-curt-schilling",
+    "mlb-cera-kbb-christy-mathewson",
+    "mlb-cobp-hr-alfonso-soriano",
+    "mlb-cbb-sb-mark-mcgwire"
+  ],
+  "2026-11-15": [
+    "mlb-cavg-iso-pete-rose",
+    "mlb-ck9-wpct-lee-smith",
+    "mlb-cera-ip-walter-johnson",
+    "mlb-cso-sb-ozzie-smith",
+    "mlb-cavg-hr-george-brett"
+  ],
+  "2026-11-16": [
+    "mlb-chr-rg-dave-kingman",
+    "mlb-cbb-so-carl-yastrzemski",
+    "mlb-cso-rg-paul-molitor",
+    "mlb-crg-rbig-kenny-lofton",
+    "mlb-ciso-rg-willie-mccovey"
+  ],
+  "2026-11-17": [
+    "mlb-cavg-rbig-roberto-clemente",
+    "mlb-cobp-rbig-dave-kingman",
+    "mlb-cera-wpct-cy-young",
+    "mlb-cwhip-wpct-chuck-finley",
+    "mlb-cwhip-k9-sandy-koufax"
+  ],
+  "2026-11-18": [
+    "mlb-cobp-so-joe-torre",
+    "mlb-cops-sb-tony-oliva",
+    "mlb-cera-bb9-babe-ruth",
+    "mlb-cslg-sb-ozzie-smith",
+    "mlb-cobp-iso-tony-gwynn"
+  ],
+  "2026-11-19": [
+    "mlb-cera-kbb-carl-hubbell",
+    "mlb-cavg-ops-paul-molitor",
+    "mlb-cslg-g-omar-vizquel",
+    "mlb-cavg-slg-kirby-puckett",
+    "mlb-cbb9-h9-cy-young"
+  ],
+  "2026-11-20": [
+    "mlb-cavg-bb-darryl-strawberry",
+    "mlb-cwhip-ip-christy-mathewson",
+    "mlb-cera-k9-tom-henke",
+    "mlb-cera-ip-cy-young",
+    "mlb-cbb9-wpct-curt-schilling"
+  ],
+  "2026-11-21": [
+    "mlb-cbb-sb-harmon-killebrew",
+    "mlb-cobp-sb-steve-garvey",
+    "mlb-chr-rg-fred-lynn",
+    "mlb-cops-g-jeff-bagwell",
+    "mlb-crg-rbig-barry-larkin"
+  ],
+  "2026-11-22": [
+    "mlb-ckbb-ip-ted-lyons",
+    "mlb-ciso-rg-lou-brock",
+    "mlb-ckbb-wpct-babe-ruth",
+    "mlb-cso-sb-jim-thome",
+    "mlb-ck9-wpct-john-smoltz"
+  ],
+  "2026-11-23": [
+    "mlb-cobp-g-ted-simmons",
+    "mlb-cso-rg-lance-parrish",
+    "mlb-cobp-iso-andre-dawson",
+    "mlb-cobp-so-frank-robinson",
+    "mlb-cavg-iso-derek-jeter"
+  ],
+  "2026-11-24": [
+    "mlb-cavg-rbig-jose-canseco",
+    "mlb-cbb-so-alfonso-soriano",
+    "mlb-cslg-sb-alan-trammell",
+    "mlb-cslg-g-rickey-henderson",
+    "mlb-cavg-ops-kenny-lofton"
+  ],
+  "2026-11-25": [
+    "mlb-cops-sb-dave-concepcion",
+    "mlb-cera-ip-bob-johnson",
+    "mlb-cwhip-ip-tom-seaver",
+    "mlb-cavg-slg-rod-carew",
+    "mlb-cavg-sb-ozzie-smith"
+  ],
+  "2026-11-26": [
+    "mlb-cavg-bb-tony-oliva",
+    "mlb-cwhip-k9-tommy-bridges",
+    "mlb-cwhip-wpct-tom-seaver",
+    "mlb-chr-rg-tim-raines",
+    "mlb-cbb-sb-andre-dawson"
+  ],
+  "2026-11-27": [
+    "mlb-cobp-rbig-tony-gwynn",
+    "mlb-ckbb-ip-bucky-walters",
+    "mlb-ch9-wpct-doug-jones",
+    "mlb-ciso-rg-paul-molitor",
+    "mlb-cavg-hr-willie-mccovey"
+  ],
+  "2026-11-28": [
+    "mlb-cobp-so-joe-torre",
+    "mlb-ck9-wpct-babe-ruth",
+    "mlb-cavg-iso-kirby-puckett",
+    "mlb-cobp-iso-juan-gonzalez",
+    "mlb-cera-kbb-sandy-koufax"
+  ],
+  "2026-11-29": [
+    "mlb-cera-wpct-dennis-eckersley",
+    "mlb-cso-sb-carl-yastrzemski",
+    "mlb-cera-bb9-paul-derringer",
+    "mlb-cobp-hr-wade-boggs",
+    "mlb-cavg-rbig-roberto-clemente"
+  ],
+  "2026-11-30": [
+    "mlb-cslg-g-mike-piazza",
+    "mlb-cslg-sb-mark-mcgwire",
+    "mlb-cavg-slg-kirby-puckett",
+    "mlb-cops-sb-kenny-lofton",
+    "mlb-cera-ip-todd-jones"
+  ],
+  "2026-12-01": [
+    "mlb-cwhip-wpct-early-wynn",
+    "mlb-chr-rg-ron-santo",
+    "mlb-cobp-sb-jim-thome",
+    "mlb-cavg-bb-ozzie-smith",
+    "mlb-cso-rg-paul-molitor"
+  ],
+  "2026-12-02": [
+    "mlb-cops-g-dave-concepcion",
+    "mlb-cwhip-k9-tommy-bridges",
+    "mlb-cera-k9-billy-wagner",
+    "mlb-ch9-wpct-babe-ruth",
+    "mlb-cwhip-ip-christy-mathewson"
+  ],
+  "2026-12-03": [
+    "mlb-cera-kbb-tommy-bridges",
+    "mlb-ckbb-wpct-doug-jones",
+    "mlb-cavg-sb-ozzie-smith",
+    "mlb-cavg-ops-robin-yount",
+    "mlb-cobp-so-sammy-sosa"
+  ]
+}

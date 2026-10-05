@@ -21,17 +21,16 @@
     "short": "MLB careers",
     "blurb": "Career rate lines for hitters and pitchers — averages, ERAs, per-nine rates.",
     "epoch": "2026-10-05",
-    "status": "soon",
-    "note": "Questions are being written and verified. The game opens when its pool is big enough to run without repeating and every number in it has been re-derived from the source dataset."
+    "status": "live"
   },
   "nfl": {
     "name": "StatMap NFL",
     "slug": "nfl",
     "short": "NFL careers",
-    "blurb": "Career per-game and per-touch rates, from the 1999 season forward.",
+    "blurb": "Career per-touch rates — yards per carry, yards per catch, catch rate.",
     "epoch": "2026-10-05",
     "status": "soon",
-    "note": "Questions are being written and verified. The game opens when its pool is big enough to run without repeating and every number in it has been re-derived from the source dataset."
+    "note": "Measured, not guessed: the nflverse weekly data starts in 1999, its 1999-2001 yardage is materially less complete than 2002 onward, and its targets column simply echoes receptions for 2003-2008. Those three faults stack up on a CAREER in a way they do not on a single season, which leaves 40 retired players with a 2002-or-later debut — 27 with enough receptions for a yards-per-catch chart, 20 with enough carries, 7 with enough pass attempts. That is about ten days of content before it repeats, which is not a daily game. It opens when there is a source that reaches further back, or as season averages instead of career ones if that is the call."
   },
   "nhl": {
     "name": "StatMap NHL",

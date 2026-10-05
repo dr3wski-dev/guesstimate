@@ -313,6 +313,38 @@ def load_pool():
 
 
 # ---------------------------------------------------------------- MLB
+def _mlb_rates(c):
+    """Career rate line from career totals.
+
+    SLG uses total bases, where a double is already counted once in H — so total
+    bases is H + 2B + 2x3B + 3xHR, not H + 2x2B + 3x3B + 4xHR. Getting that wrong
+    inflates every slugging figure by a believable-looking amount, which is the kind
+    of error that ships.
+
+    OBP's denominator excludes sacrifice HITS and includes sacrifice FLIES, which is
+    the official definition and not a simplification worth taking: counting bunts
+    would quietly lower the on-base percentage of every contact hitter in the file.
+    """
+    ab, bb, hbp, sf, sh = c['AB'], c['BB'], c['HBP'], c['SF'], c['SH']
+    tb = c['H'] + c['2B'] + 2 * c['3B'] + 3 * c['HR']
+    pa = ab + bb + hbp + sf + sh
+    obp_den = ab + bb + hbp + sf
+    slg = tb / ab
+    obp = (c['H'] + bb + hbp) / obp_den if obp_den else None
+    return {
+        'SLG': round(slg, 3),
+        'OBP': round(obp, 3) if obp is not None else None,
+        'OPS': round(obp + slg, 3) if obp is not None else None,
+        'ISO': round(slg - c['H'] / ab, 3),
+        'BBPCT': round(100 * bb / pa, 1) if pa else None,
+        'SOPCT': round(100 * c['SO'] / pa, 1) if pa else None,
+        'HR600': round(600 * c['HR'] / pa, 1) if pa else None,
+        'SB600': round(600 * c['SB'] / pa, 1) if pa else None,
+        'RG': round(c['R'] / c['G'], 2) if c['G'] else None,
+        'RBIG': round(c['RBI'] / c['G'], 2) if c['G'] else None,
+    }
+
+
 def mlb_careers(pool_all, gate=True):
     pool = pool_all['MLB']
     bat, people, allstar = _read('Batting.csv'), _read('People.csv'), _read('AllstarFull.csv')
@@ -321,7 +353,11 @@ def mlb_careers(pool_all, gate=True):
     for r in bat:
         pid = r['playerID']
         years[pid].add(int(r['yearID']))
-        for c in ('G','AB','R','H','2B','3B','HR','RBI','SB','BB','SO'):
+        # HBP/SF/SH join the sums for the plate-appearance denominator the rate
+        # stats need. They are blank, not zero, in the early game — SF was not
+        # recorded at all before 1954 — which is why every rate built on PA is gated
+        # on a debut year rather than quietly treating a missing column as nothing.
+        for c in ('G','AB','R','H','2B','3B','HR','RBI','SB','BB','SO','HBP','SF','SH'):
             if r[c]:
                 tot[pid][c] += int(r[c])
     as_years = defaultdict(set)
@@ -360,6 +396,10 @@ def mlb_careers(pool_all, gate=True):
                 'RBI': c['RBI'], 'R': c['R'], 'G': c['G'],
                 'AVG': round(c['H'] / c['AB'], 3),
                 'AS': len(as_years[pid]),
+                # Career rate lines for the MLB minigame. Every one is a ratio of
+                # career totals, never an average of season rates: a .300 September
+                # and a .250 full season do not average to .275 for a career.
+                **_mlb_rates(c),
             },
         }
     return out, data_max
@@ -429,6 +469,12 @@ def mlb_pitchers(pool_all, gate=True):
                 'K9': round(c['SO'] * 27 / outs, 1),
                 'BB9': round(c['BB'] * 27 / outs, 1),
                 'WHIP': round((c['H'] + c['BB']) * 3 / outs, 2),
+                'H9': round(c['H'] * 27 / outs, 1),
+                'KBB': round(c['SO'] / c['BB'], 2) if c['BB'] else None,
+                # Win-loss percentage, as a percentage rather than the .587 form, so
+                # the axis reads in the same units as the other rate charts here.
+                'WPCT': (round(100 * c['W'] / (c['W'] + c['L']), 1)
+                         if c['W'] + c['L'] else None),
             },
         }
     return out, data_max
@@ -524,6 +570,131 @@ def nfl_seasons(pool_all, gate=True):
 
 
 # ---------------------------------------------------------------- NBA
+# ------------------------------------------------- NFL careers (the easy-mode game)
+# WHY THE ELIGIBLE FIELD HERE IS SO NARROW
+# Three independent coverage faults in this dataset stack up, and every one of them
+# is already documented above because it cost something to find. A career average is
+# the sum over a whole career, so it inherits all three at once rather than one
+# season at a time:
+#
+#   - 1999-2001 play-by-play is materially less complete (NFL_MIN_SEASON), so a
+#     career that includes those years carries their yardage gap forever.
+#   - targets ECHO receptions for 2003-2008 (NFL_TARGETS_BROKEN), so catch rate is
+#     only meaningful for a career entirely after that window.
+#   - air yards and yards-after-catch do not exist before 2006 (NFL_AIRYARDS_FROM)
+#     and read as zero, which is a missing measurement wearing a real number.
+#
+# So the floor is a 2002 debut, and the two stats that need more get their own.
+# Everything here is PER TOUCH rather than per game, and that is not a stylistic
+# choice: this file has no games-played column. Season games are counted as distinct
+# weeks with a row, which is close enough for one season and wrong for a career —
+# a player with no touches in a game has no row, so every per-game career rate would
+# come out slightly too high with nothing to flag it.
+NFL_CAREER_DEBUT = 2002
+NFL_CATCHRATE_DEBUT = max(NFL_TARGETS_BROKEN) + 1
+NFL_CAREER_SOURCE = (
+    'nflverse-data player_stats release, regular-season weekly rows aggregated by '
+    'player_id across a whole career. Career rates are ratios of career totals '
+    '(yards per carry as career yards over career carries, and so on). Yardage is '
+    'derived from play-by-play and can differ from official gamebook totals by a '
+    'yard or two.')
+
+
+def nfl_careers(pool_all, gate=True):
+    """Career per-touch rates, keyed by nflverse player_id.
+
+    Rates are career totals over career touches, never an average of season rates:
+    a 3-carry game at 12 yards apiece does not belong in the same average as a
+    300-carry season at 4.2.
+    """
+    pool = pool_all['NFL']
+    rows = _read('nfl_player_stats.csv')
+    COLS = ('rushing_yards', 'rushing_tds', 'receiving_yards', 'receiving_tds',
+            'passing_yards', 'passing_tds', 'interceptions', 'attempts',
+            'completions', 'receptions', 'carries', 'targets',
+            'receiving_air_yards', 'receiving_yards_after_catch')
+    tot, years, names, volume = defaultdict(Counter), defaultdict(set), {}, Counter()
+    for r in rows:
+        if r.get('season_type') != 'REG':
+            continue
+        pid, yr = r['player_id'], int(r['season'])
+        names[pid] = r['player_display_name']
+        years[pid].add(yr)
+        for c in COLS:
+            v = r.get(c)
+            if v:
+                try:
+                    tot[pid][c] += float(v)
+                except ValueError:
+                    pass
+        for c in ('rushing_yards', 'receiving_yards', 'passing_yards'):
+            if r.get(c):
+                try:
+                    volume[pid] += float(r[c])
+                except ValueError:
+                    pass
+    data_max = max(int(r['season']) for r in rows if r.get('season_type') == 'REG')
+
+    by_name = defaultdict(list)
+    for pid, nm in names.items():
+        by_name[norm(nm)].append(pid)
+    chosen = disambiguate(by_name, lambda pid: volume[pid])
+
+    out = {}
+    for key, pid in chosen.items():
+        if gate and key not in pool:
+            continue
+        first, last = min(years[pid]), max(years[pid])
+        if first < NFL_CAREER_DEBUT:
+            continue
+        c = tot[pid]
+        rate = lambda num, den, places=1, floor=0: (
+            round(num / den, places) if den and den >= floor else None)
+        row = pool.get(key, {'Tier': '', 'Status': ''})
+        # Volume floors, so a rate always has a real sample behind it. A quarterback
+        # with 30 career carries at 5.1 a go is not a 5.1-yards-per-carry runner.
+        st = {
+            'carries': int(c['carries']) or None,
+            'rush_yds': int(c['rushing_yards']) or None,
+            'rec': int(c['receptions']) or None,
+            'rec_yds': int(c['receiving_yards']) or None,
+            'att': int(c['attempts']) or None,
+            'pass_yds': int(c['passing_yards']) or None,
+            'ypc': rate(c['rushing_yards'], c['carries'], 2, 400),
+            'rush_td_pct': rate(100 * c['rushing_tds'], c['carries'], 1, 400),
+            'ypr': rate(c['receiving_yards'], c['receptions'], 2, 200),
+            'rec_td_pct': rate(100 * c['receiving_tds'], c['receptions'], 1, 200),
+            'comp_pct': rate(100 * c['completions'], c['attempts'], 1, 1000),
+            'ypa': rate(c['passing_yards'], c['attempts'], 2, 1000),
+            'pass_td_pct': rate(100 * c['passing_tds'], c['attempts'], 1, 1000),
+            'int_pct': rate(100 * c['interceptions'], c['attempts'], 1, 1000),
+            # Targets echo receptions for 2003-2008, so catch rate needs a career
+            # that starts after that window closed. Air yards and YAC are implied by
+            # the same floor, since it is later than NFL_AIRYARDS_FROM.
+            'catch_pct': (rate(100 * c['receptions'], c['targets'], 1, 250)
+                          if first >= NFL_CATCHRATE_DEBUT else None),
+            'yac_per_rec': (rate(c['receiving_yards_after_catch'], c['receptions'], 2, 200)
+                            if first >= NFL_CATCHRATE_DEBUT else None),
+            'ay_per_tgt': (rate(c['receiving_air_yards'], c['targets'], 2, 250)
+                           if first >= NFL_CATCHRATE_DEBUT else None),
+        }
+        out[key] = {
+            'name': names[pid], 'first_season': first, 'last_season': last,
+            'who': key, 'player_id': pid,
+            # NO SPAN, deliberately. The debut floor does put every season inside
+            # coverage, but this file has a row only for a week a player TOUCHED the
+            # ball — so the first year in it is the first year he was thrown to, not
+            # the first year he was on a roster. For a receiver who caught nothing as
+            # a rookie that is off by a year, and a career span that is off by a year
+            # is a wrong fact printed next to a right one. J.J. Watt reads as
+            # 2014-2015 here, which is where his three touchdown catches are.
+            'career_complete': row['Status'].strip() == 'Retired' and last <= data_max - 1,
+            'pool': row,
+            'stats': st,
+        }
+    return out, data_max
+
+
 def nba_seasons(pool_all, gate=True):
     """Season-level per-game averages, keyed by stats.nba.com player_id.
 
@@ -621,6 +792,18 @@ NBA_CAREER_MIN_GAMES = 400
 # Why the aggregation is spelled out in the citation: a career average computed the
 # other plausible way (averaging the rounded per-game season figures) differs, so
 # "career per-game averages" alone would not identify which number this is.
+# The rate definitions are named because more than one convention exists and the
+# number depends on which: on-base percentage counts sacrifice flies in the
+# denominator and sacrifice hits not at all, and slugging is total bases where a
+# double is one hit plus one extra base rather than two hits.
+MLB_CAREER_SOURCE = (
+    'Lahman / Chadwick Bureau baseball databank (core/Batting.csv), regular season. '
+    'Career rates are ratios of career totals: OBP as (H+BB+HBP)/(AB+BB+HBP+SF), '
+    'SLG as total bases per at-bat, walk and strikeout rates per plate appearance.')
+MLB_PITCH_CAREER_SOURCE = (
+    'Lahman / Chadwick Bureau baseball databank (core/Pitching.csv), regular season. '
+    'Career rates are recomputed from career totals — ERA as earned runs per 27 '
+    'outs, K/9, BB/9 and H/9 likewise — not averaged across seasons.')
 NBA_CAREER_SOURCE = (
     'stats.nba.com leaguedashplayerstats, via the sportsdataverse/hoopR '
     'nba_stats_player_season_stats release. Career averages are career regular-season '
@@ -1044,6 +1227,108 @@ NBA_CAREER_ARCHETYPES = [
     _nba_career_arch('cra-spg',    'rapg',  'spg',   0.10),
     _nba_career_arch('cra-g',      'rapg',  'G',    -0.04),
     _nba_career_arch('cra-ato',    'rapg',  'astto', 0.05),
+]
+
+
+# ------------------------------------------------- MLB career archetypes (easy mode)
+# Rate lines rather than totals, which is what separates this game from hard mode.
+# Hard mode asks for 573 home runs; this asks what a player hit, got on base at, and
+# slugged — three numbers a baseball fan carries around and nobody looks up.
+#
+# WHY EVERY HITTER CHART IS GATED AT A 1954 DEBUT
+# Sacrifice flies were not recorded before 1954: the column is blank, not zero. Every
+# rate here has a plate-appearance denominator, and a blank read as nothing inflates
+# on-base percentage for anyone who played earlier — by a small, entirely believable
+# amount. One gate for the whole list rather than one per archetype, because the
+# per-archetype version is how a rate ends up ungated by accident.
+#
+# Pitching has no such gate: every column it uses (outs, earned runs, hits, walks,
+# strikeouts, wins, losses) is populated in every season Lahman covers, back to 1871 —
+# checked across the file, not assumed.
+MLB_RATE_DEBUT = 1954
+MLB_RATE_MINAB = 4000
+MLB_CAREER = dict(
+    AVG=('Career batting average', 'AVG', 0.001),
+    OBP=('Career on-base percentage', 'OBP', 0.001),
+    SLG=('Career slugging percentage', 'SLG', 0.001),
+    OPS=('Career OPS (on-base plus slugging)', 'OPS', 0.001),
+    ISO=('Career isolated power (slugging minus average)', 'ISO', 0.001),
+    BBPCT=('Career walk rate (share of plate appearances)', 'BB%', 0.1),
+    SOPCT=('Career strikeout rate (share of plate appearances)', 'SO%', 0.1),
+    HR600=('Career home runs per 600 plate appearances', 'HR', 0.1),
+    SB600=('Career stolen bases per 600 plate appearances', 'SB', 0.1),
+    RG=('Career runs scored per game', 'R/G', 0.01),
+    RBIG=('Career runs batted in per game', 'RBI/G', 0.01),
+    G=('Career games played', 'G', 1),
+)
+MLB_PITCH_CAREER = dict(
+    ERA=('Career earned run average', 'ERA', 0.01),
+    WHIP=('Career WHIP (walks + hits per inning)', 'WHIP', 0.01),
+    K9=('Career strikeouts per nine innings', 'K/9', 0.1),
+    BB9=('Career walks per nine innings', 'BB/9', 0.1),
+    H9=('Career hits allowed per nine innings', 'H/9', 0.1),
+    KBB=('Career strikeout-to-walk ratio', 'K/BB', 0.01),
+    WPCT=('Career win percentage', 'W%', 0.1),
+    IP=('Career innings pitched', 'IP', 1),
+)
+
+
+def _arch(table, aid, x, y, r, **extra):
+    xl, xu, xs = table[x]
+    yl, yu, ys = table[y]
+    return dict(id=aid, x=x, y=y, xl=xl, xu=xu, yl=yl, yu=yu, xstep=xs, ystep=ys,
+                r=r, **extra)
+
+
+def _mlb_rate_arch(aid, x, y, r):
+    return _arch(MLB_CAREER, aid, x, y, r,
+                 minab=MLB_RATE_MINAB, min_first=MLB_RATE_DEBUT)
+
+
+MLB_CAREER_ARCHETYPES = [
+    _mlb_rate_arch('cavg-rbig',  'AVG',   'RBIG',  -0.01),
+    _mlb_rate_arch('cbb-sb',     'BBPCT', 'SB600',  0.01),
+    _mlb_rate_arch('cobp-so',    'OBP',   'SOPCT', -0.04),
+    _mlb_rate_arch('cobp-sb',    'OBP',   'SB600',  0.08),
+    _mlb_rate_arch('cso-rg',     'SOPCT', 'RG',     0.09),
+    _mlb_rate_arch('cavg-sb',    'AVG',   'SB600',  0.11),
+    _mlb_rate_arch('cops-g',     'OPS',   'G',     -0.12),
+    _mlb_rate_arch('cobp-g',     'OBP',   'G',      0.13),
+    _mlb_rate_arch('cavg-slg',   'AVG',   'SLG',    0.15),
+    _mlb_rate_arch('chr-rg',     'HR600', 'RG',     0.17),
+    _mlb_rate_arch('cavg-bb',    'AVG',   'BBPCT', -0.18),
+    _mlb_rate_arch('cobp-hr',    'OBP',   'HR600',  0.20),
+    _mlb_rate_arch('cavg-iso',   'AVG',   'ISO',   -0.21),
+    _mlb_rate_arch('cslg-g',     'SLG',   'G',     -0.22),
+    _mlb_rate_arch('crg-rbig',   'RG',    'RBIG',   0.24),
+    _mlb_rate_arch('cso-sb',     'SOPCT', 'SB600', -0.25),
+    _mlb_rate_arch('cobp-rbig',  'OBP',   'RBIG',   0.26),
+    _mlb_rate_arch('cops-sb',    'OPS',   'SB600', -0.28),
+    _mlb_rate_arch('cbb-so',     'BBPCT', 'SOPCT',  0.28),
+    _mlb_rate_arch('ciso-rg',    'ISO',   'RG',     0.29),
+    _mlb_rate_arch('cavg-ops',   'AVG',   'OPS',    0.30),
+    _mlb_rate_arch('cavg-hr',    'AVG',   'HR600', -0.31),
+    _mlb_rate_arch('cobp-iso',   'OBP',   'ISO',    0.33),
+    _mlb_rate_arch('cslg-sb',    'SLG',   'SB600', -0.40),
+]
+# K/9 against BB/9 is deliberately absent: hard mode already has that exact chart,
+# and two games asking the same question is one question with two front doors.
+MLB_PITCH_CAREER_ARCHETYPES = [
+    _arch(MLB_PITCH_CAREER, 'cwhip-ip',  'WHIP', 'IP',   -0.01),
+    _arch(MLB_PITCH_CAREER, 'ckbb-wpct', 'KBB',  'WPCT',  0.02),
+    _arch(MLB_PITCH_CAREER, 'ch9-wpct',  'H9',   'WPCT', -0.03),
+    _arch(MLB_PITCH_CAREER, 'cera-ip',   'ERA',  'IP',    0.08),
+    _arch(MLB_PITCH_CAREER, 'cera-k9',   'ERA',  'K9',   -0.16),
+    _arch(MLB_PITCH_CAREER, 'ckbb-ip',   'KBB',  'IP',   -0.18),
+    _arch(MLB_PITCH_CAREER, 'cera-bb9',  'ERA',  'BB9',   0.21),
+    _arch(MLB_PITCH_CAREER, 'cwhip-wpct','WHIP', 'WPCT', -0.26),
+    _arch(MLB_PITCH_CAREER, 'cbb9-wpct', 'BB9',  'WPCT', -0.27),
+    _arch(MLB_PITCH_CAREER, 'ck9-wpct',  'K9',   'WPCT', -0.27),
+    _arch(MLB_PITCH_CAREER, 'cera-wpct', 'ERA',  'WPCT', -0.28),
+    _arch(MLB_PITCH_CAREER, 'cera-kbb',  'ERA',  'KBB',  -0.30),
+    _arch(MLB_PITCH_CAREER, 'cbb9-h9',   'BB9',  'H9',   -0.30),
+    _arch(MLB_PITCH_CAREER, 'ch9-kbb',   'H9',   'KBB',  -0.32),
+    _arch(MLB_PITCH_CAREER, 'cwhip-k9',  'WHIP', 'K9',   -0.35),
 ]
 
 
@@ -1493,11 +1778,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--fetch', action='store_true')
     ap.add_argument('--validate', action='store_true')
-    ap.add_argument('--league', choices=['mlb', 'mlbp', 'nfl', 'nba', 'nbac'],
+    ap.add_argument('--league',
+                    choices=['mlb', 'mlbp', 'nfl', 'nba', 'nbac', 'mlbc', 'mlbpc'],
                     help="mlbp is MLB pitchers, which are a separate dataset "
                          "(Pitching.csv) and separate archetypes from the hitters. "
-                         "nbac is NBA CAREER averages, which feed the separate 'nba' "
-                         "minigame rather than hard mode")
+                         "nbac, mlbc and mlbpc are CAREER-RATE batches that feed "
+                         "the separate minigames rather than hard mode (NBA "
+                         "averages, MLB hitters, MLB pitchers)")
     ap.add_argument('--top', type=int, default=10)
     ap.add_argument('--per-archetype', type=int, default=2)
     ap.add_argument('--per-player', type=int, default=1,
@@ -1537,6 +1824,20 @@ def main():
         cands = build(elig, NBA_CAREER_ARCHETYPES, 'NBA', lambda e: e['name'],
                       NBA_CAREER_SOURCE, a.top, a.per_archetype, only=only,
                       per_player=a.per_player, game='nba')
+    elif a.league == 'mlbc':
+        entries, dmax = mlb_careers(pool)
+        elig = [e for e in entries.values()
+                if e['career_complete'] and e['pool']['Status'] == 'Retired']
+        cands = build(elig, MLB_CAREER_ARCHETYPES, 'MLB', lambda e: e['name'],
+                      MLB_CAREER_SOURCE, a.top, a.per_archetype, only=only,
+                      per_player=a.per_player, game='mlb')
+    elif a.league == 'mlbpc':
+        entries, dmax = mlb_pitchers(pool)
+        elig = [e for e in entries.values()
+                if e['career_complete'] and e['pool']['Status'] == 'Retired']
+        cands = build(elig, MLB_PITCH_CAREER_ARCHETYPES, 'MLB', lambda e: e['name'],
+                      MLB_PITCH_CAREER_SOURCE, a.top, a.per_archetype, only=only,
+                      per_player=a.per_player, game='mlb')
     elif a.league == 'mlb':
         entries, dmax = mlb_careers(pool)
         # career questions only for players whose career finished inside the data

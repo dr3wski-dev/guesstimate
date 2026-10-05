@@ -65,6 +65,38 @@ NBA_LABELS = {
     'Assists per game (season)': 'ast',
     'Turnovers per game (season)': 'tov',
 }
+# Sacrifice flies enter the record in 1954. Before that the column is blank, which
+# read as zero shrinks an on-base denominator and nudges the figure up — invisibly,
+# and in the direction that looks right. Independent of the generator's own constant
+# by design; if the two ever disagree the gate is what notices.
+MLB_SF_RECORDED_FROM = 1954
+# The MLB minigame's axes: career rate lines. 'Career games played' is deliberately
+# NOT here — it already means 'G' in MLB_LABELS and resolves identically, so adding
+# a second entry for it would be two names for one lookup.
+MLB_CAREER_LABELS = {
+    'Career batting average': 'AVG',
+    'Career on-base percentage': 'OBP',
+    'Career slugging percentage': 'SLG',
+    'Career OPS (on-base plus slugging)': 'OPS',
+    'Career isolated power (slugging minus average)': 'ISO',
+    'Career walk rate (share of plate appearances)': 'BBPCT',
+    'Career strikeout rate (share of plate appearances)': 'SOPCT',
+    'Career home runs per 600 plate appearances': 'HR600',
+    'Career stolen bases per 600 plate appearances': 'SB600',
+    'Career runs scored per game': 'RG',
+    'Career runs batted in per game': 'RBIG',
+    'Career games played': 'G',
+}
+MLB_PITCH_CAREER_LABELS = {
+    'Career earned run average': 'ERA',
+    'Career WHIP (walks + hits per inning)': 'WHIP',
+    'Career strikeouts per nine innings': 'K9',
+    'Career walks per nine innings': 'BB9',
+    'Career hits allowed per nine innings': 'H9',
+    'Career strikeout-to-walk ratio': 'KBB',
+    'Career win percentage': 'WPCT',
+    'Career innings pitched': 'IP',
+}
 # The NBA minigame's axes. Kept apart from NBA_LABELS, which is all season figures
 # and says so in every label, because these are whole-career averages: one shared
 # table would let a career question be checked against a season row and pass.
@@ -200,7 +232,8 @@ def mlb_table():
     seasons = defaultdict(set)
     for r in bat:
         seasons[r['playerID']].add(int(r['yearID']))
-        for c in ('AB','H','HR','SB','2B','3B','SO','BB','RBI','R','G'):
+        for c in ('AB','H','HR','SB','2B','3B','SO','BB','RBI','R','G',
+                  'HBP','SF','SH'):
             if r[c]:
                 tot[r['playerID']][c] += int(r[c])
     asy = defaultdict(set)
@@ -213,10 +246,39 @@ def mlb_table():
             continue
         claims[norm(name_of.get(pid, ''))].append((pid, c))
     def row(pid, c):
+        # Career rate line for the MLB minigame, recomputed from career totals.
+        # Total bases counts a double as one hit plus one extra base; OBP's
+        # denominator takes sacrifice flies and not sacrifice hits. Both are the
+        # official definitions, and both have a plausible wrong version that would
+        # move every number here by a believable amount.
+        ab, bb, hbp, sf, sh = c['AB'], c['BB'], c['HBP'], c['SF'], c['SH']
+        tb = c['H'] + c['2B'] + 2 * c['3B'] + 3 * c['HR']
+        pa = ab + bb + hbp + sf + sh
+        obp_den = ab + bb + hbp + sf
+        slg = tb / ab
+        # Every rate with a plate-appearance denominator is withheld for a career
+        # that began before sacrifice flies were recorded, because the column is
+        # BLANK rather than zero in those seasons and a blank read as nothing
+        # inflates on-base percentage slightly for everyone who played then. The
+        # generator declines to author those questions; this declines to confirm
+        # them, which is the half that matters if the generator's gate ever slips.
+        pa_ok = pa and min(seasons[pid]) >= MLB_SF_RECORDED_FROM
+        obp = (c['H'] + bb + hbp) / obp_den if (obp_den and pa_ok) else None
+        rate = lambda v, d: round(v / d, 1) if pa_ok else None
         return {'AS': len(asy[pid]), 'HR': c['HR'], 'SB': c['SB'],
                 '2B': c['2B'], '3B': c['3B'], 'SO': c['SO'], 'BB': c['BB'],
                 'RBI': c['RBI'], 'R': c['R'], 'G': c['G'], 'H': c['H'],
                 'AVG': round(c['H'] / c['AB'], 3),
+                'SLG': round(slg, 3),
+                'ISO': round(slg - c['H'] / ab, 3),
+                'OBP': round(obp, 3) if obp is not None else None,
+                'OPS': round(obp + slg, 3) if obp is not None else None,
+                'BBPCT': rate(100 * bb, pa),
+                'SOPCT': rate(100 * c['SO'], pa),
+                'HR600': rate(600 * c['HR'], pa),
+                'SB600': rate(600 * c['SB'], pa),
+                'RG': round(c['R'] / c['G'], 2) if c['G'] else None,
+                'RBIG': round(c['RBI'] / c['G'], 2) if c['G'] else None,
                 '_span': [min(seasons[pid]), max(seasons[pid])]}
 
     out = {}
@@ -264,6 +326,10 @@ def mlb_pitch_table():
                 'K9': round(c['SO'] * 27 / outs, 1),
                 'BB9': round(c['BB'] * 27 / outs, 1),
                 'WHIP': round((c['H'] + c['BB']) * 3 / outs, 2),
+                'H9': round(c['H'] * 27 / outs, 1),
+                'KBB': round(c['SO'] / c['BB'], 2) if c['BB'] else None,
+                'WPCT': (round(100 * c['W'] / (c['W'] + c['L']), 1)
+                         if c['W'] + c['L'] else None),
                 # Pitching rows only, so a pitcher's span is the years he pitched.
                 '_span': [min(seasons[pid]), max(seasons[pid])]}
 
@@ -473,20 +539,30 @@ def main():
         # different axes, and resolving one against the other's table is a mismatch
         # this file would otherwise have to catch by luck.
         game = q.get('game')
-        labels = ({'nba': NBA_CAREER_LABELS}.get(game)
-                  or {'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
-                  .get(q['league'], {}))
-        xk, yk = labels.get(q['xLabel']), labels.get(q['yLabel'])
+        # Which pair of label tables this question is read through. Dispatch on the
+        # GAME first where one exists: a career question and a season question can
+        # carry the same league and completely different axes, and resolving one
+        # against the other's table is a mismatch this file would otherwise catch
+        # only by luck.
+        hitting_labels, pitching_labels = {
+            'nba': (NBA_CAREER_LABELS, {}),
+            'mlb': (MLB_CAREER_LABELS, MLB_PITCH_CAREER_LABELS),
+        }.get(game) or (
+            {'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
+            .get(q['league'], {}),
+            MLB_PITCH_LABELS if q['league'] == 'MLB' else {},
+        )
+        xk, yk = hitting_labels.get(q['xLabel']), hitting_labels.get(q['yLabel'])
         # A pitching question is an MLB question whose labels are not in the hitters'
         # table. Resolve against the pitchers' table instead, and only if BOTH axes
         # are pitching stats — a chart mixing the two would be a bug worth catching,
         # not something to paper over by looking in two tables.
-        pitching = (q['league'] == 'MLB' and not game and not (xk and yk)
-                    and MLB_PITCH_LABELS.get(q['xLabel'])
-                    and MLB_PITCH_LABELS.get(q['yLabel']))
+        pitching = (not (xk and yk)
+                    and pitching_labels.get(q['xLabel'])
+                    and pitching_labels.get(q['yLabel']))
         if pitching:
-            xk = MLB_PITCH_LABELS[q['xLabel']]
-            yk = MLB_PITCH_LABELS[q['yLabel']]
+            xk = pitching_labels[q['xLabel']]
+            yk = pitching_labels[q['yLabel']]
         if not xk or not yk:
             unverified += 1
             skipped.append(f"{q['id']} ({q['league']}: {q['xLabel']} / {q['yLabel']})")
@@ -503,6 +579,8 @@ def main():
             elif q['league'] == 'MLB':
                 rec = (mlbp.get(norm(nm)) if pitching
                        else (mlb.get('@' + who) or mlb.get(norm(nm))))
+                if game == 'mlb' and season is not None:
+                    rec = None
             elif q['league'] == 'NBA':
                 rec = nba.get(('@' + nm, season)) or nba.get((norm(nm), season))
             else:
