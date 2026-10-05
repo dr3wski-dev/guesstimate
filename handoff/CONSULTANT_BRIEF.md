@@ -40,7 +40,7 @@ content, no other game modes. That direction was considered and scrapped. See
 | Launch day (hard mode puzzle #1) | 2026-08-17 |
 | The minigames' puzzle #1 | 2026-10-05 |
 | Runtime dependencies | **zero** |
-| Total pipeline + worker code | ~5,700 lines, plus ~1,000 of browser suites |
+| Total pipeline + worker code | ~5,700 lines, plus ~740 of browser suites |
 | The game itself | one 2,774-line HTML file |
 
 ---
