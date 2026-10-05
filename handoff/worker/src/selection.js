@@ -21,6 +21,24 @@
 export const BAG_EPOCH = '2026-08-17';
 export const DAILY_COUNT = 5;
 
+/* ------------------------------- GAMES -------------------------------------
+   One pool, several games. A game is a named slice of the pool with its own
+   daily rotation, its own epoch and its own puzzle numbering, so "NBA Careers
+   #1" can be somebody's first ever puzzle on a day the original game is on
+   #50. Membership is a field on the question, not a guess from its labels:
+   `game: "nba"`. The original 600 questions carry no field at all and mean
+   "main", which keeps hard mode's pool byte-identical to what it has always
+   been — see the seed comment in selectDailyBag for why that matters.
+
+   The manifest itself (names, slugs, epochs, which games are open) lives in
+   data/games.json and is read by the Worker, the builder and the page. This
+   file stays data-free so it can still be unit-tested in plain Node. */
+export const MAIN_GAME = 'main';
+export function gameOf(q){ return q.game || MAIN_GAME; }
+export function poolForGame(pool, gameId = MAIN_GAME){
+  return pool.filter(q => gameOf(q) === gameId);
+}
+
 export function hashString(str){
   let h = 0;
   for(let i=0;i<str.length;i++){ h = (Math.imul(31,h) + str.charCodeAt(i)) | 0; }
@@ -60,12 +78,23 @@ export function selectDailyQuestions(dateStr, pool, count=5){
 export function daysSince(dateStr, epoch){
   return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
 }
-export function puzzleNumber(dateStr){
-  return Math.max(0, daysSince(dateStr, BAG_EPOCH)) + 1; // day one is #1
+export function puzzleNumber(dateStr, epoch = BAG_EPOCH){
+  return Math.max(0, daysSince(dateStr, epoch)) + 1; // day one is #1
 }
-export function selectDailyBag(dateStr, pool, count=5){
+/* The shuffle seed for a cycle of a game's bag.
+
+   `main` keeps the bare `bag-cycle-N` string it has always used, with no game
+   id in it. That asymmetry is deliberate and must not be tidied up: the seed
+   decides which questions land on which date, so changing it for main would
+   re-deal every day in the calendar — including days people have already
+   played and shared a score for. Played days are immutable. Every other game
+   is namespaced, so two games holding similar pools don't march in step. */
+function bagSeed(gameId, cycleIndex){
+  return gameId === MAIN_GAME ? `bag-cycle-${cycleIndex}` : `bag-cycle-${gameId}-${cycleIndex}`;
+}
+export function selectDailyBag(dateStr, pool, count=5, epoch = BAG_EPOCH, gameId = MAIN_GAME){
   if(pool.length === 0) return [];
-  const dayIndex = Math.max(0, daysSince(dateStr, BAG_EPOCH));
+  const dayIndex = Math.max(0, daysSince(dateStr, epoch));
   const startIdx = dayIndex * count;
   const cycleShuffles = new Map();
   const result = [];
@@ -73,7 +102,7 @@ export function selectDailyBag(dateStr, pool, count=5){
     const cycleIndex = Math.floor(i / pool.length);
     const posInCycle = i % pool.length;
     if(!cycleShuffles.has(cycleIndex)){
-      cycleShuffles.set(cycleIndex, seededShuffle(pool, hashString(`bag-cycle-${cycleIndex}`)));
+      cycleShuffles.set(cycleIndex, seededShuffle(pool, hashString(bagSeed(gameId, cycleIndex))));
     }
     result.push(cycleShuffles.get(cycleIndex)[posInCycle]);
   }
@@ -102,7 +131,14 @@ export function bagPool(pool, schedule){
   // hand the player a short round.
   return rest.length >= DAILY_COUNT ? rest : pool;
 }
-export function roundsForDate(dateStr, pool, schedule){
+/* `game` is `{ id, epoch }` — defaulting to the original game, so every existing
+   caller keeps its exact behaviour. The pool handed in is already this game's
+   slice (see poolForGame); the schedule is global and simply doesn't match on
+   dates pinned for a different game's questions, because none of those ids are
+   in this pool. */
+export function roundsForDate(dateStr, pool, schedule, game = {}){
+  const gameId = game.id || MAIN_GAME;
+  const epoch = game.epoch || BAG_EPOCH;
   const pins = schedule && schedule[dateStr];
   if(pins && pins.length){
     const byId = new Map(pool.map(q => [q.id, q]));
@@ -113,6 +149,6 @@ export function roundsForDate(dateStr, pool, schedule){
   }
   const usable = bagPool(pool, schedule);
   return usable.length >= DAILY_COUNT
-    ? selectDailyBag(dateStr, usable, DAILY_COUNT)
+    ? selectDailyBag(dateStr, usable, DAILY_COUNT, epoch, gameId)
     : selectDailyQuestions(dateStr, usable, usable.length);
 }

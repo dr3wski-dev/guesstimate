@@ -25,9 +25,28 @@ import POOL from '../../data/questions.json' with { type: 'json' };
 // Optional pinned days. Bundled the same way as the pool so the Worker stays a
 // pure function of its bundle — an empty object simply means "no pinned days".
 import SCHEDULE from '../../data/schedule.json' with { type: 'json' };
-import { roundsForDate, puzzleNumber, todayDateString, BAG_EPOCH } from './selection.js';
+/* One pinned-days file per game, and they have to be listed by hand because a
+   Worker bundle has no filesystem to enumerate — every import is resolved at build
+   time. Adding a game means adding a line here, which is tedious and is the right
+   trade: the alternative is a lookup that can miss at runtime and fall back to the
+   bag, which is the exact silent re-dealing that scheduling exists to end.
+   pipeline/check_games.mjs fails the build if a live game is missing from this map. */
+import SCHEDULE_NBA from '../../data/schedule-nba.json' with { type: 'json' };
+import SCHEDULE_MLB from '../../data/schedule-mlb.json' with { type: 'json' };
+import SCHEDULE_NFL from '../../data/schedule-nfl.json' with { type: 'json' };
+// Which games exist, what each is called, when each started counting. Bundled for
+// the same reason the pool is: the selection has to stay a pure function of the
+// bundle, with nothing to look up and nothing to get out of sync.
+import GAMES from '../../data/games.json' with { type: 'json' };
+import { roundsForDate, puzzleNumber, todayDateString, poolForGame, MAIN_GAME, BAG_EPOCH }
+  from './selection.js';
 
-const json = (body, cacheControl, extra = {}) => new Response(JSON.stringify(body), {
+export const SCHEDULES = {
+  main: SCHEDULE, nba: SCHEDULE_NBA, mlb: SCHEDULE_MLB, nfl: SCHEDULE_NFL,
+};
+
+const json = (body, cacheControl, extra = {}, status = 200) => new Response(JSON.stringify(body), {
+  status,
   headers: {
     'content-type': 'application/json; charset=utf-8',
     'cache-control': cacheControl,
@@ -57,13 +76,31 @@ const json = (body, cacheControl, extra = {}) => new Response(JSON.stringify(bod
    future is refused rather than clamped, so this endpoint can't be walked
    forward to read tomorrow's questions, which is the exact hole the client-side
    date created. Malformed input and anything before the epoch are refused too. */
-function acceptPastDate(raw, today){
+function acceptPastDate(raw, today, epoch = BAG_EPOCH){
   if(!raw || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
   const t = Date.parse(raw + 'T00:00:00Z');
   if(!Number.isFinite(t)) return null;
-  if(t < Date.parse(BAG_EPOCH + 'T00:00:00Z')) return null;
+  // Before this GAME's epoch, not the original one. A game that opened in October
+  // has no September puzzles, and letting a date through would serve one and label
+  // it "#-17".
+  if(t < Date.parse(epoch + 'T00:00:00Z')) return null;
   if(t > Date.parse(today + 'T00:00:00Z')) return null;
   return raw;
+}
+
+/* Which game is being asked for. Unknown ids, and ids of games that aren't open
+   yet, are refused rather than quietly falling back to the main game: a client
+   that asks for /nba and silently receives hard-mode questions is worse than one
+   that gets an error, because the player would have no way to tell. */
+function resolveGame(raw, today){
+  const id = raw || MAIN_GAME;
+  const g = GAMES[id];
+  if(!g) return { error: `no such game: ${id}` };
+  if(g.status !== 'live') return { error: `game not open: ${id}` };
+  if(Date.parse(g.epoch + 'T00:00:00Z') > Date.parse(today + 'T00:00:00Z')){
+    return { error: `game not open yet: ${id} starts ${g.epoch}` };
+  }
+  return { id, epoch: g.epoch };
 }
 
 /* How long a BROWSER may reuse a daily response. Deliberately not 24 hours: the
@@ -91,8 +128,9 @@ const BROWSER_TTL = 300;    // 5 min in the browser, so a deploy can actually la
 
    Deliberately not a timestamp or a random value: those would change on every cold
    start and throw away a cache that is supposed to last the day. */
-const BUILD = (() => {
-  const src = BAG_EPOCH + '|' + JSON.stringify(SCHEDULE) + '|' + JSON.stringify(POOL);
+export const BUILD = (() => {
+  const src = BAG_EPOCH + '|' + JSON.stringify(GAMES) + '|' + JSON.stringify(SCHEDULES)
+            + '|' + JSON.stringify(POOL);
   let h = 5381;
   for (let i = 0; i < src.length; i++) h = ((h * 33) ^ src.charCodeAt(i)) >>> 0;
   return h.toString(36);
@@ -123,7 +161,12 @@ export default {
     const today = todayDateString();
 
     if(path === '/daily'){
-      const date = acceptPastDate(url.searchParams.get('d'), today) || today;
+      const game = resolveGame(url.searchParams.get('g'), today);
+      if(game.error){
+        return json({ error: game.error }, 'public, max-age=60', { 'x-cache': 'MISS' },
+                    404);
+      }
+      const date = acceptPastDate(url.searchParams.get('d'), today, game.epoch) || today;
 
       /* Edge cache. Every visitor on a given day gets a byte-identical answer, so
          the selection should run once per day per edge location, not once per
@@ -140,7 +183,11 @@ export default {
       // a changed epoch could all sit undelivered for up to 24 hours while the
       // deployment log said success. That is the same silent-staleness failure the
       // whole bundled-pool design was meant to avoid, reintroduced one layer down.
-      const cacheKey = new Request(`https://statmap.invalid/daily/${date}/${BUILD}`, { method: 'GET' });
+      // The game id is part of the key. Without it every game would share one entry
+      // and whichever was asked for first would be served to all of them — the kind
+      // of fault that looks like a content bug for days.
+      const cacheKey = new Request(
+        `https://statmap.invalid/daily/${game.id}/${date}/${BUILD}`, { method: 'GET' });
       if(cache){
         const hit = await cache.match(cacheKey);
         // Re-derive max-age on a hit: the stored copy was written with the TTL
@@ -156,8 +203,11 @@ export default {
       const res = json({
         date,
         today,
-        puzzleNumber: puzzleNumber(date),
-        questions: roundsForDate(date, POOL, SCHEDULE),
+        game: game.id,
+        epoch: game.epoch,
+        puzzleNumber: puzzleNumber(date, game.epoch),
+        questions: roundsForDate(date, poolForGame(POOL, game.id),
+                                 SCHEDULES[game.id] || {}, game),
       }, `public, max-age=${browserTtl()}, s-maxage=${EDGE_TTL}`, { 'x-cache': 'MISS' });
 
       if(cache){

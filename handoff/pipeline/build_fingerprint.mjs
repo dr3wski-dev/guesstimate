@@ -9,28 +9,21 @@
  * ones. Nothing in that picture says "stale", which is exactly what makes it
  * expensive.
  *
- * It deliberately re-implements nothing. BAG_EPOCH is imported from the Worker's own
- * selection.js rather than copied, because a fingerprint that can drift from the
- * thing it fingerprints is worse than no fingerprint — it would report agreement
- * between two builds that differ.
+ * It deliberately re-implements nothing: it imports the Worker's own BUILD constant,
+ * which is the exact value the Worker will put in `x-build`. This used to be a second
+ * copy of the hash expression with a comment asking the next person to keep the two
+ * identical, and that comment was not enough — adding the games manifest to the
+ * fingerprint touched one copy and would have shipped a deploy check that compared a
+ * three-part hash against a four-part one and failed on a correct deploy. A
+ * fingerprint that can drift from the thing it fingerprints is worse than none.
  *
  *   node pipeline/build_fingerprint.mjs           # print it
  *   node pipeline/build_fingerprint.mjs --check   # compare against the live API
  */
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { BAG_EPOCH } from '../worker/src/selection.js';
+import { BUILD } from '../worker/src/index.js';
 
-const HERE = path.dirname(fileURLToPath(import.meta.url));
-const read = f => JSON.parse(fs.readFileSync(path.join(HERE, '..', 'data', f), 'utf8'));
-
-// Byte-for-byte the expression in worker/src/index.js. Keep them identical.
-export function fingerprint(pool = read('questions.json'), schedule = read('schedule.json')) {
-  const src = BAG_EPOCH + '|' + JSON.stringify(schedule) + '|' + JSON.stringify(pool);
-  let h = 5381;
-  for (let i = 0; i < src.length; i++) h = ((h * 33) ^ src.charCodeAt(i)) >>> 0;
-  return h.toString(36);
+export function fingerprint() {
+  return BUILD;
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

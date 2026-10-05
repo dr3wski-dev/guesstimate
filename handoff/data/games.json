@@ -1,0 +1,64 @@
+{
+  "main": {
+    "name": "StatMap",
+    "slug": "",
+    "short": "Hard mode",
+    "blurb": "Every league, every kind of stat — single seasons, career totals, height, All-Star counts. No warm-up.",
+    "epoch": "2026-08-17",
+    "status": "live"
+  },
+  "nba": {
+    "name": "StatMap NBA",
+    "slug": "nba",
+    "short": "NBA careers",
+    "blurb": "Career per-game averages only. One league, one kind of number, so you can actually calibrate.",
+    "epoch": "2026-10-05",
+    "status": "soon",
+    "note": "Questions are being written and verified. The game opens when its pool is big enough to run without repeating and every number in it has been re-derived from the source dataset."
+  },
+  "mlb": {
+    "name": "StatMap MLB",
+    "slug": "mlb",
+    "short": "MLB careers",
+    "blurb": "Career rate lines for hitters and pitchers — averages, ERAs, per-nine rates.",
+    "epoch": "2026-10-05",
+    "status": "soon",
+    "note": "Questions are being written and verified. The game opens when its pool is big enough to run without repeating and every number in it has been re-derived from the source dataset."
+  },
+  "nfl": {
+    "name": "StatMap NFL",
+    "slug": "nfl",
+    "short": "NFL careers",
+    "blurb": "Career per-game and per-touch rates, from the 1999 season forward.",
+    "epoch": "2026-10-05",
+    "status": "soon",
+    "note": "Questions are being written and verified. The game opens when its pool is big enough to run without repeating and every number in it has been re-derived from the source dataset."
+  },
+  "nhl": {
+    "name": "StatMap NHL",
+    "slug": "nhl",
+    "short": "NHL careers",
+    "blurb": "Career per-game scoring rates.",
+    "epoch": "2026-10-05",
+    "status": "blocked",
+    "note": "No open NHL dataset has been found that covers whole careers and can be re-derived independently. The candidates checked so far are either play-by-play events (which would mean inventing our own season totals with nothing to check them against) or unreachable. This game opens when there is a source that passes the same bar as the others, and not before."
+  },
+  "cfb": {
+    "name": "StatMap College Football",
+    "slug": "cfb",
+    "short": "College football",
+    "blurb": "Career per-game rates for college careers.",
+    "epoch": "2026-10-05",
+    "status": "blocked",
+    "note": "The open college-football data we can reach starts at 2014 and is play-by-play level. Career totals built from it would be our own arithmetic with no second source to check them against — two readings of one file agreeing with each other is not verification. This game opens when there is a source that passes the same bar as the others."
+  },
+  "psu": {
+    "name": "StatMap Penn State",
+    "slug": "psu",
+    "short": "Penn State",
+    "blurb": "Nittany Lion careers.",
+    "epoch": "2026-10-05",
+    "status": "blocked",
+    "note": "Same blocker as the college-football game, plus a sharper one: most of the Penn State careers worth asking about are from before 2014, which is where the reachable data begins."
+  }
+}

@@ -52,6 +52,11 @@
             "MLB"
           ]
         },
+        "game": {
+          "description": "Which minigame this question belongs to, as an id in data/games.json. Absent means the original game ('main'), which is why the 600 questions that predate the split carry no field: adding one to them would have changed the pool and re-dealt every day in the calendar. That the id actually exists is checked by pipeline/check_games.mjs, not here, because a schema cannot read the manifest.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
         "xLabel": {
           "type": "string",
           "minLength": 3,
