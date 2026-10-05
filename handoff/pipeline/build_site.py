@@ -33,6 +33,7 @@ ROOT = os.path.abspath(os.path.join(HERE, '..'))
 SRC_HTML = os.path.join(ROOT, 'reference', 'statmap.html')
 SRC_DATA = os.path.join(ROOT, 'data', 'questions.json')
 SRC_SCHEDULE = os.path.join(ROOT, 'data', 'schedule.json')
+SRC_GAMES = os.path.join(ROOT, 'data', 'games.json')
 SRC_ASSETS = os.path.join(ROOT, 'assets')
 OUT = os.path.join(ROOT, '..', 'site')
 
@@ -129,9 +130,93 @@ def fairness_gate():
     print(r.stdout.strip().splitlines()[-1])
 
 
+def games_gate():
+    """The games manifest has to agree with the pool, the schedules and the Worker
+    before any of it is published. Same reasoning as the fairness gate above: the
+    failure it catches — a game that loads, answers, and serves nothing — looks
+    completely healthy from outside."""
+    checker = os.path.join(HERE, 'check_games.mjs')
+    r = subprocess.run(['node', checker], capture_output=True, text=True)
+    if r.returncode != 0:
+        print(r.stdout + r.stderr)
+        sys.exit('games manifest is inconsistent — fix it before building.')
+    print(r.stdout.strip().splitlines()[-1])
+
+
+def game_page(html, game, games, site_url, depth):
+    """One game's page, from the one template.
+
+    `depth` is how many directories below the web root the page sits: 0 for the
+    original game at /, 1 for /nba/. It decides the asset paths, and those are the
+    only thing that differs structurally between the pages — the reference file
+    already writes '../assets/...' because it lives one directory below the data, so
+    a page at depth 1 wants them left exactly as they are and a page at the root
+    wants them flattened. Getting this backwards produces a page that loads, renders,
+    and silently falls back to system fonts.
+    """
+    url = site_url + ('/' if depth == 0 else f"/{game['slug']}/")
+
+    # Which game this page is, read by the single GAME/GAMES declaration in the
+    # template. Injected rather than string-replaced into the body: there is one
+    # place the page learns its identity, and it is a data assignment, so a page
+    # cannot half-change.
+    manifest = [{'id': gid, 'slug': g['slug'], 'name': g['name'], 'short': g['short'],
+                 'status': g['status']}
+                for gid, g in games.items()]
+    me = {'id': game['id'], 'slug': game['slug'], 'name': game['name'],
+          'short': game['short'], 'blurb': game['blurb'], 'epoch': game['epoch']}
+    inject = ('<script>window.__SM_GAME=' + json.dumps(me, separators=(',', ':'))
+              + ';window.__SM_GAMES=' + json.dumps(manifest, separators=(',', ':'))
+              + ';</script>')
+    html = html.replace('</head>', inject + '\n</head>', 1)
+
+    if depth == 0:
+        html, nf = re.subn(r"url\('\.\./assets/fonts/", "url('assets/fonts/", html)
+        assert nf > 0, 'expected font URLs to rewrite'
+        html, np = re.subn(r'href="\.\./assets/', 'href="assets/', html)
+        assert np > 0, 'expected font preload hrefs to rewrite'
+    else:
+        # Left alone on purpose — see the docstring. Asserted rather than assumed,
+        # because "the fonts are missing on the NBA page" is the kind of thing that
+        # gets noticed a week later.
+        assert "url('../assets/fonts/" in html, 'expected relative font URLs to survive'
+
+    # og:image has to be absolute whatever the depth: a relative one is the single
+    # most common reason a pasted link renders a blank card, and iMessage will not
+    # resolve one at all.
+    html = html.replace('content="assets/og-image.png"',
+                        f'content="{site_url}/assets/og-image.png"')
+    html = html.replace('content="../assets/og-image.png"',
+                        f'content="{site_url}/assets/og-image.png"')
+
+    if 'property="og:url"' not in html:
+        html = html.replace('<meta property="og:type" content="website">',
+                            f'<meta property="og:type" content="website">\n'
+                            f'<meta property="og:url" content="{url}">')
+    html = html.replace('<title>', f'<link rel="canonical" href="{url}">\n<title>', 1)
+
+    # Title and social copy name the game. A minigame sharing hard mode's title is
+    # the sort of thing that makes two different pages indistinguishable in a tab
+    # strip, in search results and in a pasted link card.
+    if game['id'] != 'main':
+        title = game['title']
+        html = html.replace('<title>StatMap: Daily Sports Stat Guessing Game</title>',
+                            f'<title>{title}</title>', 1)
+        for prop in ('property="og:title"', 'name="twitter:title"'):
+            html = re.sub(f'<meta {prop} content="[^"]*"',
+                          f'<meta {prop} content="{title}"', html)
+        for prop in ('property="og:description"', 'name="twitter:description"'):
+            html = re.sub(f'<meta {prop} content="[^"]*"',
+                          f'<meta {prop} content="{game["blurb"]}"', html)
+    return html
+
+
 def build(site_url, check=False, provider=None, domain=None):
     site_url = site_url.rstrip('/')
     fairness_gate()
+    games_gate()
+    games = json.load(open(SRC_GAMES))
+    live = {gid: dict(g, id=gid) for gid, g in games.items() if g['status'] == 'live'}
     html = open(SRC_HTML, encoding='utf-8').read()
 
     # 1. The data path. In the reference tree the game sits one directory below the
@@ -158,25 +243,12 @@ def build(site_url, check=False, provider=None, domain=None):
         f'Worker says {worker_epoch.group(1)} — the puzzle number and the questions '
         f'served would disagree')
 
-    # 2. Fonts move from ../assets/fonts to assets/fonts for the same reason.
-    html, nf = re.subn(r"url\('\.\./assets/fonts/", "url('assets/fonts/", html)
-    assert nf > 0, 'expected font URLs to rewrite'
-    # Same rewrite for the <link rel=preload> hrefs, which sit in the head rather
-    # than inside a CSS url().
-    html, np = re.subn(r'href="\.\./assets/', 'href="assets/', html)
-    assert np > 0, 'expected font preload hrefs to rewrite'
-
-    # 3. Absolute OG/Twitter URLs. Relative ones are the single most common reason a
-    #    link card renders blank, and for a game distributed by pasted links that card
-    #    IS the landing page. iMessage in particular will not resolve a relative
-    #    og:image.
-    html = html.replace('content="assets/og-image.png"',
-                        f'content="{site_url}/assets/og-image.png"')
-    if 'property="og:url"' not in html:
-        html = html.replace('<meta property="og:type" content="website">',
-                            f'<meta property="og:type" content="website">\n'
-                            f'<meta property="og:url" content="{site_url}/">')
-    html = html.replace('<title>', f'<link rel="canonical" href="{site_url}/">\n<title>', 1)
+    # 2. The page identity, asset depth, canonical URL and social copy are all
+    #    per-game now and live in game_page(). What is left here is everything that
+    #    is the same on every page.
+    assert 'window.__SM_GAME' in html, (
+        'expected the page to read its game identity from window.__SM_GAME — '
+        'without it every page would be hard mode wearing a different title')
 
     if provider:
         tag = ANALYTICS[provider]['tag'].format(domain=domain)
@@ -200,19 +272,29 @@ def build(site_url, check=False, provider=None, domain=None):
         html = html.replace(meta.group(0),
                             f'<meta http-equiv="Content-Security-Policy" content="{"; ".join(widened)}"')
 
-    leftovers = re.findall(r'(?:content|href|src)="(?!https?:|data:|#)[^"]*\.\./[^"]*"', html)
-    assert not leftovers, f'unresolved relative paths: {leftovers}'
+    # One page per LIVE game. A game that is not live has no page at all: a URL that
+    # loads a playable-looking board and then gets a 404 from the API is worse than
+    # no URL, and the start screen does not link to one either.
+    pages = {}
+    for gid, game in sorted(live.items(), key=lambda kv: (kv[1]['slug'] != '', kv[0])):
+        depth = 0 if game['slug'] == '' else 1
+        page = game_page(html, game, games, site_url, depth)
+        leftovers = re.findall(r'(?:content|href|src)="(?!https?:|data:|#)[^"]*\.\./[^"]*"', page)
+        if depth == 0:
+            assert not leftovers, f'{gid}: unresolved relative paths: {leftovers}'
+        pages['index.html' if depth == 0 else f"{game['slug']}/index.html"] = page
 
     if check:
         problems = []
-        if 'content="assets/og-image.png"' in html:
-            problems.append('og:image still relative')
-        if "fetch('../data" in html:
-            problems.append('data path still relative')
+        for rel, page in pages.items():
+            if 'content="assets/og-image.png"' in page:
+                problems.append(f'{rel}: og:image still relative')
+            if "fetch('../data" in page:
+                problems.append(f'{rel}: data path still relative')
         pool = json.load(open(SRC_DATA))
         if len(pool) < 5:
             problems.append(f'question pool too small to fill a day: {len(pool)}')
-        print('CHECK:', 'ok' if not problems else 'FAILED')
+        print('CHECK:', 'ok' if not problems else 'FAILED', f'({len(pages)} page(s))')
         for p in problems:
             print('  -', p)
         return 1 if problems else 0
@@ -220,7 +302,10 @@ def build(site_url, check=False, provider=None, domain=None):
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
     os.makedirs(OUT, exist_ok=True)
-    open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
+    for rel, page in pages.items():
+        dest = os.path.join(OUT, rel)
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        open(dest, 'w', encoding='utf-8').write(page)
     shutil.copytree(SRC_ASSETS, os.path.join(OUT, 'assets'),
                     ignore=shutil.ignore_patterns('og-source.html'))
 
@@ -246,6 +331,11 @@ def build(site_url, check=False, provider=None, domain=None):
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# Every game's page, same reasoning: the HTML names the day's puzzle number and the
+# game it belongs to, so a cached copy is a wrong page rather than a slow one.
+/*/index.html
+  Cache-Control: public, max-age=0, must-revalidate
 """)
 
     json.dump({
@@ -267,11 +357,14 @@ def build(site_url, check=False, provider=None, domain=None):
 
     open(os.path.join(OUT, 'robots.txt'), 'w').write(
         f'User-agent: *\nAllow: /\nSitemap: {site_url}/sitemap.xml\n')
+    locs = ''.join(
+        f'  <url><loc>{site_url}/{g["slug"] + "/" if g["slug"] else ""}</loc>'
+        f'<changefreq>daily</changefreq></url>\n'
+        for g in sorted(live.values(), key=lambda g: g['slug']))
     open(os.path.join(OUT, 'sitemap.xml'), 'w').write(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        f'  <url><loc>{site_url}/</loc><changefreq>daily</changefreq></url>\n'
-        '</urlset>\n')
+        + locs + '</urlset>\n')
 
     pool = json.load(open(SRC_DATA))
     total = sum(os.path.getsize(os.path.join(dp, f))

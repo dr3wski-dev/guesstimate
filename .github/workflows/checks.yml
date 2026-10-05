@@ -69,6 +69,14 @@ jobs:
       # Does every question still reward knowing the answer? This is the check that
       # caught two shipped questions paying better for a blind guess than for
       # knowledge, and neither looked wrong in review.
+      # A game that is "live" must have five questions, a schedule the Worker
+      # actually imports, and days pinned through today. Every one of those can be
+      # missing on its own, and the result is a page that loads, answers, and serves
+      # nothing — so it is a named step rather than only a side effect of the build.
+      - name: Games manifest
+        working-directory: handoff
+        run: node pipeline/check_games.mjs
+
       - name: Fairness gate
         run: node handoff/pipeline/audit_fairness.mjs
 

@@ -79,7 +79,17 @@ const server = http.createServer(async (req, res) => {
     return res.end(body);
   }
 
-  let file = path.join(SITE, url.pathname === '/' ? 'index.html' : url.pathname);
+  /* Directory index, same as a static host does it. Without this the minigames
+     404 locally while working in production, so the browser suites would be testing
+     a site shape that only exists on the dev box — and /nba/ would be the one route
+     nothing ever exercised. */
+  let rel = url.pathname === '/' ? 'index.html' : url.pathname.replace(/^\/+/, '');
+  if(rel.endsWith('/')) rel += 'index.html';
+  let file = path.join(SITE, rel);
+  if(!path.extname(file)) {
+    const asDir = path.join(file, 'index.html');
+    if(fs.existsSync(asDir)) file = asDir;
+  }
   if(!file.startsWith(SITE)) { res.writeHead(403); return res.end(); }
   fs.readFile(file, (err, data) => {
     if(err){ res.writeHead(404); return res.end('not found'); }

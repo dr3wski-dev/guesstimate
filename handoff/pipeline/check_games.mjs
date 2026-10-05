@@ -36,7 +36,7 @@ const slugs = new Map();
 for (const [id, g] of Object.entries(GAMES)) {
   const where = `games.json/${id}`;
   if (!/^[a-z][a-z0-9-]*$/.test(id)) problems.push(`${where}: id must be lowercase slug-safe`);
-  for (const field of ['name', 'short', 'blurb', 'epoch', 'status']) {
+  for (const field of ['name', 'title', 'short', 'blurb', 'epoch', 'status']) {
     if (!g[field]) problems.push(`${where}: missing "${field}"`);
   }
   if (!STATUSES.has(g.status)) {

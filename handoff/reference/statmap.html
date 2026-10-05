@@ -584,6 +584,27 @@ try{
   /* Ranged left with everything else. Centring it was the one break in the rail. */
   .start-screen .streak-line{ text-align:left; margin-bottom:0; }
   .start-screen .challenge-banner{ margin-bottom:0; }
+  /* THE GAME SWITCHER.
+     One rail, same as everything else on this screen. A row of links rather than a
+     dropdown: there are a handful of games, they all fit, and a select would hide
+     the fact that there is more than one game at all — which is the single thing
+     this block exists to communicate. */
+  .game-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .game-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em;
+              text-transform:uppercase; color:var(--ink-faint); }
+  .game-link{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink);
+    text-decoration:none; padding:5px 9px; border:2px solid var(--line);
+    border-radius:3px; background:var(--paper-2);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .game-link:hover, .game-link:focus-visible{ border-color:var(--ink); color:var(--guess); }
+  /* The game you are already on. Marked rather than removed, so the row reads as a
+     set you are inside rather than a list of elsewhere. */
+  .game-link[aria-current="page"]{
+    border-color:var(--ink); color:var(--ink-faint); pointer-events:none;
+  }
+  .game-soon{ font-size:11.5px; color:var(--ink-faint); line-height:1.5; }
   .restore{ margin-top:18px; padding-top:14px; border-top:2px dashed var(--line); }
   .restore-head{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
   .restore-note{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:0 0 10px; }
@@ -969,6 +990,23 @@ function clampScore(raw, max){
 // sessions. Declared up here rather than with the rotation code below because the
 // challenge-date sanitizer needs it, and this block deliberately runs first.
 const BAG_EPOCH = '2026-08-17';   // must match worker/src/selection.js; build_site.py asserts it
+
+/* ============================= WHICH GAME THIS PAGE IS =============================
+   One page template, several games. build_site.py writes a small inline <script>
+   into each page's <head> declaring which game it is and what the others are; this
+   file keeps working with no injection at all, which is what lets it still be opened
+   straight off disk during development.
+
+   GAME.epoch, not BAG_EPOCH, is what numbers a puzzle from here down. The two are
+   the same for the original game and different for every other one: a game that
+   opened in October is on #1 that day, not on #50 of a calendar it has never
+   played. BAG_EPOCH stays because the build asserts it against the Worker's copy,
+   and because a challenge link for the original game still has to resolve. */
+const GAME = window.__SM_GAME || { id:'main', name:'StatMap', short:'Hard mode',
+                                   slug:'', epoch:BAG_EPOCH };
+// Every game, for the switcher at the bottom of the start screen. Each entry:
+// { id, slug, name, short, status, note }. Empty when nothing was injected.
+const GAMES = window.__SM_GAMES || [];
 // A challenge link carries the date it was played on, so the recipient gets the
 // *same five questions* the sender did. Without it the banner claims "beat their
 // 350" while serving an entirely different puzzle. Bounded on both ends: nothing
@@ -978,7 +1016,7 @@ function sanitizeDate(raw){
   if(!raw || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
   const t = Date.parse(raw + 'T00:00:00Z');
   if(!Number.isFinite(t)) return null;
-  if(t < Date.parse(BAG_EPOCH + 'T00:00:00Z')) return null;
+  if(t < Date.parse(GAME.epoch + 'T00:00:00Z')) return null;
   if(t > Date.now() + 86400000) return null;
   return raw;
 }
@@ -1062,7 +1100,7 @@ function daysSince(dateStr, epoch){
   return Math.floor((Date.parse(dateStr + 'T00:00:00Z') - Date.parse(epoch + 'T00:00:00Z')) / 86400000);
 }
 function puzzleNumber(dateStr){
-  return Math.max(0, daysSince(dateStr, BAG_EPOCH)) + 1; // day one is #1
+  return Math.max(0, daysSince(dateStr, GAME.epoch)) + 1; // day one is #1
 }
 /* One round-trip for a day's questions. The only date the client may ask for is a
    challenge link's, and the server refuses anything that isn't already in the past,
@@ -1076,7 +1114,13 @@ function puzzleNumber(dateStr){
    "Unexpected token '<', "<!DOCTYPE "... is not valid JSON" — which tells a player
    nothing except that something is broken in a way they can't fix. */
 async function fetchDaily(dateStr){
-  const q = dateStr ? `?d=${encodeURIComponent(dateStr)}` : '';
+  // The game id goes on the wire. Omitted for the original game so its URLs, and
+  // the edge cache entry behind them, are byte-identical to what they have always
+  // been — the Worker defaults to it.
+  const p = new URLSearchParams();
+  if(dateStr) p.set('d', dateStr);
+  if(GAME.id !== 'main') p.set('g', GAME.id);
+  const q = p.toString() ? `?${p}` : '';
   let res;
   try{
     res = await fetch(`${API_BASE}/daily${q}`);
@@ -1115,7 +1159,12 @@ async function fetchDaily(dateStr){
    true, so that round is silently discarded — no streak credit, no day counted, no
    points, and no message explaining why. Everything below now runs on the same
    Eastern calendar date the puzzle does. */
-const STATS_KEY = 'statmap_stats_v1';
+/* Stats are PER GAME, which is the whole point of a streak existing at all: a
+   streak on the NBA game is a run of NBA days, and sharing one counter across games
+   would mean playing any one of them kept all of them alive. The original game keeps
+   the unsuffixed key it has always used, because renaming it would reset the streak
+   of everybody currently playing. */
+const STATS_KEY = 'statmap_stats_v1' + (GAME.id === 'main' ? '' : '_' + GAME.id);
 // Vestigial since the rename to StatMap: the whole localStorage namespace moved to
 // statmap_*, and this names a key from a build that was never deployed, so no browser
 // on the production origin can hold one. Kept because it costs nothing at runtime and
@@ -1197,6 +1246,10 @@ function makeRestoreCode(s){
     lastPlayed: s.lastPlayed, currentStreak: s.currentStreak, bestStreak: s.bestStreak,
     daysPlayed: s.daysPlayed, totalPoints: s.totalPoints, bestRound: s.bestRound,
     tiers: s.tiers,
+    // Which game these stats belong to. Without it, pasting an NBA code into hard
+    // mode would overwrite a real streak with one earned somewhere else, and the
+    // code would look perfectly valid doing it.
+    g: GAME.id,
   };
   const body = b64encode(JSON.stringify(slim));
   return `${CODE_PREFIX}-${checksum(body)}-${body}`;
@@ -1213,6 +1266,14 @@ function readRestoreCode(raw){
   try{ parsed = JSON.parse(b64decode(body)); }
   catch(e){ throw new Error("That code couldn't be read."); }
   if(!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error("That code couldn't be read.");
+  // A code made before games existed carries no marker, and those can only be hard
+  // mode's — accept them there and nowhere else.
+  const codeGame = typeof parsed.g === 'string' ? parsed.g : 'main';
+  if(codeGame !== GAME.id){
+    const other = (GAMES.find(g => g.id === codeGame) || {}).name || codeGame;
+    throw new Error(`That code is from ${other}, not ${GAME.name}. `
+      + `Each game keeps its own streak, so open that one and paste it there.`);
+  }
   const n = v => Number.isFinite(+v) && +v >= 0 ? Math.floor(+v) : 0;
   const merged = Object.assign({}, DEFAULT_STATS, {
     lastPlayed: /^\d{4}-\d{2}-\d{2}$/.test(parsed.lastPlayed) ? parsed.lastPlayed : null,
@@ -1706,6 +1767,33 @@ function startScreen(){
   const replayNote = playedToday
     ? `<p class="instructions">You've already played puzzle #${PUZZLE_NO}.</p>`
     : '';
+  /* The other games. Only rendered when the build injected a manifest, so the
+     reference file opened off disk shows nothing rather than a row of dead links.
+     Relative hrefs: the original game sits at the root and the others one level
+     down, so a link from /nba/ back to hard mode is '../' and a link between two
+     minigames is '../mlb/'. Absolute paths would hard-code an origin into a file
+     that is also served from a preview domain and from disk.
+
+     Games with no pool yet are one muted sentence rather than six dead rows. The
+     reason each one is closed is specific and worth keeping, but it belongs in
+     data/games.json where it can be reviewed, not in six tooltips nobody on a phone
+     can open. */
+  const here = GAME.slug || '';
+  const hrefTo = slug => {
+    const up = here ? '../' : '';
+    return slug ? `${up}${slug}/` : (up || './');
+  };
+  const live = GAMES.filter(g => g.status === 'live');
+  const pending = GAMES.filter(g => g.status !== 'live');
+  const gamesHTML = live.length > 1 ? `
+      <div class="start-group">
+        <div class="game-head">Games</div>
+        <div class="game-row">${live.map(g => `<a class="game-link" href="${hrefTo(g.slug)}"${
+          g.id === GAME.id ? ' aria-current="page"' : ''}>${escapeHtml(g.short)}</a>`).join('')}</div>
+        ${pending.length ? `<p class="game-soon">Also coming: ${
+          pending.map(g => escapeHtml(g.short)).join(', ')} — each one opens when there
+          is a source every number in it can be checked against.</p>` : ''}
+      </div>` : '';
   panel.classList.remove('has-chart');
   // Four groups, in the order a person actually needs them: what this is, where
   // today stands, what they can do, and the small print.
@@ -1718,7 +1806,13 @@ function startScreen(){
   panel.innerHTML = `
     <div class="start-screen">
       <div class="start-group">
-        <h1 class="title">StatMap</h1>
+        <h1 class="title">${escapeHtml(GAME.name)}</h1>
+        <!-- WHAT this game asks, then HOW to answer. Only the minigames carry the
+             first line: hard mode is the thing everything else is a variation of, and
+             its own description is the one the whole page already is. On a minigame
+             it is the difference between "guess where the dot goes" and knowing you
+             are being asked for a CAREER average rather than one season. -->
+        ${GAME.blurb && GAME.id !== 'main' ? `<p class="sub">${escapeHtml(GAME.blurb)}</p>` : ''}
         <p class="sub">Real reference players are plotted on a 2D chart. Click, drag, or arrow-key where you think the named player falls on both stats at once.</p>
       </div>
       <div class="start-group">
@@ -1732,6 +1826,7 @@ function startScreen(){
         ${streakHTML}
       </div>
       <div class="start-actions"><button class="primary" id="startBtn">${startLabel}</button>${archiveBtn}${leaveChallengeBtn}</div>
+      ${gamesHTML}
       <div class="start-group start-foot">
         <button class="how-link" id="howLink">How does scoring work?</button>
         <!-- rel="noopener noreferrer" is not boilerplate here: target="_blank"
@@ -2298,9 +2393,11 @@ function showResults(){
   const strip = roundScores.map(s=>scoreTier(s).emoji).join('');
   track('round_complete', { mode: MODE, score: total, band: `${Math.floor(total/50)*50}-${Math.floor(total/50)*50+49}`,
                             streak: MODE==='daily' ? liveStreak(stats, TODAY) : 0 });
+  // The game's own name, so two shared strips from two different games are not both
+  // "StatMap #3" with unrelated scores under them.
   const headline = MODE === 'challenge'
-    ? `StatMap #${puzzleNumber(SERVED_DATE)}`
-    : `StatMap #${PUZZLE_NO}`;
+    ? `${GAME.name} #${puzzleNumber(SERVED_DATE)}`
+    : `${GAME.name} #${PUZZLE_NO}`;
   const pills = roundScores.map(s=>{
     const tier = scoreTier(s);
     return `<span class="pill" style="border-color:${tier.color};color:${tier.color}">${tierMark(tier)} +${s}</span>`;
@@ -2443,9 +2540,9 @@ const archiveModal = document.getElementById('archiveModal');
 function archiveDates(){
   // Newest first: the interesting end of a list of days is the recent end.
   const out = [];
-  const last = daysSince(TODAY || todayDateString(), BAG_EPOCH);
+  const last = daysSince(TODAY || todayDateString(), GAME.epoch);
   for(let d = last; d >= 0; d--){
-    out.push(new Date(Date.parse(BAG_EPOCH + 'T00:00:00Z') + d * 86400000)
+    out.push(new Date(Date.parse(GAME.epoch + 'T00:00:00Z') + d * 86400000)
       .toISOString().slice(0, 10));
   }
   return out;

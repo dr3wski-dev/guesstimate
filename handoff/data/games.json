@@ -1,6 +1,7 @@
 {
   "main": {
     "name": "StatMap",
+    "title": "StatMap: Daily Sports Stat Guessing Game",
     "slug": "",
     "short": "Hard mode",
     "blurb": "Every league, every kind of stat — single seasons, career totals, height, All-Star counts. No warm-up.",
@@ -9,6 +10,7 @@
   },
   "nba": {
     "name": "StatMap NBA",
+    "title": "StatMap NBA: Daily NBA Career Stat Game",
     "slug": "nba",
     "short": "NBA careers",
     "blurb": "Career per-game averages only. One league, one kind of number, so you can actually calibrate.",
@@ -17,6 +19,7 @@
   },
   "mlb": {
     "name": "StatMap MLB",
+    "title": "StatMap MLB: Daily Baseball Career Stat Game",
     "slug": "mlb",
     "short": "MLB careers",
     "blurb": "Career rate lines for hitters and pitchers — averages, ERAs, per-nine rates.",
@@ -25,6 +28,7 @@
   },
   "nfl": {
     "name": "StatMap NFL",
+    "title": "StatMap NFL: Daily NFL Career Stat Game",
     "slug": "nfl",
     "short": "NFL careers",
     "blurb": "Career per-touch rates — yards per carry, yards per catch, catch rate.",
@@ -34,6 +38,7 @@
   },
   "nhl": {
     "name": "StatMap NHL",
+    "title": "StatMap NHL: Daily Hockey Career Stat Game",
     "slug": "nhl",
     "short": "NHL careers",
     "blurb": "Career per-game scoring rates.",
@@ -43,6 +48,7 @@
   },
   "cfb": {
     "name": "StatMap College Football",
+    "title": "StatMap College Football: Daily Career Stat Game",
     "slug": "cfb",
     "short": "College football",
     "blurb": "Career per-game rates for college careers.",
@@ -52,6 +58,7 @@
   },
   "psu": {
     "name": "StatMap Penn State",
+    "title": "StatMap Penn State: Daily Nittany Lion Stat Game",
     "slug": "psu",
     "short": "Penn State",
     "blurb": "Nittany Lion careers.",
