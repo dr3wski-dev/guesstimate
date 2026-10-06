@@ -78,11 +78,11 @@ MLB_CAREER_LABELS = {
     'Career on-base percentage': 'OBP',
     'Career slugging percentage': 'SLG',
     'Career OPS (on-base plus slugging)': 'OPS',
-    'Career isolated power (slugging minus average)': 'ISO',
-    'Career walk rate (share of plate appearances)': 'BBPCT',
-    'Career strikeout rate (share of plate appearances)': 'SOPCT',
-    'Career home runs per 600 plate appearances': 'HR600',
-    'Career stolen bases per 600 plate appearances': 'SB600',
+    'Career isolated power (SLG minus AVG)': 'ISO',
+    'Career walk rate': 'BBPCT',
+    'Career strikeout rate': 'SOPCT',
+    'Career home runs per 600 PA': 'HR600',
+    'Career stolen bases per 600 PA': 'SB600',
     'Career runs scored per game': 'RG',
     'Career runs batted in per game': 'RBIG',
     'Career games played': 'G',
@@ -170,6 +170,30 @@ NFL_LABELS = {
 # question that plots one now fails rather than reproduces.
 NFL_TARGETS_BROKEN = range(2003, 2009)
 NFL_AIRYARDS_FROM = 2006
+# The NFL minigame's axes: whole-career per-touch rates. Per touch and not per game
+# because this file has no games-played column — a row exists only for a week a
+# player recorded something, so a career per-game rate would come out high with
+# nothing to flag it.
+NFL_CAREER_LABELS = {
+    'Career rushing attempts': 'carries',
+    'Career rushing yards': 'rush_yds',
+    'Career receptions': 'rec',
+    'Career receiving yards': 'rec_yds',
+    'Career yards per carry': 'ypc',
+    'Career rushing TDs per 100 carries': 'rush_td_pct',
+    'Career yards per reception': 'ypr',
+    'Career receiving TDs per 100 catches': 'rec_td_pct',
+    'Career catch rate': 'catch_pct',
+    'Career yards after catch per reception': 'yac_per_rec',
+    'Career air yards per target': 'ay_per_tgt',
+}
+# A career cannot be gated season by season the way NFL_SEASON_GATED does it: the
+# whole point of a career total is that the seasons are already summed. So the gate
+# moves to the DEBUT. 1999-2001 play-by-play is materially less complete, so a career
+# that includes it carries that gap forever; targets echo receptions through 2008, so
+# anything built on targets needs a career that starts after the window closed.
+NFL_CAREER_DEBUT = 2002
+NFL_CAREER_TARGET_DEBUT = max(NFL_TARGETS_BROKEN) + 1
 NFL_SEASON_GATED = {
     'tgt': lambda yr: yr not in NFL_TARGETS_BROKEN,
     'ypt': lambda yr: yr not in NFL_TARGETS_BROKEN,
@@ -388,6 +412,79 @@ def nba_table():
     return out
 
 
+def nfl_career_table():
+    """{normalized name: {stat: value}} — career per-touch rates, re-derived.
+
+    Every rate is a ratio of two career totals from the same rows, never an average
+    of season rates: a three-carry game at twelve yards apiece does not belong in the
+    same average as a three-hundred-carry season at 4.2.
+
+    Refuses rather than guesses in three situations. A name two players share — this
+    file contains two distinct Ricky Williamses overlapping in 2002-03, and
+    name-keying silently summed them. A career that starts before the yardage is
+    trustworthy. And, for anything derived from targets, a career that overlaps the
+    window where the targets column simply echoes receptions — which is the failure
+    that shipped four plotted values once already, with the verifier passing them
+    because it re-derived from the same broken column.
+    """
+    rows = [r for r in read('nfl_player_stats.csv') if r.get('season_type') == 'REG']
+    COLS = ('rushing_yards', 'rushing_tds', 'receiving_yards', 'receiving_tds',
+            'receptions', 'carries', 'targets', 'receiving_air_yards',
+            'receiving_yards_after_catch')
+    tot, years, names, volume = defaultdict(Counter), defaultdict(set), {}, Counter()
+    for r in rows:
+        pid = r['player_id']
+        names[pid] = r['player_display_name']
+        years[pid].add(int(r['season']))
+        for c in COLS:
+            v = r.get(c)
+            if v:
+                try:
+                    tot[pid][c] += float(v)
+                except ValueError:
+                    pass
+        for c in ('rushing_yards', 'receiving_yards', 'passing_yards'):
+            if r.get(c):
+                try:
+                    volume[pid] += float(r[c])
+                except ValueError:
+                    pass
+
+    claims = defaultdict(list)
+    for pid, nm in names.items():
+        claims[norm(nm)].append(pid)
+
+    out = {}
+    for key, pids in claims.items():
+        pids.sort(key=lambda p: -volume[p])
+        if len(pids) > 1 and volume[pids[0]] > 0 and volume[pids[1]] / volume[pids[0]] >= 0.5:
+            continue
+        pid = pids[0]
+        first = min(years[pid])
+        if first < NFL_CAREER_DEBUT:
+            continue
+        c = tot[pid]
+        rate = lambda num, den, places=1: round(num / den, places) if den else None
+        targets_ok = first >= NFL_CAREER_TARGET_DEBUT
+        out[key] = {
+            'carries': int(c['carries']) or None,
+            'rush_yds': int(c['rushing_yards']) or None,
+            'rec': int(c['receptions']) or None,
+            'rec_yds': int(c['receiving_yards']) or None,
+            'ypc': rate(c['rushing_yards'], c['carries'], 2),
+            'rush_td_pct': rate(100 * c['rushing_tds'], c['carries'], 1),
+            'ypr': rate(c['receiving_yards'], c['receptions'], 2),
+            'rec_td_pct': rate(100 * c['receiving_tds'], c['receptions'], 1),
+            'catch_pct': (rate(100 * c['receptions'], c['targets'], 1)
+                          if targets_ok else None),
+            'yac_per_rec': (rate(c['receiving_yards_after_catch'], c['receptions'], 2)
+                            if targets_ok else None),
+            'ay_per_tgt': (rate(c['receiving_air_yards'], c['targets'], 2)
+                           if targets_ok else None),
+        }
+    return out
+
+
 def nba_career_table():
     """{normalized name: {stat: value}} — career averages, re-derived.
 
@@ -530,6 +627,7 @@ def main():
     mlb, nfl, nba = mlb_table(), nfl_table(), nba_table()
     mlbp = mlb_pitch_table()
     nba_career = nba_career_table()
+    nfl_career = nfl_career_table()
     checked = mismatched = unverified = 0
     problems, skipped = [], []
 
@@ -547,6 +645,7 @@ def main():
         hitting_labels, pitching_labels = {
             'nba': (NBA_CAREER_LABELS, {}),
             'mlb': (MLB_CAREER_LABELS, MLB_PITCH_CAREER_LABELS),
+            'nfl': (NFL_CAREER_LABELS, {}),
         }.get(game) or (
             {'MLB': MLB_LABELS, 'NFL': NFL_LABELS, 'NBA': NBA_LABELS}
             .get(q['league'], {}),
@@ -576,6 +675,8 @@ def main():
                 # anyway is a question authored against the wrong table, so it is left
                 # to fail on the lookup rather than quietly ignored.
                 rec = None if season is not None else nba_career.get(norm(nm))
+            elif game == 'nfl':
+                rec = None if season is not None else nfl_career.get(norm(nm))
             elif q['league'] == 'MLB':
                 rec = (mlbp.get(norm(nm)) if pitching
                        else (mlb.get('@' + who) or mlb.get(norm(nm))))
@@ -607,7 +708,8 @@ def main():
             for key, shipped, axis in ((xk, gx, 'x'), (yk, gy, 'y')):
                 # A value from a season where this column is not a measurement is a
                 # failure however well the two sides agree about it.
-                gate = NFL_SEASON_GATED.get(key) if q['league'] == 'NFL' else None
+                gate = (NFL_SEASON_GATED.get(key)
+                        if q['league'] == 'NFL' and not game else None)
                 if gate and season is not None and not gate(season):
                     mismatched += 1
                     problems.append(

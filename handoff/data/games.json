@@ -12,37 +12,36 @@
     "name": "StatMap NBA",
     "title": "StatMap NBA: Daily NBA Career Stat Game",
     "slug": "nba",
-    "short": "NBA careers",
+    "short": "NBA",
     "blurb": "Career per-game averages only. One league, one kind of number, so you can actually calibrate.",
-    "epoch": "2026-10-05",
+    "epoch": "2026-10-06",
     "status": "live"
   },
   "mlb": {
     "name": "StatMap MLB",
     "title": "StatMap MLB: Daily Baseball Career Stat Game",
     "slug": "mlb",
-    "short": "MLB careers",
+    "short": "MLB",
     "blurb": "Career rate lines for hitters and pitchers — averages, ERAs, per-nine rates.",
-    "epoch": "2026-10-05",
+    "epoch": "2026-10-06",
     "status": "live"
   },
   "nfl": {
     "name": "StatMap NFL",
     "title": "StatMap NFL: Daily NFL Career Stat Game",
     "slug": "nfl",
-    "short": "NFL careers",
-    "blurb": "Career per-touch rates — yards per carry, yards per catch, catch rate.",
-    "epoch": "2026-10-05",
-    "status": "soon",
-    "note": "Measured, not guessed: the nflverse weekly data starts in 1999, its 1999-2001 yardage is materially less complete than 2002 onward, and its targets column simply echoes receptions for 2003-2008. Those three faults stack up on a CAREER in a way they do not on a single season, which leaves 40 retired players with a 2002-or-later debut — 27 with enough receptions for a yards-per-catch chart, 20 with enough carries, 7 with enough pass attempts. That is about ten days of content before it repeats, which is not a daily game. It opens when there is a source that reaches further back, or as season averages instead of career ones if that is the call."
+    "short": "NFL",
+    "blurb": "Career per-touch rates — yards per carry, yards per catch, touchdown rate. Retired players, 2002 onward.",
+    "epoch": "2026-10-06",
+    "status": "live"
   },
   "nhl": {
     "name": "StatMap NHL",
     "title": "StatMap NHL: Daily Hockey Career Stat Game",
     "slug": "nhl",
-    "short": "NHL careers",
+    "short": "NHL",
     "blurb": "Career per-game scoring rates.",
-    "epoch": "2026-10-05",
+    "epoch": "2026-10-06",
     "status": "blocked",
     "note": "No open NHL dataset has been found that covers whole careers and can be re-derived independently. The candidates checked so far are either play-by-play events (which would mean inventing our own season totals with nothing to check them against) or unreachable. This game opens when there is a source that passes the same bar as the others, and not before."
   },
@@ -52,7 +51,7 @@
     "slug": "cfb",
     "short": "College football",
     "blurb": "Career per-game rates for college careers.",
-    "epoch": "2026-10-05",
+    "epoch": "2026-10-06",
     "status": "blocked",
     "note": "The open college-football data we can reach starts at 2014 and is play-by-play level. Career totals built from it would be our own arithmetic with no second source to check them against — two readings of one file agreeing with each other is not verification. This game opens when there is a source that passes the same bar as the others."
   },
@@ -62,7 +61,7 @@
     "slug": "psu",
     "short": "Penn State",
     "blurb": "Nittany Lion careers.",
-    "epoch": "2026-10-05",
+    "epoch": "2026-10-06",
     "status": "blocked",
     "note": "Same blocker as the college-football game, plus a sharper one: most of the Penn State careers worth asking about are from before 2014, which is where the reachable data begins."
   }

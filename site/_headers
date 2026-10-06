@@ -28,3 +28,9 @@
 
 /nba/index.html
   Cache-Control: public, max-age=0, must-revalidate
+
+/nfl/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/nfl/index.html
+  Cache-Control: public, max-age=0, must-revalidate

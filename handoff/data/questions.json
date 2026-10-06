@@ -38216,7 +38216,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -38273,7 +38273,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -38387,7 +38387,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -38444,7 +38444,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -38556,9 +38556,9 @@
     "id": "mlb-cso-sb-willie-stargell",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -38672,7 +38672,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -38841,9 +38841,9 @@
     "id": "mlb-cbb-sb-harmon-killebrew",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -38900,7 +38900,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -38957,7 +38957,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -39012,9 +39012,9 @@
     "id": "mlb-cbb-sb-andre-dawson",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -39128,7 +39128,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -39240,9 +39240,9 @@
     "id": "mlb-cso-sb-harmon-killebrew",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -39299,7 +39299,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -39354,9 +39354,9 @@
     "id": "mlb-cbb-sb-willie-mccovey",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -39413,7 +39413,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -39468,9 +39468,9 @@
     "id": "mlb-cbb-sb-mark-mcgwire",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -39527,7 +39527,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -39926,7 +39926,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -39981,9 +39981,9 @@
     "id": "mlb-cbb-sb-dave-concepcion",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -40154,7 +40154,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -40439,7 +40439,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -40496,7 +40496,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -40610,7 +40610,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -40665,7 +40665,7 @@
     "id": "mlb-cso-rg-lance-parrish",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -40724,7 +40724,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -41123,7 +41123,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -41180,7 +41180,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -41351,7 +41351,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -41408,7 +41408,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -41463,9 +41463,9 @@
     "id": "mlb-cso-sb-jim-thome",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -41522,7 +41522,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -41862,7 +41862,7 @@
     "id": "mlb-ciso-rg-lou-brock",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -41921,7 +41921,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -42206,7 +42206,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -42263,7 +42263,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -42320,7 +42320,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -42377,7 +42377,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -42434,7 +42434,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -42945,9 +42945,9 @@
     "id": "mlb-cbb-sb-jason-giambi",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -43061,7 +43061,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -43116,7 +43116,7 @@
     "id": "mlb-chr-rg-barry-larkin",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -43175,7 +43175,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -43232,7 +43232,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -43743,7 +43743,7 @@
     "id": "mlb-ciso-rg-willie-mccovey",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -43802,7 +43802,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -43859,7 +43859,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -43916,7 +43916,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -44087,7 +44087,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -44144,7 +44144,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -44199,7 +44199,7 @@
     "id": "mlb-ciso-rg-derek-jeter",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -44258,7 +44258,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -44885,7 +44885,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -44940,9 +44940,9 @@
     "id": "mlb-cbb-so-joe-morgan",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -44997,7 +44997,7 @@
     "id": "mlb-chr-rg-dave-kingman",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -45056,7 +45056,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -45111,9 +45111,9 @@
     "id": "mlb-cbb-sb-luis-aparicio",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -45282,9 +45282,9 @@
     "id": "mlb-cso-sb-carl-yastrzemski",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -45341,7 +45341,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -45396,7 +45396,7 @@
     "id": "mlb-cso-rg-jason-giambi",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -45453,9 +45453,9 @@
     "id": "mlb-cso-sb-ozzie-smith",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -45510,9 +45510,9 @@
     "id": "mlb-cbb-so-barry-bonds",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -45567,7 +45567,7 @@
     "id": "mlb-chr-rg-roberto-alomar",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -45626,7 +45626,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -46023,9 +46023,9 @@
     "id": "mlb-cso-sb-lance-parrish",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -46196,7 +46196,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -46251,7 +46251,7 @@
     "id": "mlb-cso-rg-reggie-jackson",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -46310,7 +46310,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -46367,7 +46367,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -46821,9 +46821,9 @@
     "id": "mlb-cbb-so-wade-boggs",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -46878,7 +46878,7 @@
     "id": "mlb-cso-rg-tim-raines",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -46937,7 +46937,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -46994,7 +46994,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -47051,7 +47051,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -47393,7 +47393,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -47507,7 +47507,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -47963,7 +47963,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -48020,7 +48020,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -48075,7 +48075,7 @@
     "id": "mlb-ciso-rg-kenny-lofton",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -48191,7 +48191,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -48303,7 +48303,7 @@
     "id": "mlb-chr-rg-fred-lynn",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -48932,7 +48932,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -49046,7 +49046,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -49215,7 +49215,7 @@
     "id": "mlb-ciso-rg-paul-molitor",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -49614,9 +49614,9 @@
     "id": "mlb-cbb-sb-jim-thome",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -49673,7 +49673,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -49730,7 +49730,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -49787,7 +49787,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -49844,7 +49844,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -50013,7 +50013,7 @@
     "id": "mlb-cso-rg-barry-larkin",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -50070,9 +50070,9 @@
     "id": "mlb-cso-sb-alan-trammell",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -50528,7 +50528,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -50583,7 +50583,7 @@
     "id": "mlb-cso-rg-pete-rose",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -50642,7 +50642,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -50699,7 +50699,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -50813,7 +50813,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -50927,7 +50927,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -51041,7 +51041,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -51381,7 +51381,7 @@
     "id": "mlb-cso-rg-willie-stargell",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -51440,7 +51440,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -51497,7 +51497,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -51552,7 +51552,7 @@
     "id": "mlb-ciso-rg-eddie-murray",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -51666,7 +51666,7 @@
     "id": "mlb-chr-rg-derek-jeter",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -51782,7 +51782,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -51839,7 +51839,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -52350,7 +52350,7 @@
     "id": "mlb-cso-rg-hank-aaron",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -52409,7 +52409,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -52521,9 +52521,9 @@
     "id": "mlb-cbb-so-carl-yastrzemski",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -52751,7 +52751,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -52808,7 +52808,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -52863,9 +52863,9 @@
     "id": "mlb-cbb-so-alfonso-soriano",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -53262,7 +53262,7 @@
     "id": "mlb-chr-rg-tim-raines",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -53321,7 +53321,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -53378,7 +53378,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -53433,9 +53433,9 @@
     "id": "mlb-cbb-so-lance-parrish",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -54005,7 +54005,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -54062,7 +54062,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -54290,7 +54290,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -54345,7 +54345,7 @@
     "id": "mlb-ciso-rg-willie-stargell",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -54402,7 +54402,7 @@
     "id": "mlb-cso-rg-paul-molitor",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -55200,7 +55200,7 @@
     "id": "mlb-chr-rg-rickey-henderson",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -55259,7 +55259,7 @@
     "game": "mlb",
     "xLabel": "Career slugging percentage",
     "xUnit": "SLG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -55316,7 +55316,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -55485,7 +55485,7 @@
     "id": "mlb-ciso-rg-pete-rose",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career isolated power (slugging minus average)",
+    "xLabel": "Career isolated power (SLG minus AVG)",
     "xUnit": "ISO",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -55715,7 +55715,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career walk rate (share of plate appearances)",
+    "yLabel": "Career walk rate",
     "yUnit": "BB%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -56055,7 +56055,7 @@
     "id": "mlb-chr-rg-paul-molitor",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -56112,9 +56112,9 @@
     "id": "mlb-cbb-so-gary-sheffield",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -56342,7 +56342,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -56399,7 +56399,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career home runs per 600 plate appearances",
+    "yLabel": "Career home runs per 600 PA",
     "yUnit": "HR",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -56456,7 +56456,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -56513,7 +56513,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -56568,9 +56568,9 @@
     "id": "mlb-cbb-so-ivan-rodriguez",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career walk rate (share of plate appearances)",
+    "xLabel": "Career walk rate",
     "xUnit": "BB%",
-    "yLabel": "Career strikeout rate (share of plate appearances)",
+    "yLabel": "Career strikeout rate",
     "yUnit": "SO%",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -56627,7 +56627,7 @@
     "game": "mlb",
     "xLabel": "Career on-base percentage",
     "xUnit": "OBP",
-    "yLabel": "Career isolated power (slugging minus average)",
+    "yLabel": "Career isolated power (SLG minus AVG)",
     "yUnit": "ISO",
     "xStep": 0.001,
     "yStep": 0.001,
@@ -56912,7 +56912,7 @@
     "game": "mlb",
     "xLabel": "Career batting average",
     "xUnit": "AVG",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -57026,7 +57026,7 @@
     "game": "mlb",
     "xLabel": "Career OPS (on-base plus slugging)",
     "xUnit": "OPS",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.001,
     "yStep": 0.1,
@@ -57081,9 +57081,9 @@
     "id": "mlb-cso-sb-barry-larkin",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career strikeout rate (share of plate appearances)",
+    "xLabel": "Career strikeout rate",
     "xUnit": "SO%",
-    "yLabel": "Career stolen bases per 600 plate appearances",
+    "yLabel": "Career stolen bases per 600 PA",
     "yUnit": "SB",
     "xStep": 0.1,
     "yStep": 0.1,
@@ -57252,7 +57252,7 @@
     "id": "mlb-chr-rg-ron-santo",
     "league": "MLB",
     "game": "mlb",
-    "xLabel": "Career home runs per 600 plate appearances",
+    "xLabel": "Career home runs per 600 PA",
     "xUnit": "HR",
     "yLabel": "Career runs scored per game",
     "yUnit": "R/G",
@@ -57361,5 +57361,2506 @@
       1955,
       1977
     ]
+  },
+  {
+    "id": "nfl-crec-rtd-ben-roethlisberger",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      2,
+      6
+    ],
+    "targetPlayer": "Ben Roethlisberger",
+    "targetX": 1,
+    "targetY": 3.9,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch",
+        "x": 287,
+        "y": 3.5
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 400,
+        "y": 2.6
+      },
+      {
+        "name": "Matt Forte",
+        "x": 555,
+        "y": 2.3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rec-alex-smith",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20000
+    ],
+    "yDomain": [
+      0,
+      800
+    ],
+    "targetPlayer": "Alex Smith",
+    "targetX": 2608,
+    "targetY": 3,
+    "referencePlayers": [
+      {
+        "name": "Cole Beasley",
+        "x": 7,
+        "y": 556
+      },
+      {
+        "name": "James White",
+        "x": 1278,
+        "y": 381
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 9923,
+        "y": 247
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rtd-ben-roethlisberger",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20000
+    ],
+    "yDomain": [
+      2,
+      6
+    ],
+    "targetPlayer": "Ben Roethlisberger",
+    "targetX": 1370,
+    "targetY": 3.9,
+    "referencePlayers": [
+      {
+        "name": "Le'Veon Bell",
+        "x": 6554,
+        "y": 2.6
+      },
+      {
+        "name": "Matt Forte",
+        "x": 9789,
+        "y": 2.3
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 11102,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-ypc-alex-smith",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Alex Smith",
+    "targetX": 3,
+    "targetY": 4.52,
+    "referencePlayers": [
+      {
+        "name": "Arian Foster",
+        "x": 255,
+        "y": 4.42
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 307,
+        "y": 4.47
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 460,
+        "y": 4.14
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rec-alex-smith",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      0,
+      2000
+    ],
+    "targetPlayer": "Alex Smith",
+    "targetX": 577,
+    "targetY": 3,
+    "referencePlayers": [
+      {
+        "name": "Wes Welker",
+        "x": 18,
+        "y": 904
+      },
+      {
+        "name": "James White",
+        "x": 319,
+        "y": 381
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 2453,
+        "y": 287
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-ypc-matt-forte",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      200,
+      600
+    ],
+    "yDomain": [
+      4.1,
+      4.9
+    ],
+    "targetPlayer": "Matt Forte",
+    "targetX": 555,
+    "targetY": 4.16,
+    "referencePlayers": [
+      {
+        "name": "Clinton Portis",
+        "x": 247,
+        "y": 4.45
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 305,
+        "y": 4.62
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 518,
+        "y": 4.52
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rtd-ben-roethlisberger",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      1.5,
+      5.5
+    ],
+    "targetPlayer": "Ben Roethlisberger",
+    "targetX": 516,
+    "targetY": 3.9,
+    "referencePlayers": [
+      {
+        "name": "Le'Veon Bell",
+        "x": 1595,
+        "y": 2.6
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 2453,
+        "y": 3.5
+      },
+      {
+        "name": "Frank Gore",
+        "x": 3736,
+        "y": 2.2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cctd-yac-antonio-brown",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving TDs per 100 catches",
+    "xUnit": "TD",
+    "yLabel": "Career yards after catch per reception",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      1.25,
+      11.25
+    ],
+    "yDomain": [
+      4,
+      12
+    ],
+    "targetPlayer": "Antonio Brown",
+    "targetX": 8.9,
+    "targetY": 4.81,
+    "referencePlayers": [
+      {
+        "name": "Le'Veon Bell",
+        "x": 2.2,
+        "y": 8.39
+      },
+      {
+        "name": "Arian Foster",
+        "x": 5.5,
+        "y": 8.78
+      },
+      {
+        "name": "James White",
+        "x": 6.6,
+        "y": 7.61
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ypr-marshawn-lynch",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      7.5,
+      9.5
+    ],
+    "targetPlayer": "Marshawn Lynch",
+    "targetX": 3.5,
+    "targetY": 7.71,
+    "referencePlayers": [
+      {
+        "name": "Matt Forte",
+        "x": 2.3,
+        "y": 8.43
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 2.5,
+        "y": 7.99
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 3.1,
+        "y": 8.36
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-ypc-alex-smith",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      -1000,
+      7000
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Alex Smith",
+    "targetX": -7,
+    "targetY": 4.52,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch",
+        "x": 2214,
+        "y": 4.25
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 3297,
+        "y": 4.11
+      },
+      {
+        "name": "Matt Forte",
+        "x": 4679,
+        "y": 4.16
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-ypr-matt-forte",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.01,
+    "yStep": 0.01,
+    "xDomain": [
+      4.1,
+      4.9
+    ],
+    "yDomain": [
+      7.25,
+      9.25
+    ],
+    "targetPlayer": "Matt Forte",
+    "targetX": 4.16,
+    "targetY": 8.43,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch",
+        "x": 4.25,
+        "y": 7.71
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 4.45,
+        "y": 8.17
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 4.52,
+        "y": 7.53
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rtd-frank-gore",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20000
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Frank Gore",
+    "targetX": 16000,
+    "targetY": 2.2,
+    "referencePlayers": [
+      {
+        "name": "Matt Ryan",
+        "x": 1539,
+        "y": 2.5
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 7174,
+        "y": 3.1
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 9923,
+        "y": 3.4
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ctd-adrian-peterson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career receiving TDs per 100 catches",
+    "yUnit": "TD",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      1,
+      9
+    ],
+    "targetPlayer": "Adrian Peterson",
+    "targetX": 3.7,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Frank Gore",
+        "x": 2.2,
+        "y": 3.7
+      },
+      {
+        "name": "Chris Johnson",
+        "x": 2.5,
+        "y": 2.9
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 3.1,
+        "y": 6.5
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rtd-steven-jackson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      5000,
+      13000
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Steven Jackson",
+    "targetX": 11447,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Arian Foster",
+        "x": 6525,
+        "y": 3.7
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 7563,
+        "y": 3.1
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 10424,
+        "y": 3.5
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-ypc-matt-forte",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      -1000,
+      7000
+    ],
+    "yDomain": [
+      4.1,
+      4.9
+    ],
+    "targetPlayer": "Matt Forte",
+    "targetX": 4679,
+    "targetY": 4.16,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": -7,
+        "y": 4.52
+      },
+      {
+        "name": "Arian Foster",
+        "x": 2346,
+        "y": 4.42
+      },
+      {
+        "name": "Frank Gore",
+        "x": 3985,
+        "y": 4.28
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-rtd-ben-roethlisberger",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 0.01,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      6
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Ben Roethlisberger",
+    "targetX": 2.66,
+    "targetY": 3.9,
+    "referencePlayers": [
+      {
+        "name": "Matt Ryan",
+        "x": 2.99,
+        "y": 2.5
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 4.25,
+        "y": 3.5
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 4.47,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cctd-yac-leveon-bell",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving TDs per 100 catches",
+    "xUnit": "TD",
+    "yLabel": "Career yards after catch per reception",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      3,
+      11
+    ],
+    "targetPlayer": "Le'Veon Bell",
+    "targetX": 2.2,
+    "targetY": 8.39,
+    "referencePlayers": [
+      {
+        "name": "Danny Amendola",
+        "x": 3.9,
+        "y": 4.08
+      },
+      {
+        "name": "Julian Edelman",
+        "x": 5.8,
+        "y": 4.79
+      },
+      {
+        "name": "Rob Gronkowski",
+        "x": 14.8,
+        "y": 5.92
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rec-arian-foster",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20000
+    ],
+    "yDomain": [
+      200,
+      1000
+    ],
+    "targetPlayer": "Arian Foster",
+    "targetX": 6525,
+    "targetY": 255,
+    "referencePlayers": [
+      {
+        "name": "Danny Amendola",
+        "x": 99,
+        "y": 617
+      },
+      {
+        "name": "James White",
+        "x": 1278,
+        "y": 381
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 10424,
+        "y": 287
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-rtd-frank-gore",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      200,
+      600
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Frank Gore",
+    "targetX": 484,
+    "targetY": 2.2,
+    "referencePlayers": [
+      {
+        "name": "Clinton Portis",
+        "x": 247,
+        "y": 3.4
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 305,
+        "y": 3.7
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 400,
+        "y": 2.6
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ypr-matt-forte",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      6.75,
+      8.75
+    ],
+    "targetPlayer": "Matt Forte",
+    "targetX": 2.3,
+    "targetY": 8.43,
+    "referencePlayers": [
+      {
+        "name": "Chris Johnson",
+        "x": 2.5,
+        "y": 7.35
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 3.1,
+        "y": 7.05
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 3.4,
+        "y": 8.17
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ctd-frank-gore",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career receiving TDs per 100 catches",
+    "yUnit": "TD",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      1.5,
+      5.5
+    ],
+    "targetPlayer": "Frank Gore",
+    "targetX": 2.2,
+    "targetY": 3.7,
+    "referencePlayers": [
+      {
+        "name": "Chris Johnson",
+        "x": 2.5,
+        "y": 2.9
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 3.1,
+        "y": 2
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 3.5,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-rtd-ben-roethlisberger",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      -1000,
+      7000
+    ],
+    "yDomain": [
+      2,
+      6
+    ],
+    "targetPlayer": "Ben Roethlisberger",
+    "targetX": -1,
+    "targetY": 3.9,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch",
+        "x": 2214,
+        "y": 3.5
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 3297,
+        "y": 2.6
+      },
+      {
+        "name": "Matt Forte",
+        "x": 4679,
+        "y": 2.3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cctd-yac-demarco-murray",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving TDs per 100 catches",
+    "xUnit": "TD",
+    "yLabel": "Career yards after catch per reception",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      3,
+      11
+    ],
+    "targetPlayer": "DeMarco Murray",
+    "targetX": 2,
+    "targetY": 7.45,
+    "referencePlayers": [
+      {
+        "name": "Danny Amendola",
+        "x": 3.9,
+        "y": 4.08
+      },
+      {
+        "name": "Cole Beasley",
+        "x": 6.1,
+        "y": 4.64
+      },
+      {
+        "name": "Rob Gronkowski",
+        "x": 14.8,
+        "y": 5.92
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-ypc-steven-jackson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1000,
+      3000
+    ],
+    "yDomain": [
+      3.75,
+      5.75
+    ],
+    "targetPlayer": "Steven Jackson",
+    "targetX": 2766,
+    "targetY": 4.14,
+    "referencePlayers": [
+      {
+        "name": "Jamaal Charles",
+        "x": 1407,
+        "y": 5.38
+      },
+      {
+        "name": "Chris Johnson",
+        "x": 2163,
+        "y": 4.46
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 2453,
+        "y": 4.25
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rec-arian-foster",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      200,
+      1000
+    ],
+    "targetPlayer": "Arian Foster",
+    "targetX": 1475,
+    "targetY": 255,
+    "referencePlayers": [
+      {
+        "name": "Danny Amendola",
+        "x": 17,
+        "y": 617
+      },
+      {
+        "name": "James White",
+        "x": 319,
+        "y": 381
+      },
+      {
+        "name": "Chris Johnson",
+        "x": 2163,
+        "y": 307
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cctd-yac-lesean-mccoy",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving TDs per 100 catches",
+    "xUnit": "TD",
+    "yLabel": "Career yards after catch per reception",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2,
+      10
+    ],
+    "yDomain": [
+      3,
+      11
+    ],
+    "targetPlayer": "LeSean McCoy",
+    "targetX": 3.1,
+    "targetY": 8.54,
+    "referencePlayers": [
+      {
+        "name": "Danny Amendola",
+        "x": 3.9,
+        "y": 4.08
+      },
+      {
+        "name": "Julian Edelman",
+        "x": 5.8,
+        "y": 4.79
+      },
+      {
+        "name": "James White",
+        "x": 6.6,
+        "y": 7.61
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rtd-arian-foster",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Arian Foster",
+    "targetX": 1475,
+    "targetY": 3.7,
+    "referencePlayers": [
+      {
+        "name": "Matt Ryan",
+        "x": 514,
+        "y": 2.5
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 2230,
+        "y": 3.4
+      },
+      {
+        "name": "Frank Gore",
+        "x": 3736,
+        "y": 2.2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rtd-frank-gore",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Frank Gore",
+    "targetX": 3736,
+    "targetY": 2.2,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": 577,
+        "y": 2.6
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 1604,
+        "y": 3.1
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3232,
+        "y": 3.7
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-ypc-alex-smith",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Alex Smith",
+    "targetX": 577,
+    "targetY": 4.52,
+    "referencePlayers": [
+      {
+        "name": "Arian Foster",
+        "x": 1475,
+        "y": 4.42
+      },
+      {
+        "name": "Chris Johnson",
+        "x": 2163,
+        "y": 4.46
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 2766,
+        "y": 4.14
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rec-chris-johnson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      0,
+      2000
+    ],
+    "targetPlayer": "Chris Johnson",
+    "targetX": 2163,
+    "targetY": 307,
+    "referencePlayers": [
+      {
+        "name": "Anquan Boldin",
+        "x": 41,
+        "y": 1077
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 1595,
+        "y": 400
+      },
+      {
+        "name": "Frank Gore",
+        "x": 3736,
+        "y": 484
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ypr-frank-gore",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      7,
+      9
+    ],
+    "targetPlayer": "Frank Gore",
+    "targetX": 2.2,
+    "targetY": 8.23,
+    "referencePlayers": [
+      {
+        "name": "Chris Johnson",
+        "x": 2.5,
+        "y": 7.35
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 3,
+        "y": 7.53
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3.7,
+        "y": 8.11
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-rtd-steven-jackson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      -1000,
+      7000
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Steven Jackson",
+    "targetX": 3675,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": -7,
+        "y": 2.6
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 2214,
+        "y": 3.5
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 2593,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-rtd-leveon-bell",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 0.01,
+    "yStep": 0.1,
+    "xDomain": [
+      4,
+      4.8
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Le'Veon Bell",
+    "targetX": 4.11,
+    "targetY": 2.6,
+    "referencePlayers": [
+      {
+        "name": "Matt Forte",
+        "x": 4.16,
+        "y": 2.3
+      },
+      {
+        "name": "Frank Gore",
+        "x": 4.28,
+        "y": 2.2
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 4.47,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-ypc-clinton-portis",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      200,
+      600
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Clinton Portis",
+    "targetX": 247,
+    "targetY": 4.45,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch",
+        "x": 287,
+        "y": 4.25
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 400,
+        "y": 4.11
+      },
+      {
+        "name": "Matt Forte",
+        "x": 555,
+        "y": 4.16
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rtd-steven-jackson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Steven Jackson",
+    "targetX": 2766,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Ben Roethlisberger",
+        "x": 516,
+        "y": 3.9
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 2230,
+        "y": 3.4
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 2457,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rtd-chris-johnson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Chris Johnson",
+    "targetX": 2163,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Ben Roethlisberger",
+        "x": 516,
+        "y": 3.9
+      },
+      {
+        "name": "Arian Foster",
+        "x": 1475,
+        "y": 3.7
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 2453,
+        "y": 3.5
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-ypc-frank-gore",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1000,
+      5000
+    ],
+    "yDomain": [
+      4,
+      6
+    ],
+    "targetPlayer": "Frank Gore",
+    "targetX": 3736,
+    "targetY": 4.28,
+    "referencePlayers": [
+      {
+        "name": "Jamaal Charles",
+        "x": 1407,
+        "y": 5.38
+      },
+      {
+        "name": "Clinton Portis",
+        "x": 2230,
+        "y": 4.45
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3232,
+        "y": 4.62
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-ypr-leveon-bell",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.01,
+    "yStep": 0.01,
+    "xDomain": [
+      4,
+      4.8
+    ],
+    "yDomain": [
+      7,
+      9
+    ],
+    "targetPlayer": "Le'Veon Bell",
+    "targetX": 4.11,
+    "targetY": 8.24,
+    "referencePlayers": [
+      {
+        "name": "Marshawn Lynch",
+        "x": 4.25,
+        "y": 7.71
+      },
+      {
+        "name": "Chris Johnson",
+        "x": 4.46,
+        "y": 7.35
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 4.62,
+        "y": 8.11
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cctd-yac-arian-foster",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving TDs per 100 catches",
+    "xUnit": "TD",
+    "yLabel": "Career yards after catch per reception",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2.5,
+      22.5
+    ],
+    "yDomain": [
+      3,
+      11
+    ],
+    "targetPlayer": "Arian Foster",
+    "targetX": 5.5,
+    "targetY": 8.78,
+    "referencePlayers": [
+      {
+        "name": "Danny Amendola",
+        "x": 3.9,
+        "y": 4.08
+      },
+      {
+        "name": "James White",
+        "x": 6.6,
+        "y": 7.61
+      },
+      {
+        "name": "Rob Gronkowski",
+        "x": 14.8,
+        "y": 5.92
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-ypc-leveon-bell",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1500,
+      5500
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Le'Veon Bell",
+    "targetX": 3297,
+    "targetY": 4.11,
+    "referencePlayers": [
+      {
+        "name": "Clinton Portis",
+        "x": 2018,
+        "y": 4.45
+      },
+      {
+        "name": "Arian Foster",
+        "x": 2346,
+        "y": 4.42
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 3675,
+        "y": 4.14
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-rtd-steven-jackson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Steven Jackson",
+    "targetX": 460,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": 3,
+        "y": 2.6
+      },
+      {
+        "name": "Arian Foster",
+        "x": 255,
+        "y": 3.7
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 310,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-ypr-demarco-murray",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.01,
+    "yStep": 0.01,
+    "xDomain": [
+      3.75,
+      5.75
+    ],
+    "yDomain": [
+      6.75,
+      8.75
+    ],
+    "targetPlayer": "DeMarco Murray",
+    "targetX": 4.47,
+    "targetY": 7.05,
+    "referencePlayers": [
+      {
+        "name": "Steven Jackson",
+        "x": 4.14,
+        "y": 7.99
+      },
+      {
+        "name": "Frank Gore",
+        "x": 4.28,
+        "y": 8.23
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 5.38,
+        "y": 8.36
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ctd-matt-forte",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career receiving TDs per 100 catches",
+    "yUnit": "TD",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      1.5,
+      5.5
+    ],
+    "targetPlayer": "Matt Forte",
+    "targetX": 2.3,
+    "targetY": 3.8,
+    "referencePlayers": [
+      {
+        "name": "Chris Johnson",
+        "x": 2.5,
+        "y": 2.9
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 3,
+        "y": 3.1
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3.7,
+        "y": 2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cctd-yac-rob-gronkowski",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving TDs per 100 catches",
+    "xUnit": "TD",
+    "yLabel": "Career yards after catch per reception",
+    "yUnit": "YAC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      20
+    ],
+    "yDomain": [
+      4,
+      12
+    ],
+    "targetPlayer": "Rob Gronkowski",
+    "targetX": 14.8,
+    "targetY": 5.92,
+    "referencePlayers": [
+      {
+        "name": "DeMarco Murray",
+        "x": 2,
+        "y": 7.45
+      },
+      {
+        "name": "Arian Foster",
+        "x": 5.5,
+        "y": 8.78
+      },
+      {
+        "name": "Antonio Brown",
+        "x": 8.9,
+        "y": 4.81
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-rtd-leveon-bell",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      -1000,
+      7000
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Le'Veon Bell",
+    "targetX": 3297,
+    "targetY": 2.6,
+    "referencePlayers": [
+      {
+        "name": "Ben Roethlisberger",
+        "x": -1,
+        "y": 3.9
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 2214,
+        "y": 3.5
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 2593,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rec-jamaal-charles",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      20000
+    ],
+    "yDomain": [
+      200,
+      1000
+    ],
+    "targetPlayer": "Jamaal Charles",
+    "targetX": 7563,
+    "targetY": 310,
+    "referencePlayers": [
+      {
+        "name": "Calvin Johnson",
+        "x": 167,
+        "y": 732
+      },
+      {
+        "name": "James White",
+        "x": 1278,
+        "y": 381
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 11447,
+        "y": 460
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ctd-demarco-murray",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career receiving TDs per 100 catches",
+    "yUnit": "TD",
+    "xStep": 0.1,
+    "yStep": 0.1,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      1.5,
+      5.5
+    ],
+    "targetPlayer": "DeMarco Murray",
+    "targetX": 3.1,
+    "targetY": 2,
+    "referencePlayers": [
+      {
+        "name": "Matt Forte",
+        "x": 2.3,
+        "y": 3.8
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 2.6,
+        "y": 2.2
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 3.5,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cryd-rtd-chris-johnson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      20000
+    ],
+    "yDomain": [
+      2.4,
+      3.2
+    ],
+    "targetPlayer": "Chris Johnson",
+    "targetX": 9651,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": 2608,
+        "y": 2.6
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 7563,
+        "y": 3.1
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 11102,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-rtd-chris-johnson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 0.01,
+    "yStep": 0.1,
+    "xDomain": [
+      4,
+      4.8
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Chris Johnson",
+    "targetX": 4.46,
+    "targetY": 2.5,
+    "referencePlayers": [
+      {
+        "name": "Le'Veon Bell",
+        "x": 4.11,
+        "y": 2.6
+      },
+      {
+        "name": "Arian Foster",
+        "x": 4.42,
+        "y": 3.7
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 4.52,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-ypr-chris-johnson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.01,
+    "yStep": 0.01,
+    "xDomain": [
+      4,
+      4.8
+    ],
+    "yDomain": [
+      7,
+      9
+    ],
+    "targetPlayer": "Chris Johnson",
+    "targetX": 4.46,
+    "targetY": 7.35,
+    "referencePlayers": [
+      {
+        "name": "Steven Jackson",
+        "x": 4.14,
+        "y": 7.99
+      },
+      {
+        "name": "Frank Gore",
+        "x": 4.28,
+        "y": 8.23
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 4.62,
+        "y": 8.11
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rtd-lesean-mccoy",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      2.75,
+      4.75
+    ],
+    "targetPlayer": "LeSean McCoy",
+    "targetX": 2457,
+    "targetY": 3,
+    "referencePlayers": [
+      {
+        "name": "Ben Roethlisberger",
+        "x": 516,
+        "y": 3.9
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 1604,
+        "y": 3.1
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 3232,
+        "y": 3.7
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rec-demarco-murray",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      0,
+      2000
+    ],
+    "targetPlayer": "DeMarco Murray",
+    "targetX": 1604,
+    "targetY": 307,
+    "referencePlayers": [
+      {
+        "name": "Andre Johnson",
+        "x": 23,
+        "y": 1062
+      },
+      {
+        "name": "James White",
+        "x": 319,
+        "y": 381
+      },
+      {
+        "name": "Matt Forte",
+        "x": 2355,
+        "y": 555
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ypr-lesean-mccoy",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2,
+      4
+    ],
+    "yDomain": [
+      7,
+      11
+    ],
+    "targetPlayer": "LeSean McCoy",
+    "targetX": 3,
+    "targetY": 7.53,
+    "referencePlayers": [
+      {
+        "name": "Matt Forte",
+        "x": 2.3,
+        "y": 8.43
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 2.6,
+        "y": 8.24
+      },
+      {
+        "name": "Arian Foster",
+        "x": 3.7,
+        "y": 9.2
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-ypc-leveon-bell",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      200,
+      600
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Le'Veon Bell",
+    "targetX": 400,
+    "targetY": 4.11,
+    "referencePlayers": [
+      {
+        "name": "Clinton Portis",
+        "x": 247,
+        "y": 4.45
+      },
+      {
+        "name": "Adrian Peterson",
+        "x": 305,
+        "y": 4.62
+      },
+      {
+        "name": "Frank Gore",
+        "x": 484,
+        "y": 4.28
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-ypc-adrian-peterson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      1500,
+      5500
+    ],
+    "yDomain": [
+      4,
+      4.8
+    ],
+    "targetPlayer": "Adrian Peterson",
+    "targetX": 2474,
+    "targetY": 4.62,
+    "referencePlayers": [
+      {
+        "name": "DeMarco Murray",
+        "x": 2165,
+        "y": 4.47
+      },
+      {
+        "name": "Le'Veon Bell",
+        "x": 3297,
+        "y": 4.11
+      },
+      {
+        "name": "Matt Forte",
+        "x": 4679,
+        "y": 4.16
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crtd-ypr-demarco-murray",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing TDs per 100 carries",
+    "xUnit": "TD",
+    "yLabel": "Career yards per reception",
+    "yUnit": "Y/REC",
+    "xStep": 0.1,
+    "yStep": 0.01,
+    "xDomain": [
+      2.25,
+      4.25
+    ],
+    "yDomain": [
+      6.875,
+      7.875
+    ],
+    "targetPlayer": "DeMarco Murray",
+    "targetX": 3.1,
+    "targetY": 7.05,
+    "referencePlayers": [
+      {
+        "name": "Chris Johnson",
+        "x": 2.5,
+        "y": 7.35
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 3,
+        "y": 7.53
+      },
+      {
+        "name": "Marshawn Lynch",
+        "x": 3.5,
+        "y": 7.71
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-cypc-rtd-alex-smith",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career yards per carry",
+    "xUnit": "Y/C",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 0.01,
+    "yStep": 0.1,
+    "xDomain": [
+      4,
+      4.8
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Alex Smith",
+    "targetX": 4.52,
+    "targetY": 2.6,
+    "referencePlayers": [
+      {
+        "name": "Steven Jackson",
+        "x": 4.14,
+        "y": 2.5
+      },
+      {
+        "name": "Arian Foster",
+        "x": 4.42,
+        "y": 3.7
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 4.47,
+        "y": 3.1
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-ccyd-rtd-matt-forte",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receiving yards",
+    "xUnit": "YDS",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      0,
+      8000
+    ],
+    "yDomain": [
+      2,
+      4
+    ],
+    "targetPlayer": "Matt Forte",
+    "targetX": 4679,
+    "targetY": 2.3,
+    "referencePlayers": [
+      {
+        "name": "Matt Ryan",
+        "x": 5,
+        "y": 2.5
+      },
+      {
+        "name": "Arian Foster",
+        "x": 2346,
+        "y": 3.7
+      },
+      {
+        "name": "LeSean McCoy",
+        "x": 3898,
+        "y": 3
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-ypc-steven-jackson",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career yards per carry",
+    "yUnit": "Y/C",
+    "xStep": 1,
+    "yStep": 0.01,
+    "xDomain": [
+      0,
+      800
+    ],
+    "yDomain": [
+      3.75,
+      5.75
+    ],
+    "targetPlayer": "Steven Jackson",
+    "targetX": 460,
+    "targetY": 4.14,
+    "referencePlayers": [
+      {
+        "name": "Alex Smith",
+        "x": 3,
+        "y": 4.52
+      },
+      {
+        "name": "Arian Foster",
+        "x": 255,
+        "y": 4.42
+      },
+      {
+        "name": "Jamaal Charles",
+        "x": 310,
+        "y": 5.38
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-crec-rtd-marshawn-lynch",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career receptions",
+    "xUnit": "REC",
+    "yLabel": "Career rushing TDs per 100 carries",
+    "yUnit": "TD",
+    "xStep": 1,
+    "yStep": 0.1,
+    "xDomain": [
+      200,
+      600
+    ],
+    "yDomain": [
+      2.25,
+      4.25
+    ],
+    "targetPlayer": "Marshawn Lynch",
+    "targetX": 287,
+    "targetY": 3.5,
+    "referencePlayers": [
+      {
+        "name": "Clinton Portis",
+        "x": 247,
+        "y": 3.4
+      },
+      {
+        "name": "DeMarco Murray",
+        "x": 307,
+        "y": 3.1
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 460,
+        "y": 2.5
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
+  },
+  {
+    "id": "nfl-catt-rec-jamaal-charles",
+    "league": "NFL",
+    "game": "nfl",
+    "xLabel": "Career rushing attempts",
+    "xUnit": "ATT",
+    "yLabel": "Career receptions",
+    "yUnit": "REC",
+    "xStep": 1,
+    "yStep": 1,
+    "xDomain": [
+      0,
+      4000
+    ],
+    "yDomain": [
+      125,
+      1125
+    ],
+    "targetPlayer": "Jamaal Charles",
+    "targetX": 1407,
+    "targetY": 310,
+    "referencePlayers": [
+      {
+        "name": "Antonio Brown",
+        "x": 35,
+        "y": 928
+      },
+      {
+        "name": "James White",
+        "x": 319,
+        "y": 381
+      },
+      {
+        "name": "Steven Jackson",
+        "x": 2766,
+        "y": 460
+      }
+    ],
+    "fact": "",
+    "source": "nflverse-data player_stats release, regular-season weekly rows aggregated by player_id across a career. Career rates are ratios of career totals. Yardage is derived from play-by-play and can differ from gamebook totals by a yard or two."
   }
 ]

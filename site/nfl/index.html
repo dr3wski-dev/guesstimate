@@ -10,8 +10,8 @@
      Fonts are self-hosted now, so this no longer needs to allow googleapis/gstatic
      at all — the only non-'self' source left is data: for the inline SVG favicon. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloud.umami.is https://gateway.umami.is; base-uri 'none'; object-src 'none'; form-action 'self';">
-<link rel="canonical" href="https://statmap.app/mlb/">
-<title>StatMap MLB: Daily Baseball Career Stat Game</title>
+<link rel="canonical" href="https://statmap.app/nfl/">
+<title>StatMap NFL: Daily NFL Career Stat Game</title>
 <meta name="author" content="Drew Tanous">
 <script>
 /* Read the challenge parameters and take them out of the URL, before anything else
@@ -43,17 +43,17 @@ try{
      domain — most crawlers (including iMessage's) will not resolve a relative
      og:image. Regenerate the image from assets/og-source.html; see that file. -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://statmap.app/mlb/">
+<meta property="og:url" content="https://statmap.app/nfl/">
 <meta property="og:site_name" content="StatMap">
-<meta property="og:title" content="StatMap MLB: Daily Baseball Career Stat Game">
-<meta property="og:description" content="Career rate lines for hitters and pitchers — averages, ERAs, per-nine rates.">
+<meta property="og:title" content="StatMap NFL: Daily NFL Career Stat Game">
+<meta property="og:description" content="Career per-touch rates — yards per carry, yards per catch, touchdown rate. Retired players, 2002 onward.">
 <meta property="og:image" content="https://statmap.app/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="StatMap: a scatter chart with plotted sports players and a guess marker.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="StatMap MLB: Daily Baseball Career Stat Game">
-<meta name="twitter:description" content="Career rate lines for hitters and pitchers — averages, ERAs, per-nine rates.">
+<meta name="twitter:title" content="StatMap NFL: Daily NFL Career Stat Game">
+<meta name="twitter:description" content="Career per-touch rates — yards per carry, yards per catch, touchdown rate. Retired players, 2002 onward.">
 <meta name="twitter:image" content="https://statmap.app/assets/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1810'/%3E%3Cpath d='M6 26 H27' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M6 26 V5' stroke='%23f2efe4' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='2.6' fill='%23f0b429'/%3E%3Ccircle cx='20' cy='12' r='3.4' fill='%232f5fd6' stroke='%23f2efe4' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -883,7 +883,7 @@ try{
   .restore-status{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin:8px 0 0; min-height:16px; line-height:1.5; }
 </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="3acb4aa9-ff47-4133-8bad-a14e592a0ebb"></script>
-<script>window.__SM_GAME={"id":"mlb","slug":"mlb","name":"StatMap MLB","short":"MLB","blurb":"Career rate lines for hitters and pitchers \u2014 averages, ERAs, per-nine rates.","epoch":"2026-10-06"};window.__SM_GAMES=[{"id":"main","slug":"","name":"StatMap","short":"Hard mode","status":"live"},{"id":"nba","slug":"nba","name":"StatMap NBA","short":"NBA","status":"live"},{"id":"mlb","slug":"mlb","name":"StatMap MLB","short":"MLB","status":"live"},{"id":"nfl","slug":"nfl","name":"StatMap NFL","short":"NFL","status":"live"},{"id":"nhl","slug":"nhl","name":"StatMap NHL","short":"NHL","status":"blocked"},{"id":"cfb","slug":"cfb","name":"StatMap College Football","short":"College football","status":"blocked"},{"id":"psu","slug":"psu","name":"StatMap Penn State","short":"Penn State","status":"blocked"}];</script>
+<script>window.__SM_GAME={"id":"nfl","slug":"nfl","name":"StatMap NFL","short":"NFL","blurb":"Career per-touch rates \u2014 yards per carry, yards per catch, touchdown rate. Retired players, 2002 onward.","epoch":"2026-10-06"};window.__SM_GAMES=[{"id":"main","slug":"","name":"StatMap","short":"Hard mode","status":"live"},{"id":"nba","slug":"nba","name":"StatMap NBA","short":"NBA","status":"live"},{"id":"mlb","slug":"mlb","name":"StatMap MLB","short":"MLB","status":"live"},{"id":"nfl","slug":"nfl","name":"StatMap NFL","short":"NFL","status":"live"},{"id":"nhl","slug":"nhl","name":"StatMap NHL","short":"NHL","status":"blocked"},{"id":"cfb","slug":"cfb","name":"StatMap College Football","short":"College football","status":"blocked"},{"id":"psu","slug":"psu","name":"StatMap Penn State","short":"Penn State","status":"blocked"}];</script>
 </head>
 <body>
 <div class="app" id="app">

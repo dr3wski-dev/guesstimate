@@ -32,16 +32,16 @@ content, no other game modes. That direction was considered and scrapped. See
 
 | | |
 |---|---|
-| Questions in the pool | **1,128** |
-| Games served from it | **3 live** (hard mode, NBA careers, MLB careers) · 4 declared and not open |
-| Split by game | main 600 · nba 192 · mlb 336 |
+| Questions in the pool | **1,189** |
+| Games served from it | **4 live** (hard mode, NBA, MLB, NFL) · 3 declared and not open |
+| Split by game | main 600 · nba 192 · mlb 336 · nfl 61 |
 | Hard mode's league split | NBA 236 · MLB 205 · NFL 159 |
-| Distinct chart types | **141** |
+| Distinct chart types | **154** |
 | Launch day (hard mode puzzle #1) | 2026-08-17 |
 | The minigames' puzzle #1 | 2026-10-05 |
 | Runtime dependencies | **zero** |
 | Total pipeline + worker code | ~5,700 lines, plus ~740 of browser suites |
-| The game itself | one 2,774-line HTML file |
+| The game itself | one 2,785-line HTML file |
 
 ---
 

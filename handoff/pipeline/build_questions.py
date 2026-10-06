@@ -594,10 +594,8 @@ NFL_CAREER_DEBUT = 2002
 NFL_CATCHRATE_DEBUT = max(NFL_TARGETS_BROKEN) + 1
 NFL_CAREER_SOURCE = (
     'nflverse-data player_stats release, regular-season weekly rows aggregated by '
-    'player_id across a whole career. Career rates are ratios of career totals '
-    '(yards per carry as career yards over career carries, and so on). Yardage is '
-    'derived from play-by-play and can differ from official gamebook totals by a '
-    'yard or two.')
+    'player_id across a career. Career rates are ratios of career totals. Yardage is '
+    'derived from play-by-play and can differ from gamebook totals by a yard or two.')
 
 
 def nfl_careers(pool_all, gate=True):
@@ -1252,11 +1250,11 @@ MLB_CAREER = dict(
     OBP=('Career on-base percentage', 'OBP', 0.001),
     SLG=('Career slugging percentage', 'SLG', 0.001),
     OPS=('Career OPS (on-base plus slugging)', 'OPS', 0.001),
-    ISO=('Career isolated power (slugging minus average)', 'ISO', 0.001),
-    BBPCT=('Career walk rate (share of plate appearances)', 'BB%', 0.1),
-    SOPCT=('Career strikeout rate (share of plate appearances)', 'SO%', 0.1),
-    HR600=('Career home runs per 600 plate appearances', 'HR', 0.1),
-    SB600=('Career stolen bases per 600 plate appearances', 'SB', 0.1),
+    ISO=('Career isolated power (SLG minus AVG)', 'ISO', 0.001),
+    BBPCT=('Career walk rate', 'BB%', 0.1),
+    SOPCT=('Career strikeout rate', 'SO%', 0.1),
+    HR600=('Career home runs per 600 PA', 'HR', 0.1),
+    SB600=('Career stolen bases per 600 PA', 'SB', 0.1),
     RG=('Career runs scored per game', 'R/G', 0.01),
     RBIG=('Career runs batted in per game', 'RBI/G', 0.01),
     G=('Career games played', 'G', 1),
@@ -1329,6 +1327,49 @@ MLB_PITCH_CAREER_ARCHETYPES = [
     _arch(MLB_PITCH_CAREER, 'cbb9-h9',   'BB9',  'H9',   -0.30),
     _arch(MLB_PITCH_CAREER, 'ch9-kbb',   'H9',   'KBB',  -0.32),
     _arch(MLB_PITCH_CAREER, 'cwhip-k9',  'WHIP', 'K9',   -0.35),
+]
+
+# ------------------------------------------------- NFL career archetypes (easy mode)
+# PER TOUCH, NEVER PER GAME, and that is forced rather than chosen: this dataset has
+# no games-played column (see nfl_careers). Every rate below is a ratio of two career
+# totals from the same rows.
+#
+# THE SMALLEST GAME OF THE THREE, AND IT WILL STAY THAT WAY
+# 40 retired players clear a 2002 debut, of whom 27 have the receptions and 15 the
+# carries to put a rate on. Passing has seven, which is below the eight an archetype
+# needs to build at all, so there are no quarterback charts here — the list is short
+# because the data is, and padding it with charts whose axes give each other away
+# would make it longer without making it better.
+NFL_CAREER = dict(
+    carries=('Career rushing attempts', 'ATT', 1),
+    rush_yds=('Career rushing yards', 'YDS', 1),
+    rec=('Career receptions', 'REC', 1),
+    rec_yds=('Career receiving yards', 'YDS', 1),
+    ypc=('Career yards per carry', 'Y/C', 0.01),
+    rush_td_pct=('Career rushing TDs per 100 carries', 'TD', 0.1),
+    ypr=('Career yards per reception', 'Y/REC', 0.01),
+    rec_td_pct=('Career receiving TDs per 100 catches', 'TD', 0.1),
+    catch_pct=('Career catch rate', 'CATCH%', 0.1),
+    yac_per_rec=('Career yards after catch per reception', 'YAC', 0.01),
+    ay_per_tgt=('Career air yards per target', 'AIR', 0.01),
+)
+
+
+NFL_CAREER_ARCHETYPES = [
+    _arch(NFL_CAREER, 'cypc-ypr',    'ypc',         'ypr',          0.04),
+    _arch(NFL_CAREER, 'cypc-rtd',    'ypc',         'rush_td_pct', -0.05),
+    _arch(NFL_CAREER, 'crtd-ctd',    'rush_td_pct', 'rec_td_pct',   0.09),
+    _arch(NFL_CAREER, 'cryd-rtd',    'rush_yds',    'rush_td_pct', -0.13),
+    _arch(NFL_CAREER, 'crtd-ypr',    'rush_td_pct', 'ypr',          0.16),
+    _arch(NFL_CAREER, 'catt-rtd',    'carries',     'rush_td_pct', -0.17),
+    _arch(NFL_CAREER, 'ccyd-rtd',    'rec_yds',     'rush_td_pct', -0.35),
+    _arch(NFL_CAREER, 'cctd-yac',    'rec_td_pct',  'yac_per_rec', -0.35),
+    _arch(NFL_CAREER, 'crec-rtd',    'rec',         'rush_td_pct', -0.36),
+    _arch(NFL_CAREER, 'catt-ypc',    'carries',     'ypc',          0.41),
+    _arch(NFL_CAREER, 'cryd-rec',    'rush_yds',    'rec',         -0.44),
+    _arch(NFL_CAREER, 'catt-rec',    'carries',     'rec',         -0.45),
+    _arch(NFL_CAREER, 'ccyd-ypc',    'rec_yds',     'ypc',          0.47),
+    _arch(NFL_CAREER, 'crec-ypc',    'rec',         'ypc',          0.48),
 ]
 
 
@@ -1779,7 +1820,8 @@ def main():
     ap.add_argument('--fetch', action='store_true')
     ap.add_argument('--validate', action='store_true')
     ap.add_argument('--league',
-                    choices=['mlb', 'mlbp', 'nfl', 'nba', 'nbac', 'mlbc', 'mlbpc'],
+                    choices=['mlb', 'mlbp', 'nfl', 'nba', 'nbac', 'mlbc', 'mlbpc',
+                             'nflc'],
                     help="mlbp is MLB pitchers, which are a separate dataset "
                          "(Pitching.csv) and separate archetypes from the hitters. "
                          "nbac, mlbc and mlbpc are CAREER-RATE batches that feed "
@@ -1824,6 +1866,12 @@ def main():
         cands = build(elig, NBA_CAREER_ARCHETYPES, 'NBA', lambda e: e['name'],
                       NBA_CAREER_SOURCE, a.top, a.per_archetype, only=only,
                       per_player=a.per_player, game='nba')
+    elif a.league == 'nflc':
+        entries, dmax = nfl_careers(pool)
+        elig = [e for e in entries.values() if e['career_complete']]
+        cands = build(elig, NFL_CAREER_ARCHETYPES, 'NFL', lambda e: e['name'],
+                      NFL_CAREER_SOURCE, a.top, a.per_archetype, only=only,
+                      per_player=a.per_player, game='nfl')
     elif a.league == 'mlbc':
         entries, dmax = mlb_careers(pool)
         elig = [e for e in entries.values()

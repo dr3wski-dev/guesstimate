@@ -1,1 +1,422 @@
-{}
+{
+  "2026-10-06": [
+    "nfl-ccyd-ypc-adrian-peterson",
+    "nfl-cryd-rec-alex-smith",
+    "nfl-crec-ypc-matt-forte",
+    "nfl-cypc-rtd-ben-roethlisberger",
+    "nfl-cryd-rtd-chris-johnson"
+  ],
+  "2026-10-07": [
+    "nfl-catt-rec-chris-johnson",
+    "nfl-cypc-ypr-matt-forte",
+    "nfl-crec-rtd-ben-roethlisberger",
+    "nfl-ccyd-rtd-steven-jackson",
+    "nfl-cctd-yac-lesean-mccoy"
+  ],
+  "2026-10-08": [
+    "nfl-ccyd-ypc-leveon-bell",
+    "nfl-crtd-ctd-frank-gore",
+    "nfl-crtd-ypr-matt-forte",
+    "nfl-cryd-rec-jamaal-charles",
+    "nfl-cryd-rtd-steven-jackson"
+  ],
+  "2026-10-09": [
+    "nfl-cctd-yac-rob-gronkowski",
+    "nfl-cypc-ypr-demarco-murray",
+    "nfl-catt-rtd-chris-johnson",
+    "nfl-catt-ypc-steven-jackson",
+    "nfl-catt-rec-arian-foster"
+  ],
+  "2026-10-10": [
+    "nfl-crec-ypc-clinton-portis",
+    "nfl-crec-rtd-steven-jackson",
+    "nfl-ccyd-ypc-alex-smith",
+    "nfl-crtd-ypr-frank-gore",
+    "nfl-cypc-rtd-leveon-bell"
+  ],
+  "2026-10-11": [
+    "nfl-catt-rec-jamaal-charles",
+    "nfl-ccyd-rtd-matt-forte",
+    "nfl-crtd-ctd-demarco-murray",
+    "nfl-cctd-yac-arian-foster",
+    "nfl-catt-ypc-alex-smith"
+  ],
+  "2026-10-12": [
+    "nfl-crec-ypc-alex-smith",
+    "nfl-catt-rtd-lesean-mccoy",
+    "nfl-ccyd-ypc-matt-forte",
+    "nfl-crec-rtd-marshawn-lynch",
+    "nfl-crtd-ypr-demarco-murray"
+  ],
+  "2026-10-13": [
+    "nfl-cypc-rtd-chris-johnson",
+    "nfl-cctd-yac-antonio-brown",
+    "nfl-cryd-rec-arian-foster",
+    "nfl-catt-rec-alex-smith",
+    "nfl-catt-ypc-frank-gore"
+  ],
+  "2026-10-14": [
+    "nfl-ccyd-rtd-ben-roethlisberger",
+    "nfl-cypc-ypr-leveon-bell",
+    "nfl-catt-rtd-arian-foster",
+    "nfl-crtd-ctd-adrian-peterson",
+    "nfl-crec-rtd-frank-gore"
+  ],
+  "2026-10-15": [
+    "nfl-cypc-rtd-alex-smith",
+    "nfl-catt-rec-demarco-murray",
+    "nfl-crtd-ypr-marshawn-lynch",
+    "nfl-cctd-yac-leveon-bell",
+    "nfl-cryd-rtd-frank-gore"
+  ],
+  "2026-10-16": [
+    "nfl-crtd-ctd-matt-forte",
+    "nfl-catt-rtd-ben-roethlisberger",
+    "nfl-cypc-ypr-chris-johnson",
+    "nfl-ccyd-rtd-leveon-bell",
+    "nfl-crec-ypc-steven-jackson"
+  ],
+  "2026-10-17": [
+    "nfl-crtd-ypr-lesean-mccoy",
+    "nfl-cctd-yac-demarco-murray",
+    "nfl-cryd-rtd-ben-roethlisberger",
+    "nfl-cypc-rtd-leveon-bell",
+    "nfl-catt-ypc-frank-gore"
+  ],
+  "2026-10-18": [
+    "nfl-catt-rtd-ben-roethlisberger",
+    "nfl-ccyd-ypc-alex-smith",
+    "nfl-crec-rtd-frank-gore",
+    "nfl-crec-ypc-steven-jackson",
+    "nfl-cypc-ypr-chris-johnson"
+  ],
+  "2026-10-19": [
+    "nfl-catt-rec-alex-smith",
+    "nfl-ccyd-rtd-ben-roethlisberger",
+    "nfl-crtd-ctd-demarco-murray",
+    "nfl-cryd-rtd-frank-gore",
+    "nfl-crtd-ypr-matt-forte"
+  ],
+  "2026-10-20": [
+    "nfl-catt-rtd-chris-johnson",
+    "nfl-catt-ypc-alex-smith",
+    "nfl-crec-ypc-clinton-portis",
+    "nfl-cctd-yac-antonio-brown",
+    "nfl-cypc-rtd-ben-roethlisberger"
+  ],
+  "2026-10-21": [
+    "nfl-crtd-ctd-matt-forte",
+    "nfl-cryd-rtd-steven-jackson",
+    "nfl-cryd-rec-jamaal-charles",
+    "nfl-cypc-ypr-demarco-murray",
+    "nfl-ccyd-rtd-leveon-bell"
+  ],
+  "2026-10-22": [
+    "nfl-cypc-rtd-chris-johnson",
+    "nfl-catt-ypc-steven-jackson",
+    "nfl-catt-rtd-arian-foster",
+    "nfl-ccyd-ypc-matt-forte",
+    "nfl-crtd-ypr-marshawn-lynch"
+  ],
+  "2026-10-23": [
+    "nfl-cryd-rec-arian-foster",
+    "nfl-crec-ypc-leveon-bell",
+    "nfl-cryd-rtd-chris-johnson",
+    "nfl-crec-rtd-ben-roethlisberger",
+    "nfl-cctd-yac-rob-gronkowski"
+  ],
+  "2026-10-24": [
+    "nfl-ccyd-ypc-adrian-peterson",
+    "nfl-crtd-ypr-demarco-murray",
+    "nfl-catt-rtd-lesean-mccoy",
+    "nfl-crtd-ctd-frank-gore",
+    "nfl-cypc-rtd-alex-smith"
+  ],
+  "2026-10-25": [
+    "nfl-crec-rtd-marshawn-lynch",
+    "nfl-cypc-ypr-leveon-bell",
+    "nfl-cryd-rec-alex-smith",
+    "nfl-catt-rec-jamaal-charles",
+    "nfl-ccyd-rtd-matt-forte"
+  ],
+  "2026-10-26": [
+    "nfl-crec-ypc-matt-forte",
+    "nfl-crtd-ctd-adrian-peterson",
+    "nfl-ccyd-ypc-leveon-bell",
+    "nfl-cctd-yac-lesean-mccoy",
+    "nfl-catt-rtd-steven-jackson"
+  ],
+  "2026-10-27": [
+    "nfl-catt-rec-demarco-murray",
+    "nfl-crtd-ypr-frank-gore",
+    "nfl-ccyd-rtd-steven-jackson",
+    "nfl-cypc-ypr-matt-forte",
+    "nfl-crec-rtd-ben-roethlisberger"
+  ],
+  "2026-10-28": [
+    "nfl-catt-rtd-chris-johnson",
+    "nfl-cryd-rtd-frank-gore",
+    "nfl-cctd-yac-demarco-murray",
+    "nfl-crec-ypc-matt-forte",
+    "nfl-ccyd-ypc-alex-smith"
+  ],
+  "2026-10-29": [
+    "nfl-crtd-ypr-lesean-mccoy",
+    "nfl-crec-rtd-marshawn-lynch",
+    "nfl-cypc-ypr-demarco-murray",
+    "nfl-crtd-ctd-frank-gore",
+    "nfl-catt-rec-arian-foster"
+  ],
+  "2026-10-30": [
+    "nfl-catt-ypc-steven-jackson",
+    "nfl-crec-ypc-leveon-bell",
+    "nfl-cctd-yac-antonio-brown",
+    "nfl-cryd-rec-jamaal-charles",
+    "nfl-cryd-rtd-chris-johnson"
+  ],
+  "2026-10-31": [
+    "nfl-ccyd-rtd-ben-roethlisberger",
+    "nfl-cypc-rtd-chris-johnson",
+    "nfl-cypc-ypr-leveon-bell",
+    "nfl-crtd-ctd-adrian-peterson",
+    "nfl-catt-rtd-frank-gore"
+  ],
+  "2026-11-01": [
+    "nfl-ccyd-ypc-matt-forte",
+    "nfl-crec-ypc-steven-jackson",
+    "nfl-cctd-yac-arian-foster",
+    "nfl-cryd-rec-alex-smith",
+    "nfl-crec-rtd-frank-gore"
+  ],
+  "2026-11-02": [
+    "nfl-catt-rtd-steven-jackson",
+    "nfl-ccyd-rtd-matt-forte",
+    "nfl-cryd-rtd-ben-roethlisberger",
+    "nfl-crtd-ctd-demarco-murray",
+    "nfl-catt-ypc-alex-smith"
+  ],
+  "2026-11-03": [
+    "nfl-cctd-yac-leveon-bell",
+    "nfl-crec-ypc-alex-smith",
+    "nfl-cryd-rec-arian-foster",
+    "nfl-catt-rec-jamaal-charles",
+    "nfl-crtd-ypr-matt-forte"
+  ],
+  "2026-11-04": [
+    "nfl-catt-ypc-frank-gore",
+    "nfl-crec-rtd-steven-jackson",
+    "nfl-cypc-ypr-chris-johnson",
+    "nfl-catt-rtd-ben-roethlisberger",
+    "nfl-crtd-ctd-matt-forte"
+  ],
+  "2026-11-05": [
+    "nfl-crec-ypc-clinton-portis",
+    "nfl-ccyd-rtd-leveon-bell",
+    "nfl-cctd-yac-lesean-mccoy",
+    "nfl-cryd-rtd-steven-jackson",
+    "nfl-cypc-rtd-ben-roethlisberger"
+  ],
+  "2026-11-06": [
+    "nfl-crtd-ypr-demarco-murray",
+    "nfl-ccyd-ypc-leveon-bell",
+    "nfl-catt-rec-chris-johnson",
+    "nfl-catt-rtd-arian-foster",
+    "nfl-catt-ypc-steven-jackson"
+  ],
+  "2026-11-07": [
+    "nfl-cypc-rtd-chris-johnson",
+    "nfl-ccyd-rtd-ben-roethlisberger",
+    "nfl-crec-ypc-steven-jackson",
+    "nfl-cypc-ypr-matt-forte",
+    "nfl-cctd-yac-lesean-mccoy"
+  ],
+  "2026-11-08": [
+    "nfl-catt-rtd-steven-jackson",
+    "nfl-cryd-rtd-chris-johnson",
+    "nfl-ccyd-ypc-alex-smith",
+    "nfl-cryd-rec-arian-foster",
+    "nfl-crec-rtd-ben-roethlisberger"
+  ],
+  "2026-11-09": [
+    "nfl-ccyd-rtd-leveon-bell",
+    "nfl-cctd-yac-antonio-brown",
+    "nfl-crtd-ypr-marshawn-lynch",
+    "nfl-catt-ypc-frank-gore",
+    "nfl-cypc-rtd-alex-smith"
+  ],
+  "2026-11-10": [
+    "nfl-cypc-ypr-leveon-bell",
+    "nfl-crtd-ctd-adrian-peterson",
+    "nfl-ccyd-ypc-matt-forte",
+    "nfl-cryd-rtd-ben-roethlisberger",
+    "nfl-cryd-rec-alex-smith"
+  ],
+  "2026-11-11": [
+    "nfl-crec-ypc-alex-smith",
+    "nfl-crec-rtd-steven-jackson",
+    "nfl-crtd-ypr-frank-gore",
+    "nfl-cctd-yac-leveon-bell",
+    "nfl-catt-rtd-ben-roethlisberger"
+  ],
+  "2026-11-12": [
+    "nfl-cypc-rtd-leveon-bell",
+    "nfl-cryd-rtd-frank-gore",
+    "nfl-cryd-rec-jamaal-charles",
+    "nfl-crtd-ctd-matt-forte",
+    "nfl-cypc-ypr-demarco-murray"
+  ],
+  "2026-11-13": [
+    "nfl-crec-ypc-leveon-bell",
+    "nfl-catt-ypc-alex-smith",
+    "nfl-cctd-yac-rob-gronkowski",
+    "nfl-catt-rtd-frank-gore",
+    "nfl-crtd-ypr-matt-forte"
+  ],
+  "2026-11-14": [
+    "nfl-catt-rec-jamaal-charles",
+    "nfl-crec-rtd-frank-gore",
+    "nfl-cypc-ypr-chris-johnson",
+    "nfl-ccyd-rtd-matt-forte",
+    "nfl-ccyd-ypc-adrian-peterson"
+  ],
+  "2026-11-15": [
+    "nfl-crtd-ctd-demarco-murray",
+    "nfl-crec-ypc-clinton-portis",
+    "nfl-catt-rtd-lesean-mccoy",
+    "nfl-cypc-rtd-ben-roethlisberger",
+    "nfl-cryd-rtd-steven-jackson"
+  ],
+  "2026-11-16": [
+    "nfl-cctd-yac-demarco-murray",
+    "nfl-crtd-ypr-lesean-mccoy",
+    "nfl-crec-rtd-marshawn-lynch",
+    "nfl-ccyd-rtd-steven-jackson",
+    "nfl-catt-rec-arian-foster"
+  ],
+  "2026-11-17": [
+    "nfl-crtd-ctd-frank-gore",
+    "nfl-crec-ypc-matt-forte",
+    "nfl-catt-rtd-chris-johnson",
+    "nfl-ccyd-ypc-adrian-peterson",
+    "nfl-catt-ypc-alex-smith"
+  ],
+  "2026-11-18": [
+    "nfl-crec-rtd-marshawn-lynch",
+    "nfl-ccyd-rtd-ben-roethlisberger",
+    "nfl-cypc-rtd-alex-smith",
+    "nfl-catt-rec-jamaal-charles",
+    "nfl-cypc-ypr-matt-forte"
+  ],
+  "2026-11-19": [
+    "nfl-crec-ypc-clinton-portis",
+    "nfl-catt-rtd-ben-roethlisberger",
+    "nfl-cctd-yac-arian-foster",
+    "nfl-crtd-ctd-adrian-peterson",
+    "nfl-crtd-ypr-marshawn-lynch"
+  ],
+  "2026-11-20": [
+    "nfl-catt-rec-demarco-murray",
+    "nfl-crec-rtd-steven-jackson",
+    "nfl-cypc-rtd-leveon-bell",
+    "nfl-cryd-rec-alex-smith",
+    "nfl-cryd-rtd-ben-roethlisberger"
+  ],
+  "2026-11-21": [
+    "nfl-ccyd-ypc-leveon-bell",
+    "nfl-catt-rtd-frank-gore",
+    "nfl-cctd-yac-lesean-mccoy",
+    "nfl-cypc-ypr-demarco-murray",
+    "nfl-ccyd-rtd-matt-forte"
+  ],
+  "2026-11-22": [
+    "nfl-catt-rec-arian-foster",
+    "nfl-catt-ypc-frank-gore",
+    "nfl-cryd-rtd-steven-jackson",
+    "nfl-crtd-ctd-demarco-murray",
+    "nfl-cryd-rec-jamaal-charles"
+  ],
+  "2026-11-23": [
+    "nfl-ccyd-ypc-alex-smith",
+    "nfl-cctd-yac-leveon-bell",
+    "nfl-crec-ypc-steven-jackson",
+    "nfl-cypc-ypr-chris-johnson",
+    "nfl-catt-rtd-arian-foster"
+  ],
+  "2026-11-24": [
+    "nfl-crtd-ctd-matt-forte",
+    "nfl-catt-rec-chris-johnson",
+    "nfl-crtd-ypr-frank-gore",
+    "nfl-cypc-rtd-ben-roethlisberger",
+    "nfl-ccyd-rtd-steven-jackson"
+  ],
+  "2026-11-25": [
+    "nfl-cryd-rtd-frank-gore",
+    "nfl-crec-rtd-ben-roethlisberger",
+    "nfl-crec-ypc-alex-smith",
+    "nfl-cypc-ypr-leveon-bell",
+    "nfl-cryd-rec-arian-foster"
+  ],
+  "2026-11-26": [
+    "nfl-cctd-yac-demarco-murray",
+    "nfl-ccyd-ypc-matt-forte",
+    "nfl-cypc-rtd-chris-johnson",
+    "nfl-catt-ypc-steven-jackson",
+    "nfl-crtd-ypr-lesean-mccoy"
+  ],
+  "2026-11-27": [
+    "nfl-ccyd-rtd-leveon-bell",
+    "nfl-catt-rec-alex-smith",
+    "nfl-catt-rtd-steven-jackson",
+    "nfl-cryd-rtd-chris-johnson",
+    "nfl-crec-rtd-frank-gore"
+  ],
+  "2026-11-28": [
+    "nfl-crtd-ypr-demarco-murray",
+    "nfl-cctd-yac-antonio-brown",
+    "nfl-crec-ypc-leveon-bell",
+    "nfl-ccyd-ypc-adrian-peterson",
+    "nfl-cypc-ypr-chris-johnson"
+  ],
+  "2026-11-29": [
+    "nfl-catt-rec-arian-foster",
+    "nfl-cypc-rtd-alex-smith",
+    "nfl-ccyd-rtd-steven-jackson",
+    "nfl-crtd-ctd-adrian-peterson",
+    "nfl-catt-ypc-frank-gore"
+  ],
+  "2026-11-30": [
+    "nfl-cypc-ypr-demarco-murray",
+    "nfl-crec-ypc-alex-smith",
+    "nfl-catt-rtd-steven-jackson",
+    "nfl-crec-rtd-marshawn-lynch",
+    "nfl-cryd-rec-arian-foster"
+  ],
+  "2026-12-01": [
+    "nfl-cypc-rtd-ben-roethlisberger",
+    "nfl-catt-ypc-steven-jackson",
+    "nfl-catt-rec-demarco-murray",
+    "nfl-ccyd-ypc-alex-smith",
+    "nfl-cctd-yac-rob-gronkowski"
+  ],
+  "2026-12-02": [
+    "nfl-cryd-rtd-steven-jackson",
+    "nfl-ccyd-rtd-matt-forte",
+    "nfl-catt-rtd-lesean-mccoy",
+    "nfl-crec-ypc-clinton-portis",
+    "nfl-cryd-rec-alex-smith"
+  ],
+  "2026-12-03": [
+    "nfl-cctd-yac-leveon-bell",
+    "nfl-crtd-ypr-frank-gore",
+    "nfl-cypc-rtd-chris-johnson",
+    "nfl-cypc-ypr-matt-forte",
+    "nfl-catt-rec-jamaal-charles"
+  ],
+  "2026-12-04": [
+    "nfl-catt-rtd-arian-foster",
+    "nfl-crtd-ctd-matt-forte",
+    "nfl-cryd-rtd-chris-johnson",
+    "nfl-ccyd-rtd-ben-roethlisberger",
+    "nfl-cryd-rec-jamaal-charles"
+  ]
+}

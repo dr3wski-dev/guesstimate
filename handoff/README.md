@@ -18,14 +18,19 @@ on a day hard mode is on #50.
 | `main` | `/` | every league, every kind of stat — one season, career totals, height, All-Star counts | live, 600 questions |
 | `nba` | `/nba/` | career per-game averages | live, 192 questions |
 | `mlb` | `/mlb/` | career rate lines, hitters and pitchers | live, 336 questions |
-| `nfl` | `/nfl/` | career per-touch rates | **not open** — see the note in `data/games.json` |
+| `nfl` | `/nfl/` | career per-touch rates | live, 61 questions — small, and bounded by the data |
 | `nhl`, `cfb`, `psu` | — | career rates | **not open** — no source that can be re-derived |
 
 `data/games.json` is the manifest, and the `note` on a game that is not open says
 exactly what is blocking it rather than "coming soon". Those notes are the honest part:
-there is no open NHL career dataset we can check our arithmetic against, the reachable
-college data starts at 2014 and is play-by-play, and the NFL data's three coverage
-faults stack up on a career in a way they do not on a single season.
+there is no open NHL career dataset we can check our arithmetic against, and the
+reachable college data starts at 2014 and is play-by-play.
+
+The NFL game is live but deliberately small, and that is the data rather than a
+decision to come back to it: the nflverse weekly data starts in 1999, its 1999-2001
+yardage is unreliable, and its targets column echoes receptions for 2003-2008. Those
+three faults stack up on a career where they do not on a single season, which leaves
+40 retired players with a 2002-or-later debut. It repeats about every twelve days.
 
 **A question belongs to a game by a `game` field**, and the 600 that predate the split
 carry no field at all, meaning hard mode. That is not laziness: adding one would have
@@ -69,7 +74,7 @@ that loads, answers, and serves nothing.
 6. **CONTENT_BACKLOG.md** — comp archetypes for the next research pass (efficiency vs.
    volume, defensive identity, stat-stuffer, and others across NBA/NFL/MLB), all
    unresearched, with a process for turning an archetype into a verified question.
-7. **data/questions.json** — 1,128 verified, sourced questions across all the games
+7. **data/questions.json** — 1,189 verified, sourced questions across all the games
    in the exact schema new content should follow.
    Every number re-derives from the raw datasets on a separate code path; see
    **pipeline/** below. `data/quarantine.json` holds questions withdrawn for being bad
